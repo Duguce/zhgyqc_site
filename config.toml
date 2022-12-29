@@ -1,4 +1,4 @@
-baseURL = "https://duguce.github.io/"
+baseURL = "https://zhgyqc.netlify.app/"
 languageCode = "en-us"
 title = "Qingchen Yu"
 theme = "hugo-ht"
@@ -28,18 +28,19 @@ posts = "/posts/:year/:month/:day/:slug/"
     url = "/cn/posts/"
     weight = 4
 
+
 [[menu.cn]]
     name = "关于"
     url = "/cn/about/"
-    weight = 1
+    weight = 2
 [[menu.cn]]
     name = "日志"
     url = "/cn/posts/"
-    weight = 2
+    weight = 3
 [[menu.cn]]
     name = "English"
     url = "/"
-    weight = 3
+    weight = 4
 
 [params]
     description = "Peronal website of Qingchen Yu"
@@ -52,11 +53,11 @@ posts = "/posts/:year/:month/:day/:slug/"
     MathJaxVersion = "2.7.5"
     favicon = "media/logo.png"
     # Edit by yourself:
-    GithubEdit = "https://github.com/USERNAME/REPONAME/edit/master/content/"
+    # GithubEdit = "https://github.com/USERNAME/REPONAME/edit/master/content/"
     copyright = "&copy;"
     copyrightYear = "2022"
     # Edit by yourself:
-    # GithubRepo = "https://github.com/USERNAME/REPONAME"
+    # GithubRepo = "https://github.com/Duguce/zhgyqc_site"
     # Edit by yourself:
     # ContentSource = "https://raw.githubusercontent.com/USERNAME/REPONAME/master/content/" 
 
