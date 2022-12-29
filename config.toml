@@ -146,7 +146,7 @@ quality = 100
 
 ## 配置 utteranc评论
 [params.utteranc]
-  enable = false
+  enable = True
   repo = "Duguce/zhgyqc_site"
   issueTerm = "title"
   theme = "github-light"
