@@ -6,7 +6,7 @@ slug: first-post-cn
 draft: false
 toc: false
 categories:
-  - test
+  - thinking
 tags:
   - 思考
 ---
