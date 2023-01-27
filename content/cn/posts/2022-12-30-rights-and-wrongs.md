@@ -1,6 +1,6 @@
 ---
 title: "立场与是非"
-date: 2022-12-31
+date: 2022-12-30
 author: Qingchen Yu
 slug: first-post-cn
 draft: false
