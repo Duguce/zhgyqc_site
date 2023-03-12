@@ -2,7 +2,7 @@
 title: "我的阅读书单-2022"
 date: 2022-12-31
 author: Qingchen Yu
-slug: first-post-cn
+slug: My-Reading-List-2022
 draft: false
 toc: false
 categories:

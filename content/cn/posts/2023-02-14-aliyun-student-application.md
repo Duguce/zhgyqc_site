@@ -2,7 +2,7 @@
 title: "免费领取阿里云云服务器的经验分享"
 date: 2023-02-14
 author: Qingchen Yu
-slug: 
+slug: aliyun-student-application
 draft: false
 toc: false
 categories:
