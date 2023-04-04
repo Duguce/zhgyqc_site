@@ -14,6 +14,17 @@ tags:
 
 # 基本步骤
 
+**添加 MySQL 8.0 的 APT 源**
+
+添加 MySQL 8.0 的 APT 源。打开终端并输入以下命令，以添加 MySQL 8.0 的 APT 源：
+
+```bash
+wget -c https://dev.mysql.com/get/mysql-apt-config_0.8.22-1_all.deb
+sudo dpkg -i mysql-apt-config_0.8.22-1_all.deb
+```
+
+在安装过程中，您需要选择 MySQL 8.0 版本并更新 APT 存储库。
+
 **服务器端安装MySQL**
 
 ```

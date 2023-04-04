@@ -13,7 +13,7 @@ tags:
 
 本文主要介绍了如何将Django博客系统部署在阿里云上。部署流程主要包括下载项目、在Ubuntu上新建虚拟环境、新建数据库、在本地的PyCharm中配置运行、在阿里云上配置安全组和开放8000端口等步骤。在部署过程中，还需要检查博客网站是否已经启动、博客网站的配置是否正确、本地网络连接是否正常以及防火墙和安全组的设置等问题。通过以上操作，就可以将Django博客系统成功地部署在阿里云上，并实现外网访问。
 
-Django博客项目是来源与GitHub上的一个开源项目：https://github.com/liangliangyy/DjangoBlog
+Django博客项目是来源于GitHub上的一个开源项目：https://github.com/liangliangyy/DjangoBlog
 
 # 基本步骤
 

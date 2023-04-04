@@ -53,7 +53,7 @@ source /usr/local/bin/virtualenvwrapper.sh
 ``` 
 mkvirtualenv 虚拟环境名称 # 创建虚拟环境命令
 workon 虚拟环境名称 # 进入虚拟环境工作
-workon # 查看机器上有多个个虚拟环境
+workon # 查看机器上有多少个虚拟环境
 deactivate # 退出虚拟环境
 rmvirtualenv 虚拟环境名 # 删除虚拟环境
 # 查看虚拟环境中的安装包信息
