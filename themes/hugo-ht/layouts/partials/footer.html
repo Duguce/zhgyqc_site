@@ -1,8 +1,17 @@
 <footer class="footer">
 {{if and (not .IsSection) (not .IsHome)}}
-<script src="https://utteranc.es/client.js"
+<!-- <script src="https://utteranc.es/client.js"
         repo="Duguce/zhgyqc_site"
         issue-term="title"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script> -->
+<div id="utterances-comments"></div>
+<script src="https://utteranc.es/client.js"
+        repo="Duguce/zhgyqc_site"
+        issue-term="{{ .Permalink }}"
+        label="{{ .Title }}"
         theme="github-light"
         crossorigin="anonymous"
         async>
