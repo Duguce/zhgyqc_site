@@ -20,8 +20,8 @@ posts = "/posts/:year/:month/:day/:slug/"
     url = "/en/about/"
     weight = 2
 [[menu.en]]
-    name = "Blog"
-    url = "/en/posts/"
+    name = "Projects"
+    url = "/en/projects/"
     weight = 3
 [[menu.en]]
     name = "中文"
@@ -29,12 +29,9 @@ posts = "/posts/:year/:month/:day/:slug/"
     weight = 4
 
 
+
 [[menu.cn]]
-    name = "关于"
-    url = "/cn/about/"
-    weight = 2
-[[menu.cn]]
-    name = "日志"
+    name = "博客"
     url = "/cn/posts/"
     weight = 3
 [[menu.cn]]
