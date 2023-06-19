@@ -32,7 +32,7 @@ posts = "/posts/:year/:month/:day/:slug/"
 
 [[menu.cn]]
     name = "博客"
-    url = "/cn/posts/"
+    url = "/cn/blogs/"
     weight = 3
 [[menu.cn]]
     name = "English"
@@ -43,7 +43,7 @@ posts = "/posts/:year/:month/:day/:slug/"
     description = "Peronal website of Qingchen Yu"
     homeText = "You just need a Hugo blog from scratch"
     # Please make sure `blogDirName` matches the name used in `menu` above:
-    blogDirName = "posts"
+    blogDirName = "blogs"
     # singleLang = true
     defaultLang = "en"
     MathJaxCDN = "//cdnjs.cloudflare.com/ajax/libs" 
