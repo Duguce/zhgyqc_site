@@ -1,7 +1,7 @@
 ---
 title: "阿里云 Ubuntu 上重新安装 MySQL 8.0 的步骤"
 date: 2023-04-04
-author: Qingchen Yu
+author: Yu Ching San
 slug: steps-to-reinstall-mysql_8.0-on-aliyun-ubuntu
 draft: false
 toc: false

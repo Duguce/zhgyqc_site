@@ -1,7 +1,7 @@
 ---
 title: "Python虚拟环境配置"
 date: 2023-03-14
-author: Qingchen Yu
+author: Yu Ching San
 slug: python-virtual-environment-configuration
 draft: false
 toc: false

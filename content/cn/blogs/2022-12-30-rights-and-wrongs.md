@@ -1,7 +1,7 @@
 ---
 title: "立场与是非"
 date: 2022-12-30
-author: Qingchen Yu
+author: Yu Ching San
 slug: first-post-cn
 draft: false
 toc: false

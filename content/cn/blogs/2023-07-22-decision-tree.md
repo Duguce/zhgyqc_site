@@ -1,7 +1,7 @@
 ---
 title: "决策树算法概述"
 date: 2023-07-22
-author: Qingchen Yu
+author: Yu Ching San
 slug: Decision Tree
 draft: false
 toc: True

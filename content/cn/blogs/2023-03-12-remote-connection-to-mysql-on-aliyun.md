@@ -1,7 +1,7 @@
 ---
 title: "远程连接阿里云上的MySQL"
 date: 2023-03-12
-author: Qingchen Yu
+author: Yu Ching San
 slug: remote-connection-to-mysql-on-aliyun
 draft: false
 toc: false

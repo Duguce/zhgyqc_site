@@ -1,7 +1,7 @@
 ---
 title: "Jetbrains全家桶免费使用"
 date: 2023-03-17
-author: Qingchen Yu
+author: Yu Ching San
 slug: the-jetbrains-family-bucket-is-free-to-use
 draft: false
 toc: false

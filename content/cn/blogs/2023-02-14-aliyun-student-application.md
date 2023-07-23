@@ -1,7 +1,7 @@
 ---
 title: "免费领取阿里云云服务器"
 date: 2023-02-14
-author: Qingchen Yu
+author: Yu Ching San
 slug: aliyun-student-application
 draft: false
 toc: false

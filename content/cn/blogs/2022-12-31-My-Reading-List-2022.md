@@ -1,7 +1,7 @@
 ---
 title: "我的阅读书单-2022"
 date: 2022-12-31
-author: Qingchen Yu
+author: Yu Ching San
 slug: My-Reading-List-2022
 draft: false
 toc: false

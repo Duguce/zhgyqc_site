@@ -1,7 +1,7 @@
 ---
 title: "在阿里云上运行Django博客项目的详细步骤"
 date: 2023-03-18
-author: Qingchen Yu
+author: Yu Ching San
 slug: steps-to-run-a-django-blog-project-in-aliyun
 draft: false
 toc: false
