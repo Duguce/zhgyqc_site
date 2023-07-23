@@ -40,7 +40,7 @@ posts = "/posts/:year/:month/:day/:slug/"
     weight = 4
 
 [params]
-    description = "Peronal website of Qingchen Yu"
+    description = "Peronal website of Yu Ching San"
     homeText = "You just need a Hugo blog from scratch"
     # Please make sure `blogDirName` matches the name used in `menu` above:
     blogDirName = "blogs"
@@ -68,8 +68,8 @@ posts = "/posts/:year/:month/:day/:slug/"
 [params.lang]
 
     [params.lang.author]
-      en = "Qingchen Yu"
-      cn = "Qingchen Yu"
+      en = "Yu Ching San"
+      cn = "Yu Ching San"
 
     [params.lang.madeWith]
       en = "Made with"
