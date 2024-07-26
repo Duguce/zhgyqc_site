@@ -6,15 +6,6 @@ title: Home
 
 ------
 
-<p align="center">
-    <a href="https://github.com/Duguce">GitHub</a>
-    | <a href="https://twitter.com/zhgyqc_duguce">Twitter</a>
-</p>
-<p align="center">
-    Email: <u>zhgyqc[at]163[dot]com</u>
-</p>
-
 <p>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome to my website! I'm a first-year master's student at <a href="https://www.shu.edu.cn/">Shanghai University</a>. My research interests are focused on machine learning, natural language processing, and data analysis. To know more about me, you can click <a href="/en/about/">here</a>.
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome to my website! I'm a second-year master's student at <a href="https://www.shu.edu.cn/">Shanghai University</a>. My main interests are in machine learning and natural language processing. Currently, my research focuses on the reliable evaluation of large language models (LLMs). To learn more about me, please click <a href="/en/about/">here</a>.
 </p>
-
