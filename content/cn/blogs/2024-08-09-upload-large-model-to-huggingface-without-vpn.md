@@ -78,7 +78,7 @@ git lfs push --all origin main
 git push
 
 # 如果最后一步出现了无法推送的问题，可以尝试设置一下重新推送
-git remote set-url origin https://<user_name>:<token>@hf-mirror.com/<repo_path 
+git remote set-url origin https://<user_name>:<token>@hf-mirror.com/<repo_path>
 ```
 
 
