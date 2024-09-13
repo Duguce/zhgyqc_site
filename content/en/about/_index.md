@@ -5,7 +5,7 @@
     </div>
     <div>
         <p>
-            I'm a second-year master's student at School of Management, <a href="https://www.shu.edu.cn/">Shanghai University</a>. Previously, I obtained my B.S. in E-commerce at <a href="https://www.huel.edu.cn/">Henan University of Economics and Law</a> in July 2022.<br>
+            I'm a third-year master's student at School of Management, <a href="https://www.shu.edu.cn/">Shanghai University</a>. Previously, I obtained my B.S. in E-commerce at <a href="https://www.huel.edu.cn/">Henan University of Economics and Law</a> in July 2022.<br>
             <strong>Email:</strong>zhgyqc[at]163[dot]com
         </p>
     </div>
