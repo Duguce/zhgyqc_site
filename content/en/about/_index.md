@@ -1,12 +1,14 @@
 # Qingchen Yu
 <div style="display: flex; align-items: center;">
     <div style="margin-right: 20px;">
-        <img src="./assets/profile.jpg" alt="profile_photo" style="width: 222px; height: auto;">
+        <img src="./assets/profile.jpg" alt="profile_photo" style="width: 260px; height: auto;">
     </div>
     <div>
         <p>
-            I'm a third-year master's student at School of Management, <a href="https://www.shu.edu.cn/">Shanghai University</a>. Previously, I obtained my B.S. in E-commerce at <a href="https://www.huel.edu.cn/">Henan University of Economics and Law</a> in July 2022.<br>
-            <strong>Email:</strong>zhgyqc[at]163[dot]com
+
+​            I'm currently a third-year master's student at the School of Management, Shanghai University (SHU). I previously obtained my Bachelor of Management in E-commerce from Henan University of Economics and Law (HUEL) in July 2022.<br>
+
+​            <strong>Email:</strong> zhgyqc[at]163[dot]com
         </p>
     </div>
 </div>
@@ -75,3 +77,17 @@ My main interests are in machine learning and natural language processing. Curre
         </p>
     </div>
 </div>
+
+<h2 style="text-align: left;">Honors and Awards</h2>
+
+<ul>
+  <li style="font-size: 18px;">Outstanding Graduate Award of Henan (2022)</li>
+  <li style="font-size: 18px;">National Scholarship for Undergraduate Students (2021)</li>
+  <li style="font-size: 18px;">National Second Prize in the China Undergraduate Mathematical Contest in Modeling (2020)</li>
+</ul>
+
+<h2 style="text-align: left;">Academic Service</h2>
+
+<ul>
+  <li style="font-size: 18px;">Reviewer for ICLR (2025)</li>
+</ul>
