@@ -6,7 +6,7 @@
     <div>
         <p>
 
-​            I'm currently a third-year master's student at the School of Management, Shanghai University (SHU). I previously obtained my Bachelor of Management in E-commerce from Henan University of Economics and Law (HUEL) in July 2022.<br>
+​            I'm currently a third-year master's student at the School of Management, Shanghai University. I previously obtained my Bachelor of Management in E-commerce from Henan University of Economics and Law in July 2022.<br>
 
 ​            <strong>Email:</strong> zhgyqc[at]163[dot]com
         </p>
@@ -34,7 +34,7 @@ My main interests are in machine learning and natural language processing. Curre
         <p style="font-size: 16px;">
             <strong>TurtleBench: Evaluating Top Language Models via Real-World Yes/No Puzzles</strong><br>
             <strong>Qingchen Yu</strong><sup>*</sup>, Shichao Song<sup>*</sup>, Ke Fang<sup>*</sup>, Yunfeng Shi, Zifan Zheng, Hanyu Wang, Simin Niu, Zhiyu Li<sup>†</sup><br>
-            arXiv, 2024. <a href="https://arxiv.org/pdf/2410.05262">PDF</a> | <a href="https://github.com/mazzzystar/TurtleBench">Code</a> | <a href="https://huggingface.co/datasets/Duguce/TurtleBench1.5k">TurtleBench1.5k</a>
+            arXiv, 2024. <a href="https://arxiv.org/pdf/2410.05262">PDF</a> | <a href="https://github.com/mazzzystar/TurtleBench">Code</a> | <a href="https://huggingface.co/datasets/Duguce/TurtleBench1.5k">Dataset</a>
         </p>
     </div>
 </div>
