@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Yu Ching San</title>
+    <link>https://zhgyqc.netlify.app/categories/</link>
+    <description>Recent content in Categories on Yu Ching San</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 09 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://zhgyqc.netlify.app/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>coding</title>
+      <link>https://zhgyqc.netlify.app/categories/coding/</link>
+      <pubDate>Fri, 09 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhgyqc.netlify.app/categories/coding/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>reading</title>
+      <link>https://zhgyqc.netlify.app/categories/reading/</link>
+      <pubDate>Mon, 07 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhgyqc.netlify.app/categories/reading/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>machine learning</title>
+      <link>https://zhgyqc.netlify.app/categories/machine-learning/</link>
+      <pubDate>Sat, 22 Jul 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhgyqc.netlify.app/categories/machine-learning/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>data analysis</title>
+      <link>https://zhgyqc.netlify.app/categories/data-analysis/</link>
+      <pubDate>Mon, 19 Jun 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhgyqc.netlify.app/categories/data-analysis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>thinking</title>
+      <link>https://zhgyqc.netlify.app/categories/thinking/</link>
+      <pubDate>Fri, 30 Dec 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhgyqc.netlify.app/categories/thinking/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
