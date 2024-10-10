@@ -6,7 +6,7 @@
     <div>
         <p>
 
-​            I'm currently a third-year master's student at the School of Management, Shanghai University. I previously obtained my Bachelor of Management in E-commerce from Henan University of Economics and Law in July 2022.<br>
+I'm currently a third-year master's student at the School of Management, Shanghai University. I previously obtained my Bachelor of Management in E-commerce from Henan University of Economics and Law in July 2022.<br>
 
 ​            <strong>Email:</strong> zhgyqc[at]163[dot]com
         </p>
