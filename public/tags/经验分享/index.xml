@@ -1,125 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>经验分享 on Yu Ching San</title>
-    <link>https://zhgyqc.netlify.app/tags/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/</link>
-    <description>Recent content in 经验分享 on Yu Ching San</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Fri, 09 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://zhgyqc.netlify.app/tags/%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>上传大模型到huggingface的方法（不用梯子）</title>
-      <link>https://zhgyqc.netlify.app/cn/2024/08/09/upload-large-model-to-huggingface-without-vpn/</link>
-      <pubDate>Fri, 09 Aug 2024 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhgyqc.netlify.app/cn/2024/08/09/upload-large-model-to-huggingface-without-vpn/</guid>
-      <description>相关配置 下载LFS # 更新包管理器 sudo apt-get update sudo apt-get upgrade # 安装Git（如有则忽略） sudo apt-get install git # 安装Git LFS sudo apt-get install git-lfs # 初始化Git LFS git lfs install # 验证Git LFS是否安装成功 git lfs --version 配置huggingface 从huggingface申请token（需要同时有读写权限的，注意token只会展示一次，所以要记得保存）； 安装huggingface-cli pip install huggingface_hub huggingface-cli login # 输入上边生成的token 下载模型 注：预先要在huggingface上创建好对应的模型仓库
-git lfs install # 不需要梯子 git clone https://hf-mirror.com/username/model_name # 需要梯子 git clone https://huggingface.co/username/model_name # 进入仓库并将需要上传的文件放到这个文件夹内 cd model_name 上传模型 追踪大文件 # 追踪需要上传的大文件，后缀需要修改为你需要上传的大文件所对应的 git lfs track &amp;#34;*.</description>
-    </item>
-    
-    <item>
-      <title>WSL2网络代理配置（实现自由切换）</title>
-      <link>https://zhgyqc.netlify.app/cn/2023/12/12/wsl-proxy-config/</link>
-      <pubDate>Tue, 12 Dec 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhgyqc.netlify.app/cn/2023/12/12/wsl-proxy-config/</guid>
-      <description>在使用代理的环境中，灵活切换是否使用代理是一个常见的需求。
-本文介绍了如何通过修改 .bashrc 文件实现这一目标。配置过程中主要参考了WSL2 的开发环境配置和在 WSL2 中使用 Clash for Windows 代理连接。
-首先需要在Windows中的软件配置代理设置。
-然后在WSL下通过vim ~/.bashrc命令进入 .bashrc 文件将启用和禁用代理的过程封装为两个短命令的代码放入其中并保存。
-# 网络代理设置 setp() { host_ip=$(cat /etc/resolv.conf | grep &amp;#34;nameserver&amp;#34; | cut -f 2 -d &amp;#34; &amp;#34;) export http_proxy=&amp;#34;http://$host_ip:7890&amp;#34; export https_proxy=&amp;#34;http://$host_ip:7890&amp;#34; echo &amp;#34;Proxy enabled.&amp;#34; } usetp() { unset http_proxy unset https_proxy echo &amp;#34;Proxy disabled.&amp;#34; } 再修改保存后，执行source .bashrc使其生效后即可使用，具体使用方式见下图</description>
-    </item>
-    
-    <item>
-      <title>阿里云 Ubuntu 上重新安装 MySQL 8.0 的步骤</title>
-      <link>https://zhgyqc.netlify.app/cn/2023/04/04/steps-to-reinstall-mysql_8.0-on-aliyun-ubuntu/</link>
-      <pubDate>Tue, 04 Apr 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhgyqc.netlify.app/cn/2023/04/04/steps-to-reinstall-mysql_8.0-on-aliyun-ubuntu/</guid>
-      <description>前言 当您在使用 MySQL 时遇到问题时，可能需要重新安装 MySQL 以解决问题。在卸载并重新安装 MySQL 8.0 是一种可靠的解决方法。通过这种方法，您可以确保从头开始获得干净的 MySQL 安装，消除了可能由之前的安装引起的问题。因此，接下来我们将介绍如何在阿里云 Ubuntu 上执行卸载并重新安装 MySQL 8.0 的步骤，以解决 MySQL 的问题。
-emm~本文其实是基于ChatGPT生成的！在我使用MySQL的过程中，遇到了一个无法解决的报错。我试着遵循网上给出的建议，但是问题依旧存在。于是，我想到了使用卸载重装的方法（卸载重装大法yyds！）。我试着按照网上的步骤操作，但是总是卸载不干净。最后，我又想到了向ChatGPT求助，跟着它给出的步骤，终于成功解决了问题。因此，我想把这份卸载重装的步骤整理下来方便后续查看，也希望能帮助其他遇到类似问题的朋友们节省时间成本。
-步骤 卸载旧版本的 MySQL 在卸载 MySQL 之前，最好备份您的数据以防止数据丢失。接下来，按照以下步骤卸载旧版本的 MySQL：
-停止 MySQL 服务 在终端中运行以下命令以停止MySQL服务（这一步非常重要！！！）：
-sudo systemctl stop mysql 删除 MySQL 数据目录 默认情况下，MySQL数据目录位于/var/lib/mysql。在终端中运行以下命令以删除此目录及其内容：
-sudo rm -rf /var/lib/mysql 卸载 MySQL 软件包 在终端中运行以下命令以卸载 MySQL 软件包：
-sudo apt-get remove --purge mysql-server mysql-client mysql-common sudo apt-get autoremove sudo apt-get autoclean 第一条命令删除MySQL服务器和客户端软件包，第二条命令将自动删除未使用的依赖项，第三条命令清理apt-cache。
-清除 MySQL 配置文件 在终端中运行以下命令以清除 MySQL 的配置文件：
-sudo rm -rf /etc/mysql/ 添加 MySQL 8.</description>
-    </item>
-    
-    <item>
-      <title>在阿里云上运行Django博客项目的详细步骤</title>
-      <link>https://zhgyqc.netlify.app/cn/2023/03/18/steps-to-run-a-django-blog-project-in-aliyun/</link>
-      <pubDate>Sat, 18 Mar 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhgyqc.netlify.app/cn/2023/03/18/steps-to-run-a-django-blog-project-in-aliyun/</guid>
-      <description>本文主要介绍了如何将Django博客系统运行在阿里云上。运行流程主要包括下载项目、在Ubuntu上新建虚拟环境、新建数据库、在本地的PyCharm中配置运行、在阿里云上配置安全组和开放8000端口等步骤。在运行过程中，还需要检查博客网站是否已经启动、博客网站的配置是否正确、本地网络连接是否正常以及防火墙和安全组的设置等问题。通过以上操作，就可以将Django博客系统成功地运行在阿里云上，并实现外网访问。
-Django博客项目是来源于GitHub上的一个开源项目：https://github.com/liangliangyy/DjangoBlog
-基本步骤 下载项目 通过以下命令，将博客项目克隆到本地
-git clone git@github.com:liangliangyy/DjangoBlog.git Ubuntu上新建虚拟环境 以下是在Ubuntu上新建及操作虚拟环境的基本命令：
-mkvirtualenv 虚拟环境名称 # 创建虚拟环境命令workon 虚拟环境名称 # 进入虚拟环境工作workon # 查看机器上有多个个虚拟环境deactivate # 退出虚拟环境rmvirtualenv 虚拟环境名 # 删除虚拟环境# 查看虚拟环境中的安装包信息pip listpip freezepip freeze &amp;gt; requirement.txt # 导出安装包信息# 把依赖包导入到虚拟环境中pip install - r requirement.txt 建好虚拟环境好，在虚拟环境中使用以下命令，将博客项目所使用的相关依赖包导入到虚拟环境中：
-pip install -r requirements_longge.txt Ubuntu上新建数据库 该博客项目中涉及到数据存储，需要连接MySQL数据库的。因此需要在Ubuntu上新建一个数据库。
-create database django_blog charset=utf8mb4; 然后把项目提供的数据库备份djangoblog.sql导入到新建的数据库中。
-mysql -u root -p django_blog &amp;lt;djangoblo 在本地的PyCharm中配置运行 首先在PyCharm中打开下载好的博客项目，然后修改DjangoBlog文件夹下的settings中的数据库密码和IP：
-DATABASES = { &amp;#39;default&amp;#39;: { &amp;#39;ENGINE&amp;#39;: &amp;#39;django.</description>
-    </item>
-    
-    <item>
-      <title>Jetbrains全家桶免费使用</title>
-      <link>https://zhgyqc.netlify.app/cn/2023/03/17/the-jetbrains-family-bucket-is-free-to-use/</link>
-      <pubDate>Fri, 17 Mar 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhgyqc.netlify.app/cn/2023/03/17/the-jetbrains-family-bucket-is-free-to-use/</guid>
-      <description>Jetbrains是一家专注于提供优秀的开发工具的软件公司，其开发的产品包括IntelliJ IDEA、WebStorm、PyCharm等等。这些工具广受开发者欢迎，因为它们拥有丰富的功能、优秀的性能和良好的用户体验。然而，这些工具的价格也相对较高，可能会对一些开发者造成经济负担。但是，Jetbrains也提供了一些免费使用的渠道，让更多的开发者能够免费使用这些工具。本文将介绍这些渠道，帮助你免费使用Jetbrains全家桶。
-面向高校师生的免费使用 Jetbrains的教育优惠地址是 https://www.jetbrains.com/shop/eform/students
-如果你是一名在校大学生或者高中生，并且正在学习计算机相关专业，那么你可以通过Jetbrains的学生许可证程序免费使用Jetbrains全家桶。这个程序非常简单，只需要提供你的学校邮箱地址或者学生证明即可。你可以在Jetbrains官网的学生许可证页面提交申请，审核通过后，你就可以免费使用Jetbrains全家桶一年。
-通过学生许可证程序获得的许可证是完全正式的，你可以使用它来进行任何的商业或者非商业项目开发。并且，在许可证到期前，你可以再次提交申请，以延长使用时间。这个程序对于在校学生来说，是一个非常棒的福利。
-面向开源开发者的免费使用 Jetbrains的开源开发许可地址是 https://www.jetbrains.com/zh-cn/community/opensource/#support
-如果你是一名开源开发者，并且正在为开源项目做贡献，那么你可以通过Jetbrains的开源项目许可证程序免费使用Jetbrains全家桶。这个程序也非常简单，只需要提供你参与的开源项目的链接即可。Jetbrains会审核你的项目，并且决定是否为你提供免费的许可证。通过开源项目许可证程序获得的许可证也是完全正式的，你可以使用它来进行任何的商业或者非商业项目开发。
-开源开发者的申请方式我目前暂时也没有试过，不过据说这种方式也不是特别难，具体可以结合官网上对于开源的相关说明进行申请。</description>
-    </item>
-    
-    <item>
-      <title>Python虚拟环境配置</title>
-      <link>https://zhgyqc.netlify.app/cn/2023/03/14/python-virtual-environment-configuration/</link>
-      <pubDate>Tue, 14 Mar 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhgyqc.netlify.app/cn/2023/03/14/python-virtual-environment-configuration/</guid>
-      <description>安装虚拟环境 windows下安装
-pip install virtualenv # 安装虚拟环境pip install virtualenvwrapper-win # 安装虚拟环境扩展包 按照上述步骤安装之后，可以通过pip list|grep vir命令检查是否安装成功，若显示已下内容即可：
-Ubuntu下安装
-sudo pip install virtualenv # 安装虚拟环境sudo pip install virtualenvwrapper # 安装虚拟环境扩展包 注意：给阿里云上的Ubuntu安装虚拟环境扩展包的时候，使用sudo命令可能会报错，这个时候，可以用pip install virtualenvwrapper命令，只给当前用户安装即可。
-除此之外，Ubuntu下安装还需要编辑家目录下的.bashrc文件，通过vim .bashrc进入文件，添加以下三行内容：
-VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3export WORKON_HOME=$HOME/.virtualenvssource /usr/local/bin/virtualenvwrapper.sh 保存该文件并退出后，使用source .bashrc使其生效。
-按照上述步骤安装之后，可以通过pip list|grep vir命令检查是否安装成功，若显示已下内容即可：
-使用虚拟环境 mkvirtualenv 虚拟环境名称 # 创建虚拟环境命令workon 虚拟环境名称 # 进入虚拟环境工作workon # 查看机器上有多少个虚拟环境deactivate # 退出虚拟环境rmvirtualenv 虚拟环境名 # 删除虚拟环境# 查看虚拟环境中的安装包信息pip listpip freezepip freeze &amp;gt; requirement.</description>
-    </item>
-    
-    <item>
-      <title>远程连接阿里云上的MySQL</title>
-      <link>https://zhgyqc.netlify.app/cn/2023/03/12/remote-connection-to-mysql-on-aliyun/</link>
-      <pubDate>Sun, 12 Mar 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhgyqc.netlify.app/cn/2023/03/12/remote-connection-to-mysql-on-aliyun/</guid>
-      <description>基本步骤 添加 MySQL 8.0 的 APT 源
-添加 MySQL 8.0 的 APT 源。打开终端并输入以下命令，以添加 MySQL 8.0 的 APT 源：
-wget -c https://dev.mysql.com/get/mysql-apt-config_0.8.22-1_all.deb sudo dpkg -i mysql-apt-config_0.8.22-1_all.deb 在安装过程中，您需要选择 MySQL 8.0 版本并更新 APT 存储库。
-服务器端安装MySQL
-sudo apt updatesudo apt install mysql-server 注意：当安装mysql-server提示输入密码时，一定要输入密码，两次密码一致。
-然后输入mysql -u root -p回车，输入密码，能正常进入以下界面就是安装成功了 下面是几个针对服务器端MySQL的常用操作 启动服务 sudo service mysql start 查看服务状态 sudo service mysql status 查看进程中是否存在mysql服务 ps -elf|grep mysql 停止服务 sudo service mysql stop 重启服务 sudo service mysql restart 远程连接</description>
-    </item>
-    
-    <item>
-      <title>免费领取阿里云云服务器</title>
-      <link>https://zhgyqc.netlify.app/cn/2023/02/14/aliyun-student-application/</link>
-      <pubDate>Tue, 14 Feb 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhgyqc.netlify.app/cn/2023/02/14/aliyun-student-application/</guid>
-      <description>领取步骤 阿里云的飞天加速计划3.0-高校计划，面向学生开发者提供免费的云服务器福利，通过学生身份认证及续费任务后，最多可以领取7个月免费云服务器ECS资源。具体步骤如下：
-注册阿里云账号 完成学生身份认证 免费领取云服务器，首次领用时长为1个月 完成实验学习与Clouder认证测试 免费续领云服务器，时长为6个月 完成以上操作步骤后，就可以领取7个月免费云服务器ECS资源啦。
-参考资料 下面是我在免费领取阿里云云服务器及初步配置过程中参考的学习资料：
-免费领取阿里云云服务器的详细攻略：https://developer.aliyun.com/article/1122002 云服务器新手上路任务教程：https://blog.csdn.net/qq_45736061/article/details/123415046 Ubuntu系统如何安装图形界面？教你Ubuntu怎么进图形界面：https://www.hechangquan.com/how/1718.html?spm=a2c6h.12873639.article-detail.7.350d4c2fGUPQGl </description>
-    </item>
-    
-  </channel>
-</rss>
