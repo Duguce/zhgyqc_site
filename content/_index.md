@@ -89,5 +89,5 @@ My main interests are in machine learning and natural language processing. Curre
 <h2 style="text-align: left;">Academic Service</h2>
 
 <ul>
-  <li style="font-size: 18px;">Reviewer for ICLR (2025)</li>
+  <li style="font-size: 18px;">Reviewer for ICLR (2025), COLING (2025)</li>
 </ul>
