@@ -1,10 +1,12 @@
-baseURL = "https://zhgyqc.netlify.app/"
+baseURL = "https://zhgyqc.vercel.app"
 languageCode = "en"
 title = "Yu Ching San"
 theme = "hugo-ht"
 footnotereturnlinkcontents = "↩"
+enableGitInfo = true
 enableRobotsTXT = true
-# enableGitInfo = true
+relativeURLs = true
+canonifyURLs = true
 
 [permalinks]
 cn = "/cn/:year/:month/:day/:slug/"
@@ -24,8 +26,6 @@ posts = "/posts/:year/:month/:day/:slug/"
     url = "/cn/blogs/"
     weight = 3
 
-
-
 [[menu.cn]]
     name = "博客"
     url = "/cn/blogs/"
@@ -36,33 +36,23 @@ posts = "/posts/:year/:month/:day/:slug/"
     weight = 4
 
 [params]
-    description = "Peronal website of Yu Ching San"
+    description = "Personal website of Yu Ching San"
     homeText = "You just need a Hugo blog from scratch"
-    # Please make sure `blogDirName` matches the name used in `menu` above:
     blogDirName = "blogs"
-    # singleLang = true
     defaultLang = "en"
     MathJaxCDN = "//cdnjs.cloudflare.com/ajax/libs" 
     MathJaxVersion = "2.7.5"
-    favicon = "media/logo.png"
-    # Edit by yourself:
-    # GithubEdit = "https://github.com/USERNAME/REPONAME/edit/master/content/"
+    favicon = "/media/logo.png"
     copyright = "&copy;"
     copyrightYear = "2022-2024"
-    # Edit by yourself:
-    # GithubRepo = "https://github.com/Duguce/zhgyqc_site"
-    # Edit by yourself:
-    # ContentSource = "https://raw.githubusercontent.com/USERNAME/REPONAME/master/content/" 
 
 [params.logo]
-   # Change the logo picture as your prefer:
-   url = "media/logo.png" # you can change it
-   width = 50.0
-   height = 50.0
-   alt = "Hugo-ht"
+    url = "media/logo.png"
+    width = 50.0
+    height = 50.0
+    alt = "Hugo-ht"
 
 [params.lang]
-
     [params.lang.author]
       en = "Yu Ching San"
       cn = "Yu Ching San"
@@ -80,8 +70,8 @@ posts = "/posts/:year/:month/:day/:slug/"
       cn = "最后一次修改于"
 
     [params.lang.Sitelastupdate]
-        en = "Site last updated on"
-        cn = "最近一次更新于"
+      en = "Site last updated on"
+      cn = "最近一次更新于"
 
     [params.lang.sourceCode]
       en = "Content in"
@@ -96,43 +86,45 @@ posts = "/posts/:year/:month/:day/:slug/"
       cn = "版权"
 
 [markup]
- defaultMarkdownHandler = "goldmark"
+    defaultMarkdownHandler = "goldmark"
 
-  [markup.goldmark]
+    [markup.goldmark]
+        [markup.goldmark.extensions]
+        definitionList = true
+        footnote = true
+        linkify = true
+        strikethrough = true
+        table = true
+        taskList = true
+        typographer = true
 
-    [markup.goldmark.extensions]
-    definitionList = true
-    footnote = true
-    linkify = false
-    strikethrough = true
-    table = true
-    taskList = true
-    typographer = true
+        [markup.goldmark.parser]
+        attribute = true
+        autoHeadingID = true
 
-    [markup.goldmark.parser]
-    attribute = true
-    autoHeadingID = true
-
-    [markup.goldmark.renderer]
-    hardWraps = false
-    unsafe = true
-    xHTML = false
+        [markup.goldmark.renderer]
+        hardWraps = false
+        unsafe = true
+        xHTML = false
   
-  [markup.highlight]
-    codeFences = true
-    guessSyntax = false
-    hl_Lines = ""
-    lineNoStart = 1
-    lineNos = false
-    lineNumbersInTable = true
-    noClasses = true
-    style = "pygments"
-    tabWidth = 4
+    [markup.highlight]
+        codeFences = true
+        guessSyntax = false
+        hl_Lines = ""
+        lineNoStart = 1
+        lineNos = false
+        lineNumbersInTable = true
+        noClasses = true
+        style = "pygments"
+        tabWidth = 4
 
-  [markup.tableOfContents]
-  endLevel = 3
-  ordered = true
-  startLevel = 2
+    [markup.tableOfContents]
+        endLevel = 3
+        ordered = true
+        startLevel = 2
 
 [imaging]
 quality = 100
+
+[outputs]
+home = ["HTML", "RSS", "SITEMAP"]
