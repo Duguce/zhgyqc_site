@@ -14,7 +14,7 @@ I'm currently a third-year master's student at the School of Management, Shangha
 </div>
 
 <p align="center">
-    <a href="https://scholar.google.com/citations?user=-soHkFYAAAAJ&hl=zh-CN">Google Scholar</a> | <a href="https://www.semanticscholar.org/author/Qingchen-Yu/2278590555">Semantic Scholar</a> | <a href="https://github.com/Duguce">GitHub</a> | <a href="https://huggingface.co/Duguce">Hugging Face</a> | <a href="https://x.com/zhgyqc_duguce">Twitter</a> | <a href="https://blog.csdn.net/LIGHTER_06">CSDN</a> | <a href="./assets/yqc_cv.pdf">CV</a>
+    <a href="https://scholar.google.com/citations?user=-soHkFYAAAAJ&hl=zh-CN">Google Scholar</a> | <a href="https://www.semanticscholar.org/author/Qingchen-Yu/2278590555">Semantic Scholar</a> | <a href="./assets/yqc_cv.pdf">CV</a> | <a href="https://github.com/Duguce">GitHub</a><br><a href="https://huggingface.co/Duguce">Hugging Face</a> | <a href="https://x.com/zhgyqc_duguce">Twitter</a> | <a href="https://blog.csdn.net/LIGHTER_06">CSDN</a>
 
 </p>
 
