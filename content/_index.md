@@ -60,7 +60,7 @@ My main interests are in machine learning and natural language processing. Curre
         <p style="font-size: 16px;">
             <strong>xFinder: Robust and Pinpoint Answer Extraction for Large Language Models</strong><br>
             <strong>Qingchen Yu</strong><sup>*</sup>, Zifan Zheng<sup>*</sup>, Shichao Song<sup>*</sup>, Zhiyu Li<sup>†</sup>, Feiyu Xiong, Bo Tang, Ding Chen<br>
-            arXiv, 2024. <a href="https://arxiv.org/pdf/2405.11874">PDF</a> | <a href="https://github.com/IAAR-Shanghai/xFinder">Code</a> | <a href="https://huggingface.co/collections/IAAR-Shanghai/xfinder-664b7b21e94e9a93f25a8412">Models</a>
+            arXiv, 2024. <a href="https://arxiv.org/pdf/2405.11874">PDF</a> | <a href="https://github.com/IAAR-Shanghai/xFinder">Code</a> | <a href="https://huggingface.co/collections/IAAR-Shanghai/xfinder-664b7b21e94e9a93f25a8412">Models</a> | <a href="https://huggingface.co/datasets/IAAR-Shanghai/KAF-Dataset">Dataset</a>
         </p>
     </div>
 </div>
