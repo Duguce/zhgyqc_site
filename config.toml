@@ -1,6 +1,6 @@
 baseURL = "https://zhgyqc.vercel.app"
 languageCode = "en"
-title = "Yu Ching San"
+title = "Qingchen Yu"
 theme = "hugo-ht"
 footnotereturnlinkcontents = "↩"
 enableGitInfo = true
@@ -36,7 +36,7 @@ posts = "/posts/:year/:month/:day/:slug/"
     weight = 4
 
 [params]
-    description = "Personal website of Yu Ching San"
+    description = "Personal website of Qingchen Yu"
     homeText = "You just need a Hugo blog from scratch"
     blogDirName = "blogs"
     defaultLang = "en"
@@ -54,8 +54,8 @@ posts = "/posts/:year/:month/:day/:slug/"
 
 [params.lang]
     [params.lang.author]
-      en = "Yu Ching San"
-      cn = "Yu Ching San"
+      en = "Qingchen Yu"
+      cn = "Qingchen Yu"
 
     [params.lang.madeWith]
       en = "Made with"
