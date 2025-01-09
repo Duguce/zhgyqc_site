@@ -44,7 +44,7 @@ posts = "/posts/:year/:month/:day/:slug/"
     MathJaxVersion = "2.7.5"
     favicon = "/media/logo.png"
     copyright = "&copy;"
-    copyrightYear = "2022-2024"
+    copyrightYear = "2022-2025"
 
 [params.logo]
     url = "media/logo.png"
