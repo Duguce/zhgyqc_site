@@ -32,10 +32,10 @@ My main interests are in machine learning and natural language processing. Curre
     </div>
     <div>
         <p style="font-size: 16px; line-height: 1.6; margin: 0;">
-            <strong>xFinder: Robust and Pinpoint Answer Extraction for Large Language Models</strong><br>
+            <strong>xFinder: Large Language Models as Automated Evaluators for Reliable Evaluation</strong><br>
             <strong>Qingchen Yu</strong><sup>*</sup>, Zifan Zheng<sup>*</sup>, Shichao Song<sup>*</sup>, Zhiyu Li<sup>†</sup>, Feiyu Xiong, Bo Tang, Ding Chen<br>
            <span style="font-size: 16px; background-color: #FFD700; color: #333; font-weight: bold; padding: 3px 6px; border-radius: 5px;">ICLR, 2025</span>
-            <a href="https://arxiv.org/abs/2405.11874" style="color: #0066cc; text-decoration: none;">arXiv</a> | <a href="https://github.com/IAAR-Shanghai/xFinder" style="color: #0066cc; text-decoration: none;">GitHub</a> | <a href="https://huggingface.co/collections/IAAR-Shanghai/xfinder-664b7b21e94e9a93f25a8412" style="color: #0066cc; text-decoration: none;">Models</a> | <a href="https://huggingface.co/datasets/IAAR-Shanghai/KAF-Dataset" style="color: #0066cc; text-decoration: none;">Dataset</a> | <a href="https://mp.weixin.qq.com/s/C5G-rpen9OM4MmBhrByTIQ" style="color: #0066cc; text-decoration: none;">WeChat Article</a>
+            <a href="https://arxiv.org/abs/2405.11874" style="color: #0066cc; text-decoration: none;">arXiv</a> | <a href="https://openreview.net/forum?id=7UqQJUKaLM" style="color: #0066cc; text-decoration: none;">OpenReview</a> | <a href="https://github.com/IAAR-Shanghai/xFinder" style="color: #0066cc; text-decoration: none;">GitHub</a> | <a href="https://huggingface.co/collections/IAAR-Shanghai/xfinder-664b7b21e94e9a93f25a8412" style="color: #0066cc; text-decoration: none;">Models</a> | <a href="https://huggingface.co/datasets/IAAR-Shanghai/KAF-Dataset" style="color: #0066cc; text-decoration: none;">Dataset</a> | <a href="https://mp.weixin.qq.com/s/C5G-rpen9OM4MmBhrByTIQ" style="color: #0066cc; text-decoration: none;">WeChat Article</a>
         </p>
     </div>
 </div>
@@ -97,5 +97,5 @@ My main interests are in machine learning and natural language processing. Curre
 <h2 style="text-align: left;">Academic Services</h2>
 
 <ul>
-  <li style="font-size: 18px;">Reviewer for ICLR (2025), COLING (2025)</li>
+  <li style="font-size: 18px;">Reviewer for ICLR (2025), COLING (2025), ACM TIST</li>
 </ul>

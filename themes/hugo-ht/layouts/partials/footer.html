@@ -21,9 +21,6 @@
   {{ partial "foot_custom.html" . }}
      <ul class="footer-links">
       {{ if .IsHome }}
-       <li>
-        <a href="https://gohugo.io/" class="footer-links-kudos" target="_blank">Made with <img src="/media/hugo-logo.png" width="22" height="22"></a>
-       </li>
        {{ with .Site.Params.GithubRepo}}
        <li>
         <a href='{{ . }}' class="footer-links-kudos" target="_blank"> 
