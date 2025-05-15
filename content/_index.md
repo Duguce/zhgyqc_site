@@ -28,6 +28,19 @@ My main interests are in machine learning and natural language processing. Curre
 
 <div style="display: flex; align-items: center; margin-bottom: 20px;">
     <div style="margin-right: 20px;">
+        <img src="./assets/guessarena_framework.png" alt="guessarena_framework" style="width: 190px; height: auto; border-radius: 8px;">
+    </div>
+    <div>
+        <p style="font-size: 16px; line-height: 1.6; margin: 0;">
+            <strong>GuessArena: Guess Who I Am? A Self-Adaptive Framework for Evaluating LLMs in Domain-Specific Knowledge and Reasoning</strong><br>
+            <strong>Qingchen Yu</strong>, Zifan Zheng, Ding Chen, Simin Niu, Bo Tang, Feiyu Xiong, Zhiyu Li<sup>†</sup><br>
+           <span style="font-size: 16px; background-color: #FFD700; color: #333; font-weight: bold; padding: 3px 6px; border-radius: 5px;">ACL, 2025</span>
+        </p>
+    </div>
+</div>
+
+<div style="display: flex; align-items: center; margin-bottom: 20px;">
+    <div style="margin-right: 20px;">
         <img src="./assets/xfinder_framework.jpg" alt="xfinder_framework" style="width: 130px; height: auto; border-radius: 8px;">
     </div>
     <div>
