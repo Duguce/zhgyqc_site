@@ -1,12 +1,12 @@
 # Qingchen Yu
 <div style="display: flex; align-items: center;">
     <div style="margin-right: 20px;">
-        <img src="./assets/profile.jpg" alt="profile_photo" style="width: 260px; height: auto;">
+        <img src="./assets/profile.jpg" alt="profile_photo" style="width: 100px; height: auto;">
     </div>
     <div>
         <p>
 
-I'm currently a third-year master's student at the School of Management, Shanghai University. I previously obtained my Bachelor of Management in E-commerce from Henan University of Economics and Law in July 2022.<br>
+I recently graduated with a Master's degree from the School of Management at Shanghai University.<br>
 
 <strong>Email:</strong> zhgyqc[at]163[dot]com
         </p>
@@ -17,8 +17,30 @@ I'm currently a third-year master's student at the School of Management, Shangha
     <a href="https://scholar.google.com/citations?user=-soHkFYAAAAJ&hl=en">Google Scholar</a> | <a href="https://www.semanticscholar.org/author/Qingchen-Yu/2278590555">Semantic Scholar</a> | <a href="./assets/yqc_cv.pdf">CV</a> | <a href="https://github.com/Duguce">GitHub</a><br><a href="https://huggingface.co/Duguce">Hugging Face</a> | <a href="https://x.com/zhgyqc_duguce">Twitter</a> | <a href="https://blog.csdn.net/LIGHTER_06">CSDN</a>
 </p>
 
-<h2 style="text-align: left;">Research Interests</h2>
-My main interests are in machine learning and natural language processing. Currently, my research focuses on the reliable evaluation of large language models (LLMs).
+<h2 style="text-align: left;">Education</h2>
+<div style="margin-bottom: 20px;">
+    <div style="margin-bottom: 15px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 16px; line-height: 1.6; margin: 0;">
+            <span><strong>Shanghai University</strong></span>
+            <span>Shanghai, China</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; color: #666; font-size: 14px;">
+            <span>M.Mgt. in Management Science and Engineering</span>
+            <span>2022.06 - 2025.04</span>
+        </div>
+    </div>
+    <div>
+        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 16px; line-height: 1.6; margin: 0;">
+            <span><strong>Henan University of Economics and Law</strong></span>
+            <span>Zhengzhou, China</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; color: #666; font-size: 14px;">
+            <span>B.Mgt. in E-commerce</span>
+            <span>2018.09 - 2022.06</span>
+        </div>
+    </div>
+</div>
+
 
 <h2 style="text-align: left;">Selected Publications</h2>
 <p style="font-size: 16px;">
@@ -32,7 +54,7 @@ My main interests are in machine learning and natural language processing. Curre
     <div>
         <p style="font-size: 16px; line-height: 1.6; margin: 0;">
             <strong>GuessArena: Guess Who I Am? A Self-Adaptive Framework for Evaluating LLMs in Domain-Specific Knowledge and Reasoning</strong><br>
-            <strong>Qingchen Yu</strong>, Zifan Zheng, Ding Chen, Simin Niu, Bo Tang, Feiyu Xiong, Zhiyu Li<sup>†</sup><br>
+            <strong>Qingchen Yu</strong><sup>*</sup>, Zifan Zheng<sup>*</sup>, Ding Chen<sup>*</sup>, Simin Niu, Bo Tang, Feiyu Xiong, Zhiyu Li<sup>†</sup><br>
            <span style="font-size: 16px; background-color: #FFD700; color: #333; font-weight: bold; padding: 3px 6px; border-radius: 5px;">ACL, 2025</span> <a href="https://arxiv.org/abs/2505.22661" style="color: #0066cc; text-decoration: none;">arXiv</a> | <a href="https://github.com/IAAR-Shanghai/GuessArena" style="color: #0066cc; text-decoration: none;">GitHub</a>
         </p>
     </div>
