@@ -26,7 +26,7 @@ I recently graduated with a Master's degree from the School of Management at Sha
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; color: #666; font-size: 14px;">
             <span>M.Mgt. in Management Science and Engineering</span>
-            <span>2022.06 - 2025.04</span>
+            <span>2022.09 - 2025.04</span>
         </div>
     </div>
     <div>
