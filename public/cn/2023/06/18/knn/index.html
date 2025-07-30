@@ -1,0 +1,451 @@
+<a name="top"></a>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Qingchen Yu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="../../../../../css/style.css" />
+    <link rel="stylesheet" href="../../../../../css/fonts.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/r.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/bash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/python.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega@5.17.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@4.17.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6.12.2"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+            <link rel="icon" href="https://zhgyqc.vercel.app/media/logo.png">
+
+
+
+
+
+  </head>
+  
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav" >
+      <a href="../../../../../" class="nav-logo">
+        <img src="../../../../../media/logo.png"
+         width="50"
+         height="50"
+         alt="Hugo-ht">
+      </a>
+
+      <ul class="nav-links" >
+        
+        
+           <li><a href="../../../../../cn/blogs/">博客</a></li>
+       
+           <li><a href="../../../../../">English</a></li>
+       
+       
+      </ul>
+</nav>
+      </header>
+
+<main class="content" role="main">
+  <div style="text-align: center">
+    
+      <h1>K-近邻算法概述</h1>
+      
+      <p>
+        Yu Ching San 
+         / 2023-06-18
+      </p>
+    
+    <hr/>
+  </div>
+
+  <span class="article-toolbar">
+    
+      
+        
+        
+          
+        
+        
+      
+    
+  </span>
+
+  
+    <aside class="toc">
+      Table of Contents:
+      <nav id="TableOfContents">
+  <ol>
+    <li><a href="#引言">引言</a></li>
+    <li><a href="#算法概述">算法概述</a></li>
+    <li><a href="#实战案例">实战案例</a>
+      <ol>
+        <li><a href="#案例概述">案例概述</a></li>
+        <li><a href="#准备数据">准备数据</a></li>
+        <li><a href="#分析数据">分析数据</a></li>
+        <li><a href="#数据归一化">数据归一化</a></li>
+        <li><a href="#分类器实现">分类器实现</a></li>
+        <li><a href="#测试算法">测试算法</a></li>
+        <li><a href="#使用算法">使用算法</a></li>
+      </ol>
+    </li>
+    <li><a href="#sklearn实现">sklearn实现</a></li>
+    <li><a href="#常见问题">常见问题</a></li>
+    <li><a href="#参考文献">参考文献</a></li>
+  </ol>
+</nav>
+    </aside>
+  
+
+  <div class="body-text list-text">
+    
+    <h2 id="引言">引言<a href="#引言" class="header-anchor" ariaLabel="Anchor"> # </a></h2>
+<p>本文分享第一个机器学习算法：<strong>K-近邻算法（K-Nearest Neighbor, KNN）</strong>，最初由Cover和Hart于1968年提出，是最简单的机器学习算法之一。本文将从以下几个方面对K-近邻算法进行分享：首先，我将分享K-近邻算法的基本理论概念；其次，本文将使用Python实现一个实战案例；最后，我将分享一些K-近邻算法常见的面试问题。</p>
+<h2 id="算法概述">算法概述<a href="#算法概述" class="header-anchor" ariaLabel="Anchor"> # </a></h2>
+<p><strong>K-近邻算法</strong>是通过测量不同特征值之间的距离方法进行分类。它的工作原理是：存在一个样本数据集合，也称为训练样本集，并且样本集中每个数据都存在标签，即已知样本集中每一数据与所属分类的对应关系。当输入没有标签的新数据后，将新数据的每个特征与样本集中数据对应的特征进行比较，然后算法提取样本集中特征最相似数据（最近邻）的分类标签。一般来说，我们只选择样本数据集中前\(k\)个最相似的数据，这就是K-近邻算法中的\(k\)出处，通常是\(k\)不大于20的整数。最后，选择\(k\)个最相似数据中出现次数最多的分类，作为新数据的分类。</p>
+<p><strong>K-近邻算法</strong>的<strong>预测分类流程</strong>如下：</p>
+<ol>
+<li>计算已知类别数据集中的点与当前点之间的距离；</li>
+<li>按照距离递增次序排序；</li>
+<li>选取与当前点距离最小的\(k\)个点；</li>
+<li>确定前\(k\)个点所在类别的出现频率；</li>
+<li>返回前\(k\)个点出现频率最高的类别作为当前点的预测分类。</li>
+</ol>
+<p>其中，计算距离一般使用欧氏距离公式：</p>
+<p>$$
+d(\mathbf{x}, \mathbf{y}) = \sqrt{\sum_{i=1}^{n} (x_i - y_i)^2}
+$$</p>
+<p><strong>K-近邻算法</strong>的<strong>优缺点</strong>如下：</p>
+<p><strong>优点：</strong></p>
+<ul>
+<li><strong>简单易懂：</strong> K-近邻算法是一种直观、简单的算法，容易理解和实现；</li>
+<li><strong>无需训练：</strong> K-近邻算法不需要训练，它可以直接利用已有的数据进行推断，因此对新数据的适应性较好；</li>
+<li><strong>对异常值不敏感：</strong> 由于K-近邻算法是基于局部信息进行推断，它对于异常值的影响相对较小，不易受异常样本的干扰。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li><strong>计算开销较大：</strong> 在进行预测时，K-近邻算法需要计算新样本与所有训练样本之间的距离，因此在处理大规模数据集时，计算开销较高，对计算资源要求较高；</li>
+<li><strong>特征维度问题：</strong> 随着特征维度的增加，计算样本之间的距离会变得更加困难，这一问题被称为“唯独灾难”。在高维空间中，样本间的距离往往趋于相等或相差不大，导致K-近邻算法的性能下降；</li>
+<li><strong>对不平衡数据集敏感：</strong> 当训练数据集中的类别不平衡时，样本较多的类别将对预测结果产生较大的影响，从而导致偏差。这可能会导致K-近邻算法在处理不平衡数据集时的性能下降。</li>
+</ul>
+<p><strong>注意：</strong> K-近邻算法中的\(k\)值是一个超参数，需要根据具体问题和数据进行调优。选择不合适的\(k\)值可能导致<strong>欠拟合</strong>或<strong>过拟合</strong>问题。</p>
+<h2 id="实战案例">实战案例<a href="#实战案例" class="header-anchor" ariaLabel="Anchor"> # </a></h2>
+<p>本文所使用的是一个改进约会网站配对效果的案例，原始案例来自于<a href="https://book.douban.com/subject/24703171/" target="_blank" rel="noreferrer noopener">《机器学习实战》</a>
+
+一书，另外这里推荐一个写的还不错的书中项目对应的<a href="https://github.com/Jack-Cherish/Machine-Learning" target="_blank" rel="noreferrer noopener">源码地址</a>
+
+。</p>
+<h3 id="案例概述">案例概述<a href="#案例概述" class="header-anchor" ariaLabel="Anchor"> # </a></h3>
+<p>我的朋友海伦一直使用在线约会网站寻找适合自己的约会对象。尽管约会网站会推荐不同的人选，但她并不是喜欢每一个人。经过一番总结，她发现曾交往过三种类型的人：</p>
+<ul>
+<li>不喜欢的人</li>
+<li>魅力一般的人</li>
+<li>极具魅力的人</li>
+</ul>
+<p>尽管发现了上述规律，但海伦依然无法将约会网站推荐的匹配对象归入恰当的分类。她觉得可以在周一到周五约会那些魅力一般的人，而周末则更喜欢与那些极具魅力的人为伴。海伦希望我们的分类软件可以更好地帮助她将匹配对象划分到确切的分类中。此外海伦还收集了一些约会网站未曾记录的数据信息，她认为这些数据更有助于匹配对象的归类。</p>
+<p>这里我们就使用K-近邻算法来实现这一任务，下面是基本流程：</p>
+<ol>
+<li>收集数据：提供文本文件；</li>
+<li>准备数据：使用Python解析文本文件；</li>
+<li>分析数据：使用Matplotlib画二维扩散图；</li>
+<li>测试算法：使用海伦提供的部分数据作为测试样例；</li>
+<li>使用算法：产生简单的命令行程序，然后海伦可以输入一些特征数据以判断对方是否为自己喜欢的类型。</li>
+</ol>
+<p><strong>注意：</strong> 测试样本和非测试样本的区别在于：测试样本是已经完成分类的数据，如果预测分类与实际类别不同，则标记为一个错误。</p>
+<h3 id="准备数据">准备数据<a href="#准备数据" class="header-anchor" ariaLabel="Anchor"> # </a></h3>
+<p>海伦收集约会数据已经有了一段时间，她把这些数据存放在文本文件中，每个样本数据占据一行，总共有1000行。海伦的样本主要包含以下3种特征：</p>
+<ul>
+<li>每年获得的飞行常客里程数；</li>
+<li>玩视频游戏所耗时间百分比；</li>
+<li>每周消费的冰淇淋公升数。</li>
+</ul>
+<p>在将上述特征数据输入到分类器之前，必须将待处理数据的格式改变为分类器可以接受的格式。下面是使用Python实现的数据读取代码：</p>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">def</span> <span style="color:#00f">file2matrix</span>(filename):
+</span></span><span style="display:flex;"><span>    <span style="color:#ba2121">&#34;&#34;&#34;Read data from file and return a matrix and a vector of labels.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    fr <span style="color:#666">=</span> <span style="color:#008000">open</span>(filename, <span style="color:#ba2121">&#34;r&#34;</span>, encoding<span style="color:#666">=</span><span style="color:#ba2121">&#34;utf-8&#34;</span>)
+</span></span><span style="display:flex;"><span>    array_of_lines <span style="color:#666">=</span> fr<span style="color:#666">.</span>readlines()
+</span></span><span style="display:flex;"><span>    number_of_lines <span style="color:#666">=</span> <span style="color:#008000">len</span>(array_of_lines)
+</span></span><span style="display:flex;"><span>    return_mat <span style="color:#666">=</span> np<span style="color:#666">.</span>zeros((number_of_lines, <span style="color:#666">3</span>))
+</span></span><span style="display:flex;"><span>    class_label_vector <span style="color:#666">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#008000;font-weight:bold">for</span> index, line <span style="color:#a2f;font-weight:bold">in</span> <span style="color:#008000">enumerate</span>(array_of_lines):
+</span></span><span style="display:flex;"><span>        line <span style="color:#666">=</span> line<span style="color:#666">.</span>strip()
+</span></span><span style="display:flex;"><span>        list_from_line <span style="color:#666">=</span> line<span style="color:#666">.</span>split(<span style="color:#ba2121">&#34;</span><span style="color:#b62;font-weight:bold">\t</span><span style="color:#ba2121">&#34;</span>)
+</span></span><span style="display:flex;"><span>        return_mat[index, :] <span style="color:#666">=</span> list_from_line[:<span style="color:#666">3</span>]
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#008000;font-weight:bold">if</span> list_from_line[<span style="color:#666">-</span><span style="color:#666">1</span>] <span style="color:#666">==</span> <span style="color:#ba2121">&#34;didntLike&#34;</span>:
+</span></span><span style="display:flex;"><span>            class_label_vector<span style="color:#666">.</span>append(<span style="color:#666">1</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#008000;font-weight:bold">elif</span> list_from_line[<span style="color:#666">-</span><span style="color:#666">1</span>] <span style="color:#666">==</span> <span style="color:#ba2121">&#34;smallDoses&#34;</span>:
+</span></span><span style="display:flex;"><span>            class_label_vector<span style="color:#666">.</span>append(<span style="color:#666">2</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#008000;font-weight:bold">elif</span> list_from_line[<span style="color:#666">-</span><span style="color:#666">1</span>] <span style="color:#666">==</span> <span style="color:#ba2121">&#34;largeDoses&#34;</span>:
+</span></span><span style="display:flex;"><span>            class_label_vector<span style="color:#666">.</span>append(<span style="color:#666">3</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#008000;font-weight:bold">return</span> return_mat, class_label_vector
+</span></span></code></pre></div><h3 id="分析数据">分析数据<a href="#分析数据" class="header-anchor" ariaLabel="Anchor"> # </a></h3>
+<p>我们可以通过使用Matplotlib绘制原始数据的散点图，初步分析数据的特征。下面是对应的Python代码：</p>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">def</span> <span style="color:#00f">show_data</span>(dating_data_mat, dating_labels):
+</span></span><span style="display:flex;"><span>    <span style="color:#ba2121">&#34;&#34;&#34;Show data in a scatter plot.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    font <span style="color:#666">=</span> FontProperties(fname<span style="color:#666">=</span><span style="color:#ba2121">r</span><span style="color:#ba2121">&#34;c:\windows\fonts\simsun.ttc&#34;</span>, size<span style="color:#666">=</span><span style="color:#666">14</span>)
+</span></span><span style="display:flex;"><span>    fig, axs <span style="color:#666">=</span> plt<span style="color:#666">.</span>subplots(nrows<span style="color:#666">=</span><span style="color:#666">2</span>, ncols<span style="color:#666">=</span><span style="color:#666">2</span>, sharex<span style="color:#666">=</span><span style="color:#008000;font-weight:bold">False</span>, sharey<span style="color:#666">=</span><span style="color:#008000;font-weight:bold">False</span>, figsize<span style="color:#666">=</span>(<span style="color:#666">13</span>, <span style="color:#666">8</span>))
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    labels_colors <span style="color:#666">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#008000;font-weight:bold">for</span> i <span style="color:#a2f;font-weight:bold">in</span> dating_labels:
+</span></span><span style="display:flex;"><span>        <span style="color:#008000;font-weight:bold">if</span> i <span style="color:#666">==</span> <span style="color:#666">1</span>:
+</span></span><span style="display:flex;"><span>            labels_colors<span style="color:#666">.</span>append(<span style="color:#ba2121">&#34;black&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#008000;font-weight:bold">elif</span> i <span style="color:#666">==</span> <span style="color:#666">2</span>:
+</span></span><span style="display:flex;"><span>            labels_colors<span style="color:#666">.</span>append(<span style="color:#ba2121">&#34;orange&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#008000;font-weight:bold">elif</span> i <span style="color:#666">==</span> <span style="color:#666">3</span>:
+</span></span><span style="display:flex;"><span>            labels_colors<span style="color:#666">.</span>append(<span style="color:#ba2121">&#34;red&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#408080;font-style:italic"># 画出散点图，以第一列和第二列数据为横纵坐标       </span>
+</span></span><span style="display:flex;"><span>    axs[<span style="color:#666">0</span>][<span style="color:#666">0</span>]<span style="color:#666">.</span>scatter(x<span style="color:#666">=</span>dating_data_mat[:, <span style="color:#666">0</span>], y<span style="color:#666">=</span>dating_data_mat[:, <span style="color:#666">1</span>], color<span style="color:#666">=</span>labels_colors, s<span style="color:#666">=</span><span style="color:#666">15</span>, alpha<span style="color:#666">=</span><span style="color:#666">.5</span>)
+</span></span><span style="display:flex;"><span>    axs0_title_text <span style="color:#666">=</span> axs[<span style="color:#666">0</span>][<span style="color:#666">0</span>]<span style="color:#666">.</span>set_title(<span style="color:#ba2121">u</span><span style="color:#ba2121">&#34;每年获得的飞行常客里程数与玩视频游戏所消耗时间占比&#34;</span>, fontproperties<span style="color:#666">=</span>font)
+</span></span><span style="display:flex;"><span>    axs0_xlabel_text <span style="color:#666">=</span> axs[<span style="color:#666">0</span>][<span style="color:#666">0</span>]<span style="color:#666">.</span>set_xlabel(<span style="color:#ba2121">u</span><span style="color:#ba2121">&#34;每年获得的飞行常客里程数&#34;</span>, fontproperties<span style="color:#666">=</span>font)
+</span></span><span style="display:flex;"><span>    axs0_ylabel_text <span style="color:#666">=</span> axs[<span style="color:#666">0</span>][<span style="color:#666">0</span>]<span style="color:#666">.</span>set_ylabel(<span style="color:#ba2121">u</span><span style="color:#ba2121">&#34;玩视频游戏所消耗时间占比&#34;</span>, fontproperties<span style="color:#666">=</span>font)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#666">.</span>setp(axs0_title_text, size<span style="color:#666">=</span><span style="color:#666">9</span>, weight<span style="color:#666">=</span><span style="color:#ba2121">&#34;bold&#34;</span>, color<span style="color:#666">=</span><span style="color:#ba2121">&#34;red&#34;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#666">.</span>setp(axs0_xlabel_text, size<span style="color:#666">=</span><span style="color:#666">7</span>, weight<span style="color:#666">=</span><span style="color:#ba2121">&#34;bold&#34;</span>, color<span style="color:#666">=</span><span style="color:#ba2121">&#34;black&#34;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#666">.</span>setp(axs0_ylabel_text, size<span style="color:#666">=</span><span style="color:#666">7</span>, weight<span style="color:#666">=</span><span style="color:#ba2121">&#34;bold&#34;</span>, color<span style="color:#666">=</span><span style="color:#ba2121">&#34;black&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#408080;font-style:italic"># 画出散点图，以第一列和第三列数据为横纵坐标</span>
+</span></span><span style="display:flex;"><span>    axs[<span style="color:#666">0</span>][<span style="color:#666">1</span>]<span style="color:#666">.</span>scatter(x<span style="color:#666">=</span>dating_data_mat[:, <span style="color:#666">0</span>], y<span style="color:#666">=</span>dating_data_mat[:, <span style="color:#666">2</span>], color<span style="color:#666">=</span>labels_colors, s<span style="color:#666">=</span><span style="color:#666">15</span>, alpha<span style="color:#666">=</span><span style="color:#666">.5</span>)
+</span></span><span style="display:flex;"><span>    axs1_title_text <span style="color:#666">=</span> axs[<span style="color:#666">0</span>][<span style="color:#666">1</span>]<span style="color:#666">.</span>set_title(<span style="color:#ba2121">u</span><span style="color:#ba2121">&#34;每年获得的飞行常客里程数与每周消费的冰淇淋公升数&#34;</span>, fontproperties<span style="color:#666">=</span>font)
+</span></span><span style="display:flex;"><span>    axs1_xlabel_text <span style="color:#666">=</span> axs[<span style="color:#666">0</span>][<span style="color:#666">1</span>]<span style="color:#666">.</span>set_xlabel(<span style="color:#ba2121">u</span><span style="color:#ba2121">&#34;每年获得的飞行常客里程数&#34;</span>, fontproperties<span style="color:#666">=</span>font)
+</span></span><span style="display:flex;"><span>    axs1_ylabel_text <span style="color:#666">=</span> axs[<span style="color:#666">0</span>][<span style="color:#666">1</span>]<span style="color:#666">.</span>set_ylabel(<span style="color:#ba2121">u</span><span style="color:#ba2121">&#34;每周消费的冰淇淋公升数&#34;</span>, fontproperties<span style="color:#666">=</span>font)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#666">.</span>setp(axs1_title_text, size<span style="color:#666">=</span><span style="color:#666">9</span>, weight<span style="color:#666">=</span><span style="color:#ba2121">&#34;bold&#34;</span>, color<span style="color:#666">=</span><span style="color:#ba2121">&#34;red&#34;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#666">.</span>setp(axs1_xlabel_text, size<span style="color:#666">=</span><span style="color:#666">7</span>, weight<span style="color:#666">=</span><span style="color:#ba2121">&#34;bold&#34;</span>, color<span style="color:#666">=</span><span style="color:#ba2121">&#34;black&#34;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#666">.</span>setp(axs1_ylabel_text, size<span style="color:#666">=</span><span style="color:#666">7</span>, weight<span style="color:#666">=</span><span style="color:#ba2121">&#34;bold&#34;</span>, color<span style="color:#666">=</span><span style="color:#ba2121">&#34;black&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#408080;font-style:italic"># 画出散点图，以第二列和第三列数据为横纵坐标</span>
+</span></span><span style="display:flex;"><span>    axs[<span style="color:#666">1</span>][<span style="color:#666">0</span>]<span style="color:#666">.</span>scatter(x<span style="color:#666">=</span>dating_data_mat[:, <span style="color:#666">1</span>], y<span style="color:#666">=</span>dating_data_mat[:, <span style="color:#666">2</span>], color<span style="color:#666">=</span>labels_colors, s<span style="color:#666">=</span><span style="color:#666">15</span>, alpha<span style="color:#666">=</span><span style="color:#666">.5</span>)
+</span></span><span style="display:flex;"><span>    axs2_title_text <span style="color:#666">=</span> axs[<span style="color:#666">1</span>][<span style="color:#666">0</span>]<span style="color:#666">.</span>set_title(<span style="color:#ba2121">u</span><span style="color:#ba2121">&#34;玩视频游戏所消耗时间占比与每周消费的冰淇淋公升数&#34;</span>, fontproperties<span style="color:#666">=</span>font)
+</span></span><span style="display:flex;"><span>    axs2_xlabel_text <span style="color:#666">=</span> axs[<span style="color:#666">1</span>][<span style="color:#666">0</span>]<span style="color:#666">.</span>set_xlabel(<span style="color:#ba2121">u</span><span style="color:#ba2121">&#34;玩视频游戏所消耗时间占比&#34;</span>, fontproperties<span style="color:#666">=</span>font)
+</span></span><span style="display:flex;"><span>    axs2_ylabel_text <span style="color:#666">=</span> axs[<span style="color:#666">1</span>][<span style="color:#666">0</span>]<span style="color:#666">.</span>set_ylabel(<span style="color:#ba2121">u</span><span style="color:#ba2121">&#34;每周消费的冰淇淋公升数&#34;</span>, fontproperties<span style="color:#666">=</span>font)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#666">.</span>setp(axs2_title_text, size<span style="color:#666">=</span><span style="color:#666">9</span>, weight<span style="color:#666">=</span><span style="color:#ba2121">&#34;bold&#34;</span>, color<span style="color:#666">=</span><span style="color:#ba2121">&#34;red&#34;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#666">.</span>setp(axs2_xlabel_text, size<span style="color:#666">=</span><span style="color:#666">7</span>, weight<span style="color:#666">=</span><span style="color:#ba2121">&#34;bold&#34;</span>, color<span style="color:#666">=</span><span style="color:#ba2121">&#34;black&#34;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#666">.</span>setp(axs2_ylabel_text, size<span style="color:#666">=</span><span style="color:#666">7</span>, weight<span style="color:#666">=</span><span style="color:#ba2121">&#34;bold&#34;</span>, color<span style="color:#666">=</span><span style="color:#ba2121">&#34;black&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#408080;font-style:italic"># 设置图例</span>
+</span></span><span style="display:flex;"><span>    didnt_like <span style="color:#666">=</span> mlines<span style="color:#666">.</span>Line2D([], [], color<span style="color:#666">=</span><span style="color:#ba2121">&#34;black&#34;</span>, marker<span style="color:#666">=</span><span style="color:#ba2121">&#34;.&#34;</span>, markersize<span style="color:#666">=</span><span style="color:#666">6</span>, label<span style="color:#666">=</span><span style="color:#ba2121">&#34;didntLike&#34;</span>)
+</span></span><span style="display:flex;"><span>    small_doses <span style="color:#666">=</span> mlines<span style="color:#666">.</span>Line2D([], [], color<span style="color:#666">=</span><span style="color:#ba2121">&#34;orange&#34;</span>, marker<span style="color:#666">=</span><span style="color:#ba2121">&#34;.&#34;</span>, markersize<span style="color:#666">=</span><span style="color:#666">6</span>, label<span style="color:#666">=</span><span style="color:#ba2121">&#34;smallDoses&#34;</span>)
+</span></span><span style="display:flex;"><span>    large_doses <span style="color:#666">=</span> mlines<span style="color:#666">.</span>Line2D([], [], color<span style="color:#666">=</span><span style="color:#ba2121">&#34;red&#34;</span>, marker<span style="color:#666">=</span><span style="color:#ba2121">&#34;.&#34;</span>, markersize<span style="color:#666">=</span><span style="color:#666">6</span>, label<span style="color:#666">=</span><span style="color:#ba2121">&#34;largeDoses&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#408080;font-style:italic"># 增加图例</span>
+</span></span><span style="display:flex;"><span>    axs[<span style="color:#666">0</span>][<span style="color:#666">0</span>]<span style="color:#666">.</span>legend(handles<span style="color:#666">=</span>[didnt_like, small_doses, large_doses])
+</span></span><span style="display:flex;"><span>    axs[<span style="color:#666">0</span>][<span style="color:#666">1</span>]<span style="color:#666">.</span>legend(handles<span style="color:#666">=</span>[didnt_like, small_doses, large_doses])
+</span></span><span style="display:flex;"><span>    axs[<span style="color:#666">1</span>][<span style="color:#666">0</span>]<span style="color:#666">.</span>legend(handles<span style="color:#666">=</span>[didnt_like, small_doses, large_doses])
+</span></span><span style="display:flex;"><span>    <span style="color:#408080;font-style:italic"># 增加子图间的间隔</span>
+</span></span><span style="display:flex;"><span>    plt<span style="color:#666">.</span>subplots_adjust(hspace<span style="color:#666">=</span><span style="color:#666">.3</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    plt<span style="color:#666">.</span>show()
+</span></span></code></pre></div><p>绘制结果如下图所示：</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2331187910294f94bc8081f3231e2466~tplv-k3u1fbpfcp-watermark.image?" alt="image.png"></p>
+<p>由上图可见，每年赢得的飞行常客里程数与玩视频游戏所占百分比的约会数据这两个特征相对更容易区分数据点所属的类别。</p>
+<h3 id="数据归一化">数据归一化<a href="#数据归一化" class="header-anchor" ariaLabel="Anchor"> # </a></h3>
+<p>数据中给定的特征的量纲并不统一，会对计算结果产生影响。因此，在处理这种不同取值范围的特征值时，我们通常采用的方法是将数值归一化，如将取值范围处理为0到1或者-1到1之间。下面的公式可以将任意取值范围的特征值转化为0到1区间内的值：
+$$
+newValue = \frac{{oldValue - {min}}}{{{max} - {min}}}
+$$
+下面是Python实现数据归一化的代码：</p>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">def</span> <span style="color:#00f">autoNorm</span>(dataSet):
+</span></span><span style="display:flex;"><span>    <span style="color:#ba2121">&#34;&#34;&#34;Normalize data set.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    min_vals <span style="color:#666">=</span> dataSet<span style="color:#666">.</span>min(<span style="color:#666">0</span>) <span style="color:#408080;font-style:italic"># 取每一列的最小值</span>
+</span></span><span style="display:flex;"><span>    max_vals <span style="color:#666">=</span> dataSet<span style="color:#666">.</span>max(<span style="color:#666">0</span>) <span style="color:#408080;font-style:italic"># 取每一列的最大值</span>
+</span></span><span style="display:flex;"><span>    ranges <span style="color:#666">=</span> max_vals <span style="color:#666">-</span> min_vals <span style="color:#408080;font-style:italic"># 取每一列的范围</span>
+</span></span><span style="display:flex;"><span>    norm_data_set <span style="color:#666">=</span> np<span style="color:#666">.</span>zeros(np<span style="color:#666">.</span>shape(dataSet)) <span style="color:#408080;font-style:italic"># 初始化归一化数据集</span>
+</span></span><span style="display:flex;"><span>    m <span style="color:#666">=</span> dataSet<span style="color:#666">.</span>shape[<span style="color:#666">0</span>] <span style="color:#408080;font-style:italic"># 取数据集的行数</span>
+</span></span><span style="display:flex;"><span>    norm_data_set <span style="color:#666">=</span> dataSet <span style="color:#666">-</span> np<span style="color:#666">.</span>tile(min_vals, (m, <span style="color:#666">1</span>)) <span style="color:#408080;font-style:italic"># 每一列的数据减去最小值</span>
+</span></span><span style="display:flex;"><span>    norm_data_set <span style="color:#666">=</span> norm_data_set <span style="color:#666">/</span> np<span style="color:#666">.</span>tile(ranges, (m, <span style="color:#666">1</span>)) <span style="color:#408080;font-style:italic"># 每一列的数据除以范围</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#008000;font-weight:bold">return</span> norm_data_set, ranges, min_vals
+</span></span></code></pre></div><h3 id="分类器实现">分类器实现<a href="#分类器实现" class="header-anchor" ariaLabel="Anchor"> # </a></h3>
+<p>基于K-近邻算法的原理，用Python实现的分类器代码如下：</p>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">def</span> <span style="color:#00f">classify0</span>(in_x, data_set, labels, k):
+</span></span><span style="display:flex;"><span>    <span style="color:#ba2121">&#34;&#34;&#34;Classify data.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    data_set_size <span style="color:#666">=</span> data_set<span style="color:#666">.</span>shape[<span style="color:#666">0</span>] <span style="color:#408080;font-style:italic"># 取数据集的行数</span>
+</span></span><span style="display:flex;"><span>    diff_mat <span style="color:#666">=</span> np<span style="color:#666">.</span>tile(in_x, (data_set_size, <span style="color:#666">1</span>)) <span style="color:#666">-</span> data_set <span style="color:#408080;font-style:italic"># 每一行的数据减去输入数据</span>
+</span></span><span style="display:flex;"><span>    sq_diff_mat <span style="color:#666">=</span> diff_mat <span style="color:#666">**</span> <span style="color:#666">2</span> <span style="color:#408080;font-style:italic"># 每一行的数据平方</span>
+</span></span><span style="display:flex;"><span>    sq_distances <span style="color:#666">=</span> sq_diff_mat<span style="color:#666">.</span>sum(axis<span style="color:#666">=</span><span style="color:#666">1</span>) <span style="color:#408080;font-style:italic"># 每一行的数据平方和</span>
+</span></span><span style="display:flex;"><span>    distances <span style="color:#666">=</span> sq_distances <span style="color:#666">**</span> <span style="color:#666">.5</span> <span style="color:#408080;font-style:italic"># 每一行的数据开方</span>
+</span></span><span style="display:flex;"><span>    sorted_dist_indicies <span style="color:#666">=</span> distances<span style="color:#666">.</span>argsort() <span style="color:#408080;font-style:italic"># 每一行的数据从小到大排序</span>
+</span></span><span style="display:flex;"><span>    class_count <span style="color:#666">=</span> {} <span style="color:#408080;font-style:italic"># 初始化分类字典</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#008000;font-weight:bold">for</span> i <span style="color:#a2f;font-weight:bold">in</span> <span style="color:#008000">range</span>(k):
+</span></span><span style="display:flex;"><span>        vote_i_label <span style="color:#666">=</span> labels[sorted_dist_indicies[i]] <span style="color:#408080;font-style:italic"># 取前k个数据的标签</span>
+</span></span><span style="display:flex;"><span>        class_count[vote_i_label] <span style="color:#666">=</span> class_count<span style="color:#666">.</span>get(vote_i_label, <span style="color:#666">0</span>) <span style="color:#666">+</span> <span style="color:#666">1</span> <span style="color:#408080;font-style:italic"># 统计标签出现的次数</span>
+</span></span><span style="display:flex;"><span>    sorted_class_count <span style="color:#666">=</span> <span style="color:#008000">sorted</span>(class_count<span style="color:#666">.</span>items(), key<span style="color:#666">=</span>operator<span style="color:#666">.</span>itemgetter(<span style="color:#666">1</span>), reverse<span style="color:#666">=</span><span style="color:#008000;font-weight:bold">True</span>) <span style="color:#408080;font-style:italic"># 标签出现的次数从大到小排序</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#008000;font-weight:bold">return</span> sorted_class_count[<span style="color:#666">0</span>][<span style="color:#666">0</span>]
+</span></span></code></pre></div><h3 id="测试算法">测试算法<a href="#测试算法" class="header-anchor" ariaLabel="Anchor"> # </a></h3>
+<p>对于分类器来说，错误率就是分类器给出错误结果的次数除以测试数据的总数，完美分类器的错误率为0，而错误率为1.0的分类器不会给出任何正确的分类结果。代码里我们定义一个计数器变量，每次分类器错误地分类数据，计数器就加1，程序执行完成之后计数器的结果除以数据点总数即是错误率。具体的Python实现代码如下所示：</p>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">def</span> <span style="color:#00f">datingClassTest</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#ba2121">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#ba2121">    Test dating data.
+</span></span></span><span style="display:flex;"><span><span style="color:#ba2121">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    dating_data_mat, dating_labels <span style="color:#666">=</span> file2matrix(<span style="color:#ba2121">&#34;datingTestSet.txt&#34;</span>)
+</span></span><span style="display:flex;"><span>    ho_ratio <span style="color:#666">=</span> <span style="color:#666">.1</span> <span style="color:#408080;font-style:italic"># 取数据集的10%作为测试集</span>
+</span></span><span style="display:flex;"><span>    norm_data_set, ranges, min_vals <span style="color:#666">=</span> autoNorm(dating_data_mat) <span style="color:#408080;font-style:italic"># 归一化数据集</span>
+</span></span><span style="display:flex;"><span>    m <span style="color:#666">=</span> norm_data_set<span style="color:#666">.</span>shape[<span style="color:#666">0</span>] <span style="color:#408080;font-style:italic"># 取数据集的行数</span>
+</span></span><span style="display:flex;"><span>    num_test_vecs <span style="color:#666">=</span> <span style="color:#008000">int</span>(m <span style="color:#666">*</span> ho_ratio) <span style="color:#408080;font-style:italic"># 取测试集的行数</span>
+</span></span><span style="display:flex;"><span>    error_count <span style="color:#666">=</span> <span style="color:#666">0.0</span> <span style="color:#408080;font-style:italic"># 初始化错误率</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#008000;font-weight:bold">for</span> i <span style="color:#a2f;font-weight:bold">in</span> <span style="color:#008000">range</span>(num_test_vecs):
+</span></span><span style="display:flex;"><span>        classifier_result <span style="color:#666">=</span> classify0(norm_data_set[i, :], norm_data_set[num_test_vecs:m, :], dating_labels[num_test_vecs:m], <span style="color:#666">3</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#008000">print</span>(<span style="color:#ba2121">&#34;the classifier came back with: </span><span style="color:#b68;font-weight:bold">%d</span><span style="color:#ba2121">, the real answer is: </span><span style="color:#b68;font-weight:bold">%d</span><span style="color:#ba2121">&#34;</span> <span style="color:#666">%</span> (classifier_result, dating_labels[i]))
+</span></span><span style="display:flex;"><span>        <span style="color:#008000;font-weight:bold">if</span> classifier_result <span style="color:#666">!=</span> dating_labels[i]:
+</span></span><span style="display:flex;"><span>            error_count <span style="color:#666">+=</span> <span style="color:#666">1.0</span>
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>    <span style="color:#008000">print</span>(<span style="color:#ba2121">&#34;the total error rate is: </span><span style="color:#b68;font-weight:bold">%f</span><span style="color:#ba2121">&#34;</span> <span style="color:#666">%</span> (error_count <span style="color:#666">/</span> <span style="color:#008000">float</span>(num_test_vecs)))
+</span></span></code></pre></div><p>执行分类器测试程序，我们将得到下面的输出结果：</p>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>the classifier came back <span style="color:#008000;font-weight:bold">with</span><span style="color:#666">:</span> <span style="color:#666">3</span>, the real answer is<span style="color:#666">:</span> <span style="color:#666">3</span>
+</span></span><span style="display:flex;"><span>the classifier came back <span style="color:#008000;font-weight:bold">with</span><span style="color:#666">:</span> <span style="color:#666">2</span>, the real answer is<span style="color:#666">:</span> <span style="color:#666">2</span> 
+</span></span><span style="display:flex;"><span>the classifier came back <span style="color:#008000;font-weight:bold">with</span><span style="color:#666">:</span> <span style="color:#666">1</span>, the real answer is<span style="color:#666">:</span> <span style="color:#666">1</span> 
+</span></span><span style="display:flex;"><span>the classifier came back <span style="color:#008000;font-weight:bold">with</span><span style="color:#666">:</span> <span style="color:#666">1</span>, the real answer is<span style="color:#666">:</span> <span style="color:#666">1</span> 
+</span></span><span style="display:flex;"><span>the classifier came back <span style="color:#008000;font-weight:bold">with</span><span style="color:#666">:</span> <span style="color:#666">1</span>, the real answer is<span style="color:#666">:</span> <span style="color:#666">1</span> 
+</span></span><span style="display:flex;"><span>the classifier came back <span style="color:#008000;font-weight:bold">with</span><span style="color:#666">:</span> <span style="color:#666">1</span>, the real answer is<span style="color:#666">:</span> <span style="color:#666">1</span> 
+</span></span><span style="display:flex;"><span>the classifier came back <span style="color:#008000;font-weight:bold">with</span><span style="color:#666">:</span> <span style="color:#666">3</span>, the real answer is<span style="color:#666">:</span> <span style="color:#666">3</span> 
+</span></span><span style="display:flex;"><span>the classifier came back <span style="color:#008000;font-weight:bold">with</span><span style="color:#666">:</span> <span style="color:#666">3</span>, the real answer is<span style="color:#666">:</span> <span style="color:#666">3</span> 
+</span></span><span style="display:flex;"><span>the classifier came back <span style="color:#008000;font-weight:bold">with</span><span style="color:#666">:</span> <span style="color:#666">1</span>, the real answer is<span style="color:#666">:</span> <span style="color:#666">1</span> 
+</span></span><span style="display:flex;"><span>the classifier came back <span style="color:#008000;font-weight:bold">with</span><span style="color:#666">:</span> <span style="color:#666">3</span>, the real answer is<span style="color:#666">:</span> <span style="color:#666">3</span> 
+</span></span><span style="display:flex;"><span>the classifier came back <span style="color:#008000;font-weight:bold">with</span><span style="color:#666">:</span> <span style="color:#666">1</span>, the real answer is<span style="color:#666">:</span> <span style="color:#666">1</span> 
+</span></span><span style="display:flex;"><span>the classifier came back <span style="color:#008000;font-weight:bold">with</span><span style="color:#666">:</span> <span style="color:#666">1</span>, the real answer is<span style="color:#666">:</span> <span style="color:#666">1</span>
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>the classifier came back <span style="color:#008000;font-weight:bold">with</span><span style="color:#666">:</span> <span style="color:#666">2</span>, the real answer is<span style="color:#666">:</span> <span style="color:#666">2</span> 
+</span></span><span style="display:flex;"><span>the classifier came back <span style="color:#008000;font-weight:bold">with</span><span style="color:#666">:</span> <span style="color:#666">1</span>, the real answer is<span style="color:#666">:</span> <span style="color:#666">1</span> 
+</span></span><span style="display:flex;"><span>the classifier came back <span style="color:#008000;font-weight:bold">with</span><span style="color:#666">:</span> <span style="color:#666">3</span>, the real answer is<span style="color:#666">:</span> <span style="color:#666">1</span> 
+</span></span><span style="display:flex;"><span>the total error rate is<span style="color:#666">:</span> <span style="color:#666">0.050000</span>
+</span></span></code></pre></div><h3 id="使用算法">使用算法<a href="#使用算法" class="header-anchor" ariaLabel="Anchor"> # </a></h3>
+<p>上面我们已经在数据上对分类器进行了测试，现在终于可以使用这个分类器为海伦来对人们分类。下面是使用Python实现的代码：</p>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">def</span> <span style="color:#00f">classifyPerson</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#ba2121">&#34;&#34;&#34;Classify person.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    result_list <span style="color:#666">=</span> [<span style="color:#ba2121">&#34;not at all&#34;</span>, <span style="color:#ba2121">&#34;in small doses&#34;</span>, <span style="color:#ba2121">&#34;in large doses&#34;</span>]
+</span></span><span style="display:flex;"><span>    percent_tats <span style="color:#666">=</span> <span style="color:#008000">float</span>(<span style="color:#008000">input</span>(<span style="color:#ba2121">&#34;percentage of time spent playing video games?&#34;</span>))
+</span></span><span style="display:flex;"><span>    ff_miles <span style="color:#666">=</span> <span style="color:#008000">float</span>(<span style="color:#008000">input</span>(<span style="color:#ba2121">&#34;frequent flier miles earned per year?&#34;</span>))
+</span></span><span style="display:flex;"><span>    ice_cream <span style="color:#666">=</span> <span style="color:#008000">float</span>(<span style="color:#008000">input</span>(<span style="color:#ba2121">&#34;liters of ice cream consumed per year?&#34;</span>))
+</span></span><span style="display:flex;"><span>    dating_data_mat, dating_labels <span style="color:#666">=</span> file2matrix(<span style="color:#ba2121">&#34;datingTestSet.txt&#34;</span>)
+</span></span><span style="display:flex;"><span>    norm_data_set, ranges, min_vals <span style="color:#666">=</span> autoNorm(dating_data_mat)
+</span></span><span style="display:flex;"><span>    in_arr <span style="color:#666">=</span> np<span style="color:#666">.</span>array([ff_miles, percent_tats, ice_cream])
+</span></span><span style="display:flex;"><span>    classifier_result <span style="color:#666">=</span> classify0((in_arr <span style="color:#666">-</span> min_vals) <span style="color:#666">/</span> ranges, norm_data_set, dating_labels, <span style="color:#666">3</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#008000">print</span>(<span style="color:#ba2121">&#34;You will probably like this person: &#34;</span>, result_list[classifier_result <span style="color:#666">-</span> <span style="color:#666">1</span>])
+</span></span></code></pre></div><h2 id="sklearn实现">sklearn实现<a href="#sklearn实现" class="header-anchor" ariaLabel="Anchor"> # </a></h2>
+<p>针对于上文中的案例，这里使用Python的sklearn库进行实现，具体代码如下所示：</p>
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">from</span> <span style="color:#00f;font-weight:bold">sklearn.model_selection</span> <span style="color:#008000;font-weight:bold">import</span> train_test_split
+</span></span><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">from</span> <span style="color:#00f;font-weight:bold">sklearn.neighbors</span> <span style="color:#008000;font-weight:bold">import</span> KNeighborsClassifier
+</span></span><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">from</span> <span style="color:#00f;font-weight:bold">sklearn.preprocessing</span> <span style="color:#008000;font-weight:bold">import</span> MinMaxScaler
+</span></span><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">from</span> <span style="color:#00f;font-weight:bold">sklearn.metrics</span> <span style="color:#008000;font-weight:bold">import</span> accuracy_score
+</span></span><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">from</span> <span style="color:#00f;font-weight:bold">sklearn.preprocessing</span> <span style="color:#008000;font-weight:bold">import</span> LabelEncoder
+</span></span><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">pandas</span> <span style="color:#008000;font-weight:bold">as</span> <span style="color:#00f;font-weight:bold">pd</span>
+</span></span><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">numpy</span> <span style="color:#008000;font-weight:bold">as</span> <span style="color:#00f;font-weight:bold">np</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># 读取数据</span>
+</span></span><span style="display:flex;"><span>dating_data_mat <span style="color:#666">=</span> pd<span style="color:#666">.</span>read_table(<span style="color:#ba2121">&#34;datingTestSet.txt&#34;</span>, header<span style="color:#666">=</span><span style="color:#008000;font-weight:bold">None</span>, names<span style="color:#666">=</span>[<span style="color:#ba2121">&#34;ff_miles&#34;</span>, <span style="color:#ba2121">&#34;percent_tats&#34;</span>, <span style="color:#ba2121">&#34;ice_cream&#34;</span>, <span style="color:#ba2121">&#34;labels&#34;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># 进行归一化</span>
+</span></span><span style="display:flex;"><span>min_max_scaler <span style="color:#666">=</span> MinMaxScaler()
+</span></span><span style="display:flex;"><span>norm_data_set <span style="color:#666">=</span> min_max_scaler<span style="color:#666">.</span>fit_transform(dating_data_mat<span style="color:#666">.</span>iloc[:, :<span style="color:#666">-</span><span style="color:#666">1</span>])
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># 基于sklearn将标签转换为数字</span>
+</span></span><span style="display:flex;"><span>label_encoder <span style="color:#666">=</span> LabelEncoder()
+</span></span><span style="display:flex;"><span>labels <span style="color:#666">=</span> label_encoder<span style="color:#666">.</span>fit_transform(dating_data_mat<span style="color:#666">.</span>iloc[:, <span style="color:#666">-</span><span style="color:#666">1</span>])
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># 划分训练集和测试集</span>
+</span></span><span style="display:flex;"><span>train_data, test_data, train_labels, test_labels <span style="color:#666">=</span> train_test_split(norm_data_set, labels, test_size<span style="color:#666">=</span><span style="color:#666">.1</span>, random_state<span style="color:#666">=</span><span style="color:#666">2020</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># 构建模型</span>
+</span></span><span style="display:flex;"><span>knn <span style="color:#666">=</span> KNeighborsClassifier(n_neighbors<span style="color:#666">=</span><span style="color:#666">5</span>)
+</span></span><span style="display:flex;"><span>knn<span style="color:#666">.</span>fit(train_data, train_labels)
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># 测试模型</span>
+</span></span><span style="display:flex;"><span>predict <span style="color:#666">=</span> knn<span style="color:#666">.</span>predict(test_data)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># 计算测试准确率</span>
+</span></span><span style="display:flex;"><span>accuracy <span style="color:#666">=</span> accuracy_score(test_labels, predict)
+</span></span><span style="display:flex;"><span><span style="color:#008000">print</span>(<span style="color:#ba2121">&#34;accuracy: &#34;</span>, accuracy)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># 预测新数据</span>
+</span></span><span style="display:flex;"><span>new_data <span style="color:#666">=</span> np<span style="color:#666">.</span>array([[<span style="color:#666">26052</span>, <span style="color:#666">1.441871</span>, <span style="color:#666">0.805124</span>]])
+</span></span><span style="display:flex;"><span>new_data <span style="color:#666">=</span> min_max_scaler<span style="color:#666">.</span>transform(new_data)
+</span></span><span style="display:flex;"><span>new_predict <span style="color:#666">=</span> knn<span style="color:#666">.</span>predict(new_data)
+</span></span><span style="display:flex;"><span><span style="color:#408080;font-style:italic"># 将标签转换为原始标签</span>
+</span></span><span style="display:flex;"><span>new_predict <span style="color:#666">=</span> label_encoder<span style="color:#666">.</span>inverse_transform(new_predict)
+</span></span><span style="display:flex;"><span><span style="color:#008000">print</span>(<span style="color:#ba2121">&#34;You will probably like this person:&#34;</span>, new_predict[<span style="color:#666">0</span>])
+</span></span></code></pre></div><h2 id="常见问题">常见问题<a href="#常见问题" class="header-anchor" ariaLabel="Anchor"> # </a></h2>
+<ul>
+<li>简述一下KNN算法的原理？（参考答案见上文）</li>
+<li>KNN算法有哪些优点和缺点？（参考答案见上文）</li>
+<li>KNN算法的三要素？</li>
+</ul>
+<blockquote>
+<p><strong>参考答案</strong></p>
+<p>K近邻（K-Nearest Neighbors，KNN）算法是一种基本的分类和回归算法。它的三个要素是：距离度量、K值的选择和分类决策规则。</p>
+<p>（1）距离度量：KNN算法通过计算样本之间的距离来确定它们的相似性。常用的距离度量方法包括欧氏距离、曼哈顿距离、闵可夫斯基距离等。选择合适的距离度量方法对算法的性能影响很大。（2）K值的选择：K值代表选择最近邻的样本数量。在KNN算法中，为了确定一个未知样本的类别，它会找到距离最近的K个邻居样本，并根据这些邻居样本的类别进行投票或计算平均值来决定未知样本的类别。选择合适的K值是关键，较小的K值可能会导致模型过拟合，较大的K值可能会导致模型欠拟合。（3）分类决策规则：KNN算法的分类决策规则是基于邻居样本的类别进行的。对于分类任务，常用的决策规则是多数表决，即将K个邻居样本中出现最多次数的类别作为未知样本的类别。对于回归任务，通常采用平均值决策规则，即将K个邻居样本的输出值的平均值作为未知样本的输出值。</p>
+<p>这三个要素是KNN算法的关键部分，它们共同决定了KNN算法的性能和表现。选择合适的距离度量方法、K值和分类决策规则对于获得准确的预测结果非常重要。</p>
+</blockquote>
+<h2 id="参考文献">参考文献<a href="#参考文献" class="header-anchor" ariaLabel="Anchor"> # </a></h2>
+<p>[1] Cover T, Hart P. Nearest neighbor pattern classification[J]. IEEE transactions on information theory, 1967, 13(1): 21-27.</p>
+<p>[2] Harrington, P. (2012). Machine Learning in Action. Shelter Islan
+d, NY: Manning Publications.</p>
+
+
+    
+    <p style="color:#777;">
+      最后一次修改于
+      2023-07-23
+    </p>
+  </div>
+
+  <a href="#top"><i class="fa fa-chevron-up" style="font-size: 30px; color: black;"></i></a>
+</main>
+<footer class="footer">
+
+
+<div id="utterances-comments"></div>
+<script src="https://utteranc.es/client.js"
+        repo="Duguce/zhgyqc_site"
+        issue-term="https://zhgyqc.vercel.app/cn/2023/06/18/knn/"
+        label="K-近邻算法概述"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+  <script type="text/javascript" src="../../../../../js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript" src="../../../../../js/center-img.js"></script>
+
+
+
+     <ul class="footer-links">
+      
+       
+       
+       
+       <li><a href="../../../../../cn/blogs/index.xml" type="application/rss+xml" title="RSS feed">
+       订阅 </a>
+       </li>
+       
+       
+       <li>
+       
+       <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">
+       
+        版权
+        <i class="fa fa-cc" aria-hidden="true" title="Attribution-NonCommercial-ShareAlike 4.0 International"></i> 
+        </a>
+       </li>
+       
+     </ul>
+     <div class="copyright-text">
+            
+            ©
+            
+            Qingchen Yu
+            
+            2022-2025
+            
+     </div>
+
+</footer>
+
+
+
+
