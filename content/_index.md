@@ -1,12 +1,12 @@
 # Qingchen Yu
 <div style="display: flex; align-items: center;">
     <div style="margin-right: 20px;">
-        <img src="./assets/profile.jpg" alt="profile_photo" style="width: 100px; height: auto;">
+        <img src="./assets/profile.jpg" alt="profile_photo" style="width: 130px; height: auto;">
     </div>
     <div>
         <p>
 
-I recently graduated with a Master's degree from the School of Management at Shanghai University.<br>
+I am currently a Ph.D. student in Artificial Intelligence at Beihang University. My research interests mainly focus on large language models.
 
 <strong>Email:</strong> zhgyqc[at]163[dot]com
         </p>
@@ -19,6 +19,16 @@ I recently graduated with a Master's degree from the School of Management at Sha
 
 <h2 style="text-align: left;">Education</h2>
 <div style="margin-bottom: 20px;">
+    <div style="margin-bottom: 15px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 16px; line-height: 1.6; margin: 0;">
+            <span><strong>Beihang University</strong></span>
+            <span>Beijing, China</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; color: #666; font-size: 14px;">
+            <span>Ph.D. Student in Artificial Intelligence</span>
+            <span>2025.09 - Present</span>
+        </div>
+    </div>
     <div style="margin-bottom: 15px;">
         <div style="display: flex; justify-content: space-between; align-items: center; font-size: 16px; line-height: 1.6; margin: 0;">
             <span><strong>Shanghai University</strong></span>
