@@ -6,7 +6,7 @@
     <div>
         <p>
 
-I am currently a Ph.D. student in Artificial Intelligence at Beihang University. My research interests mainly focus on large language models.
+I am currently a Ph.D. student in Artificial Intelligence at Beihang University. My research interests mainly focus on large language models.<br>
 
 <strong>Email:</strong> zhgyqc[at]163[dot]com
         </p>
