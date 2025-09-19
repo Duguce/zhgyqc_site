@@ -25,6 +25,7 @@ tags:
 
 - 安装
 
+
 ```bash
 mkdir -p /tmp/SC_tmp && tar -zxf '/tmp/ShellCrash.tar.gz' -C /tmp/SC_tmp/ && bash /tmp/SC_tmp/init.sh && source /etc/profile >/dev/null
 ```
@@ -36,6 +37,7 @@ mkdir -p /tmp/SC_tmp && tar -zxf '/tmp/ShellCrash.tar.gz' -C /tmp/SC_tmp/ && bas
 ![shellcrash-config-example](https://raw.githubusercontent.com/Duguce/zhgyqc_site/master/content/assets/shellcrash-config-example.png)
 
 - 测试是否配置成功
+
 
 ```bash
 
@@ -56,6 +58,7 @@ crontab -e
 ### 使用教程
 
 - 一次性使用（仅在当前会话窗口生效）
+
 
 ```bash
 export http_proxy="http://127.0.0.1:7890"
@@ -87,6 +90,7 @@ usetp() {
 保存后，执行 `source ~/.bashrc` 使配置生效。
 
 - 测试是否可以正常使用
+
 
 ```bash
 curl -I https://www.google.com
