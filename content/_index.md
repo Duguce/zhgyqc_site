@@ -159,5 +159,5 @@ I am currently a Ph.D. student in Artificial Intelligence at Beihang University.
 <h2 style="text-align: left;">Academic Services</h2>
 
 <ul>
-  <li style="font-size: 18px;">Reviewer for ICLR (2025-2026), CVPR (2026), ACM TIST</li>
+  <li style="font-size: 18px;">Reviewer for ICLR (2025-2026), CVPR (2026), ACM TIST, TMLR</li>
 </ul>
