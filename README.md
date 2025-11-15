@@ -2,7 +2,18 @@
     Qingchen Yu Personal Website
 </h2>
 
-This is [Qingchen Yu](https://zhgyqc.site/)'s personal website powered by [Hugo](https://gohugo.io/) and the [hugo-ht](https://github.com/hongtaoh/hugo-ht) theme.
+<p align="center">
+  <em>
+    This is 
+    <a href="https://zhgyqc.site/" target="_blank">Qingchen Yu</a>'s 
+    personal website powered by 
+    <a href="https://gohugo.io/" target="_blank">Hugo</a> 
+    and the 
+    <a href="https://github.com/hongtaoh/hugo-ht" target="_blank">hugo-ht</a> 
+    theme.
+  </em>
+</p>
+
 
 ### Requirements
 - Hugo Extended (v0.120+ recommended)
