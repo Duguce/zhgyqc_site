@@ -1,275 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>中文博客 on Qingchen Yu</title>
-    <link>https://zhgyqc.vercel.app/cn/blogs/</link>
-    <description>Recent content in 中文博客 on Qingchen Yu</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language><atom:link href="https://zhgyqc.vercel.app/cn/blogs/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>修改 Git Commit 消息指南</title>
-      <link>https://zhgyqc.vercel.app/cn/2024/10/22/modify-git-commit-messages/</link>
-      <pubDate>Tue, 22 Oct 2024 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhgyqc.vercel.app/cn/2024/10/22/modify-git-commit-messages/</guid>
-      <description>本文由 ChatGPT 辅助生成
-有时候，我们会在提交代码时拼写错误 commit 消息，或者消息描述不够准确。幸运的是，Git 提供了方法来修改已经提交的历史记录，包括 commit 消息。本文将详细介绍如何修改任意数量的 commit 消息，并将它们推送到远程仓库。
-修改历史 Commit 消息 如果你想修改之前的 commit 消息，你可以按照以下步骤进行：
-运行以下命令来开始交互式修改：git rebase -i HEAD~n。这里的 n 表示你想要修改的最近提交次数。例如，如果你想修改过去五次的提交，可以使用 git rebase -i HEAD~5。这会启动一个交互式编辑器，显示最近几次提交的列表： pick &amp;lt;commit-hash-1&amp;gt; commit message 1 pick &amp;lt;commit-hash-2&amp;gt; commit message 2 pick &amp;lt;commit-hash-3&amp;gt; commit message 3 将你想要修改的 commit 前的 pick 改为 reword，像这样： reword &amp;lt;commit-hash-1&amp;gt; commit message 1 reword &amp;lt;commit-hash-2&amp;gt; commit message 2 reword &amp;lt;commit-hash-3&amp;gt; commit message 3 保存并退出编辑器。之后，Git 会依次打开每个需要修改的 commit 消息的编辑器，你可以在其中修改消息。修改完成后，保存并退出。 完成所有修改后，你会看到如下提示： Successfully rebased and updated refs/heads/main.</description>
-    </item>
-    
-    <item>
-      <title>上传大模型到huggingface的方法（不用梯子）</title>
-      <link>https://zhgyqc.vercel.app/cn/2024/08/09/upload-large-model-to-huggingface-without-vpn/</link>
-      <pubDate>Fri, 09 Aug 2024 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhgyqc.vercel.app/cn/2024/08/09/upload-large-model-to-huggingface-without-vpn/</guid>
-      <description>相关配置 下载LFS # 更新包管理器 sudo apt-get update sudo apt-get upgrade # 安装Git（如有则忽略） sudo apt-get install git # 安装Git LFS sudo apt-get install git-lfs # 初始化Git LFS git lfs install # 验证Git LFS是否安装成功 git lfs --version 配置huggingface 从huggingface申请token（需要同时有读写权限的，注意token只会展示一次，所以要记得保存）； 安装huggingface-cli pip install huggingface_hub huggingface-cli login # 输入上边生成的token 下载模型 注：预先要在huggingface上创建好对应的模型仓库
-git lfs install # 不需要梯子 git clone https://hf-mirror.com/username/model_name # 需要梯子 git clone https://huggingface.co/username/model_name # 进入仓库并将需要上传的文件放到这个文件夹内 cd model_name 上传模型 追踪大文件 # 追踪需要上传的大文件，后缀需要修改为你需要上传的大文件所对应的 git lfs track &amp;#34;*.</description>
-    </item>
-    
-    <item>
-      <title>WSL2网络代理配置（实现自由切换）</title>
-      <link>https://zhgyqc.vercel.app/cn/2023/12/12/wsl-proxy-config/</link>
-      <pubDate>Tue, 12 Dec 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhgyqc.vercel.app/cn/2023/12/12/wsl-proxy-config/</guid>
-      <description>在使用代理的环境中，灵活切换是否使用代理是一个常见的需求。
-本文介绍了如何通过修改 .bashrc 文件实现这一目标。配置过程中主要参考了WSL2 的开发环境配置和在 WSL2 中使用 Clash for Windows 代理连接。
-首先需要在Windows中的软件配置代理设置。
-然后在WSL下通过vim ~/.bashrc命令进入 .bashrc 文件将启用和禁用代理的过程封装为两个短命令的代码放入其中并保存。
-# 网络代理设置 setp() { host_ip=$(cat /etc/resolv.conf | grep &amp;#34;nameserver&amp;#34; | cut -f 2 -d &amp;#34; &amp;#34;) export http_proxy=&amp;#34;http://$host_ip:7890&amp;#34; export https_proxy=&amp;#34;http://$host_ip:7890&amp;#34; echo &amp;#34;Proxy enabled.&amp;#34; } usetp() { unset http_proxy unset https_proxy echo &amp;#34;Proxy disabled.&amp;#34; } 再修改保存后，执行source .bashrc使其生效后即可使用，具体使用方式见下图</description>
-    </item>
-    
-    <item>
-      <title>读《大明王朝1566》·刘和平著</title>
-      <link>https://zhgyqc.vercel.app/cn/2023/08/07/the-great-ming-dynasty-1566/</link>
-      <pubDate>Mon, 07 Aug 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhgyqc.vercel.app/cn/2023/08/07/the-great-ming-dynasty-1566/</guid>
-      <description>我大明拥有四海，倘使朝廷节用以爱人，使民以时，各级官员清廉自守，开丝绸、瓷器、茶叶通商之路，仅此三项即可富甲天下，何至于今日之国库亏空！上下挥霍无度，便掠之于民；民变在即，便掠之于商。
-本书印象最为深刻的一段话，出自沈一石之口，所有的历史都是当代史。
-万稳万当，不如一默。任何一句话，你不说出来便是那句话的主人，你说了出来，便是那句话的奴隶。
-这句话出自《淮南子·人间训》中，“百战百胜，不如一忍；万言万当，不如一默”。我觉得这句话怎么理解要看语境，在本书这里应该是讲我们需要对自己说出的话负责，有时候少说或者不说更好，即无为。
-有些事不上秤没有四两，上了秤一千斤也打不住。
-事情可大可小，只要不捅破那层窗户纸。
-历来造反都是种田的人，没见着商人能翻了天去。
-因为种田的实在活不下去了&amp;hellip;光脚不怕穿鞋的。
-圣人的书，都是给人看的，拿来办事，百无一用。
-实践是检验真理的唯一标准，纸上谈兵不可取。
-官场无朋友，朝事无是非，只有‘利害’二字。
-不止官场，现在的职场也是这样，或者说我们的社会就是这样。
-不谋万事者，不足谋一时；不谋全局者，不足谋一域。
-书中的海瑞和胡宗宪都是有十成十的为国为民的大局观，唯有佩服。
-户部云南清吏司主事臣海瑞谨奏；为直言天下第一事，以正君道、明臣职，求万世治安事： 君者，天下臣民万物之主也。惟其为天下臣民万物之主，责任至重。凡民生利病，一有所不宜，将有所不称其任。是故事君之道宜无不备，而以其责寄臣工，使之尽言焉。臣工尽言，而君道斯称矣。昔之务为容悦，阿谀曲从，致使灾祸隔绝、主上不闻者，无足言矣。——治安疏·海瑞
-以前总觉得海瑞、包青天之类的形象太过高大，甚至有些“伟光正”。但随着了解的深入，发现能做到海瑞这样不忘初心，为国为民才是难得。如果国家能多一些像他们这样的官员，才是百姓之幸。</description>
-    </item>
-    
-    <item>
-      <title>决策树算法概述</title>
-      <link>https://zhgyqc.vercel.app/cn/2023/07/22/decision-tree/</link>
-      <pubDate>Sat, 22 Jul 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhgyqc.vercel.app/cn/2023/07/22/decision-tree/</guid>
-      <description>引言 本文分享第一个机器学习算法：K-近邻算法（K-Nearest Neighbor, KNN），最初由Cover和Hart于1968年提出，是最简单的机器学习算法之一。我将从以下几个方面对K-近邻算法进行分享：首先，我将分享K-近邻算法的基本理论概念；其次，我将使用Python实现一个实战案例；最后，我将分享一些K-近邻算法常见的面试问题。
-算法概述 你是否玩过二十个问题的游戏，游戏的规则很简单：参与游戏的一方在脑海里想某个事物，其他参与者向他提问问题，只允许提问20个问题，问题的答案也只能用对或错回答。问问题的人通过推断分解，逐步缩小待猜测事物的范围。
-决策树的工作原理与20个问题类似，用户输入一系列数据，然后给出游戏的答案。如下图所示是一个决策树的流程图。图中构造了一个假想的邮件分类系统，它首先检测发送邮件域名地址。如果地址为“myEmployer.com”，则将其放在分类“无聊时需要阅读的邮件”中。如果邮件不是来自这个域名，则检查邮件的内容是否包含单词“曲棍球”，如果包含则将邮件归类到“需要及时处理的朋友邮件”，如果不包含则将邮件归类到“无需阅读的垃圾邮件”。
-决策树算法的预测分类流程如下：
-特征选择。在构建决策树时，首先需要选择用于分裂节点的最佳特征。常用的特征选择方法有信息增益、信息增益比、基尼指数等。这些方法根据特征的不确定性或纯度来衡量特征的重要性。 分裂节点。根据选择的特征，将节点分裂成多个子节点。每个子节点代表一个特征取值，将数据集按照该特征取值进行划分。 递归构建。对于每个子节点，重复执行特征选择和分裂节点的过程，直至满足停止的条件。停止的条件可以是达到最大深度、节点中的数据样本小于预定义阈值或节点的不确定性或纯度低于阈值等。 标记叶子节点。当达到停止条件时，将叶子节点标记为特定的类别标签或预测值。对于分类问题，叶子节点通常表示一个类别。（对于回归问题，叶子节点表示一个数值） 预测。通过将输入样本从根节点开始沿着决策树的路径进行遍历，最终达到叶子节点，从而预测样本的类别。（或数值） 决策树算法的优缺点如下：
-优点：
-可解释性强。决策树的结构清晰，易于理解和解释。可以通过可视化展示决策树，直观地观察到决策过程和特征的重要性。 处理混合数据类型。决策树可以处理包含离散型和连续型特征的数据，而无需对特征进行特殊的预处理或转换。 对缺失值和异常值鲁棒。决策树能够自然地处理缺失值，并且对异常值相对鲁棒，不会对异常值过度敏感。 计算效率高。相对于其他复杂的机器学习算法，决策树的训练和预测速度较快，尤其适用于处理大型数据集。 缺点：
-容易过拟合。决策树容易生成过于复杂的模型，过拟合训练数据，导致在新数据上的泛化能力较差。可以通过剪枝等方法来减轻过拟合问题。 忽略特征间的相关性。决策树基于每个节点上的最佳特征进行分裂，可能忽略特征之间的相关性。在某些情况下，其他算法（如基于统计的方法）能够更好地处理特征之间的复杂关系。 对噪声敏感。当数据中存在噪声时，决策树可能会过度拟合噪声，导致模型不稳定。 实战案例 案例概述 本文使用一组海洋生物数据，需要将这些动物分为两类：鱼类和非鱼类。如下表所示的数据包含5个海洋动物，特征包括：不浮出水面是否可以生存，以及是否有脚蹼。现在需要决定是依据第一个特征还是第二个特征划分数据。本文将使用ID3算法划分数据集，该算法处理如何划分数据集，何时停止划分数据集。 信息增益 划分数据集的大原则是将无序的数据变得更加有序。组织杂乱无章数据的一种方法就是使用信息论度量信息，信息论是量化处理信息的分支科学。我们可以在划分数据之前或之后使用信息论量化度量信息的内容。在划分数据集之前之后信息发生的变化称为信息增益，知道如何计算信息增益，我们就可以计算每个特征值划分数据集获得的信息增益，获得信息增益最高的特征就是最好的选择。
-集合信息的度量方式称为香农熵或者简称为熵，这个名字来源于信息论之父克劳德·香农。
-熵定义为信息的期望值，在明晰这个概念之前，我们必须知道信息的定义。如果待分类的事物可能划分在多个分类之中，则符号$x_i$的信息定义为$l(x_i)=-log_2 p(x_i)$，其中，$p(x_i)$是选择该分类的概率。
-为了计算熵，我们需要计算所有类别所有可能值包含的信息期望值，通过以下的公式得到：
-$$H=-\sum_{i=1}^{n}p(x_i)log_2 p(x_i)$$
-其中，n是分类的数目。
-以下是基于Python实现的计算信息熵的代码：
-from math import log def calc_shannon_ent(dataset): &amp;#34;&amp;#34;&amp;#34; Calculate Shannon Entropy of a dataset &amp;#34;&amp;#34;&amp;#34; num_entries = len(dataset) # number of entries label_counts = {} # dictionary to store the number of each class # loop over all the entries for feat_vec in dataset: current_label = feat_vec[-1] # get the label of the current entry if current_label not in label_counts.</description>
-    </item>
-    
-    <item>
-      <title>A/B试验概述</title>
-      <link>https://zhgyqc.vercel.app/cn/2023/06/19/ab-test/</link>
-      <pubDate>Mon, 19 Jun 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhgyqc.vercel.app/cn/2023/06/19/ab-test/</guid>
-      <description>引言 本文主要分享A/B试验的相关概念。我将主要从以下几个方面对A/B试验进行分享：A/B试验的基本原理、实验流程、构用场景和常见问题等。
-基本原理 A/B试验是一种常用的实验设计方法，本质是一种对比分析方法。A/B试验属于实验范畴，通过对用户进行随机分组，根据单一变量的原则为每一组用户分配一个实验方案，在相同的时间维度观察用户的反应以确定最佳方案。
-以网页皮肤优化为例，原方案A中网页颜色为绿色，调整后的方案B网页颜色为黄色。为了确定用户对网页颜色的偏好，可以设计A/B试验，将特征相似的用户随机分成A、B两组，让其分别打开不同颜色的网页，观察两组用户的网页点击率。
-A/B试验之所以能够在数据分析领域得到广泛应用，是因为它能够解决大多数关于选择的问题，通过A/B试验选择出来的方案大部分情况下会使得投入产出比最大化。总之，A/B试验可以辅助业务方选出最优方案并在现有流量中获得更高的投入产出比。
-评估方案优劣，选择最优方案 A/B试验的主要目的之一是判断两个方案中哪个更好，以辅助运营人员选择最优方案，达到最好的效果。以网页皮肤选择为例，通过A/B试验确定用户对网页皮肤的偏好，以提升用户点击率，降低用户跳出率。
-计算ROI，提升收益 通过A/B试验选择最优方案的终极目的还是提升收益、量化收益，计算投入产出比（ROI）也是数据分析师需要掌握的技能。对于不同的方案而言，成本都是可以直接计算出来的；而对于收益，则需要计算试验组与对照组收益的差值。
-实验流程 A/B试验是一个系统性的过程，以用户对网页皮肤的偏好选择为例，其实施流程可以归纳为以下7个步骤：
-设定目标 进行A/B试验的第一步是确定比较指标，选取哪些指标进行对比需要根据实验的目的来决定。A/B试验中的指标可以分为三类，即核心指标、辅助指标和反向指标，在进行A/B试验时建议同时选择三类指标作为试验指标。
-通过A/B试验确定用户对网页皮肤的偏好，就可以选择点击率作为比较的核心指标。为了排除同一个用户多次点击造成的统计偏差，这里将点击率的统计口径定为去重的点击人数与去重的页面访问人数的比值。
-除核心指标外，也需要一些辅助指标和反向指标。辅助指标可以根据用户行为漏斗进行设定；也可以选择重要的下游指标，如平均点击次数、下单成功率、复购率等；反向指标是可能对产品产生负面影响的指标，如回跳率、退货率、回撤率和应用删除率等。
-创建变量 选定指标之后，就需要进行变量的创建，即对网页的元素进行更改，将之前绿色的皮肤改为黄色的皮肤。这部分由前端配合完成。
-生成假设 有了变量之后，可以基于经验对试验结果做出假设。例如，可以假设用户更喜欢改版后的网页。
-确定分流（抽样）方案 如何分配流量、分配多少流量关系到A/B试验的成败，尽管选择同质性较高的用户，也就是各个维度特征较为相似的用户进行测试，同时需要确定分流比例和其他分流细节。
-国内外很多开源网站都提供了A/B试验样本量计算器，evanmiller是其中的一种。只需输入目前大盘基准值、预期试验提升效果、置信度及功效等参数，即可计算出试验所需的样本值。目前大盘的基准值为41.68%，预期能够提升的比率为0.2%。如果估计不准，为了保证试验能够得到结果，此处可低估，不可高估，也就是0.2%是预期能够提升的最小值。在95%的置信度、80%的功效下每一组所需的最小样本量为\(95.4138×10^4\)。
-如果预期的指标是与均值相关的指标，如人均时长、人均付费等指标，估算样本量可能会稍微复杂。这时候需要运用t检验反算样本量，但同样可以使用各类开源的网页工具进行计算，如字节跳动的DataTester、腾讯的A/B试验平台及百度的峙一平台。
-确定试验时长 试验时长也是A/B试验的重要环节，即这个A/B试验要持续多久。试验时长不宜过短，否则参与试验的用户几乎都是活跃用户。试验时间的长短和所需样本量是密切相关的，步骤4中已经估算了所需样本量，因此问题转化成要达到95.4138万个试验样本需要多少天。目前平台每天能为这个A/B试验项目分配10万MB的流量，要达到95.4138万个样本则至少需要10天，这样一来试验时长基本确定。
-收集数据 最后就是基于统计学基础理论，分析数据结果，判断两个版本之间是否存在统计学上的显著性差异。
-应用场景 A/B试验是一种广泛应用的实验方法，适用于许多领域。以下是几个A/B试验的常见应用场景：
-网页设计和用户体验优化：通过A/B试验，可以比较不同网页设计、布局、颜色、按钮位置等因素对用户行为和转化率的影响，从而优化用户体验和提高网站的效果。 营销和广告策略：A/B试验可用于比较不同广告文案、图像、呈现方式、定位或促销策略的效果。例如，测试不同标题、呈现方式、优惠券等，以确定哪种策略对受众产生最佳影响。 产品功能和界面改进：A/B试验可帮助确定产品功能的效果和用户偏好。通过比较不同功能的版本，可以了解用户对产品特性的偏好，并决定是否进行功能改进或调整。 电子商务和购物体验优化：通过A/B试验，可以比较不同购物页面设计、产品推荐策略、付款选项等对购物转化率的影响，以优化电子商务平台的用户体验和销售效果。 移动应用开发和优化：A/B试验可用于比较不同移动应用界面、功能、通知推送等的效果，以改进用户留存率、转化率和用户满意度。 电子邮件营销优化：通过A/B试验，可以测试不同的电子邮件主题、内容、发送时间等因素对打开率、点击率和转化率的影响，以提高电子邮件营销的效果。 社交媒体营销和广告：A/B试验可以用于比较不同社交媒体广告文案、图像、呈现方式和定位等的效果，以优化社交媒体广告投放的效果和投资回报率。 常见问题 A/B试验常见的误区 参考答案
-（1）忽略统计学意义是A/B试验常见的误区之一，包括忽视假设检验、显著性水平以及统计功效。 仍以网站皮肤优化为例，若A组的点击率是39.13%，B组的点击率仅为36.86%，是否可以直接说A组的效果优于B组，用户更喜欢A组的皮肤颜色呢？事实上，不能直接得出这个结论，因为缺少了关键步骤——假设检验。假设检验的目的之一是排除运气、抽样误差等随机因素对试验结果的误判，即通常所说的Ⅰ类错误；目的之二是排除由于漏报对于试验结果的影响，即Ⅱ类错误。为了避免Ⅰ类错误、Ⅱ类错误带来的误判和漏报，需要对试验结果进行严格的假设检验，类似于留存率、渗透率等率值相关指标可以采用Z检验或卡方检验（非正态情况下），而人均时长、用户购买量等指标可以使用t检验。
-（2）由于新奇效应的存在，试验时长的选择也需要注意。 试验所需的样本量决定了试验的时间长短，为了尽快得出结论是否可以分配较大流量使得试验尽快收集到所需样本量？或者按照正常的流量分配，达到样本量之后立即停止试验？
-答案是否定的，面对以上两种情况需要考虑是否因为新奇效应的存在给结果带来了一定的影响。在统计学上，新奇效应也称为均值回归，即随着试验次数的增加，结果往往趋近于均值。在A/B试验中，试验早期用户可能会因为新的改动而产生好奇，从而带来点击率的提升，但是随着试验时间的增加，这个点击率会趋近于用户的真实点击水平。因此，需要等到观测指标平稳之后才能停止试验，以避免新奇效用对于试验结果的影响。如果分配较大的流量在短时间内收集够样本，除存在新奇效应外，还可能受到周内效应的影响，即用户在周内、周末的行为习惯不一致造成试验误差；另外，还有可能存在以偏概全。
-（3）A/B试验的核心是用户分群试验，对于用户的选择以偏概全，只选择高频用户也是常见的误区之一。 在流量分配的时候需要保证对照组和试验组的用户具有同时性、同质性、均匀性和唯一性。换句话说就是需要将用户属性相近的用户同时分配到A组或B组中且同时进行试验。即使这样还会遇到一个问题，用户虽然大部分特征是相似的，但其活跃周期可能不尽相同，因此同样可能出现以偏概全的误区。因此，试验时间的选择应该格外注意，切不可为了尽快获得试验结果而分配大量流量，需要考虑到用户群体的全覆盖，这个可以结合样本量估算以及用户流失周期等进行思考。
-（4）辛普森悖论也是A/B试验中常见的现象，即在试验过程中流量分割比例改变，从而造成结果错误。 辛普森悖论是指在某个条件下的两组数据，分别讨论时都会满足某种性质，可是一旦合并考虑，却可能导致相反的结论。
-（5）多个试验同时进行时，如何设计A/B试验也会存在一定的误区。 针对多个试验同时进行，我们可以通过设计正交试验，解决多个试验同时进行时流量分配的问题。
-什么是正交实验？ 参考答案
-数据分析师经常会遇到多个活动同时进行A/B试验的情况，那么这个时候你会思考一个问题——别人的试验是否会影响到自己正在进行的试验？如果情人节期间开展了一系列的活动，各个活动都在通过A/B试验测试活动效果。老板肯定想知道每个活动的效果如何？所有活动的叠加效果又如何？
-A/B试验的正交试验可以解决你的疑问，也可以解决老板的疑问。在设计正交试验时需要严格遵守两个原则，即正交和互斥。
-（1）正交。流量正交可以让业务关联度小的试验有足够的流量同时进行，实现流量的高可用性。正交一般情况下是对于不同试验层来说的，将上一层的流量随机打散到下一场的试验中，使得用户再进入其他试验时时均匀分布的，而不是集中在某一块区域。
-（2）互斥。流量互斥可以让关联度较大的试验分开进行，避免相互影响，从而保证结果的可信度。流量互斥一般情况下是对同一试验层来说的，在同一试验层的几个策略中同一用户只能进入一个试验测量中。很多情况下，活动整体的效果并不等于各个子活动叠加效果，有时候子活动之间有着互相放大的作用，使得1+1&amp;gt;2；而有的时候，子活动在本质上是相同的事情，从而使得1+1&amp;lt;2。
-因此，要量化一个活动的整体效果时，就需要一个贯穿所有活动的对照组，在A/B试验系统中称为贯穿层。与贯穿层相对应的就是试验层，试验层又可以根据活动需要分为不同的子试验层。
-按照上述的框架进行试验设计，虽然试验B1层的流量被复用到试验B2层，也就相当于把B1层的试验效果带到了B2层，但是流量是正交的，即B1层的试验效果随机均匀打散分配到B2层，所以B1层的试验效果对B2层的每一个试验策略的影响都是均衡的，整体上来看别人的试验并不会影响到自己的试验效果。
-什么是最小预期提升（MDE）？ 参考答案
-最小预期提升，亦指最小检测效应（Minimum Detectable Effect，MDE）。在进行A/B试验之前，需要有一个心理预期，例如，当实验组比对照组至少提升3%的效果时，才认为实验组的方案有实际价值，若没有达到预期提升，即使统计检验时显著的，实验组的方案也不值得被采纳。MDE的大小对样本量计算和实验设计至关重要，如果MDE设置的过小，样本量可能会很大，导致昂贵和耗时的实验。如果MDE设置的过大，可能无法检测到较小的但仍具有实际意义的效应。通常，确定MDE的大小需要综合考虑多个因素，包括业务目标、可行性、预期效应大小、统计功效和显著性水平等。较大的MDE可能需要更小的样本量，但可能会错过较小但仍重要的效应。较小的MDE可能需要更大的样本量，但可以更准确地检测到较小的效应。
-如何衡量实验效果？ 参考答案
-A/B试验的效果可以通过P值、效应值、最小检测效应来衡量。
-（1）显著性水平(1-α)和P值。 显著性水平（Significance Level）和P值是判断试验结果是否具有统计显著性的重要指标。显著性水平将犯Ⅰ类错误的概率控制在一给定的水平下，这个水平就是显著性水平，在此基础上使犯第Ⅱ类错误的概率尽可能小。P值在统计学中用来衡量两样本由随机抽样误差，即犯Ⅰ类错误而产生的差异，只要P值足够小，小到可以忽略，就可以认为两样本之间的差异并不是由抽样误差引起的，而是样本本身就存在的差异。</description>
-    </item>
-    
-    <item>
-      <title>K-近邻算法概述</title>
-      <link>https://zhgyqc.vercel.app/cn/2023/06/18/knn/</link>
-      <pubDate>Sun, 18 Jun 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhgyqc.vercel.app/cn/2023/06/18/knn/</guid>
-      <description>引言 本文分享第一个机器学习算法：K-近邻算法（K-Nearest Neighbor, KNN），最初由Cover和Hart于1968年提出，是最简单的机器学习算法之一。本文将从以下几个方面对K-近邻算法进行分享：首先，我将分享K-近邻算法的基本理论概念；其次，本文将使用Python实现一个实战案例；最后，我将分享一些K-近邻算法常见的面试问题。
-算法概述 K-近邻算法是通过测量不同特征值之间的距离方法进行分类。它的工作原理是：存在一个样本数据集合，也称为训练样本集，并且样本集中每个数据都存在标签，即已知样本集中每一数据与所属分类的对应关系。当输入没有标签的新数据后，将新数据的每个特征与样本集中数据对应的特征进行比较，然后算法提取样本集中特征最相似数据（最近邻）的分类标签。一般来说，我们只选择样本数据集中前\(k\)个最相似的数据，这就是K-近邻算法中的\(k\)出处，通常是\(k\)不大于20的整数。最后，选择\(k\)个最相似数据中出现次数最多的分类，作为新数据的分类。
-K-近邻算法的预测分类流程如下：
-计算已知类别数据集中的点与当前点之间的距离； 按照距离递增次序排序； 选取与当前点距离最小的\(k\)个点； 确定前\(k\)个点所在类别的出现频率； 返回前\(k\)个点出现频率最高的类别作为当前点的预测分类。 其中，计算距离一般使用欧氏距离公式：
-$$ d(\mathbf{x}, \mathbf{y}) = \sqrt{\sum_{i=1}^{n} (x_i - y_i)^2} $$
-K-近邻算法的优缺点如下：
-优点：
-简单易懂： K-近邻算法是一种直观、简单的算法，容易理解和实现； 无需训练： K-近邻算法不需要训练，它可以直接利用已有的数据进行推断，因此对新数据的适应性较好； 对异常值不敏感： 由于K-近邻算法是基于局部信息进行推断，它对于异常值的影响相对较小，不易受异常样本的干扰。 缺点：
-计算开销较大： 在进行预测时，K-近邻算法需要计算新样本与所有训练样本之间的距离，因此在处理大规模数据集时，计算开销较高，对计算资源要求较高； 特征维度问题： 随着特征维度的增加，计算样本之间的距离会变得更加困难，这一问题被称为“唯独灾难”。在高维空间中，样本间的距离往往趋于相等或相差不大，导致K-近邻算法的性能下降； 对不平衡数据集敏感： 当训练数据集中的类别不平衡时，样本较多的类别将对预测结果产生较大的影响，从而导致偏差。这可能会导致K-近邻算法在处理不平衡数据集时的性能下降。 注意： K-近邻算法中的\(k\)值是一个超参数，需要根据具体问题和数据进行调优。选择不合适的\(k\)值可能导致欠拟合或过拟合问题。
-实战案例 本文所使用的是一个改进约会网站配对效果的案例，原始案例来自于《机器学习实战》一书，另外这里推荐一个写的还不错的书中项目对应的源码地址。
-案例概述 我的朋友海伦一直使用在线约会网站寻找适合自己的约会对象。尽管约会网站会推荐不同的人选，但她并不是喜欢每一个人。经过一番总结，她发现曾交往过三种类型的人：
-不喜欢的人 魅力一般的人 极具魅力的人 尽管发现了上述规律，但海伦依然无法将约会网站推荐的匹配对象归入恰当的分类。她觉得可以在周一到周五约会那些魅力一般的人，而周末则更喜欢与那些极具魅力的人为伴。海伦希望我们的分类软件可以更好地帮助她将匹配对象划分到确切的分类中。此外海伦还收集了一些约会网站未曾记录的数据信息，她认为这些数据更有助于匹配对象的归类。
-这里我们就使用K-近邻算法来实现这一任务，下面是基本流程：
-收集数据：提供文本文件； 准备数据：使用Python解析文本文件； 分析数据：使用Matplotlib画二维扩散图； 测试算法：使用海伦提供的部分数据作为测试样例； 使用算法：产生简单的命令行程序，然后海伦可以输入一些特征数据以判断对方是否为自己喜欢的类型。 注意： 测试样本和非测试样本的区别在于：测试样本是已经完成分类的数据，如果预测分类与实际类别不同，则标记为一个错误。
-准备数据 海伦收集约会数据已经有了一段时间，她把这些数据存放在文本文件中，每个样本数据占据一行，总共有1000行。海伦的样本主要包含以下3种特征：
-每年获得的飞行常客里程数； 玩视频游戏所耗时间百分比； 每周消费的冰淇淋公升数。 在将上述特征数据输入到分类器之前，必须将待处理数据的格式改变为分类器可以接受的格式。下面是使用Python实现的数据读取代码：
-def file2matrix(filename): &amp;#34;&amp;#34;&amp;#34;Read data from file and return a matrix and a vector of labels.</description>
-    </item>
-    
-    <item>
-      <title>阿里云 Ubuntu 上重新安装 MySQL 8.0 的步骤</title>
-      <link>https://zhgyqc.vercel.app/cn/2023/04/04/steps-to-reinstall-mysql_8.0-on-aliyun-ubuntu/</link>
-      <pubDate>Tue, 04 Apr 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhgyqc.vercel.app/cn/2023/04/04/steps-to-reinstall-mysql_8.0-on-aliyun-ubuntu/</guid>
-      <description>前言 当您在使用 MySQL 时遇到问题时，可能需要重新安装 MySQL 以解决问题。在卸载并重新安装 MySQL 8.0 是一种可靠的解决方法。通过这种方法，您可以确保从头开始获得干净的 MySQL 安装，消除了可能由之前的安装引起的问题。因此，接下来我们将介绍如何在阿里云 Ubuntu 上执行卸载并重新安装 MySQL 8.0 的步骤，以解决 MySQL 的问题。
-emm~本文其实是基于ChatGPT生成的！在我使用MySQL的过程中，遇到了一个无法解决的报错。我试着遵循网上给出的建议，但是问题依旧存在。于是，我想到了使用卸载重装的方法（卸载重装大法yyds！）。我试着按照网上的步骤操作，但是总是卸载不干净。最后，我又想到了向ChatGPT求助，跟着它给出的步骤，终于成功解决了问题。因此，我想把这份卸载重装的步骤整理下来方便后续查看，也希望能帮助其他遇到类似问题的朋友们节省时间成本。
-步骤 卸载旧版本的 MySQL 在卸载 MySQL 之前，最好备份您的数据以防止数据丢失。接下来，按照以下步骤卸载旧版本的 MySQL：
-停止 MySQL 服务 在终端中运行以下命令以停止MySQL服务（这一步非常重要！！！）：
-sudo systemctl stop mysql 删除 MySQL 数据目录 默认情况下，MySQL数据目录位于/var/lib/mysql。在终端中运行以下命令以删除此目录及其内容：
-sudo rm -rf /var/lib/mysql 卸载 MySQL 软件包 在终端中运行以下命令以卸载 MySQL 软件包：
-sudo apt-get remove --purge mysql-server mysql-client mysql-common sudo apt-get autoremove sudo apt-get autoclean 第一条命令删除MySQL服务器和客户端软件包，第二条命令将自动删除未使用的依赖项，第三条命令清理apt-cache。
-清除 MySQL 配置文件 在终端中运行以下命令以清除 MySQL 的配置文件：
-sudo rm -rf /etc/mysql/ 添加 MySQL 8.</description>
-    </item>
-    
-    <item>
-      <title>在阿里云上运行Django博客项目的详细步骤</title>
-      <link>https://zhgyqc.vercel.app/cn/2023/03/18/steps-to-run-a-django-blog-project-in-aliyun/</link>
-      <pubDate>Sat, 18 Mar 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhgyqc.vercel.app/cn/2023/03/18/steps-to-run-a-django-blog-project-in-aliyun/</guid>
-      <description>本文主要介绍了如何将Django博客系统运行在阿里云上。运行流程主要包括下载项目、在Ubuntu上新建虚拟环境、新建数据库、在本地的PyCharm中配置运行、在阿里云上配置安全组和开放8000端口等步骤。在运行过程中，还需要检查博客网站是否已经启动、博客网站的配置是否正确、本地网络连接是否正常以及防火墙和安全组的设置等问题。通过以上操作，就可以将Django博客系统成功地运行在阿里云上，并实现外网访问。
-Django博客项目是来源于GitHub上的一个开源项目：https://github.com/liangliangyy/DjangoBlog
-基本步骤 下载项目 通过以下命令，将博客项目克隆到本地
-git clone git@github.com:liangliangyy/DjangoBlog.git Ubuntu上新建虚拟环境 以下是在Ubuntu上新建及操作虚拟环境的基本命令：
-mkvirtualenv 虚拟环境名称 # 创建虚拟环境命令workon 虚拟环境名称 # 进入虚拟环境工作workon # 查看机器上有多个个虚拟环境deactivate # 退出虚拟环境rmvirtualenv 虚拟环境名 # 删除虚拟环境# 查看虚拟环境中的安装包信息pip listpip freezepip freeze &amp;gt; requirement.txt # 导出安装包信息# 把依赖包导入到虚拟环境中pip install - r requirement.txt 建好虚拟环境好，在虚拟环境中使用以下命令，将博客项目所使用的相关依赖包导入到虚拟环境中：
-pip install -r requirements_longge.txt Ubuntu上新建数据库 该博客项目中涉及到数据存储，需要连接MySQL数据库的。因此需要在Ubuntu上新建一个数据库。
-create database django_blog charset=utf8mb4; 然后把项目提供的数据库备份djangoblog.sql导入到新建的数据库中。
-mysql -u root -p django_blog &amp;lt;djangoblo 在本地的PyCharm中配置运行 首先在PyCharm中打开下载好的博客项目，然后修改DjangoBlog文件夹下的settings中的数据库密码和IP：
-DATABASES = { &amp;#39;default&amp;#39;: { &amp;#39;ENGINE&amp;#39;: &amp;#39;django.</description>
-    </item>
-    
-    <item>
-      <title>Jetbrains全家桶免费使用</title>
-      <link>https://zhgyqc.vercel.app/cn/2023/03/17/the-jetbrains-family-bucket-is-free-to-use/</link>
-      <pubDate>Fri, 17 Mar 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhgyqc.vercel.app/cn/2023/03/17/the-jetbrains-family-bucket-is-free-to-use/</guid>
-      <description>Jetbrains是一家专注于提供优秀的开发工具的软件公司，其开发的产品包括IntelliJ IDEA、WebStorm、PyCharm等等。这些工具广受开发者欢迎，因为它们拥有丰富的功能、优秀的性能和良好的用户体验。然而，这些工具的价格也相对较高，可能会对一些开发者造成经济负担。但是，Jetbrains也提供了一些免费使用的渠道，让更多的开发者能够免费使用这些工具。本文将介绍这些渠道，帮助你免费使用Jetbrains全家桶。
-面向高校师生的免费使用 Jetbrains的教育优惠地址是 https://www.jetbrains.com/shop/eform/students如果你是一名在校大学生或者高中生，并且正在学习计算机相关专业，那么你可以通过Jetbrains的学生许可证程序免费使用Jetbrains全家桶。这个程序非常简单，只需要提供你的学校邮箱地址或者学生证明即可。你可以在Jetbrains官网的学生许可证页面提交申请，审核通过后，你就可以免费使用Jetbrains全家桶一年。
-通过学生许可证程序获得的许可证是完全正式的，你可以使用它来进行任何的商业或者非商业项目开发。并且，在许可证到期前，你可以再次提交申请，以延长使用时间。这个程序对于在校学生来说，是一个非常棒的福利。
-面向开源开发者的免费使用 Jetbrains的开源开发许可地址是 https://www.jetbrains.com/zh-cn/community/opensource/#support如果你是一名开源开发者，并且正在为开源项目做贡献，那么你可以通过Jetbrains的开源项目许可证程序免费使用Jetbrains全家桶。这个程序也非常简单，只需要提供你参与的开源项目的链接即可。Jetbrains会审核你的项目，并且决定是否为你提供免费的许可证。通过开源项目许可证程序获得的许可证也是完全正式的，你可以使用它来进行任何的商业或者非商业项目开发。
-开源开发者的申请方式我目前暂时也没有试过，不过据说这种方式也不是特别难，具体可以结合官网上对于开源的相关说明进行申请。</description>
-    </item>
-    
-    <item>
-      <title>Python虚拟环境配置</title>
-      <link>https://zhgyqc.vercel.app/cn/2023/03/14/python-virtual-environment-configuration/</link>
-      <pubDate>Tue, 14 Mar 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhgyqc.vercel.app/cn/2023/03/14/python-virtual-environment-configuration/</guid>
-      <description>安装虚拟环境 windows下安装
-pip install virtualenv # 安装虚拟环境pip install virtualenvwrapper-win # 安装虚拟环境扩展包 按照上述步骤安装之后，可以通过pip list|grep vir命令检查是否安装成功，若显示已下内容即可：
-Ubuntu下安装
-sudo pip install virtualenv # 安装虚拟环境sudo pip install virtualenvwrapper # 安装虚拟环境扩展包 注意：给阿里云上的Ubuntu安装虚拟环境扩展包的时候，使用sudo命令可能会报错，这个时候，可以用pip install virtualenvwrapper命令，只给当前用户安装即可。
-除此之外，Ubuntu下安装还需要编辑家目录下的.bashrc文件，通过vim .bashrc进入文件，添加以下三行内容：
-VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3export WORKON_HOME=$HOME/.virtualenvssource /usr/local/bin/virtualenvwrapper.sh 保存该文件并退出后，使用source .bashrc使其生效。
-按照上述步骤安装之后，可以通过pip list|grep vir命令检查是否安装成功，若显示已下内容即可：
-使用虚拟环境 mkvirtualenv 虚拟环境名称 # 创建虚拟环境命令workon 虚拟环境名称 # 进入虚拟环境工作workon # 查看机器上有多少个虚拟环境deactivate # 退出虚拟环境rmvirtualenv 虚拟环境名 # 删除虚拟环境# 查看虚拟环境中的安装包信息pip listpip freezepip freeze &amp;gt; requirement.</description>
-    </item>
-    
-    <item>
-      <title>远程连接阿里云上的MySQL</title>
-      <link>https://zhgyqc.vercel.app/cn/2023/03/12/remote-connection-to-mysql-on-aliyun/</link>
-      <pubDate>Sun, 12 Mar 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhgyqc.vercel.app/cn/2023/03/12/remote-connection-to-mysql-on-aliyun/</guid>
-      <description>基本步骤 添加 MySQL 8.0 的 APT 源
-添加 MySQL 8.0 的 APT 源。打开终端并输入以下命令，以添加 MySQL 8.0 的 APT 源：
-wget -c https://dev.mysql.com/get/mysql-apt-config_0.8.22-1_all.deb sudo dpkg -i mysql-apt-config_0.8.22-1_all.deb 在安装过程中，您需要选择 MySQL 8.0 版本并更新 APT 存储库。
-服务器端安装MySQL
-sudo apt updatesudo apt install mysql-server 注意：当安装mysql-server提示输入密码时，一定要输入密码，两次密码一致。
-然后输入mysql -u root -p回车，输入密码，能正常进入以下界面就是安装成功了 下面是几个针对服务器端MySQL的常用操作 启动服务 sudo service mysql start 查看服务状态 sudo service mysql status 查看进程中是否存在mysql服务 ps -elf|grep mysql 停止服务 sudo service mysql stop 重启服务 sudo service mysql restart 远程连接</description>
-    </item>
-    
-    <item>
-      <title>免费领取阿里云云服务器</title>
-      <link>https://zhgyqc.vercel.app/cn/2023/02/14/aliyun-student-application/</link>
-      <pubDate>Tue, 14 Feb 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhgyqc.vercel.app/cn/2023/02/14/aliyun-student-application/</guid>
-      <description>领取步骤 阿里云的飞天加速计划3.0-高校计划，面向学生开发者提供免费的云服务器福利，通过学生身份认证及续费任务后，最多可以领取7个月免费云服务器ECS资源。具体步骤如下：
-注册阿里云账号 完成学生身份认证 免费领取云服务器，首次领用时长为1个月 完成实验学习与Clouder认证测试 免费续领云服务器，时长为6个月 完成以上操作步骤后，就可以领取7个月免费云服务器ECS资源啦。
-参考资料 下面是我在免费领取阿里云云服务器及初步配置过程中参考的学习资料：
-免费领取阿里云云服务器的详细攻略：https://developer.aliyun.com/article/1122002 云服务器新手上路任务教程：https://blog.csdn.net/qq_45736061/article/details/123415046 Ubuntu系统如何安装图形界面？教你Ubuntu怎么进图形界面：https://www.hechangquan.com/how/1718.html?spm=a2c6h.12873639.article-detail.7.350d4c2fGUPQGl </description>
-    </item>
-    
-    <item>
-      <title>我的阅读书单-2022</title>
-      <link>https://zhgyqc.vercel.app/cn/2022/12/31/my-reading-list-2022/</link>
-      <pubDate>Sat, 31 Dec 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhgyqc.vercel.app/cn/2022/12/31/my-reading-list-2022/</guid>
-      <description> 序号 书名 作者 我的推荐指数 1 圆圈正义：作为自由前提的信念 罗翔 ⭐⭐⭐⭐⭐ 2 富爸爸穷爸爸（20周年修订版） 罗伯特·清崎 / 萧明 译 ⭐⭐⭐⭐⭐ 3 高质量读研：教你如何写论文、做科研 张军平 ⭐⭐⭐⭐⭐ 4 Python编程：从入门到实践 埃里克·马瑟斯 / 袁国忠 译 ⭐⭐⭐⭐⭐ 5 底层逻辑 吕白 ⭐⭐⭐ 6 算法图解 巴尔加瓦 / 袁国忠 译 ⭐⭐⭐⭐ 7 机器学习：Python实践 魏贞原 ⭐⭐ 8 明朝那些事儿（全集） 当年明月 ⭐⭐⭐⭐ 9 Github入门与实践 大塚弘记 / 支鹏浩，刘斌 译 ⭐⭐⭐⭐ 10 我的二本学生 黄灯 ⭐⭐⭐ 11 浪潮之巅（第四版） 吴军 ⭐⭐⭐⭐⭐ 12 上海交通大学生存手册 survivesjtu@gmail.com⭐⭐⭐⭐⭐ </description>
-    </item>
-    
-    <item>
-      <title>立场与是非</title>
-      <link>https://zhgyqc.vercel.app/cn/2022/12/30/first-post-cn/</link>
-      <pubDate>Fri, 30 Dec 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhgyqc.vercel.app/cn/2022/12/30/first-post-cn/</guid>
-      <description>“立场”和“是非”究竟哪个更重要呢？
-《琅琊榜之风起长林》是一部我非常喜欢的国产剧，其中有一段关于“立场”和“是非”的台词令我印象深刻。
-立场不和、政见不合都不可怕，可怕的是在你面前有两个阵营，而你不得不选边站。一旦形成两个阵营，最后立场必定大于是非！1 ——萧庭生《琅琊榜之风起长林》
-虽然剧中这段台词其实是在说“党争”，但我们的生活中应该也不乏“立场”和“是非”的探讨。老话说的好，“帮理不帮亲”。但真的能这么做的又有多少人呢？一旦面临利益纠葛，我们往往会被自己所身处的立场所裹挟，认为别人做什么都是错的。即便有时候我们认识到了孰是孰非，但很有可能还是会选择去捍卫自己的立场。
-也许，将“立场”凌驾于“是非”之上，是当下的最优解。但长此以往，大家都只在乎自己的”立场“，那么对于整个集体来说，就变成了一种内耗，是不利于发展的。对于个人来说，是非观念会越来越淡薄，且变得盲目&amp;hellip;&amp;hellip;
-2022年最后一天了，随便写几句。提前祝大家新年快乐呀！
-琅琊榜之风起长林&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description>
-    </item>
-    
-  </channel>
-</rss>
