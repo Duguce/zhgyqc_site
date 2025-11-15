@@ -1,113 +1,66 @@
-<a name="top"></a>
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Qingchen Yu</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <link rel="stylesheet" href="../../../../../css/style.css" />
-    <link rel="stylesheet" href="../../../../../css/fonts.css" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" rel="stylesheet">
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/r.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/bash.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/python.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vega@5.17.0"></script>
-<script src="https://cdn.jsdelivr.net/npm/vega-lite@4.17.0"></script>
-<script src="https://cdn.jsdelivr.net/npm/vega-embed@6.12.2"></script>
-
-<script>hljs.initHighlightingOnLoad();</script>
-
-
-
-            <link rel="icon" href="https://zhgyqc.vercel.app/media/logo.png">
-
-
-
-
-
-  </head>
-  
-  <body>
-    <div class="wrapper">
-      <header class="header">
-        <nav class="nav" >
-      <a href="../../../../../" class="nav-logo">
-        <img src="../../../../../media/logo.png"
-         width="50"
-         height="50"
-         alt="Hugo-ht">
-      </a>
-
-      <ul class="nav-links" >
-        
-        
-           <li><a href="../../../../../cn/blogs/">博客</a></li>
-       
-           <li><a href="../../../../../">English</a></li>
-       
-       
-      </ul>
+<a name=top></a><!doctype html>
+<html lang=en>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>Qingchen Yu</title>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css>
+<link rel=stylesheet href=../../../../../css/style.css>
+<link rel=stylesheet href=../../../../../css/fonts.css>
+<link href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css rel=stylesheet>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/r.min.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/bash.min.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/python.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/vega@5.17.0></script>
+<script src=https://cdn.jsdelivr.net/npm/vega-lite@4.17.0></script>
+<script src=https://cdn.jsdelivr.net/npm/vega-embed@6.12.2></script>
+<script>hljs.initHighlightingOnLoad()</script>
+<link rel=icon href=https://zhgyqc.vercel.app/media/logo.png>
+</head>
+<body>
+<div class=wrapper>
+<header class=header>
+<nav class=nav>
+<a href=../../../../../ class=nav-logo>
+<img src=../../../../../media/logo.png width=50 height=50 alt=Hugo-ht>
+</a>
+<ul class=nav-links>
+<li><a href=../../../../../cn/blogs/>博客</a></li>
+<li><a href=../../../../../>English</a></li>
+</ul>
 </nav>
-      </header>
-
-<main class="content" role="main">
-  <div style="text-align: center">
-    
-      <h1>远程连接阿里云上的MySQL</h1>
-      
-      <p>
-        Yu Ching San 
-         / 2023-03-12
-      </p>
-    
-    <hr/>
-  </div>
-
-  <span class="article-toolbar">
-    
-      
-        
-        
-          
-        
-        
-      
-    
-  </span>
-
-  
-
-  <div class="body-text list-text">
-    
-    <h1 id="基本步骤">基本步骤<a href="#基本步骤" class="header-anchor" ariaLabel="Anchor"> # </a></h1>
+</header>
+<main class=content role=main>
+<div style=text-align:center>
+<h1>远程连接阿里云上的MySQL</h1>
+<p>
+Yu Ching San
+/ 2023-03-12
+</p>
+<hr>
+</div>
+<span class=article-toolbar>
+</span>
+<div class="body-text list-text">
+<h1 id=基本步骤>基本步骤<a href=#基本步骤 class=header-anchor arialabel=Anchor> # </a></h1>
 <p><strong>添加 MySQL 8.0 的 APT 源</strong></p>
 <p>添加 MySQL 8.0 的 APT 源。打开终端并输入以下命令，以添加 MySQL 8.0 的 APT 源：</p>
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wget -c https://dev.mysql.com/get/mysql-apt-config_0.8.22-1_all.deb
-</span></span><span style="display:flex;"><span>sudo dpkg -i mysql-apt-config_0.8.22-1_all.deb
-</span></span></code></pre></div><p>在安装过程中，您需要选择 MySQL 8.0 版本并更新 APT 存储库。</p>
+<div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>wget -c https://dev.mysql.com/get/mysql-apt-config_0.8.22-1_all.deb
+sudo dpkg -i mysql-apt-config_0.8.22-1_all.deb
+</code></pre></div><p>在安装过程中，您需要选择 MySQL 8.0 版本并更新 APT 存储库。</p>
 <p><strong>服务器端安装MySQL</strong></p>
-<pre tabindex="0"><code>sudo apt update
+<pre tabindex=0><code>sudo apt update
 sudo apt install mysql-server
 </code></pre><p><strong>注意</strong>：当安装mysql-server提示输入密码时，一定要输入密码，两次密码一致。</p>
 <ul>
 <li>然后输入<code>mysql -u root -p</code>回车，输入密码，能正常进入以下界面就是安装成功了</li>
 </ul>
-<figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-    <a href="https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/2023-03-12_155044.png"  itemprop="contentUrl"> 
-        <img itemprop="thumbnail"
-            src="https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/2023-03-12_155044.png"
-            
-            width="500"/>
-    </a>
-    
+<figure itemprop=associatedMedia itemscope itemtype=http://schema.org/ImageObject>
+<a href=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/2023-03-12_155044.png itemprop=contentUrl>
+<img itemprop=thumbnail src=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/2023-03-12_155044.png width=500>
+</a>
 </figure>
-
-
 <ul>
 <li>下面是几个针对服务器端MySQL的常用操作
 <ul>
@@ -123,13 +76,13 @@ sudo apt install mysql-server
 <ul>
 <li>服务器端设置支持远程连接</li>
 </ul>
-<pre tabindex="0"><code># 在命令行中依次输入以下命令
+<pre tabindex=0><code># 在命令行中依次输入以下命令
 mysql -u root -p
 
 # 进入mysql
 use mysql;
 select host, user from user;
-update user set host=&#39;%&#39; where user=&#39;root&#39;;
+update user set host='%' where user='root';
 flush privileges;
 exit;
 
@@ -138,51 +91,33 @@ sudo service mysql restart
 </code></pre><ul>
 <li>Pycharm远程连接</li>
 </ul>
-<figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-    <a href="https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/2023-03-12_162728.png"  itemprop="contentUrl"> 
-        <img itemprop="thumbnail"
-            src="https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/2023-03-12_162728.png"
-            
-            width="500"/>
-    </a>
-    
+<figure itemprop=associatedMedia itemscope itemtype=http://schema.org/ImageObject>
+<a href=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/2023-03-12_162728.png itemprop=contentUrl>
+<img itemprop=thumbnail src=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/2023-03-12_162728.png width=500>
+</a>
 </figure>
-
-
 <ul>
 <li>Navicat远程连接</li>
 </ul>
-<figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-    <a href="https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/2023-03-12_163014.png"  itemprop="contentUrl"> 
-        <img itemprop="thumbnail"
-            src="https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/2023-03-12_163014.png"
-            
-            width="500"/>
-    </a>
-    
+<figure itemprop=associatedMedia itemscope itemtype=http://schema.org/ImageObject>
+<a href=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/2023-03-12_163014.png itemprop=contentUrl>
+<img itemprop=thumbnail src=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/2023-03-12_163014.png width=500>
+</a>
 </figure>
-
-
-<h1 id="常见问题">常见问题<a href="#常见问题" class="header-anchor" ariaLabel="Anchor"> # </a></h1>
+<h1 id=常见问题>常见问题<a href=#常见问题 class=header-anchor arialabel=Anchor> # </a></h1>
 <p>下面是几个在安装配置过程中遇到的问题，及对应的解决方案</p>
 <p><strong>问题1</strong>：当在命令行输入<code>mysql -u root -p</code>回车后，报错显示：</p>
-<pre tabindex="0"><code>ERROR 1698 (28000): Access denied for user &#39;root&#39;@&#39;localhost&#39;
+<pre tabindex=0><code>ERROR 1698 (28000): Access denied for user 'root'@'localhost'
 </code></pre><p>出现这种情况一般是因为安装新版本的mysql，root密码是随机的非空密码，所以要通过查看随机密码进入，再修改原来的密码。</p>
 <p><strong>解决方法</strong></p>
 <ul>
 <li>输入以下指令：<code>sudo cat /etc/mysql/debian.cnf</code></li>
 </ul>
-<figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-    <a href="https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/2023-03-12_160547.png"  itemprop="contentUrl"> 
-        <img itemprop="thumbnail"
-            src="https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/2023-03-12_160547.png"
-            
-            width="500"/>
-    </a>
-    
+<figure itemprop=associatedMedia itemscope itemtype=http://schema.org/ImageObject>
+<a href=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/2023-03-12_160547.png itemprop=contentUrl>
+<img itemprop=thumbnail src=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/2023-03-12_160547.png width=500>
+</a>
 </figure>
-
-
 <ul>
 <li>
 <p>输入以下指令：<code>mysql -u debian-sys-maint</code>，并使用该用户名和密码进入MySQL</p>
@@ -191,52 +126,46 @@ sudo service mysql restart
 <p>在MySQL中依次输入以下指令，查看user表</p>
 </li>
 </ul>
-<pre tabindex="0"><code>use mysql;
+<pre tabindex=0><code>use mysql;
 select user, plugin from user;
 </code></pre><ul>
 <li>修改root密码格式</li>
 </ul>
-<pre tabindex="0"><code>update user set plugin=&#39;mysql_native_password&#39; where user=&#39;root&#39;; # 修改密码格式
+<pre tabindex=0><code>update user set plugin='mysql_native_password' where user='root'; # 修改密码格式
 select user,plugin from user;
 </code></pre><ul>
 <li>刷新权限</li>
 </ul>
-<pre tabindex="0"><code>flush privileges;
+<pre tabindex=0><code>flush privileges;
 </code></pre><ul>
 <li>增加root密码</li>
 </ul>
-<pre tabindex="0"><code>alter user &#39;root&#39;@&#39;localhost&#39; identified by &#39;password&#39;;
+<pre tabindex=0><code>alter user 'root'@'localhost' identified by 'password';
 </code></pre><ul>
 <li>再次刷新权限并退出</li>
 </ul>
-<pre tabindex="0"><code>flush privileges;
+<pre tabindex=0><code>flush privileges;
 exit
 </code></pre><ul>
 <li>重启mysql服务</li>
 </ul>
-<pre tabindex="0"><code>service mysql restart
+<pre tabindex=0><code>service mysql restart
 </code></pre><p>然后再次输入<code>mysql -u root -p</code>命令，并输入刚刚修改的密码，一般就可以正常登录啦。</p>
 <p><strong>问题2</strong>：远程连接失败报错</p>
 <p>Pycharm报错</p>
-<pre tabindex="0"><code>communications link failure the last packet sent successfully to the server was 0 milliseconds ago. the driver has not received any packets from the server.
+<pre tabindex=0><code>communications link failure the last packet sent successfully to the server was 0 milliseconds ago. the driver has not received any packets from the server.
 </code></pre><p>Navicat报错</p>
-<pre tabindex="0"><code>10060错误...
+<pre tabindex=0><code>10060错误...
 </code></pre><p>远程连接云服务器出现这种情况一般是因为服务器或防火墙上的安全设置可能会阻止客户端和服务器之间的通信。</p>
 <p><strong>解决方案</strong></p>
 <p>首先，进入阿里云服务器管理控制台，点击进入安全组规则，添加以下规则：</p>
-<figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-    <a href="https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/2023-03-12_163838.png"  itemprop="contentUrl"> 
-        <img itemprop="thumbnail"
-            src="https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/2023-03-12_163838.png"
-            
-            width="800"/>
-    </a>
-    
+<figure itemprop=associatedMedia itemscope itemtype=http://schema.org/ImageObject>
+<a href=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/2023-03-12_163838.png itemprop=contentUrl>
+<img itemprop=thumbnail src=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/2023-03-12_163838.png width=800>
+</a>
 </figure>
-
-
 <p>也可以通过命令行设置防护墙开放3306端口</p>
-<pre tabindex="0"><code># 添加需要监听的端口
+<pre tabindex=0><code># 添加需要监听的端口
 /sbin/iptables -I INPUT -p tcp --dport 3306 -j ACCEPT
 # 保存设置
 /etc/init.d/iptables save
@@ -249,69 +178,33 @@ service iptables start
 # 开机不再启动防火墙服务
 chkconfig iptables off
 </code></pre><p>通过以上操作后，然后重启云服务器，再次尝试是否可以远程连接成功。一般情况下，是可以正常连接的了。</p>
-
-
-    
-    <p style="color:#777;">
-      最后一次修改于
-      2023-07-23
-    </p>
-  </div>
-
-  <a href="#top"><i class="fa fa-chevron-up" style="font-size: 30px; color: black;"></i></a>
+<p style=color:#777>
+最后一次修改于
+2023-07-23
+</p>
+</div>
+<a href=#top><i class="fa fa-chevron-up" style=font-size:30px;color:#000></i></a>
 </main>
-<footer class="footer">
-
-
-<div id="utterances-comments"></div>
-<script src="https://utteranc.es/client.js"
-        repo="Duguce/zhgyqc_site"
-        issue-term="https://zhgyqc.vercel.app/cn/2023/03/12/remote-connection-to-mysql-on-aliyun/"
-        label="远程连接阿里云上的MySQL"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-</script>
-
-
-  <script type="text/javascript" src="../../../../../js/math-code.js"></script>
+<footer class=footer>
+<div id=utterances-comments></div>
+<script src=https://utteranc.es/client.js repo=Duguce/zhgyqc_site issue-term=https://zhgyqc.vercel.app/cn/2023/03/12/remote-connection-to-mysql-on-aliyun/ label=远程连接阿里云上的MySQL theme=github-light crossorigin=anonymous async></script>
+<script type=text/javascript src=../../../../../js/math-code.js></script>
 <script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-<script type="text/javascript" src="../../../../../js/center-img.js"></script>
-
-
-
-     <ul class="footer-links">
-      
-       
-       
-       
-       <li><a href="../../../../../cn/blogs/index.xml" type="application/rss+xml" title="RSS feed">
-       订阅 </a>
-       </li>
-       
-       
-       <li>
-       
-       <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">
-       
-        版权
-        <i class="fa fa-cc" aria-hidden="true" title="Attribution-NonCommercial-ShareAlike 4.0 International"></i> 
-        </a>
-       </li>
-       
-     </ul>
-     <div class="copyright-text">
-            
-            ©
-            
-            Qingchen Yu
-            
-            2022-2025
-            
-     </div>
-
+<script type=text/javascript src=../../../../../js/center-img.js></script>
+<ul class=footer-links>
+<li><a href=../../../../../cn/blogs/index.xml type=application/rss+xml title="RSS feed">
+订阅 </a>
+</li>
+<li>
+<a href=http://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh target=_blank>
+版权
+<i class="fa fa-cc" aria-hidden=true title="Attribution-NonCommercial-ShareAlike 4.0 International"></i>
+</a>
+</li>
+</ul>
+<div class=copyright-text>
+©
+Qingchen Yu
+2022-2025
+</div>
 </footer>
-
-
-
-

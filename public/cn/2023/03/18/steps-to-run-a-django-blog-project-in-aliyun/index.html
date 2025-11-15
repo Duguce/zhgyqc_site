@@ -1,109 +1,62 @@
-<a name="top"></a>
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Qingchen Yu</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <link rel="stylesheet" href="../../../../../css/style.css" />
-    <link rel="stylesheet" href="../../../../../css/fonts.css" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" rel="stylesheet">
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/r.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/bash.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/python.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vega@5.17.0"></script>
-<script src="https://cdn.jsdelivr.net/npm/vega-lite@4.17.0"></script>
-<script src="https://cdn.jsdelivr.net/npm/vega-embed@6.12.2"></script>
-
-<script>hljs.initHighlightingOnLoad();</script>
-
-
-
-            <link rel="icon" href="https://zhgyqc.vercel.app/media/logo.png">
-
-
-
-
-
-  </head>
-  
-  <body>
-    <div class="wrapper">
-      <header class="header">
-        <nav class="nav" >
-      <a href="../../../../../" class="nav-logo">
-        <img src="../../../../../media/logo.png"
-         width="50"
-         height="50"
-         alt="Hugo-ht">
-      </a>
-
-      <ul class="nav-links" >
-        
-        
-           <li><a href="../../../../../cn/blogs/">博客</a></li>
-       
-           <li><a href="../../../../../">English</a></li>
-       
-       
-      </ul>
+<a name=top></a><!doctype html>
+<html lang=en>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>Qingchen Yu</title>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css>
+<link rel=stylesheet href=../../../../../css/style.css>
+<link rel=stylesheet href=../../../../../css/fonts.css>
+<link href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css rel=stylesheet>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/r.min.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/bash.min.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/python.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/vega@5.17.0></script>
+<script src=https://cdn.jsdelivr.net/npm/vega-lite@4.17.0></script>
+<script src=https://cdn.jsdelivr.net/npm/vega-embed@6.12.2></script>
+<script>hljs.initHighlightingOnLoad()</script>
+<link rel=icon href=https://zhgyqc.vercel.app/media/logo.png>
+</head>
+<body>
+<div class=wrapper>
+<header class=header>
+<nav class=nav>
+<a href=../../../../../ class=nav-logo>
+<img src=../../../../../media/logo.png width=50 height=50 alt=Hugo-ht>
+</a>
+<ul class=nav-links>
+<li><a href=../../../../../cn/blogs/>博客</a></li>
+<li><a href=../../../../../>English</a></li>
+</ul>
 </nav>
-      </header>
-
-<main class="content" role="main">
-  <div style="text-align: center">
-    
-      <h1>在阿里云上运行Django博客项目的详细步骤</h1>
-      
-      <p>
-        Yu Ching San 
-         / 2023-03-18
-      </p>
-    
-    <hr/>
-  </div>
-
-  <span class="article-toolbar">
-    
-      
-        
-        
-          
-        
-        
-      
-    
-  </span>
-
-  
-
-  <div class="body-text list-text">
-    
-    <p>本文主要介绍了如何将Django博客系统运行在阿里云上。运行流程主要包括下载项目、在Ubuntu上新建虚拟环境、新建数据库、在本地的PyCharm中配置运行、在阿里云上配置安全组和开放8000端口等步骤。在运行过程中，还需要检查博客网站是否已经启动、博客网站的配置是否正确、本地网络连接是否正常以及防火墙和安全组的设置等问题。通过以上操作，就可以将Django博客系统成功地运行在阿里云上，并实现外网访问。</p>
+</header>
+<main class=content role=main>
+<div style=text-align:center>
+<h1>在阿里云上运行Django博客项目的详细步骤</h1>
+<p>
+Yu Ching San
+/ 2023-03-18
+</p>
+<hr>
+</div>
+<span class=article-toolbar>
+</span>
+<div class="body-text list-text">
+<p>本文主要介绍了如何将Django博客系统运行在阿里云上。运行流程主要包括下载项目、在Ubuntu上新建虚拟环境、新建数据库、在本地的PyCharm中配置运行、在阿里云上配置安全组和开放8000端口等步骤。在运行过程中，还需要检查博客网站是否已经启动、博客网站的配置是否正确、本地网络连接是否正常以及防火墙和安全组的设置等问题。通过以上操作，就可以将Django博客系统成功地运行在阿里云上，并实现外网访问。</p>
 <p>Django博客项目是来源于GitHub上的一个开源项目：https://github.com/liangliangyy/DjangoBlog</p>
-<h1 id="基本步骤">基本步骤<a href="#基本步骤" class="header-anchor" ariaLabel="Anchor"> # </a></h1>
-<figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-    <a href="https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230318_194728.jpg"  itemprop="contentUrl"> 
-        <img itemprop="thumbnail"
-            src="https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230318_194728.jpg"
-            
-            width="500"/>
-    </a>
-    
+<h1 id=基本步骤>基本步骤<a href=#基本步骤 class=header-anchor arialabel=Anchor> # </a></h1>
+<figure itemprop=associatedMedia itemscope itemtype=http://schema.org/ImageObject>
+<a href=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230318_194728.jpg itemprop=contentUrl>
+<img itemprop=thumbnail src=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230318_194728.jpg width=500>
+</a>
 </figure>
-
-
-<h2 id="下载项目">下载项目<a href="#下载项目" class="header-anchor" ariaLabel="Anchor"> # </a></h2>
+<h2 id=下载项目>下载项目<a href=#下载项目 class=header-anchor arialabel=Anchor> # </a></h2>
 <p>通过以下命令，将博客项目克隆到本地</p>
-<pre tabindex="0"><code>git clone git@github.com:liangliangyy/DjangoBlog.git
-</code></pre><h2 id="ubuntu上新建虚拟环境">Ubuntu上新建虚拟环境<a href="#ubuntu上新建虚拟环境" class="header-anchor" ariaLabel="Anchor"> # </a></h2>
+<pre tabindex=0><code>git clone git@github.com:liangliangyy/DjangoBlog.git
+</code></pre><h2 id=ubuntu上新建虚拟环境>Ubuntu上新建虚拟环境<a href=#ubuntu上新建虚拟环境 class=header-anchor arialabel=Anchor> # </a></h2>
 <p>以下是在Ubuntu上新建及操作虚拟环境的基本命令：</p>
-<pre tabindex="0"><code>mkvirtualenv 虚拟环境名称 # 创建虚拟环境命令
+<pre tabindex=0><code>mkvirtualenv 虚拟环境名称 # 创建虚拟环境命令
 workon 虚拟环境名称 # 进入虚拟环境工作
 workon # 查看机器上有多个个虚拟环境
 deactivate # 退出虚拟环境
@@ -115,38 +68,32 @@ pip freeze &gt; requirement.txt # 导出安装包信息
 # 把依赖包导入到虚拟环境中
 pip install - r requirement.txt
 </code></pre><p>建好虚拟环境好，在虚拟环境中使用以下命令，将博客项目所使用的相关依赖包导入到虚拟环境中：</p>
-<pre tabindex="0"><code>pip install -r requirements_longge.txt
-</code></pre><h2 id="ubuntu上新建数据库">Ubuntu上新建数据库<a href="#ubuntu上新建数据库" class="header-anchor" ariaLabel="Anchor"> # </a></h2>
+<pre tabindex=0><code>pip install -r requirements_longge.txt
+</code></pre><h2 id=ubuntu上新建数据库>Ubuntu上新建数据库<a href=#ubuntu上新建数据库 class=header-anchor arialabel=Anchor> # </a></h2>
 <p>该博客项目中涉及到数据存储，需要连接MySQL数据库的。因此需要在Ubuntu上新建一个数据库。</p>
-<pre tabindex="0"><code>create database django_blog charset=utf8mb4;
+<pre tabindex=0><code>create database django_blog charset=utf8mb4;
 </code></pre><p>然后把项目提供的数据库备份<code>djangoblog.sql</code>导入到新建的数据库中。</p>
-<pre tabindex="0"><code>mysql -u root -p django_blog &lt;djangoblo
-</code></pre><h2 id="在本地的pycharm中配置运行">在本地的PyCharm中配置运行<a href="#在本地的pycharm中配置运行" class="header-anchor" ariaLabel="Anchor"> # </a></h2>
+<pre tabindex=0><code>mysql -u root -p django_blog &lt;djangoblo
+</code></pre><h2 id=在本地的pycharm中配置运行>在本地的PyCharm中配置运行<a href=#在本地的pycharm中配置运行 class=header-anchor arialabel=Anchor> # </a></h2>
 <p>首先在PyCharm中打开下载好的博客项目，然后修改DjangoBlog文件夹下的settings中的数据库密码和IP：</p>
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>DATABASES <span style="color:#666">=</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#ba2121">&#39;default&#39;</span>: {
-</span></span><span style="display:flex;"><span>        <span style="color:#ba2121">&#39;ENGINE&#39;</span>: <span style="color:#ba2121">&#39;django.db.backends.mysql&#39;</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#ba2121">&#39;NAME&#39;</span>: os<span style="color:#666">.</span>environ<span style="color:#666">.</span>get(<span style="color:#ba2121">&#39;DJANGO_MYSQL_DATABASE&#39;</span>) <span style="color:#a2f;font-weight:bold">or</span> <span style="color:#ba2121">&#39;[数据库名]&#39;</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#ba2121">&#39;USER&#39;</span>: os<span style="color:#666">.</span>environ<span style="color:#666">.</span>get(<span style="color:#ba2121">&#39;DJANGO_MYSQL_USER&#39;</span>) <span style="color:#a2f;font-weight:bold">or</span> <span style="color:#ba2121">&#39;[用户名]&#39;</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#ba2121">&#39;PASSWORD&#39;</span>: os<span style="color:#666">.</span>environ<span style="color:#666">.</span>get(<span style="color:#ba2121">&#39;DJANGO_MYSQL_PASSWORD&#39;</span>) <span style="color:#a2f;font-weight:bold">or</span> <span style="color:#ba2121">&#39;[数据库密码]&#39;</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#ba2121">&#39;HOST&#39;</span>: os<span style="color:#666">.</span>environ<span style="color:#666">.</span>get(<span style="color:#ba2121">&#39;DJANGO_MYSQL_HOST&#39;</span>) <span style="color:#a2f;font-weight:bold">or</span> <span style="color:#ba2121">&#39;localhost&#39;</span>,
-</span></span><span style="display:flex;"><span>        <span style="color:#ba2121">&#39;PORT&#39;</span>: <span style="color:#008000">int</span>(
-</span></span><span style="display:flex;"><span>            os<span style="color:#666">.</span>environ<span style="color:#666">.</span>get(<span style="color:#ba2121">&#39;DJANGO_MYSQL_PORT&#39;</span>) <span style="color:#a2f;font-weight:bold">or</span> <span style="color:#666">3306</span>),
-</span></span><span style="display:flex;"><span>        <span style="color:#ba2121">&#39;OPTIONS&#39;</span>: {
-</span></span><span style="display:flex;"><span>            <span style="color:#ba2121">&#39;charset&#39;</span>: <span style="color:#ba2121">&#39;utf8mb4&#39;</span>},
-</span></span><span style="display:flex;"><span>    }}
-</span></span></code></pre></div><p>接下来选择上文中新建的Ubuntu内的虚拟环境的解释器，配置成功的效果如下图：</p>
-<figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-    <a href="https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230318_200949.jpg"  itemprop="contentUrl"> 
-        <img itemprop="thumbnail"
-            src="https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230318_200949.jpg"
-            
-            width="500"/>
-    </a>
-    
+<div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python>DATABASES <span style=color:#666>=</span> {
+    <span style=color:#ba2121>&#39;default&#39;</span>: {
+        <span style=color:#ba2121>&#39;ENGINE&#39;</span>: <span style=color:#ba2121>&#39;django.db.backends.mysql&#39;</span>,
+        <span style=color:#ba2121>&#39;NAME&#39;</span>: os<span style=color:#666>.</span>environ<span style=color:#666>.</span>get(<span style=color:#ba2121>&#39;DJANGO_MYSQL_DATABASE&#39;</span>) <span style=color:#a2f;font-weight:700>or</span> <span style=color:#ba2121>&#39;[数据库名]&#39;</span>,
+        <span style=color:#ba2121>&#39;USER&#39;</span>: os<span style=color:#666>.</span>environ<span style=color:#666>.</span>get(<span style=color:#ba2121>&#39;DJANGO_MYSQL_USER&#39;</span>) <span style=color:#a2f;font-weight:700>or</span> <span style=color:#ba2121>&#39;[用户名]&#39;</span>,
+        <span style=color:#ba2121>&#39;PASSWORD&#39;</span>: os<span style=color:#666>.</span>environ<span style=color:#666>.</span>get(<span style=color:#ba2121>&#39;DJANGO_MYSQL_PASSWORD&#39;</span>) <span style=color:#a2f;font-weight:700>or</span> <span style=color:#ba2121>&#39;[数据库密码]&#39;</span>,
+        <span style=color:#ba2121>&#39;HOST&#39;</span>: os<span style=color:#666>.</span>environ<span style=color:#666>.</span>get(<span style=color:#ba2121>&#39;DJANGO_MYSQL_HOST&#39;</span>) <span style=color:#a2f;font-weight:700>or</span> <span style=color:#ba2121>&#39;localhost&#39;</span>,
+        <span style=color:#ba2121>&#39;PORT&#39;</span>: <span style=color:green>int</span>(
+            os<span style=color:#666>.</span>environ<span style=color:#666>.</span>get(<span style=color:#ba2121>&#39;DJANGO_MYSQL_PORT&#39;</span>) <span style=color:#a2f;font-weight:700>or</span> <span style=color:#666>3306</span>),
+        <span style=color:#ba2121>&#39;OPTIONS&#39;</span>: {
+            <span style=color:#ba2121>&#39;charset&#39;</span>: <span style=color:#ba2121>&#39;utf8mb4&#39;</span>},
+    }}
+</code></pre></div><p>接下来选择上文中新建的Ubuntu内的虚拟环境的解释器，配置成功的效果如下图：</p>
+<figure itemprop=associatedMedia itemscope itemtype=http://schema.org/ImageObject>
+<a href=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230318_200949.jpg itemprop=contentUrl>
+<img itemprop=thumbnail src=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230318_200949.jpg width=500>
+</a>
 </figure>
-
-
 <p>然后在本地运行该项目，但这时候可能在本地还是无法访问。出现这种情况的原因一般是阿里云服务器的8000端口没有开启，解决方法有以下几种：</p>
 <ul>
 <li>检查博客网站是否已经启动。可以在Ubuntu上使用命令行检查博客网站的运行状态，确认是否已经启动并正在监听8000端口。如果博客网站没有启动，需要先启动它才能访问。</li>
@@ -155,81 +102,39 @@ pip install - r requirement.txt
 <li>检查防火墙是否存在其他限制。如果以上步骤都已经检查过，可以尝试暂时关闭Ubuntu防火墙和阿里云安全组，然后重新尝试访问博客网站。如果能够访问，说明存在其他限制导致无法访问，需要再次检查防火墙和安全组的设置。</li>
 </ul>
 <p>一般经过以上操作，项目就可以正常运行啦！运行效果图如下：</p>
-<figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-    <a href="https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230318_201814.jpg"  itemprop="contentUrl"> 
-        <img itemprop="thumbnail"
-            src="https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230318_201814.jpg"
-            
-            width="500"/>
-    </a>
-    
+<figure itemprop=associatedMedia itemscope itemtype=http://schema.org/ImageObject>
+<a href=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230318_201814.jpg itemprop=contentUrl>
+<img itemprop=thumbnail src=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230318_201814.jpg width=500>
+</a>
 </figure>
-
-
 <p>以上就是本次的分享，感谢阅读！</p>
-
-
-    
-    <p style="color:#777;">
-      最后一次修改于
-      2023-07-23
-    </p>
-  </div>
-
-  <a href="#top"><i class="fa fa-chevron-up" style="font-size: 30px; color: black;"></i></a>
+<p style=color:#777>
+最后一次修改于
+2023-07-23
+</p>
+</div>
+<a href=#top><i class="fa fa-chevron-up" style=font-size:30px;color:#000></i></a>
 </main>
-<footer class="footer">
-
-
-<div id="utterances-comments"></div>
-<script src="https://utteranc.es/client.js"
-        repo="Duguce/zhgyqc_site"
-        issue-term="https://zhgyqc.vercel.app/cn/2023/03/18/steps-to-run-a-django-blog-project-in-aliyun/"
-        label="在阿里云上运行Django博客项目的详细步骤"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-</script>
-
-
-  <script type="text/javascript" src="../../../../../js/math-code.js"></script>
+<footer class=footer>
+<div id=utterances-comments></div>
+<script src=https://utteranc.es/client.js repo=Duguce/zhgyqc_site issue-term=https://zhgyqc.vercel.app/cn/2023/03/18/steps-to-run-a-django-blog-project-in-aliyun/ label=在阿里云上运行Django博客项目的详细步骤 theme=github-light crossorigin=anonymous async></script>
+<script type=text/javascript src=../../../../../js/math-code.js></script>
 <script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-<script type="text/javascript" src="../../../../../js/center-img.js"></script>
-
-
-
-     <ul class="footer-links">
-      
-       
-       
-       
-       <li><a href="../../../../../cn/blogs/index.xml" type="application/rss+xml" title="RSS feed">
-       订阅 </a>
-       </li>
-       
-       
-       <li>
-       
-       <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">
-       
-        版权
-        <i class="fa fa-cc" aria-hidden="true" title="Attribution-NonCommercial-ShareAlike 4.0 International"></i> 
-        </a>
-       </li>
-       
-     </ul>
-     <div class="copyright-text">
-            
-            ©
-            
-            Qingchen Yu
-            
-            2022-2025
-            
-     </div>
-
+<script type=text/javascript src=../../../../../js/center-img.js></script>
+<ul class=footer-links>
+<li><a href=../../../../../cn/blogs/index.xml type=application/rss+xml title="RSS feed">
+订阅 </a>
+</li>
+<li>
+<a href=http://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh target=_blank>
+版权
+<i class="fa fa-cc" aria-hidden=true title="Attribution-NonCommercial-ShareAlike 4.0 International"></i>
+</a>
+</li>
+</ul>
+<div class=copyright-text>
+©
+Qingchen Yu
+2022-2025
+</div>
 </footer>
-
-
-
-

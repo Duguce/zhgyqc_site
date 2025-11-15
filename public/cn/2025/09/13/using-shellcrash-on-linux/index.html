@@ -1,0 +1,149 @@
+<a name=top></a><!doctype html>
+<html lang=en>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>Qingchen Yu</title>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css>
+<link rel=stylesheet href=../../../../../css/style.css>
+<link rel=stylesheet href=../../../../../css/fonts.css>
+<link href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css rel=stylesheet>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/r.min.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/bash.min.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/python.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/vega@5.17.0></script>
+<script src=https://cdn.jsdelivr.net/npm/vega-lite@4.17.0></script>
+<script src=https://cdn.jsdelivr.net/npm/vega-embed@6.12.2></script>
+<script>hljs.initHighlightingOnLoad()</script>
+<link rel=icon href=https://zhgyqc.vercel.app/media/logo.png>
+</head>
+<body>
+<div class=wrapper>
+<header class=header>
+<nav class=nav>
+<a href=../../../../../ class=nav-logo>
+<img src=../../../../../media/logo.png width=50 height=50 alt=Hugo-ht>
+</a>
+<ul class=nav-links>
+<li><a href=../../../../../cn/blogs/>博客</a></li>
+<li><a href=../../../../../>English</a></li>
+</ul>
+</nav>
+</header>
+<main class=content role=main>
+<div style=text-align:center>
+<h1>ShellCrash 配置及使用教程</h1>
+<p>
+Qingchen Yu
+/ 2025-09-13
+</p>
+<hr>
+</div>
+<span class=article-toolbar>
+</span>
+<div class="body-text list-text">
+<h3 id=配置教程>配置教程<a href=#配置教程 class=header-anchor arialabel=Anchor> # </a></h3>
+<ol>
+<li>
+<p>本地安装ShellCrash的教程 <a href=https://juewuy.github.io/bdaz target=_blank rel="noreferrer noopener">https://juewuy.github.io/bdaz</a>
+</p>
+</li>
+<li>
+<p>ShellCrash官方库 <a href=https://github.com/juewuy/ShellCrash target=_blank rel="noreferrer noopener">https://github.com/juewuy/ShellCrash</a>
+</p>
+</li>
+</ol>
+<h3 id=安装流程>安装流程<a href=#安装流程 class=header-anchor arialabel=Anchor> # </a></h3>
+<ul>
+<li>
+<p>下载ShellCrash包: <a href=https://github.com/juewuy/ShellCrash target=_blank rel="noreferrer noopener">https://github.com/juewuy/ShellCrash</a>
+</p>
+</li>
+<li>
+<p>安装</p>
+</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>mkdir -p /tmp/SC_tmp <span style=color:#666>&amp;&amp;</span> tar -zxf <span style=color:#ba2121>&#39;/tmp/ShellCrash.tar.gz&#39;</span> -C /tmp/SC_tmp/ <span style=color:#666>&amp;&amp;</span> bash /tmp/SC_tmp/init.sh <span style=color:#666>&amp;&amp;</span> <span style=color:green>source</span> /etc/profile &gt;/dev/null
+</code></pre></div><ul>
+<li>
+<p>安装好后，通过<code>crash</code>命令启动代理</p>
+</li>
+<li>
+<p>根据提示，导入订阅码</p>
+</li>
+</ul>
+<p><img src=https://raw.githubusercontent.com/Duguce/zhgyqc_site/master/content/assets/shellcrash-config-example.png alt=shellcrash-config-example></p>
+<ul>
+<li>测试是否配置成功</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>
+curl -x http://127.0.0.1:7890 https://www.google.com -I
+</code></pre></div><ul>
+<li>定时自启</li>
+</ul>
+<p>为了防止每天VPN一直开着导致日志堆积，所以可以设置下每天定时自动启动，同时配置开机自启。</p>
+<div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>crontab -e
+
+<span style=color:#666>30</span> <span style=color:#666>3</span> * * * bash anzhuangmulu/ShellCrash/start.sh &gt;/dev/null 2&gt;&amp;<span style=color:#666>1</span>
+@reboot bash anzhuangmulu/ShellCrash/start.sh &gt;/dev/null 2&gt;&amp;<span style=color:#666>1</span>
+</code></pre></div><h3 id=使用教程>使用教程<a href=#使用教程 class=header-anchor arialabel=Anchor> # </a></h3>
+<ul>
+<li>一次性使用（仅在当前会话窗口生效）</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:green>export</span> <span style=color:#19177c>http_proxy</span><span style=color:#666>=</span><span style=color:#ba2121>&#34;http://127.0.0.1:7890&#34;</span>
+<span style=color:green>export</span> <span style=color:#19177c>https_proxy</span><span style=color:#666>=</span><span style=color:#ba2121>&#34;http://127.0.0.1:7890&#34;</span>
+</code></pre></div><p>注：如果想永久使用，可以将上边两条命令写到 <code>~/.bashrc</code> 里边。</p>
+<ul>
+<li>配置快捷指令（推荐）</li>
+</ul>
+<p>通过vim ~/.bashrc命令进入 .bashrc 文件将启用和禁用代理的过程封装为两个短命令的代码放入其中并保存，之后就可以通过快捷指令开关代理了。</p>
+<div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#408080;font-style:italic># 网络代理设置</span>
+setp<span style=color:#666>()</span> <span style=color:#666>{</span>
+    <span style=color:#19177c>host_ip</span><span style=color:#666>=</span>127.0.0.1
+    <span style=color:green>export</span> <span style=color:#19177c>http_proxy</span><span style=color:#666>=</span><span style=color:#ba2121>&#34;http://</span><span style=color:#19177c>$host_ip</span><span style=color:#ba2121>:7890&#34;</span>
+    <span style=color:green>export</span> <span style=color:#19177c>https_proxy</span><span style=color:#666>=</span><span style=color:#ba2121>&#34;http://</span><span style=color:#19177c>$host_ip</span><span style=color:#ba2121>:7890&#34;</span>
+    <span style=color:green>echo</span> <span style=color:#ba2121>&#34;Proxy enabled.&#34;</span>
+<span style=color:#666>}</span>
+
+usetp<span style=color:#666>()</span> <span style=color:#666>{</span>
+    <span style=color:green>unset</span> http_proxy
+    <span style=color:green>unset</span> https_proxy
+    <span style=color:green>echo</span> <span style=color:#ba2121>&#34;Proxy disabled.&#34;</span>
+<span style=color:#666>}</span>
+</code></pre></div><p>保存后，执行 <code>source ~/.bashrc</code> 使配置生效。</p>
+<ul>
+<li>测试是否可以正常使用</li>
+</ul>
+<div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>curl -I https://www.google.com
+</code></pre></div>
+<p style=color:#777>
+最后一次修改于
+2025-09-19
+</p>
+</div>
+<a href=#top><i class="fa fa-chevron-up" style=font-size:30px;color:#000></i></a>
+</main>
+<footer class=footer>
+<div id=utterances-comments></div>
+<script src=https://utteranc.es/client.js repo=Duguce/zhgyqc_site issue-term=https://zhgyqc.vercel.app/cn/2025/09/13/using-shellcrash-on-linux/ label="ShellCrash 配置及使用教程" theme=github-light crossorigin=anonymous async></script>
+<script type=text/javascript src=../../../../../js/math-code.js></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type=text/javascript src=../../../../../js/center-img.js></script>
+<ul class=footer-links>
+<li><a href=../../../../../cn/blogs/index.xml type=application/rss+xml title="RSS feed">
+订阅 </a>
+</li>
+<li>
+<a href=http://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh target=_blank>
+版权
+<i class="fa fa-cc" aria-hidden=true title="Attribution-NonCommercial-ShareAlike 4.0 International"></i>
+</a>
+</li>
+</ul>
+<div class=copyright-text>
+©
+Qingchen Yu
+2022-2025
+</div>
+</footer>
