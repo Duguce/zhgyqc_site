@@ -40,8 +40,7 @@ build: check
 		--destination $(BUILD_DIR) --themesDir themes --theme $(THEME)
 
 serve: check
-	$(HUGO) server $(DRAFT_FLAGS) --bind 0.0.0.0 --port $(PORT) \
-		--baseURL $(BASE_URL) --themesDir themes --theme $(THEME) --disableFastRender
+	$(HUGO) server $(DRAFT_FLAGS) --bind 0.0.0.0 --port $(PORT)
 
 preview: clean check
 	$(HUGO) --environment staging --baseURL $(BASE_URL) $(DRAFT_FLAGS) \

@@ -18,8 +18,8 @@ posts = "/posts/:year/:month/:day/:slug/"
     url = "/"
     weight = 1
 [[menu.en]]
-    name = "News"
-    url = "/en/news/"
+    name = "Activities"
+    url = "/en/activities/"
     weight = 2
 [[menu.en]]
     name = "中文"
