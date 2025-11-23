@@ -19,7 +19,7 @@ tags:
   <em>The Unveiling Ceremony of the CAST Open Source Innovation Committee</em>
 </p>
 
-![Exploring the Open Source Community Exhibition and Booths](https://raw.githubusercontent.com/Duguce/zhgyqc_site/master/content/assets/open-source-exhibition-booths.jpg)
+![Exploring the Open Source Community Exhibition and Booths](https://raw.githubusercontent.com/Duguce/zhgyqc_site/master/content/assets/conference-exhibition-hall.jpg)
 
 <div style="text-align: center;">
   <em>Exploring the Open Source Community Exhibition and Booths</em>
