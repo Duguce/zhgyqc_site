@@ -6,9 +6,11 @@ slug: aliyun-student-application
 draft: false
 toc: false
 categories:
-  - coding
+  - Coding
 tags:
-  - 经验分享
+  - Cloud Services
+  - Student Resources
+  - Alibaba Cloud
 
 ---
 

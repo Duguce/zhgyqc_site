@@ -6,9 +6,11 @@ slug: Decision Tree
 draft: false
 toc: True
 categories:
-  - machine learning
+  - Machine Learning
 tags:
-  - 机器学习
+  - K-Nearest Neighbors
+  - sklearn
+  - Decision Tree
 ---
 
 

@@ -6,9 +6,11 @@ slug: modify-git-commit-messages
 draft: false
 toc: false
 categories:
-  - coding
+  - Coding
 tags:
-  - 经验分享
+  - Git
+  - Version Control
+  - Commit Messages
 
 ---
 

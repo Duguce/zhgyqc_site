@@ -49,7 +49,80 @@
       {{ default (index $.Site.Params.lang.lastupdate $.Site.Params.defaultLang) (index $.Site.Params.lang.lastupdate $.Section) }}
       {{ .Page.Lastmod.Format "2006-01-02" }}
     </p>
+
+    {{ with .Params.tags }}
+    <div class="post-tags" style="margin-top: 0.8rem;">
+      <ul style="list-style: none; padding-left: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.4rem;">
+        {{ range . }}
+        {{ $tagURL := (print "/tags/" (. | urlize) "/") | relURL }}
+        <li>
+          <a href="{{ $tagURL }}" style="display: inline-block; font-size: 0.88rem; color: #2e3240; text-decoration: none; background: #f8f9fb; border: 1px solid #e3e5ec; padding: 0.12rem 0.65rem; border-radius: 999px;">
+            {{ . }}
+          </a>
+        </li>
+        {{ end }}
+      </ul>
+    </div>
+    {{ end }}
   </div>
+
+  {{ $fileDir := "" }}
+  {{ with .File }}
+    {{ $fileDir = .Dir }}
+  {{ end }}
+  {{ $isBlog := strings.HasPrefix $fileDir "cn/blogs" }}
+  {{ $isMoment := strings.HasPrefix $fileDir "en/moments" }}
+  {{ $currentPage := . }}
+  {{ $sectionScratch := newScratch }}
+  {{ if $isBlog }}
+    {{ $sectionScratch.Set "sectionPage" (.Site.GetPage "section" "cn/blogs") }}
+  {{ else if $isMoment }}
+    {{ $sectionScratch.Set "sectionPage" (.Site.GetPage "section" "en/moments") }}
+  {{ end }}
+  {{ with $sectionScratch.Get "sectionPage" }}
+    {{ $sectionPages := .RegularPages.ByDate }}
+    {{ if gt (len $sectionPages) 0 }}
+    {{ $navScratch := newScratch }}
+    {{ $navScratch.Set "prev" nil }}
+    {{ $navScratch.Set "next" nil }}
+    {{ $total := len $sectionPages }}
+    {{ range $index, $p := $sectionPages }}
+      {{ if eq $p.File.Path $currentPage.File.Path }}
+        {{ if gt $index 0 }}
+          {{ $navScratch.Set "prev" (index $sectionPages (sub $index 1)) }}
+        {{ end }}
+        {{ if lt (add $index 1) $total }}
+          {{ $navScratch.Set "next" (index $sectionPages (add $index 1)) }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+    {{ $prev := $navScratch.Get "prev" }}
+    {{ $next := $navScratch.Get "next" }}
+    {{ if or $prev $next }}
+    {{ $hasBoth := and $prev $next }}
+    <nav class="post-pagination" style="margin: 1.4rem 0; display: flex; flex-wrap: wrap; gap: 0.8rem; justify-content: {{ if $hasBoth }}space-between{{ else }}flex-start{{ end }};">
+      {{ if $prev }}
+        {{ $prevTitle := truncate 48 $prev.Title }}
+        <a class="prev-post" href="{{ $prev.RelPermalink }}" style="flex: 1; min-width: 220px; text-decoration: none; border: 1px solid #dcdfe5; border-radius: 10px; padding: 0.9rem 1.1rem; background: #fff;">
+          <div style="font-size: 0.8rem; color: #7a7f8c; letter-spacing: 0.06em;">{{ if eq .Section "cn" }}上一篇{{ else }}Previous{{ end }}</div>
+          <div style="margin-top: 0.4rem; font-size: 0.98rem; font-weight: 600; color: #1f242f; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+            {{ $prevTitle }}
+          </div>
+        </a>
+      {{ end }}
+      {{ if $next }}
+        {{ $nextTitle := truncate 48 $next.Title }}
+        <a class="next-post" href="{{ $next.RelPermalink }}" style="flex: 1; min-width: 220px; text-decoration: none; border: 1px solid #dcdfe5; border-radius: 10px; padding: 0.9rem 1.1rem; background: #fff; text-align: right;">
+          <div style="font-size: 0.8rem; color: #7a7f8c; letter-spacing: 0.06em;">{{ if eq .Section "cn" }}下一篇{{ else }}Next{{ end }}</div>
+          <div style="margin-top: 0.4rem; font-size: 0.98rem; font-weight: 600; color: #1f242f; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+            {{ $nextTitle }}
+          </div>
+        </a>
+      {{ end }}
+    </nav>
+    {{ end }}
+    {{ end }}
+  {{ end }}
 
   <a href="#top"><i class="fa fa-chevron-up" style="font-size: 30px; color: black;"></i></a>
 </main>

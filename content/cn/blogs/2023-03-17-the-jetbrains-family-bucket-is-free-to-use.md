@@ -6,9 +6,11 @@ slug: the-jetbrains-family-bucket-is-free-to-use
 draft: false
 toc: false
 categories:
-  - coding
+  - Coding
 tags:
-  - 经验分享
+  - Jetbrains
+  - Free Usage
+  - Developer Tools
 ---
 
 > [Jetbrains](https://www.jetbrains.com/)是一家专注于提供优秀的开发工具的软件公司，其开发的产品包括IntelliJ IDEA、WebStorm、PyCharm等等。这些工具广受开发者欢迎，因为它们拥有丰富的功能、优秀的性能和良好的用户体验。然而，这些工具的价格也相对较高，可能会对一些开发者造成经济负担。但是，Jetbrains也提供了一些免费使用的渠道，让更多的开发者能够免费使用这些工具。本文将介绍这些渠道，帮助你免费使用Jetbrains全家桶。

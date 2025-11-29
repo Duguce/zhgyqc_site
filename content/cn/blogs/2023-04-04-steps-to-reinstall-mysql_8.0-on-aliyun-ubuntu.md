@@ -6,9 +6,11 @@ slug: steps-to-reinstall-mysql_8.0-on-aliyun-ubuntu
 draft: false
 toc: false
 categories:
-  - coding
+  - Coding
 tags:
-  - 经验分享
+  - MySQL
+  - Reinstallation
+  - Aliyun
 ---
 
 ## 前言

@@ -6,9 +6,11 @@ slug: first-post-cn
 draft: false
 toc: false
 categories:
-  - thinking
+  - Thinking
 tags:
-  - 思考
+  - Life
+  - Reflection
+  - Thoughts
 ---
 　　“立场”和“是非”究竟哪个更重要呢？
 

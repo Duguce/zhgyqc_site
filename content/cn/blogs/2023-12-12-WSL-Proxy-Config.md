@@ -6,9 +6,11 @@ slug: WSL Proxy Config
 draft: false
 toc: false
 categories:
-  - coding
+  - Coding
 tags:
-  - 经验分享
+  - WSL2
+  - Proxy Configuration
+  - Network Settings
 ---
 
 在使用代理的环境中，灵活切换是否使用代理是一个常见的需求。

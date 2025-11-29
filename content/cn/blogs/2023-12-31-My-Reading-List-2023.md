@@ -6,9 +6,11 @@ slug: My-Reading-List-2023
 draft: true
 toc: false
 categories:
-  - reading
+  - Reading
 tags:
-  - 阅读
+  - Book Recommendations
+  - Reading Summary
+  - Year-End Review
 
 ---
 

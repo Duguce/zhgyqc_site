@@ -6,9 +6,11 @@ slug: python-virtual-environment-configuration
 draft: false
 toc: false
 categories:
-  - coding
+  - Coding
 tags:
-  - 经验分享
+  - Python
+  - Virtual Environment
+  - Configuration
 
 ---
 

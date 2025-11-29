@@ -6,9 +6,11 @@ slug: remote-connection-to-mysql-on-aliyun
 draft: false
 toc: false
 categories:
-  - coding
+  - Coding
 tags:
-  - 经验分享
+  - MySQL
+  - Remote Connection
+  - Aliyun
 
 ---
 

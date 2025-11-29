@@ -6,15 +6,16 @@
          alt="{{ .Site.Params.logo.alt }}">
       </a>
 
-      <ul class="nav-links" >
-        {{ if .IsHome }}
-        {{ range .Site.Menus.en }}
-           <li><a href="{{ .URL | relURL }}">{{ .Name }}</a></li>
-        {{ end }}
-        {{ else }}
-        {{ range (default .Site.Menus.main (index .Site.Menus $.Section)) }}
-           <li><a href="{{ .URL | relURL }}">{{ .Name }}</a></li>
-       {{ end }}
-       {{ end }}
-      </ul>
+         <ul class="nav-links" >
+            {{ $defaultMenuKey := default "en" .Site.Params.defaultLang }}
+            {{ $.Scratch.Set "menuKey" $defaultMenuKey }}
+            {{ if not .IsHome }}
+               {{ $.Scratch.Set "menuKey" (default $defaultMenuKey .Section) }}
+            {{ end }}
+            {{ $menuKey := $.Scratch.Get "menuKey" }}
+            {{ $menu := default (index .Site.Menus $defaultMenuKey) (index .Site.Menus $menuKey) }}
+            {{ range $menu }}
+                <li><a href="{{ .URL | relURL }}">{{ .Name }}</a></li>
+            {{ end }}
+         </ul>
 </nav>

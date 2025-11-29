@@ -6,9 +6,11 @@ slug: upload-large-model-to-huggingface-without-vpn
 draft: false
 toc: false
 categories:
-  - coding
+  - Coding
 tags:
-  - 经验分享
+  - Huggingface
+  - Git LFS
+  - Model Upload
 
 ---
 

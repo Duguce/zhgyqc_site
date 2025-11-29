@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Virtual Environment on Qingchen Yu</title><link>https://zhgyqc.vercel.app/tags/virtual-environment/</link><description>Recent content in Virtual Environment on Qingchen Yu</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 14 Mar 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://zhgyqc.vercel.app/tags/virtual-environment/index.xml" rel="self" type="application/rss+xml"/><item><title>Python虚拟环境配置</title><link>https://zhgyqc.vercel.app/cn/2023/03/14/python-virtual-environment-configuration/</link><pubDate>Tue, 14 Mar 2023 00:00:00 +0000</pubDate><guid>https://zhgyqc.vercel.app/cn/2023/03/14/python-virtual-environment-configuration/</guid><description>安装虚拟环境 windows下安装
+pip install virtualenv # 安装虚拟环境 pip install virtualenvwrapper-win # 安装虚拟环境扩展包 按照上述步骤安装之后，可以通过pip list|grep vir命令检查是否安装成功，若显示已下内容即可：
+Ubuntu下安装
+sudo pip install virtualenv # 安装虚拟环境 sudo pip install virtualenvwrapper # 安装虚拟环境扩展包 注意：给阿里云上的Ubuntu安装虚拟环境扩展包的时候，使用sudo命令可能会报错，这个时候，可以用pip install virtualenvwrapper命令，只给当前用户安装即可。
+除此之外，Ubuntu下安装还需要编辑家目录下的.bashrc文件，通过vim .bashrc进入文件，添加以下三行内容：
+VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3 export WORKON_HOME=$HOME/.virtualenvs source /usr/local/bin/virtualenvwrapper.sh 保存该文件并退出后，使用source .bashrc使其生效。
+按照上述步骤安装之后，可以通过pip list|grep vir命令检查是否安装成功，若显示已下内容即可：
+使用虚拟环境 mkvirtualenv 虚拟环境名称 # 创建虚拟环境命令 workon 虚拟环境名称 # 进入虚拟环境工作 workon # 查看机器上有多少个虚拟环境 deactivate # 退出虚拟环境 rmvirtualenv 虚拟环境名 # 删除虚拟环境 # 查看虚拟环境中的安装包信息 pip list pip freeze pip freeze &amp;gt; requirement.</description></item></channel></rss>
