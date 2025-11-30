@@ -18,6 +18,26 @@
 </script>
 {{ end }}
 
+  {{ $rssLink := "" }}
+  {{ if not .IsHome }}
+    {{ if .Site.Params.singleLang }}
+      {{ $rssLink = printf "/%s/index.xml" $.Site.Params.blogDirName }}
+    {{ else }}
+      {{ with .CurrentSection }}
+        {{ $rssLink = printf "%sindex.xml" .RelPermalink }}
+      {{ end }}
+      {{ if and (eq $rssLink "") .File }}
+        {{ $dir := strings.TrimSuffix "/" .File.Dir }}
+        {{ if $dir }}
+          {{ $rssLink = printf "/%s/index.xml" $dir }}
+        {{ end }}
+      {{ end }}
+      {{ if and (eq $rssLink "") .Section }}
+        {{ $rssLink = printf "/%s/%s/index.xml" .Section $.Site.Params.blogDirName }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+
   {{ partial "foot_custom.html" . }}
      <ul class="footer-links">
       {{ if .IsHome }}
@@ -30,16 +50,10 @@
        </li>
        {{ end }}
        {{ end }}
-       {{ if not .IsHome }}
-       {{ with .Site.Params.singleLang }}
-       <li><a href="/{{ $.Site.Params.blogDirName }}/index.xml" type="application/rss+xml" title="RSS feed">
-       {{ else }}
-       {{ with .Section }}
-       <li><a href="/{{ . }}/{{ $.Site.Params.blogDirName }}/index.xml" type="application/rss+xml" title="RSS feed">
-       {{ default "Subscribe" (index $.Site.Params.lang.subscribe $.Section) }} </a>
-       </li>
-       {{ end }}
-       {{ end }}
+      {{ if and (not .IsHome) (ne $rssLink "") }}
+      <li><a href="{{ $rssLink }}" type="application/rss+xml" title="RSS feed">
+      {{ default "Subscribe" (index $.Site.Params.lang.subscribe $.Section) }} </a>
+      </li>
        <li>
        {{ if eq .Section "cn"}}
        <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">
