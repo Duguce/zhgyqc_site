@@ -4,13 +4,14 @@
 
 <main class = "content" role="main">
 <div class="body-text list-text">
-<ul class="terms">
-  {{ range .Data.Terms }}
-  <li>
-    <a href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a> ({{ .Count }})
-  </li>
-  {{ end }}
-</ul>
+  <div class="terms-cloud" style="display:flex; flex-wrap:wrap; gap:0.6rem; padding:0; margin:0;">
+    {{ range .Data.Terms }}
+    <a href="{{ .Page.RelPermalink }}" style="text-decoration:none; border:1px solid #e0e3ea; border-radius:999px; padding:0.35rem 0.9rem; font-size:0.95rem; color:#1f2530; background-color:#f9fafc; display:inline-flex; align-items:center; gap:0.4rem;">
+      <span>{{ .Page.Title }}</span>
+      <span style="font-size:0.85rem; color:#6c717f;">({{ .Count }})</span>
+    </a>
+    {{ end }}
+  </div>
 </div>
 </main>
 {{ partial "footer.html" . }}
