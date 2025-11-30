@@ -6,7 +6,7 @@ slug: open-source-conference
 draft: false
 toc: false
 categories:
-  - Events
+  - Life
 tags:
   - Conference
   - Open Source

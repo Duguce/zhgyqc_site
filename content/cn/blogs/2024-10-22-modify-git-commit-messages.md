@@ -10,7 +10,6 @@ categories:
 tags:
   - Git
   - Version Control
-  - Commit Messages
 
 ---
 

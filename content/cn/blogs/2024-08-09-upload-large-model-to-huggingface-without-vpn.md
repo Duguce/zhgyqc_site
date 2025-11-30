@@ -9,7 +9,7 @@ categories:
   - Coding
 tags:
   - Huggingface
-  - Git LFS
+  - Git
   - Model Upload
 
 ---
