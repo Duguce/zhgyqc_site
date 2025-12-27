@@ -8,6 +8,7 @@
 
 {{ if $useScholarLayout }}
   {{ $entries := .Pages.ByDate.Reverse }}
+  {{ $paginator := .Paginate $entries 4 }}
   {{ $totalEntries := len $entries }}
   {{ $yearGroups := .Pages.GroupByDate "2006" }}
   {{ $activeYears := len $yearGroups }}
@@ -237,6 +238,42 @@
       font-size: 0.95rem;
       margin: 2rem 0 0;
     }
+    .scholar-pagination {
+      margin: 1.6rem auto 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.8rem;
+      border: 1px solid var(--shell-border);
+      border-radius: 999px;
+      background: #fff;
+      box-shadow: 0 14px 32px rgba(16, 22, 32, 0.08);
+    }
+    .scholar-pagination__button {
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 0.3rem 0.85rem;
+      font-size: 0.8rem;
+      color: var(--shell-muted);
+      text-decoration: none;
+      min-width: 2.4rem;
+      text-align: center;
+      transition: background 140ms ease, color 140ms ease, border-color 140ms ease;
+    }
+    .scholar-pagination__button.is-active {
+      background: var(--shell-surface);
+      color: var(--shell-accent);
+      border-color: var(--shell-highlight);
+      font-weight: 600;
+    }
+    .scholar-pagination__button:hover {
+      color: var(--shell-accent);
+    }
+    .scholar-pagination__button.is-disabled {
+      pointer-events: none;
+      opacity: 0.35;
+    }
     @media (max-width: 720px) {
       .scholar-panel {
         padding: 1.4rem;
@@ -278,7 +315,7 @@
         </div>
         {{ if gt $totalEntries 0 }}
         <div class="entry-grid" role="list">
-          {{ range $entries }}
+          {{ range $paginator.Pages }}
           {{ $cardScratch := newScratch }}
           {{ if .Params.summary }}
             {{ $cardScratch.Set "summary" .Params.summary }}
@@ -304,6 +341,16 @@
           </article>
           {{ end }}
         </div>
+        {{ if gt $paginator.TotalPages 1 }}
+        <nav class="scholar-pagination" aria-label="Pagination">
+          <a class="scholar-pagination__button {{ if not $paginator.HasNext }}is-disabled{{ end }}" href="{{ if $paginator.HasNext }}{{ $paginator.Next.URL }}{{ else }}#{{ end }}">Prev</a>
+          {{ range $page := seq 1 $paginator.TotalPages }}
+            {{ $pageURL := (index $paginator.Pagers (sub $page 1)).URL }}
+            <a class="scholar-pagination__button {{ if eq $page $paginator.PageNumber }}is-active{{ end }}" href="{{ $pageURL }}">{{ $page }}</a>
+          {{ end }}
+          <a class="scholar-pagination__button {{ if not $paginator.HasPrev }}is-disabled{{ end }}" href="{{ if $paginator.HasPrev }}{{ $paginator.Prev.URL }}{{ else }}#{{ end }}">Next</a>
+        </nav>
+        {{ end }}
         {{ else }}
         <p class="entry-empty">{{ if $isCnBlogs }}暂无文章{{ else }}No moments published yet.{{ end }}</p>
         {{ end }}
