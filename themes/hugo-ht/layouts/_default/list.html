@@ -1,7 +1,7 @@
 {{ partial "header.html" . }}
 
 {{ $sectionPath := "" }}
-{{ with .File }}{{ $sectionPath = .File.Path }}{{ end }}
+{{ with .File }}{{ $sectionPath = .Path }}{{ end }}
 {{ $isCnBlogs := strings.HasPrefix $sectionPath "cn/blogs" }}
 {{ $isEnMoments := strings.HasPrefix $sectionPath "en/moments" }}
 {{ $useScholarLayout := or $isCnBlogs $isEnMoments }}
