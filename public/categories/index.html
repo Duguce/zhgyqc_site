@@ -31,35 +31,114 @@
 </ul>
 </nav>
 </header>
-<h1>Categories</h1>
 <main class=content role=main>
-<div class="body-text list-text">
-<div class=terms-cloud style=display:flex;flex-wrap:wrap;gap:.6rem;padding:0;margin:0>
-<a href=../categories/coding/ style="text-decoration:none;border:1px solid #e0e3ea;border-radius:999px;padding:.35rem .9rem;font-size:.95rem;color:#1f2530;background-color:#f9fafc;display:inline-flex;align-items:center;gap:.4rem">
-<span>Coding</span>
-<span style=font-size:.85rem;color:#6c717f>(10)</span>
-</a>
-<a href=../categories/data-analysis/ style="text-decoration:none;border:1px solid #e0e3ea;border-radius:999px;padding:.35rem .9rem;font-size:.95rem;color:#1f2530;background-color:#f9fafc;display:inline-flex;align-items:center;gap:.4rem">
-<span>Data Analysis</span>
-<span style=font-size:.85rem;color:#6c717f>(1)</span>
-</a>
-<a href=../categories/life/ style="text-decoration:none;border:1px solid #e0e3ea;border-radius:999px;padding:.35rem .9rem;font-size:.95rem;color:#1f2530;background-color:#f9fafc;display:inline-flex;align-items:center;gap:.4rem">
-<span>Life</span>
-<span style=font-size:.85rem;color:#6c717f>(3)</span>
-</a>
-<a href=../categories/machine-learning/ style="text-decoration:none;border:1px solid #e0e3ea;border-radius:999px;padding:.35rem .9rem;font-size:.95rem;color:#1f2530;background-color:#f9fafc;display:inline-flex;align-items:center;gap:.4rem">
-<span>Machine Learning</span>
-<span style=font-size:.85rem;color:#6c717f>(2)</span>
-</a>
-<a href=../categories/reading/ style="text-decoration:none;border:1px solid #e0e3ea;border-radius:999px;padding:.35rem .9rem;font-size:.95rem;color:#1f2530;background-color:#f9fafc;display:inline-flex;align-items:center;gap:.4rem">
-<span>Reading</span>
-<span style=font-size:.85rem;color:#6c717f>(2)</span>
-</a>
-<a href=../categories/thinking/ style="text-decoration:none;border:1px solid #e0e3ea;border-radius:999px;padding:.35rem .9rem;font-size:.95rem;color:#1f2530;background-color:#f9fafc;display:inline-flex;align-items:center;gap:.4rem">
-<span>Thinking</span>
-<span style=font-size:.85rem;color:#6c717f>(1)</span>
-</a>
+<style>.terms-page{--terms-surface:#f6f4ef;--terms-border:#d7d2c6;--terms-ink:#1f2535;--terms-muted:#5c6272;--terms-accent:#8a6f4d;--terms-highlight:#d8cfbe;font-family:source serif pro,palatino linotype,Georgia,serif;color:var(--terms-ink);padding-bottom:3rem}.terms-hero{background:var(--terms-surface);border:1px solid var(--terms-border);border-radius:1.4rem;padding:1.6rem;margin:0 auto 1.6rem;max-width:960px;position:relative;overflow:hidden}.terms-hero::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 25% 20%,rgba(138,111,77,.24),transparent 45%),linear-gradient(120deg,rgba(31,37,53,5%),transparent 60%);opacity:.5;pointer-events:none}.terms-hero__badge{font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:var(--terms-muted);margin-bottom:.6rem}.terms-hero__body{position:relative;z-index:1}.terms-hero h1{font-size:clamp(2rem,3vw,2.75rem);margin-bottom:.6rem}.terms-hero__desc{max-width:640px;font-size:1rem;color:var(--terms-muted);line-height:1.45}.terms-hero__stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.75rem;margin-top:1.05rem}.stat-card{background:#fff;border:1px solid var(--terms-border);border-radius:.9rem;padding:.85rem 1.2rem;min-width:0;box-shadow:0 10px 25px rgba(28,34,51,7%)}.stat-card__label{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--terms-muted);margin-bottom:.25rem}.stat-card__value{font-size:1.55rem;font-weight:600}.terms-panel{border:1px solid var(--terms-border);border-radius:1.3rem;padding:1.9rem;background:#fff;box-shadow:0 16px 38px rgba(19,23,33,7%)}.terms-panel__header{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;border-bottom:1px solid var(--terms-highlight);padding-bottom:1.2rem;margin-bottom:1.7rem}.terms-panel__header h2{font-size:1.2rem;margin-bottom:.35rem;width:100%;text-align:center}.terms-panel__header p{color:var(--terms-muted);max-width:520px;font-size:.95rem;margin:0 auto;text-align:center}.terms-panel__legend{display:inline-flex;align-items:center;gap:.4rem;font-size:.9rem;color:var(--terms-muted)}.terms-panel__legend span.legend-dot{width:10px;height:10px;border-radius:999px;background:var(--terms-accent);display:inline-flex}.terms-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.75rem}.term-card{position:relative;background:#fefdfb;border:1px solid var(--terms-border);border-radius:1rem;padding:.85rem .95rem;overflow:hidden;transition:transform 180ms ease,box-shadow 180ms ease}.term-card::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(138,111,77,.15),rgba(255,255,255,0));opacity:calc(.18 + (var(--term-weight)/600));pointer-events:none}.term-card:hover{transform:translateY(-6px);box-shadow:0 18px 30px rgba(31,37,53,.12)}.term-card__header{display:flex;justify-content:space-between;gap:.35rem;align-items:center;position:relative;z-index:1}.term-card__link{text-decoration:none;color:inherit;display:inline-flex;align-items:center;gap:.3rem;flex:auto;min-width:0}.term-card__name{font-size:.82rem;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}.term-card__icon{font-size:.75rem;color:var(--terms-accent);transition:transform 180ms ease}.term-card:hover .term-card__icon{transform:translateX(4px)}.term-card__count{font-size:.68rem;color:var(--terms-muted);white-space:nowrap}.term-card__progress{margin-top:.55rem;height:3px;border-radius:999px;background:var(--terms-highlight);position:relative;overflow:hidden;z-index:1}.term-card__progress span{display:block;height:100%;width:calc(var(--term-weight) * 1%);max-width:100%;border-radius:inherit;background:linear-gradient(90deg,var(--terms-accent),#b08c66)}@media(max-width:768px){.terms-hero,.terms-panel{padding:1.5rem}.terms-hero__stats{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}}@media(max-width:540px){.terms-panel__header{flex-direction:column}.terms-grid{grid-template-columns:1fr}.terms-hero__stats{grid-template-columns:1fr}}@media(max-width:1000px){.terms-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:720px){.terms-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}</style>
+<div class=terms-page data-page=terms-index>
+<section class=terms-hero aria-labelledby=terms-hero-title>
+<div class=terms-hero__badge>Research Index</div>
+<div class=terms-hero__body>
+<h1 id=terms-hero-title>Categories</h1>
+<p class=terms-hero__desc>
+Curated vocabulary that anchors essays, field notes, and experiments. Use these tags to trace how ideas evolve across the archive.
+</p>
+<div class=terms-hero__stats>
+<div class=stat-card>
+<span class=stat-card__label>Total tags</span>
+<span class=stat-card__value>6</span>
 </div>
+<div class=stat-card>
+<span class=stat-card__label>Citations across posts</span>
+<span class=stat-card__value>19</span>
+</div>
+</div>
+</div>
+</section>
+<section class=terms-panel aria-labelledby=terms-panel-title>
+<div class=terms-panel__header id=terms-panel-title>
+<div>
+<h2>Scholarly threads</h2>
+<p>Sorted alphabetically for calm scanning, each card highlights the relative weight of a topic across the site.</p>
+</div>
+<div class=terms-panel__legend>
+<span class=legend-dot></span>
+<span>Relative frequency</span>
+</div>
+</div>
+<div class=terms-grid role=list>
+<article class=term-card role=listitem style=--term-weight:100>
+<div class=term-card__header>
+<a href=../categories/coding/ class=term-card__link title=Coding>
+<span class=term-card__name>Coding</span>
+<span class=term-card__icon aria-hidden=true>&rarr;</span>
+</a>
+<span class=term-card__count>10 entries</span>
+</div>
+<div class=term-card__progress aria-hidden=true>
+<span></span>
+</div>
+</article>
+<article class=term-card role=listitem style=--term-weight:10>
+<div class=term-card__header>
+<a href=../categories/data-analysis/ class=term-card__link title="Data Analysis">
+<span class=term-card__name>Data Analysis</span>
+<span class=term-card__icon aria-hidden=true>&rarr;</span>
+</a>
+<span class=term-card__count>1 entry</span>
+</div>
+<div class=term-card__progress aria-hidden=true>
+<span></span>
+</div>
+</article>
+<article class=term-card role=listitem style=--term-weight:30>
+<div class=term-card__header>
+<a href=../categories/life/ class=term-card__link title=Life>
+<span class=term-card__name>Life</span>
+<span class=term-card__icon aria-hidden=true>&rarr;</span>
+</a>
+<span class=term-card__count>3 entries</span>
+</div>
+<div class=term-card__progress aria-hidden=true>
+<span></span>
+</div>
+</article>
+<article class=term-card role=listitem style=--term-weight:20>
+<div class=term-card__header>
+<a href=../categories/machine-learning/ class=term-card__link title="Machine Learning">
+<span class=term-card__name>Machine Learning</span>
+<span class=term-card__icon aria-hidden=true>&rarr;</span>
+</a>
+<span class=term-card__count>2 entries</span>
+</div>
+<div class=term-card__progress aria-hidden=true>
+<span></span>
+</div>
+</article>
+<article class=term-card role=listitem style=--term-weight:20>
+<div class=term-card__header>
+<a href=../categories/reading/ class=term-card__link title=Reading>
+<span class=term-card__name>Reading</span>
+<span class=term-card__icon aria-hidden=true>&rarr;</span>
+</a>
+<span class=term-card__count>2 entries</span>
+</div>
+<div class=term-card__progress aria-hidden=true>
+<span></span>
+</div>
+</article>
+<article class=term-card role=listitem style=--term-weight:10>
+<div class=term-card__header>
+<a href=../categories/thinking/ class=term-card__link title=Thinking>
+<span class=term-card__name>Thinking</span>
+<span class=term-card__icon aria-hidden=true>&rarr;</span>
+</a>
+<span class=term-card__count>1 entry</span>
+</div>
+<div class=term-card__progress aria-hidden=true>
+<span></span>
+</div>
+</article>
+</div>
+</section>
 </div>
 </main>
 <footer class=footer>
