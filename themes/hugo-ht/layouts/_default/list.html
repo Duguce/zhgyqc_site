@@ -150,14 +150,14 @@
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 1rem;
     }
-    .entry-card {
-      border: 1px solid var(--shell-border);
-      border-radius: 1rem;
-      padding: 1rem 1.1rem;
+      .entry-card {
+        border: 1px solid var(--shell-border);
+        border-radius: 1rem;
+        padding: 0.9rem 1rem;
       background: #fefdfb;
       position: relative;
       overflow: hidden;
-      min-height: 185px;
+        min-height: 170px;
       display: flex;
       flex-direction: column;
       gap: 0.45rem;
@@ -200,13 +200,42 @@
     .entry-card h3 a:hover {
       text-decoration: underline;
     }
-    .entry-card p {
+      .entry-card p {
       margin: 0;
       color: var(--shell-muted);
       font-size: 0.88rem;
       line-height: 1.4;
       position: relative;
       z-index: 1;
+    }
+      .entry-card__media {
+        border-radius: 0.75rem;
+        overflow: hidden;
+        background: #ebedf2;
+        position: relative;
+        z-index: 1;
+        margin: 0;
+        max-height: 150px;
+        display: block;
+      }
+      .entry-card__media img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        display: block;
+      }
+      .entry-card__media figcaption {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 0.35rem 0.6rem;
+        font-size: 0.74rem;
+        color: #fff;
+        font-style: italic;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%);
+        text-align: center;
+        line-height: 1.2;
     }
     .entry-card__footer {
       margin-top: auto;
@@ -329,13 +358,35 @@
             {{ $cardScratch.Set "summary" (.Plain | plainify) }}
           {{ end }}
           {{ $summary := truncate 150 ($cardScratch.Get "summary") }}
+          {{ $imageSrc := "" }}
+          {{ $imageCaption := "" }}
+          {{ if $isEnMoments }}
+            {{ $imgMatches := findRE `<img[^>]+src="([^"]+)"[^>]*>` .Content 1 }}
+            {{ if gt (len $imgMatches) 0 }}
+              {{ $firstImg := index $imgMatches 0 }}
+              {{ $imageSrc = replaceRE `.*src="([^"]+)".*` "$1" $firstImg }}
+            {{ end }}
+            {{ $captionMatches := findRE `<em>([^<]+)</em>` .Content 1 }}
+            {{ if gt (len $captionMatches) 0 }}
+              {{ $imageCaption = (index $captionMatches 0 | plainify) }}
+            {{ end }}
+          {{ end }}
           <article class="entry-card" role="listitem">
             <div class="entry-card__meta">
               <span>{{ .Date.Format "Jan 02, 2006" }}</span>
               {{ with .Params.location }}<span>&middot; {{ . }}</span>{{ end }}
             </div>
             <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
-            <p>{{ $summary }}</p>
+            {{ if and $isEnMoments $imageSrc }}
+              <figure class="entry-card__media">
+                <img src="{{ $imageSrc }}" alt="{{ cond (gt (len $imageCaption) 0) $imageCaption .Title }}" loading="lazy">
+                {{ if $imageCaption }}
+                <figcaption>{{ $imageCaption }}</figcaption>
+                {{ end }}
+              </figure>
+            {{ else }}
+              <p>{{ $summary }}</p>
+            {{ end }}
             <div class="entry-card__footer">
               <span class="entry-card__year">{{ .Date.Format "2006" }}</span>
               <a href="{{ .RelPermalink }}" class="entry-card__link">{{ $ctaLabel }}</a>
