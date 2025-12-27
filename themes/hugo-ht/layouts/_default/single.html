@@ -1,6 +1,417 @@
 <a name="top"></a>
 {{ partial "header.html" . }}
+
+{{ $fileDir := "" }}
+{{ with .File }}{{ $fileDir = .Dir }}{{ end }}
+{{ $isBlog := strings.HasPrefix $fileDir "cn/blogs" }}
+{{ $isMoment := strings.HasPrefix $fileDir "en/moments" }}
+{{ $useScholarLayout := or $isBlog $isMoment }}
+
+{{ $sectionScratch := newScratch }}
+{{ if $isBlog }}
+  {{ $sectionScratch.Set "sectionPage" (.Site.GetPage "section" "cn/blogs") }}
+{{ else if $isMoment }}
+  {{ $sectionScratch.Set "sectionPage" (.Site.GetPage "section" "en/moments") }}
+{{ end }}
+
+{{ $navScratch := newScratch }}
+{{ $navScratch.Set "prev" nil }}
+{{ $navScratch.Set "next" nil }}
+{{ with $sectionScratch.Get "sectionPage" }}
+  {{ $sectionPages := .RegularPages.ByDate }}
+  {{ if gt (len $sectionPages) 0 }}
+    {{ $total := len $sectionPages }}
+    {{ range $idx, $p := $sectionPages }}
+      {{ if eq $p.File.Path $.File.Path }}
+        {{ if gt $idx 0 }}
+          {{ $navScratch.Set "prev" (index $sectionPages (sub $idx 1)) }}
+        {{ end }}
+        {{ if lt (add $idx 1) $total }}
+          {{ $navScratch.Set "next" (index $sectionPages (add $idx 1)) }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{ $editScratch := newScratch }}
+{{ if .IsPage }}
+  {{ if .File.Path }}
+    {{ $Rmd := (print .File.BaseFileName ".Rmd") }}
+    {{ if (where (readDir (print "content/" .File.Dir)) "Name" $Rmd) }}
+      {{ $.Scratch.Set "FilePath" (print .File.Dir $Rmd) }}
+    {{ else }}
+      {{ $.Scratch.Set "FilePath" .File.Path }}
+    {{ end }}
+    {{ with .Site.Params.GithubEdit }}
+      {{ $editScratch.Set "href" (print . ($.Scratch.Get "FilePath")) }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
 <main class="content" role="main">
+{{ if $useScholarLayout }}
+  <style>
+  /* Scholar single layout */
+  .scholar-article {
+    --surface: #f6f4ef;
+    --border: #d7d2c6;
+    --ink: #1f2535;
+    --muted: #5c6272;
+    --accent: #8a6f4d;
+    font-family: "Source Serif Pro", "Palatino Linotype", Georgia, serif;
+    color: var(--ink);
+    padding-bottom: 3rem;
+  }
+  .scholar-article[data-variant="moments"] {
+    --surface: #f1f6fb;
+    --border: #d0dfea;
+    --accent: #4b6fad;
+  }
+  .scholar-hero {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1.4rem;
+    padding: 2rem;
+    margin-bottom: 1.6rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .scholar-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 12% 20%, rgba(138, 111, 77, 0.22), transparent 45%),
+                linear-gradient(120deg, rgba(31, 37, 53, 0.08), transparent 60%);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  .scholar-article[data-variant="moments"] .scholar-hero::after {
+    background: radial-gradient(circle at 15% 20%, rgba(75, 111, 173, 0.24), transparent 60%),
+                linear-gradient(130deg, rgba(28, 52, 94, 0.08), transparent 55%);
+  }
+  .scholar-hero__body {
+    position: relative;
+    z-index: 1;
+  }
+  .scholar-hero__badge {
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.65rem;
+    display: inline-block;
+  }
+  .scholar-hero h1 {
+    font-size: clamp(1.35rem, 2.2vw, 1.9rem);
+    margin: 0 0 0.3rem 0;
+  }
+  .scholar-hero__subtitle {
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin: 0 0 0.7rem 0;
+  }
+  .scholar-hero__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .scholar-hero__meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding-right: 0.7rem;
+    border-right: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  .scholar-hero__meta span:last-child {
+    border-right: none;
+    padding-right: 0;
+  }
+  .scholar-hero__actions {
+    margin-top: 1.1rem;
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+  }
+  .scholar-hero__edit {
+    font-size: 0.85rem;
+    text-decoration: none;
+    color: var(--accent);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.35rem 0.9rem;
+    background: #fff;
+  }
+  .scholar-body {
+    border: 1px solid var(--border);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    background: #fff;
+    box-shadow: 0 25px 55px rgba(17, 21, 32, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .scholar-body.has-toc {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 260px);
+  }
+  .scholar-body__content {
+    font-size: 1.02rem;
+    line-height: 1.75;
+    color: #1e2433;
+  }
+  .scholar-body__toc {
+    border-left: 2px solid var(--border);
+    padding-left: 1rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .scholar-body__toc strong {
+    display: block;
+    margin-bottom: 0.6rem;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .scholar-body__content pre {
+    background: linear-gradient(135deg, #fdfcf7, #eef0f5);
+    border: 1px solid rgba(31, 37, 53, 0.08);
+    border-radius: 1rem;
+    padding: 1rem 1.2rem 1.4rem;
+    color: #2a3140;
+    font-size: 0.92rem;
+    font-family: "JetBrains Mono", "Fira Code", monospace;
+    overflow: auto;
+    box-shadow: 0 28px 55px rgba(12, 18, 32, 0.12);
+    position: relative;
+    margin: 1.4rem 0;
+  }
+  .scholar-body__content pre::before {
+    content: "Code";
+    position: absolute;
+    top: 0.4rem;
+    right: 0.8rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: rgba(31, 41, 55, 0.4);
+  }
+  .scholar-body__content pre code {
+    background: transparent;
+    padding: 0;
+  }
+  .code-copy {
+    position: absolute;
+    bottom: 0.4rem;
+    right: 0.6rem;
+    border: 1px solid rgba(31, 37, 53, 0.2);
+    border-radius: 999px;
+    background: #fff;
+    color: #2a3140;
+    font-size: 0.75rem;
+    padding: 0.18rem 0.8rem;
+    cursor: pointer;
+  }
+  .code-copy.is-copied {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .scholar-body__content :not(pre) > code {
+    background: #f0efe7;
+    padding: 0.15rem 0.35rem;
+    border-radius: 0.35rem;
+    font-size: 0.9rem;
+    color: #2a3140;
+    font-family: "JetBrains Mono", "Fira Code", monospace;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  .scholar-lastupdate {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-top: 0.5rem;
+  }
+  .scholar-tags {
+    margin-top: 1.3rem;
+  }
+  .scholar-tags__label {
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: inline-block;
+    margin-bottom: 0.6rem;
+  }
+  .scholar-tags ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+  .scholar-tags a {
+    text-decoration: none;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.18rem 0.75rem;
+    font-size: 0.86rem;
+    color: var(--ink);
+    background: var(--surface);
+  }
+  .scholar-nav {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .scholar-nav__card {
+    flex: 1;
+    min-width: 220px;
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    padding: 1rem 1.2rem;
+    text-decoration: none;
+    color: var(--ink);
+    background: #fff;
+    box-shadow: 0 18px 36px rgba(15, 18, 28, 0.08);
+  }
+  .scholar-nav__label {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  .scholar-nav__title {
+    margin-top: 0.35rem;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  .scholar-backtotop {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    margin-top: 1.5rem;
+    text-decoration: none;
+    color: var(--ink);
+    background: #fff;
+  }
+  @media (max-width: 720px) {
+    .scholar-hero {
+      padding: 1.4rem;
+    }
+    .scholar-body,
+    .scholar-body.has-toc {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  </style>
+
+  <article class="scholar-article" data-variant="{{ if $isMoment }}moments{{ else }}blogs{{ end }}">
+    <header class="scholar-hero">
+      <div class="scholar-hero__body">
+        <div class="scholar-hero__badge">{{ if $isMoment }}Field Note{{ else }}Research Journal{{ end }}</div>
+        <h1>{{ .Title }}</h1>
+        {{ with .Params.subtitle }}
+        <p class="scholar-hero__subtitle">{{ . }}</p>
+        {{ end }}
+        <div class="scholar-hero__meta">
+          {{ with .Params.author }}<span>{{ . }}</span>{{ end }}
+          {{ if .Params.date }}<span>{{ .Date.Format "Jan 02, 2006" }}</span>{{ end }}
+          <span>{{ if eq .Section "cn" }}{{ printf "%d 分钟阅读" .ReadingTime }}{{ else }}{{ printf "%d min read" .ReadingTime }}{{ end }}</span>
+          {{ if and $isMoment .Params.location }}<span>{{ .Params.location }}</span>{{ end }}
+        </div>
+        <div class="scholar-hero__actions">
+          {{ with $editScratch.Get "href" }}
+          <a class="scholar-hero__edit" href="{{ . }}" target="_blank" rel="noopener">Suggest edit</a>
+          {{ end }}
+        </div>
+      </div>
+    </header>
+
+    <section class="scholar-body {{ if .Params.toc }}has-toc{{ end }}">
+      <div class="scholar-body__content">
+        {{ .Content | partial "add-header-anchors" }}
+        <p class="scholar-lastupdate">
+          {{ $lastLabel := default (index $.Site.Params.lang.lastupdate $.Site.Params.defaultLang) (index $.Site.Params.lang.lastupdate $.Section) }}
+          {{ $lastLabel }} {{ .Page.Lastmod.Format "2006-01-02" }}
+        </p>
+        {{ with .Params.tags }}
+        <div class="scholar-tags">
+          <span class="scholar-tags__label">Topics</span>
+          <ul>
+            {{ range . }}
+            {{ $tagURL := (print "/tags/" (. | urlize) "/") | relURL }}
+            <li><a href="{{ $tagURL }}">{{ . }}</a></li>
+            {{ end }}
+          </ul>
+        </div>
+        {{ end }}
+      </div>
+      {{ if .Params.toc }}
+      <aside class="scholar-body__toc">
+        <strong>Outline</strong>
+        {{ .TableOfContents }}
+      </aside>
+      {{ end }}
+    </section>
+
+    {{ $prev := $navScratch.Get "prev" }}
+    {{ $next := $navScratch.Get "next" }}
+    {{ if or $prev $next }}
+    {{ $prevLabel := cond (eq .Section "cn") "上一篇" "Previous" }}
+    {{ $nextLabel := cond (eq .Section "cn") "下一篇" "Next" }}
+    <nav class="scholar-nav">
+      {{ if $prev }}
+      <a class="scholar-nav__card" href="{{ $prev.RelPermalink }}">
+        <div class="scholar-nav__label">{{ $prevLabel }}</div>
+        <div class="scholar-nav__title">{{ truncate 60 $prev.Title }}</div>
+      </a>
+      {{ end }}
+      {{ if $next }}
+      <a class="scholar-nav__card" href="{{ $next.RelPermalink }}" style="text-align:right;">
+        <div class="scholar-nav__label">{{ $nextLabel }}</div>
+        <div class="scholar-nav__title">{{ truncate 60 $next.Title }}</div>
+      </a>
+      {{ end }}
+    </nav>
+    {{ end }}
+
+    <a class="scholar-backtotop" href="#top" aria-label="Back to top">↑</a>
+  </article>
+  <script>
+  (function() {
+    const blocks = document.querySelectorAll('.scholar-body__content pre');
+    blocks.forEach(block => {
+      if (block.dataset.hasCopyButton) return;
+      const btn = document.createElement('button');
+      btn.className = 'code-copy';
+      btn.type = 'button';
+      btn.textContent = 'Copy';
+      btn.addEventListener('click', () => {
+        const code = block.querySelector('code');
+        const text = code ? code.innerText : block.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+          btn.classList.add('is-copied');
+          btn.textContent = 'Copied';
+          setTimeout(() => {
+            btn.classList.remove('is-copied');
+            btn.textContent = 'Copy';
+          }, 1600);
+        });
+      });
+      block.appendChild(btn);
+      block.dataset.hasCopyButton = 'true';
+    });
+  })();
+  </script>
+{{ else }}
   <div style="text-align: center">
     {{ if not .IsHome }}
       <h1>{{ .Title }}</h1>
@@ -8,7 +419,7 @@
         <h1><span class="subtitle">{{ . }}</span></h1>
       {{ end }}
       <p>
-        {{ with .Params.author }}{{ . }}{{ end }} 
+        {{ with .Params.author }}{{ . }}{{ end }}
         {{ if .Params.date }} / {{ .Date.Format "2006-01-02" }}{{ end }}
       </p>
     {{ end }}
@@ -16,20 +427,10 @@
   </div>
 
   <span class="article-toolbar">
-    {{ if .IsPage }}
-      {{ if .File.Path }}
-        {{ $Rmd := (print .File.BaseFileName ".Rmd") }}
-        {{ if (where (readDir (print "content/" .File.Dir)) "Name" $Rmd) }}
-          {{ $.Scratch.Set "FilePath" (print .File.Dir $Rmd) }}
-        {{ else }}
-          {{ $.Scratch.Set "FilePath" .File.Path }}
-        {{ end }}
-        {{ with .Site.Params.GithubEdit }}
-          <a href='{{ . }}{{ $.Scratch.Get "FilePath" }}' style="font-size: 24px; color: black;" target="_blank">
-            <i class="fa fa-edit" aria-hidden="true" title="{{ default (index $.Site.Params.lang.edit.en) (index $.Site.Params.lang.edit $.Section) }}"></i>
-          </a>
-        {{ end }}
-      {{ end }}
+    {{ with $editScratch.Get "href" }}
+      <a href='{{ . }}' style="font-size: 24px; color: black;" target="_blank">
+        <i class="fa fa-edit" aria-hidden="true"></i>
+      </a>
     {{ end }}
   </span>
 
@@ -41,15 +442,11 @@
   {{ end }}
 
   <div class="body-text list-text">
-    <!-- 渲染正文内容 -->
     {{ .Content | partial "add-header-anchors" }}
-
-    <!-- 显示最后更新时间 -->
     <p style="color:#777;">
-      {{ default (index $.Site.Params.lang.lastupdate $.Site.Params.defaultLang) (index $.Site.Params.lang.lastupdate $.Section) }}
-      {{ .Page.Lastmod.Format "2006-01-02" }}
+      {{ $lastLabel := default (index $.Site.Params.lang.lastupdate $.Site.Params.defaultLang) (index $.Site.Params.lang.lastupdate $.Section) }}
+      {{ $lastLabel }} {{ .Page.Lastmod.Format "2006-01-02" }}
     </p>
-
     {{ with .Params.tags }}
     <div class="post-tags" style="margin-top: 0.8rem;">
       <ul style="list-style: none; padding-left: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.4rem;">
@@ -66,64 +463,8 @@
     {{ end }}
   </div>
 
-  {{ $fileDir := "" }}
-  {{ with .File }}
-    {{ $fileDir = .Dir }}
-  {{ end }}
-  {{ $isBlog := strings.HasPrefix $fileDir "cn/blogs" }}
-  {{ $isMoment := strings.HasPrefix $fileDir "en/moments" }}
-  {{ $currentPage := . }}
-  {{ $sectionScratch := newScratch }}
-  {{ if $isBlog }}
-    {{ $sectionScratch.Set "sectionPage" (.Site.GetPage "section" "cn/blogs") }}
-  {{ else if $isMoment }}
-    {{ $sectionScratch.Set "sectionPage" (.Site.GetPage "section" "en/moments") }}
-  {{ end }}
-  {{ with $sectionScratch.Get "sectionPage" }}
-    {{ $sectionPages := .RegularPages.ByDate }}
-    {{ if gt (len $sectionPages) 0 }}
-    {{ $navScratch := newScratch }}
-    {{ $navScratch.Set "prev" nil }}
-    {{ $navScratch.Set "next" nil }}
-    {{ $total := len $sectionPages }}
-    {{ range $index, $p := $sectionPages }}
-      {{ if eq $p.File.Path $currentPage.File.Path }}
-        {{ if gt $index 0 }}
-          {{ $navScratch.Set "prev" (index $sectionPages (sub $index 1)) }}
-        {{ end }}
-        {{ if lt (add $index 1) $total }}
-          {{ $navScratch.Set "next" (index $sectionPages (add $index 1)) }}
-        {{ end }}
-      {{ end }}
-    {{ end }}
-    {{ $prev := $navScratch.Get "prev" }}
-    {{ $next := $navScratch.Get "next" }}
-    {{ if or $prev $next }}
-    {{ $hasBoth := and $prev $next }}
-    <nav class="post-pagination" style="margin: 1.4rem 0; display: flex; flex-wrap: wrap; gap: 0.8rem; justify-content: {{ if $hasBoth }}space-between{{ else }}flex-start{{ end }};">
-      {{ if $prev }}
-        {{ $prevTitle := truncate 48 $prev.Title }}
-        <a class="prev-post" href="{{ $prev.RelPermalink }}" style="flex: 1; min-width: 220px; text-decoration: none; border: 1px solid #dcdfe5; border-radius: 10px; padding: 0.9rem 1.1rem; background: #fff;">
-          <div style="font-size: 0.8rem; color: #7a7f8c; letter-spacing: 0.06em;">{{ if eq .Section "cn" }}上一篇{{ else }}Previous{{ end }}</div>
-          <div style="margin-top: 0.4rem; font-size: 0.98rem; font-weight: 600; color: #1f242f; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-            {{ $prevTitle }}
-          </div>
-        </a>
-      {{ end }}
-      {{ if $next }}
-        {{ $nextTitle := truncate 48 $next.Title }}
-        <a class="next-post" href="{{ $next.RelPermalink }}" style="flex: 1; min-width: 220px; text-decoration: none; border: 1px solid #dcdfe5; border-radius: 10px; padding: 0.9rem 1.1rem; background: #fff; text-align: right;">
-          <div style="font-size: 0.8rem; color: #7a7f8c; letter-spacing: 0.06em;">{{ if eq .Section "cn" }}下一篇{{ else }}Next{{ end }}</div>
-          <div style="margin-top: 0.4rem; font-size: 0.98rem; font-weight: 600; color: #1f242f; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-            {{ $nextTitle }}
-          </div>
-        </a>
-      {{ end }}
-    </nav>
-    {{ end }}
-    {{ end }}
-  {{ end }}
-
   <a href="#top"><i class="fa fa-chevron-up" style="font-size: 30px; color: black;"></i></a>
+{{ end }}
 </main>
+
 {{ partial "footer.html" . }}
