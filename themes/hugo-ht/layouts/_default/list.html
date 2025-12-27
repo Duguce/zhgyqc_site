@@ -18,12 +18,14 @@
   {{ end }}
   {{ $heroDesc := cond $isCnBlogs "Long-form reflections, research logs, and essays collected in one scholarly notebook." "Short dispatches and observational notes that capture daily momentum." }}
   {{ $panelTitle := cond $isCnBlogs "Archive ledger" "Field log" }}
-  {{ $panelDesc := cond $isCnBlogs "Browse the latest essays or jump through years using the index below." "Recent dispatches arranged for quick scanning; tap any card to open the full note." }}
+  {{ $panelDesc := cond $isCnBlogs "Browse the latest essays or jump through years using the index below." "Recent updates arranged for quick browse; tap any card for full details." }}
   {{ $ctaLabel := cond $isCnBlogs "Read entry" "Open moment" }}
   {{ $stat1Label := cond $isCnBlogs "文章总数" "Total entries" }}
   {{ $stat2Label := cond $isCnBlogs "活跃年份" "Active years" }}
   {{ $stat3Label := cond $isCnBlogs "最近更新" "Last update" }}
   {{ $badgeLabel := cond $isCnBlogs "Writing Ledger" "Live Log" }}
+  {{ $newerLabel := "Newer" }}
+  {{ $olderLabel := "Earlier" }}
   <main class="content" role="main">
     <style>
     /* Scholarly list layout */
@@ -343,12 +345,12 @@
         </div>
         {{ if gt $paginator.TotalPages 1 }}
         <nav class="scholar-pagination" aria-label="Pagination">
-          <a class="scholar-pagination__button {{ if not $paginator.HasNext }}is-disabled{{ end }}" href="{{ if $paginator.HasNext }}{{ $paginator.Next.URL }}{{ else }}#{{ end }}">Prev</a>
+          <a class="scholar-pagination__button {{ if not $paginator.HasPrev }}is-disabled{{ end }}" href="{{ if $paginator.HasPrev }}{{ $paginator.Prev.URL }}{{ else }}#{{ end }}">{{ $newerLabel }}</a>
           {{ range $page := seq 1 $paginator.TotalPages }}
             {{ $pageURL := (index $paginator.Pagers (sub $page 1)).URL }}
             <a class="scholar-pagination__button {{ if eq $page $paginator.PageNumber }}is-active{{ end }}" href="{{ $pageURL }}">{{ $page }}</a>
           {{ end }}
-          <a class="scholar-pagination__button {{ if not $paginator.HasPrev }}is-disabled{{ end }}" href="{{ if $paginator.HasPrev }}{{ $paginator.Prev.URL }}{{ else }}#{{ end }}">Next</a>
+          <a class="scholar-pagination__button {{ if not $paginator.HasNext }}is-disabled{{ end }}" href="{{ if $paginator.HasNext }}{{ $paginator.Next.URL }}{{ else }}#{{ end }}">{{ $olderLabel }}</a>
         </nav>
         {{ end }}
         {{ else }}
