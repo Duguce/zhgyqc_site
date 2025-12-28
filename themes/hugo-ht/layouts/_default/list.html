@@ -305,6 +305,13 @@
       pointer-events: none;
       opacity: 0.35;
     }
+    .scholar-pagination__ellipsis {
+      color: var(--shell-muted);
+      font-size: 0.8rem;
+      padding: 0.3rem 0.4rem;
+      min-width: 1rem;
+      text-align: center;
+    }
     @media (max-width: 720px) {
       .scholar-panel {
         padding: 1.4rem;
@@ -397,9 +404,34 @@
         {{ if gt $paginator.TotalPages 1 }}
         <nav class="scholar-pagination" aria-label="Pagination">
           <a class="scholar-pagination__button {{ if not $paginator.HasPrev }}is-disabled{{ end }}" href="{{ if $paginator.HasPrev }}{{ $paginator.Prev.URL }}{{ else }}#{{ end }}">{{ $newerLabel }}</a>
-          {{ range $page := seq 1 $paginator.TotalPages }}
-            {{ $pageURL := (index $paginator.Pagers (sub $page 1)).URL }}
-            <a class="scholar-pagination__button {{ if eq $page $paginator.PageNumber }}is-active{{ end }}" href="{{ $pageURL }}">{{ $page }}</a>
+          {{ if le $paginator.TotalPages 7 }}
+            {{ range $page := seq 1 $paginator.TotalPages }}
+              {{ $pageURL := (index $paginator.Pagers (sub $page 1)).URL }}
+              <a class="scholar-pagination__button {{ if eq $page $paginator.PageNumber }}is-active{{ end }}" href="{{ $pageURL }}">{{ $page }}</a>
+            {{ end }}
+          {{ else }}
+            {{ $pageURL := (index $paginator.Pagers 0).URL }}
+            <a class="scholar-pagination__button {{ if eq 1 $paginator.PageNumber }}is-active{{ end }}" href="{{ $pageURL }}">1</a>
+            {{ if gt $paginator.PageNumber 4 }}
+              <span class="scholar-pagination__ellipsis">…</span>
+            {{ end }}
+            {{ $start := 2 }}
+            {{ if gt $paginator.PageNumber 2 }}
+              {{ $start = sub $paginator.PageNumber 1 }}
+            {{ end }}
+            {{ $end := sub $paginator.TotalPages 1 }}
+            {{ if lt $paginator.PageNumber (sub $paginator.TotalPages 1) }}
+              {{ $end = add $paginator.PageNumber 1 }}
+            {{ end }}
+            {{ range $page := seq $start $end }}
+              {{ $pageURL := (index $paginator.Pagers (sub $page 1)).URL }}
+              <a class="scholar-pagination__button {{ if eq $page $paginator.PageNumber }}is-active{{ end }}" href="{{ $pageURL }}">{{ $page }}</a>
+            {{ end }}
+            {{ if lt $paginator.PageNumber (sub $paginator.TotalPages 3) }}
+              <span class="scholar-pagination__ellipsis">…</span>
+            {{ end }}
+            {{ $pageURL := (index $paginator.Pagers (sub $paginator.TotalPages 1)).URL }}
+            <a class="scholar-pagination__button {{ if eq $paginator.TotalPages $paginator.PageNumber }}is-active{{ end }}" href="{{ $pageURL }}">{{ $paginator.TotalPages }}</a>
           {{ end }}
           <a class="scholar-pagination__button {{ if not $paginator.HasNext }}is-disabled{{ end }}" href="{{ if $paginator.HasNext }}{{ $paginator.Next.URL }}{{ else }}#{{ end }}">{{ $olderLabel }}</a>
         </nav>
