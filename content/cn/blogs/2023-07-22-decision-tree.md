@@ -4,7 +4,7 @@ date: 2023-07-22
 author: Yu Ching San
 slug: Decision Tree
 draft: false
-toc: True
+toc: false
 categories:
   - Machine Learning
 tags:
