@@ -16,13 +16,13 @@
   {{ if gt $totalEntries 0 }}
     {{ $latestStamp = (index $entries 0).Date.Format "2006-01-02" }}
   {{ end }}
-  {{ $heroDesc := cond $isCnBlogs "Long-form reflections, research logs, and essays collected in one scholarly notebook." "Short dispatches and observational notes that capture daily momentum." }}
-  {{ $panelTitle := cond $isCnBlogs "Archive ledger" "Field log" }}
-  {{ $panelDesc := cond $isCnBlogs "Browse the latest essays or jump through years using the index below." "Recent updates arranged for quick browse; tap any card for full details." }}
-  {{ $ctaLabel := cond $isCnBlogs "Read entry" "Open moment" }}
-  {{ $stat1Label := cond $isCnBlogs "文章总数" "Total entries" }}
-  {{ $stat2Label := cond $isCnBlogs "活跃年份" "Active years" }}
-  {{ $stat3Label := cond $isCnBlogs "最近更新" "Last update" }}
+  {{ $heroDesc := cond $isCnBlogs "Long-form notes on books, tech, and life." "Short notes from daily life and travel." }}
+  {{ $panelTitle := cond $isCnBlogs "Archive" "Moments" }}
+  {{ $panelDesc := cond $isCnBlogs "Read recent posts or browse by year." "Scan recent posts and open any entry." }}
+  {{ $ctaLabel := cond $isCnBlogs "Read article" "Open moment" }}
+  {{ $stat1Label := cond $isCnBlogs "Total articles" "Total entries" }}
+  {{ $stat2Label := cond $isCnBlogs "Active years" "Active years" }}
+  {{ $stat3Label := cond $isCnBlogs "Last update" "Last update" }}
   {{ $badgeLabel := cond $isCnBlogs "Writing Ledger" "Live Log" }}
   {{ $newerLabel := "Newer" }}
   {{ $olderLabel := "Earlier" }}
@@ -482,7 +482,7 @@
         </nav>
         {{ end }}
         {{ else }}
-        <p class="entry-empty">{{ if $isCnBlogs }}暂无文章{{ else }}No moments published yet.{{ end }}</p>
+        <p class="entry-empty">{{ if $isCnBlogs }}No articles published yet.{{ else }}No moments published yet.{{ end }}</p>
         {{ end }}
       </section>
     </div>
