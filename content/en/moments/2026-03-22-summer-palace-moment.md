@@ -1,8 +1,8 @@
 ---
-title: "A Lakeside Moment at the Summer Palace"
+title: "A Moment at the Summer Palace"
 date: 2026-03-22
 author: Qingchen Yu
-slug: summer-palace-lakeside
+slug: summer-palace-moment
 draft: false
 toc: false
 categories:
