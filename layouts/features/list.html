@@ -7,11 +7,12 @@
     }
 
     .features-index {
-      --bg: #f8f9fb;
+      --bg: #edf2ff;
       --ink: #0f1419;
       --muted: #5a6370;
       --accent: #6366f1;
       --accent-secondary: #8b5cf6;
+      --accent-warm: #f59e0b;
       --line: rgba(15, 20, 25, 0.08);
       --line-subtle: rgba(15, 20, 25, 0.04);
       --shadow-sm: 0 2px 8px rgba(15, 20, 25, 0.06);
@@ -22,12 +23,33 @@
       padding: 0;
       color: var(--ink);
       max-width: 100% !important;
-      width: 100vw;
-      margin: 0 calc(-50vw + 50%) 0;
-      min-height: 100vh;
+      width: 100%;
+      margin: 0;
+      min-height: calc(100vh - 84px);
       display: flex;
       flex-direction: column;
-      background: linear-gradient(180deg, var(--bg) 0%, #ffffff 100%);
+      background:
+        radial-gradient(circle at 12% 18%, rgba(99, 102, 241, 0.14) 0%, transparent 36%),
+        radial-gradient(circle at 84% 84%, rgba(245, 158, 11, 0.11) 0%, transparent 35%),
+        linear-gradient(160deg, #f4f7ff 0%, #f8f9fb 45%, #ffffff 100%);
+    }
+
+    .features-index > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .features-index .features-shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(15, 20, 25, 0.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 20, 25, 0.022) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: radial-gradient(circle at center, black 35%, transparent 88%);
+      pointer-events: none;
+      z-index: 0;
     }
 
     /* Premium background blobs - minimal, elegant */
@@ -75,30 +97,31 @@
       position: relative;
       z-index: 1;
       width: 100%;
-      padding: 0 max(2rem, calc((100vw - 1360px) / 2));
+      padding: 0;
       flex-grow: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
+      min-height: calc(100vh - 84px);
     }
 
     .features-center {
-      width: min(920px, 92vw);
+      width: min(760px, 88vw);
       text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 1.2rem;
+      gap: 0.8rem;
+      padding: 0.5rem 0;
     }
 
     .features-title {
       margin: 0;
-      font-size: clamp(2.1rem, 7vw, 5.4rem);
-      line-height: 0.94;
+      font-size: clamp(1.95rem, 6vw, 4.6rem);
+      line-height: 0.92;
       font-weight: 900;
-      letter-spacing: -0.06em;
+      letter-spacing: -0.07em;
       white-space: nowrap;
       color: var(--ink);
       background: linear-gradient(135deg, #111827 0%, #4349d5 52%, #8b5cf6 100%);
@@ -111,11 +134,15 @@
 
     .features-tagline {
       margin: 0;
-      font-size: clamp(0.88rem, 1.2vw, 1rem);
+      font-size: clamp(0.76rem, 1vw, 0.92rem);
       color: var(--muted);
       opacity: 0.85;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
+      background: linear-gradient(90deg, rgba(99, 102, 241, 0.1), rgba(245, 158, 11, 0.12));
+      border: 1px solid rgba(99, 102, 241, 0.14);
+      border-radius: 999px;
+      padding: 0.35rem 0.8rem;
     }
 
     @keyframes fadeIn {
@@ -131,20 +158,29 @@
 
     @media (max-width: 1400px) {
       .features-shell {
-        padding: 0 1.5rem;
+        padding: 0;
       }
     }
 
     @media (max-width: 1024px) {
       .features-shell {
-        min-height: calc(100vh - 40px);
+        min-height: calc(100vh - 72px);
       }
     }
 
     @media (max-width: 640px) {
       .features-center {
-        gap: 0.9rem;
+        gap: 0.65rem;
       }
+    }
+
+    /* Theme footer has margin-top: 40px; remove it only for features page. */
+    .features-index + .footer {
+      margin-top: 0;
+    }
+
+    .features-index + .footer::before {
+      display: none;
     }
   </style>
 
