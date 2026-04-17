@@ -1,4 +1,3 @@
-<footer class="footer">
 {{if and (not .IsSection) (not .IsHome)}}
 <!-- <script src="https://utteranc.es/client.js"
         repo="Duguce/zhgyqc_site"
@@ -17,6 +16,8 @@
         async>
 </script>
 {{ end }}
+
+      <footer class="footer">
 
   {{ $rssLink := "" }}
   {{ if not .IsHome }}
@@ -39,7 +40,17 @@
   {{ end }}
 
   {{ partial "foot_custom.html" . }}
-     <ul class="footer-links">
+  {{ $hasFooterLinks := false }}
+  {{ if .IsHome }}
+    {{ with .Site.Params.GithubRepo }}
+      {{ $hasFooterLinks = true }}
+    {{ end }}
+  {{ end }}
+  {{ if and (not .IsHome) (ne $rssLink "") }}
+    {{ $hasFooterLinks = true }}
+  {{ end }}
+
+     <ul class="footer-links{{ if $hasFooterLinks }} footer-links--visible{{ end }}">
       {{ if .IsHome }}
        {{ with .Site.Params.GithubRepo}}
        <li>

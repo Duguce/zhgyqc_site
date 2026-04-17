@@ -494,7 +494,7 @@
   {{ end }}
 
   <main class = "content">
-  <div class="list-page">
+  <div class="list-page{{ if .IsHome }} home-list-page{{ end }}">
   {{ .Content }}
 
   {{if not .IsHome}}
