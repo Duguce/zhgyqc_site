@@ -11,7 +11,7 @@
     {{ partial "head_custom.html" . }}
   </head>
   
-  <body>
+  <body{{ if or .IsHome (eq .RelPermalink "/") (eq .RelPermalink "./") }} class="home-page"{{ end }}>
     <div class="wrapper">
       <header class="header">
         {{ partial "nav.html" . }}

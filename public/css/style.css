@@ -16,6 +16,10 @@ body {
   color: #1f2535;
 } 
 
+body.home-page {
+  background: #ffffff;
+}
+
 /* Two columns */
 div.splitbox {
   width:100%; 
