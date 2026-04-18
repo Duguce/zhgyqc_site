@@ -115,7 +115,7 @@ I am currently a Ph.D. student in Artificial Intelligence at Beihang University.
             <a href="https://github.com/mazzzystar/TurtleBench" style="color: #0066cc; text-decoration: none;">GitHub</a> | 
             <a href="https://huggingface.co/datasets/Duguce/TurtleBench1.5k" style="color: #0066cc; text-decoration: none;">Dataset</a> | 
             <a href="https://tanghenre.com" style="color: #0066cc; text-decoration: none;">Demo</a> | 
-            <a href="https://mazzzystar.github.io/2024/08/09/turtle-benchmark-zh" style="color: #0066cc; text-decoration: none;">Blog Post</a>
+            <a href="https://mazzzystar.github.io/2024/08/09/turtle-benchmark-zh" style="color: #0066cc; text-decoration: none;">Blog Post</a> | <a href="./assets/TurtleBench-Poster_ICASSP2026.pdf" style="color: #0066cc; text-decoration: none;">Poster</a>
         </p>
     </div>
 </div>
