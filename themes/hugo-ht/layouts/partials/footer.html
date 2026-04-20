@@ -1,4 +1,7 @@
-{{if and (not .IsSection) (not .IsHome)}}
+{{ $fileDir := "" }}
+{{ with .File }}{{ $fileDir = .Dir }}{{ end }}
+{{ $showComments := or (strings.HasPrefix $fileDir "cn/blogs") (strings.HasPrefix $fileDir "en/moments") }}
+{{if and (not .IsSection) (not .IsHome) $showComments}}
 {{ $giscus := .Site.Params.giscus }}
 {{ if and $giscus.repo $giscus.repoId $giscus.category $giscus.categoryId }}
 <div id="giscus-comments"></div>
@@ -13,7 +16,7 @@
   data-emit-metadata="{{ default "0" $giscus.emitMetadata }}"
   data-input-position="{{ default "bottom" $giscus.inputPosition }}"
   data-theme="{{ default "light" $giscus.theme }}"
-  data-lang="{{ default "zh-CN" $giscus.lang }}"
+  data-lang="{{ default "en" $giscus.lang }}"
   data-loading="{{ default "lazy" $giscus.loading }}"
   crossorigin="anonymous"
   async>

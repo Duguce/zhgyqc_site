@@ -231,6 +231,12 @@ Customize as you prefer*/
   padding: 0 15px;
 }
 
+#giscus-comments {
+  max-width: 750px;
+  margin: 28px auto 0;
+  padding: 0 15px;
+}
+
 .home-list-page > h1:first-child,
 .list-page > h1:first-child {
   margin-top: 0;

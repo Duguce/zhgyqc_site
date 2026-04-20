@@ -57,7 +57,7 @@ posts = "/posts/:year/:month/:day/:slug/"
       emitMetadata = "0"
       inputPosition = "bottom"
       theme = "preferred_color_scheme"
-      lang = "zh-CN"
+      lang = "en"
       loading = "lazy"
 
 [params.logo]
