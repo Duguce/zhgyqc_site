@@ -232,9 +232,9 @@ Customize as you prefer*/
 }
 
 #giscus-comments {
-  max-width: 750px;
-  margin: 28px auto 0;
-  padding: 0 15px;
+  max-width: 100%;
+  margin-top: 1.8rem;
+  padding: 0;
 }
 
 .home-list-page > h1:first-child,
