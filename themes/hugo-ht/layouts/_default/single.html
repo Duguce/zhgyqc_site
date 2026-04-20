@@ -260,6 +260,36 @@
     color: var(--ink);
     background: var(--surface);
   }
+  .scholar-comments {
+    margin-top: 1.4rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(31, 37, 53, 0.14);
+  }
+  .scholar-article[data-variant="moments"] .scholar-comments {
+    border-top-color: rgba(75, 111, 173, 0.22);
+  }
+  .scholar-comments__title {
+    margin: 0;
+    font-size: 0.76rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    opacity: 0.9;
+  }
+  .scholar-comments__hint {
+    margin: 0.2rem 0 0;
+    font-size: 0.83rem;
+    color: var(--muted);
+    opacity: 0.85;
+  }
+  .scholar-comments #giscus-comments {
+    margin-top: 0.65rem;
+    max-width: 100%;
+    padding: 0;
+  }
+  .scholar-comments #giscus-comments iframe {
+    border-radius: 0.55rem;
+  }
   .scholar-nav {
     margin-top: 2rem;
     display: flex;
@@ -310,6 +340,10 @@
       display: flex;
       flex-direction: column;
     }
+    .scholar-comments {
+      margin-top: 1.2rem;
+      padding-top: 0.85rem;
+    }
   }
   </style>
 
@@ -356,23 +390,27 @@
 
         {{ $giscus := .Site.Params.giscus }}
         {{ if and $giscus.repo $giscus.repoId $giscus.category $giscus.categoryId }}
-        <div id="giscus-comments"></div>
-        <script src="https://giscus.app/client.js"
-          data-repo="{{ $giscus.repo }}"
-          data-repo-id="{{ $giscus.repoId }}"
-          data-category="{{ $giscus.category }}"
-          data-category-id="{{ $giscus.categoryId }}"
-          data-mapping="{{ default "pathname" $giscus.mapping }}"
-          data-strict="{{ default "0" $giscus.strict }}"
-          data-reactions-enabled="{{ default "1" $giscus.reactionsEnabled }}"
-          data-emit-metadata="{{ default "0" $giscus.emitMetadata }}"
-          data-input-position="{{ default "bottom" $giscus.inputPosition }}"
-          data-theme="{{ default "light" $giscus.theme }}"
-          data-lang="{{ default "en" $giscus.lang }}"
-          data-loading="{{ default "lazy" $giscus.loading }}"
-          crossorigin="anonymous"
-          async>
-        </script>
+        <section class="scholar-comments" aria-label="Comments">
+          <h2 class="scholar-comments__title">Discussion</h2>
+          <p class="scholar-comments__hint">Comments from readers</p>
+          <div id="giscus-comments"></div>
+          <script src="https://giscus.app/client.js"
+            data-repo="{{ $giscus.repo }}"
+            data-repo-id="{{ $giscus.repoId }}"
+            data-category="{{ $giscus.category }}"
+            data-category-id="{{ $giscus.categoryId }}"
+            data-mapping="{{ default "pathname" $giscus.mapping }}"
+            data-strict="{{ default "0" $giscus.strict }}"
+            data-reactions-enabled="{{ default "1" $giscus.reactionsEnabled }}"
+            data-emit-metadata="{{ default "0" $giscus.emitMetadata }}"
+            data-input-position="{{ default "bottom" $giscus.inputPosition }}"
+            data-theme="{{ default "light" $giscus.theme }}"
+            data-lang="{{ default "en" $giscus.lang }}"
+            data-loading="{{ default "lazy" $giscus.loading }}"
+            crossorigin="anonymous"
+            async>
+          </script>
+        </section>
         {{ end }}
       </div>
       {{ if .Params.toc }}
