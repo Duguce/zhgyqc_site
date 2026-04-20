@@ -1,20 +1,24 @@
 {{if and (not .IsSection) (not .IsHome)}}
-<!-- <script src="https://utteranc.es/client.js"
-        repo="Duguce/zhgyqc_site"
-        issue-term="title"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-</script> -->
-<div id="utterances-comments"></div>
-<script src="https://utteranc.es/client.js"
-        repo="Duguce/zhgyqc_site"
-  issue-term="pathname"
-  label="comments"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
+{{ $giscus := .Site.Params.giscus }}
+{{ if and $giscus.repo $giscus.repoId $giscus.category $giscus.categoryId }}
+<div id="giscus-comments"></div>
+<script src="https://giscus.app/client.js"
+  data-repo="{{ $giscus.repo }}"
+  data-repo-id="{{ $giscus.repoId }}"
+  data-category="{{ $giscus.category }}"
+  data-category-id="{{ $giscus.categoryId }}"
+  data-mapping="{{ default "pathname" $giscus.mapping }}"
+  data-strict="{{ default "0" $giscus.strict }}"
+  data-reactions-enabled="{{ default "1" $giscus.reactionsEnabled }}"
+  data-emit-metadata="{{ default "0" $giscus.emitMetadata }}"
+  data-input-position="{{ default "bottom" $giscus.inputPosition }}"
+  data-theme="{{ default "light" $giscus.theme }}"
+  data-lang="{{ default "zh-CN" $giscus.lang }}"
+  data-loading="{{ default "lazy" $giscus.loading }}"
+  crossorigin="anonymous"
+  async>
 </script>
+{{ end }}
 {{ end }}
 
       <footer class="footer">

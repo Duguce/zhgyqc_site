@@ -46,6 +46,20 @@ posts = "/posts/:year/:month/:day/:slug/"
     copyright = "&copy;"
     copyrightYear = "2022-2026"
 
+    [params.giscus]
+      repo = "Duguce/zhgyqc_site"
+      repoId = "R_kgDOIr7f-Q"
+      category = "General"
+      categoryId = "DIC_kwDOIr7f-c4C1_sD"
+      mapping = "pathname"
+      strict = "0"
+      reactionsEnabled = "1"
+      emitMetadata = "0"
+      inputPosition = "bottom"
+      theme = "preferred_color_scheme"
+      lang = "zh-CN"
+      loading = "lazy"
+
 [params.logo]
     url = "media/logo.png"
     width = 50.0
