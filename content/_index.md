@@ -111,6 +111,7 @@ I am currently a Ph.D. student in Artificial Intelligence at Beihang University.
             <strong>TurtleBench: Evaluating Top Language Models via Real-World Yes/No Puzzles</strong><br>
             <strong>Qingchen Yu</strong><sup>*</sup>, Shichao Song<sup>*</sup>, Ke Fang<sup>*</sup>, Yunfeng Shi, Zifan Zheng, Hanyu Wang, Simin Niu, Zhiyu Li<sup>†</sup><br>
             <span style="font-size: 16px; background-color: #E0E0E0; color: #555; font-weight: bold; padding: 3px 6px; border-radius: 5px;">arXiv, 2024</span>
+            <a href="https://ieeexplore.ieee.org/document/11464244" style="color: #0066cc; text-decoration: none;">IEEE Xplore</a> | 
             <a href="https://arxiv.org/abs/2410.05262" style="color: #0066cc; text-decoration: none;">arXiv</a> | 
             <a href="https://github.com/mazzzystar/TurtleBench" style="color: #0066cc; text-decoration: none;">GitHub</a> | 
             <a href="https://huggingface.co/datasets/Duguce/TurtleBench1.5k" style="color: #0066cc; text-decoration: none;">Dataset</a> | 
