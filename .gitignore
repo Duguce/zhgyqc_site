@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual environments
+.venv/
+venv/
+
+# Build artifacts
+build/
+dist/
+
+# Runtime outputs
+outputs/*
+!outputs/.gitkeep
+release/*
+!release/.gitkeep
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE/editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Local configuration files
+config/config.local.js

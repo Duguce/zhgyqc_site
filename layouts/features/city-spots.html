@@ -1,0 +1,2099 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ .Title }}</title>
+    <meta name="description" content="{{ with .Params.description }}{{ . }}{{ else }}{{ .Summary }}{{ end }}">
+    <!-- Load configuration: prefer local config for development, fallback to production config -->
+    <script src="/config/config.local.js" onerror="this.onerror=null; this.src='/config/config.js'"></script>
+    <style>
+      :root {
+        --bg: #f0f5ff;
+        --bg-strong: #e3efff;
+        --panel: rgba(255, 255, 255, 0.88);
+        --panel-strong: rgba(255, 255, 255, 0.97);
+        --panel-border: rgba(15, 23, 42, 0.08);
+        --panel-border-strong: rgba(15, 23, 42, 0.15);
+        --ink: #0c1222;
+        --muted: #5a6b82;
+        --accent: #0984e3;
+        --accent-strong: #0769c0;
+        --accent-soft: #d0ebff;
+        --accent-warm: #e17055;
+        --success: #00b894;
+        --success-strong: #009976;
+        --shadow-sm: 0 2px 8px rgba(9, 18, 34, 0.06);
+        --shadow-md: 0 12px 36px rgba(9, 18, 34, 0.1);
+        --shadow-lg: 0 28px 72px rgba(9, 18, 34, 0.14);
+        --shadow-xl: 0 40px 100px rgba(9, 18, 34, 0.18);
+        --radius-xl: 1.85rem;
+        --radius-lg: 1.25rem;
+        --radius-md: 0.75rem;
+        --radius-sm: 0.45rem;
+        color-scheme: light;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html, body {
+        margin: 0;
+        width: 100%;
+        min-height: 100%;
+        background:
+          radial-gradient(ellipse at 100% 0%, rgba(9,132,227,0.14), transparent 50%),
+          radial-gradient(ellipse at 0% 100%, rgba(225,112,85,0.1), transparent 50%),
+          linear-gradient(175deg, #e8f2ff 0%, #f0f5ff 25%, #f7fafd 60%, #ffffff 100%);
+        color: var(--ink);
+        font-family: "Sora", "Avenir Next", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+        overflow: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(15, 23, 42, 0.025) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(15, 23, 42, 0.025) 1px, transparent 1px);
+        background-size: 52px 52px;
+        mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+        opacity: 0.6;
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(circle at 80% 10%, rgba(9,132,227,0.12), transparent 30%),
+          radial-gradient(circle at 15% 88%, rgba(225,112,85,0.08), transparent 28%);
+        mix-blend-mode: multiply;
+        opacity: 0.4;
+      }
+
+      .city-spots-page {
+        position: relative;
+        z-index: 1;
+        width: 100vw;
+        height: 100svh;
+        padding: 20px;
+      }
+
+      .city-spots-shell {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: minmax(0, 1.72fr) minmax(360px, 0.86fr);
+        gap: 18px;
+        animation: city-spots-fade-in 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .city-spots-map-shell,
+      .city-spots-panel {
+        border: 1px solid var(--panel-border);
+        border-radius: var(--radius-xl);
+        background: var(--panel);
+        backdrop-filter: blur(24px) saturate(140%);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .city-spots-map-shell::before,
+      .city-spots-panel::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        border-radius: inherit;
+        background: linear-gradient(130deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.04) 46%, rgba(11,145,216,0.08) 100%);
+      }
+
+      .city-spots-map-shell {
+        position: relative;
+        overflow: hidden;
+        min-height: 0;
+      }
+
+      .city-spots-map {
+        width: 100%;
+        height: 100%;
+        min-height: 0;
+      }
+
+      .city-spots-map-overlay {
+        position: absolute;
+        left: 18px;
+        top: 18px;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        max-width: min(520px, calc(100% - 36px));
+      }
+
+      .city-spots-badge-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .city-spots-hero {
+        padding: 1.15rem 1.2rem;
+        border: 1px solid rgba(15, 23, 42, 0.1);
+        border-radius: 1.2rem;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: var(--shadow-md);
+        backdrop-filter: blur(20px);
+        animation: city-spots-rise-in 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .city-spots-hero h1 {
+        margin: 0;
+        font-size: clamp(2.1rem, 4vw, 3.6rem);
+        line-height: 0.92;
+        letter-spacing: -0.058em;
+        background: linear-gradient(135deg, var(--ink) 30%, var(--accent-strong) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .city-spots-hero p {
+        margin: 0.45rem 0 0;
+        max-width: 66ch;
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.6;
+      }
+
+      .city-spots-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        margin-bottom: 0.6rem;
+        color: var(--accent-strong);
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+      }
+
+      .city-spots-kicker::before {
+        content: "";
+        width: 2.75rem;
+        height: 1px;
+        background: linear-gradient(90deg, var(--accent), rgba(14, 165, 233, 0.2));
+      }
+
+      .city-spots-hero__chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .city-spots-chip {
+        display: inline-flex;
+        align-items: center;
+        min-height: 2.2rem;
+        padding: 0.42rem 0.8rem;
+        border-radius: 999px;
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        background: rgba(255, 255, 255, 0.92);
+        font-size: 0.8rem;
+        font-weight: 700;
+        box-shadow: var(--shadow-sm);
+        letter-spacing: 0.01em;
+      }
+
+      .city-spots-panel {
+        position: relative;
+        height: 100%;
+        max-height: none;
+        overflow: auto;
+        padding: 1.15rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.85rem;
+      }
+
+      .city-spots-panel::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .city-spots-panel::-webkit-scrollbar-thumb {
+        background: rgba(15, 23, 42, 0.12);
+        border-radius: 999px;
+      }
+
+      .city-spots-panel::-webkit-scrollbar-thumb:hover {
+        background: rgba(15, 23, 42, 0.2);
+      }
+
+      .city-spots-panel__top {
+        padding: 0.2rem 0.25rem 0.35rem;
+        border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+      }
+
+      .city-spots-panel__top h2 {
+        margin: 0;
+        font-size: clamp(1.32rem, 2vw, 1.72rem);
+        letter-spacing: -0.04em;
+        background: linear-gradient(135deg, var(--ink) 40%, var(--accent-strong) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .city-spots-panel__top p {
+        margin: 0.4rem 0 0;
+        color: var(--muted);
+        font-size: 0.88rem;
+        line-height: 1.55;
+      }
+
+      .city-spots-panel__stats {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.55rem;
+      }
+
+      .city-spots-stat {
+        padding: 0.88rem 0.95rem;
+        border-radius: var(--radius-lg);
+        border: 1px solid rgba(15, 23, 42, 0.07);
+        background: linear-gradient(165deg, rgba(255,255,255,0.99), rgba(240,247,255,0.92));
+        box-shadow: var(--shadow-sm);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .city-spots-stat::after {
+        content: "";
+        position: absolute;
+        top: -1px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(9,132,227,0.25), transparent);
+        border-radius: 2px;
+      }
+
+      .city-spots-stat span {
+        display: block;
+        color: var(--muted);
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+      }
+
+      .city-spots-stat strong {
+        display: block;
+        margin-top: 0.28rem;
+        font-size: 0.98rem;
+        letter-spacing: -0.02em;
+      }
+
+      .city-spots-section {
+        border: 1px solid rgba(15, 23, 42, 0.07);
+        border-radius: var(--radius-lg);
+        background: linear-gradient(165deg, rgba(255,255,255,0.99), rgba(242,249,255,0.94));
+        padding: 1rem;
+        box-shadow: var(--shadow-sm);
+        animation: city-spots-rise-in 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        animation-fill-mode: both;
+        position: relative;
+      }
+
+      .city-spots-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(15,23,42,0.06), transparent);
+      }
+
+      .city-spots-section:nth-of-type(1) { animation-delay: 0.06s; }
+      .city-spots-section:nth-of-type(2) { animation-delay: 0.12s; }
+      .city-spots-section:nth-of-type(3) { animation-delay: 0.18s; }
+
+      .city-spots-section__title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.8rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .city-spots-section__title strong {
+        font-size: 1rem;
+        letter-spacing: -0.01em;
+      }
+
+      .city-spots-map-shell {
+        min-height: 0;
+      }
+
+      .city-spots-map {
+        width: 100%;
+        height: 100%;
+        min-height: 0;
+      }
+
+      .city-spots-status {
+        margin: 0;
+        padding: 0.82rem 1rem;
+        border-top: 1px solid rgba(15, 23, 42, 0.08);
+        background: linear-gradient(180deg, rgba(255,255,255,0.46), rgba(15, 23, 42, 0.04));
+        color: var(--muted);
+        font-size: 0.82rem;
+        line-height: 1.45;
+      }
+
+      .city-spots-card {
+        border: 1px solid rgba(15, 23, 42, 0.09);
+        border-radius: var(--radius-lg);
+        background: rgba(248, 250, 252, 0.92);
+        padding: 0.8rem;
+      }
+
+      .city-spots-card > summary {
+        cursor: pointer;
+        font-weight: 700;
+        list-style: none;
+      }
+
+      .city-spots-card > summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .city-spots-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 0.55rem;
+      }
+
+      .city-spots-label {
+        font-size: 0.84rem;
+        font-weight: 700;
+        color: #334155;
+      }
+
+      .city-spots-input {
+        width: 100%;
+        border: 1px solid rgba(15, 23, 42, 0.11);
+        border-radius: var(--radius-md);
+        background: linear-gradient(180deg, #ffffff, #f9fcff);
+        color: var(--ink);
+        padding: 0.68rem 0.78rem;
+        font: inherit;
+        outline: none;
+        box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.8), 0 1px 3px rgba(15,23,42,0.04);
+        transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.15s ease;
+      }
+
+      .city-spots-input:focus {
+        border-color: rgba(9, 132, 227, 0.65);
+        box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.8), 0 0 0 4px rgba(9, 132, 227, 0.1);
+      }
+
+      .city-spots-input--static {
+        background: linear-gradient(180deg, #ffffff, #f0f6ff);
+        color: #0f172a;
+        font-weight: 650;
+      }
+
+      .city-spots-inline {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+      }
+
+      .city-spots-inline--between {
+        justify-content: space-between;
+      }
+
+      .city-spots-btn {
+        border: 1px solid rgba(15, 23, 42, 0.1);
+        border-radius: var(--radius-md);
+        background: linear-gradient(180deg, #ffffff, #f4f8ff);
+        color: var(--ink);
+        padding: 0.62rem 0.92rem;
+        font: inherit;
+        font-weight: 700;
+        font-size: 0.85rem;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.18s ease, background 0.22s ease, color 0.22s ease, border-color 0.2s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .city-spots-btn::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,0.3));
+        opacity: 0;
+        transition: opacity 0.2s ease;
+      }
+
+      .city-spots-btn:hover:not(:disabled) {
+        transform: translateY(-1.5px);
+        box-shadow: var(--shadow-md);
+        border-color: rgba(9, 132, 227, 0.25);
+      }
+
+      .city-spots-btn:hover:not(:disabled)::after {
+        opacity: 1;
+      }
+
+      .city-spots-btn:active:not(:disabled) {
+        transform: translateY(0);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .city-spots-btn:disabled {
+        cursor: not-allowed;
+        opacity: 0.8;
+      }
+
+      .city-spots-btn.is-loading {
+        background: linear-gradient(90deg, #e2e8f0 0%, #f8fafc 50%, #e2e8f0 100%);
+        background-size: 220% 100%;
+        animation: city-spots-loading-sheen 1.1s linear infinite;
+      }
+
+      @keyframes city-spots-loading-sheen {
+        0% { background-position: 200% 0; }
+        100% { background-position: -20% 0; }
+      }
+
+      .city-spots-btn--primary {
+        border-color: rgba(7, 105, 192, 0.6);
+        background: linear-gradient(180deg, var(--accent), var(--accent-strong));
+        color: #fff;
+        box-shadow: 0 8px 24px rgba(9, 132, 227, 0.28);
+      }
+
+      .city-spots-btn--primary:hover:not(:disabled) {
+        box-shadow: 0 12px 32px rgba(9, 132, 227, 0.38);
+        border-color: rgba(7, 105, 192, 0.75);
+      }
+
+      .city-spots-btn--ghost {
+        border-style: solid;
+        font-size: 0.82rem;
+        padding: 0.45rem 0.65rem;
+      }
+
+      .city-spots-help {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.8rem;
+        line-height: 1.5;
+      }
+
+      .city-spots-help strong {
+        color: var(--ink);
+      }
+
+      .city-spots-note {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        margin: 0;
+        padding: 0.7rem 0.8rem;
+        border-radius: var(--radius-md);
+        background: rgba(14, 165, 233, 0.08);
+        color: #0f4e73;
+        font-size: 0.82rem;
+        line-height: 1.45;
+      }
+
+      .city-spots-note::before {
+        content: "";
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 999px;
+        background: var(--accent-strong);
+        box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.16);
+        flex: 0 0 auto;
+      }
+
+      .city-spots-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.52rem;
+        max-height: 27vh;
+        overflow: auto;
+      }
+
+      .city-spots-item {
+        border: 1px solid rgba(15, 23, 42, 0.07);
+        border-radius: var(--radius-md);
+        background: linear-gradient(165deg, rgba(255,255,255,0.99), rgba(248,252,255,0.95));
+        padding: 0.62rem 0.7rem;
+        display: flex;
+        justify-content: space-between;
+        gap: 0.7rem;
+        transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+      }
+
+      .city-spots-item:hover {
+        transform: translateY(-1.5px) scale(1.005);
+        border-color: rgba(9, 132, 227, 0.2);
+        box-shadow: var(--shadow-md);
+      }
+
+      .city-spots-item__meta {
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.18rem;
+      }
+
+      .city-spots-item__meta strong,
+      .city-spots-item__meta span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .city-spots-item__meta strong {
+        font-size: 0.88rem;
+      }
+
+      .city-spots-item__meta span {
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+
+      .city-spots-map-toolbar {
+        position: absolute;
+        left: 18px;
+        bottom: 18px;
+        z-index: 2;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .city-spots-map-pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 2.15rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 999px;
+        background: linear-gradient(180deg, rgba(12,18,32,0.88), rgba(12,18,32,0.74));
+        color: #fff;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+        box-shadow: var(--shadow-md);
+        backdrop-filter: blur(14px);
+      }
+
+      .city-spots-pending {
+        position: absolute;
+        left: 18px;
+        top: 18px;
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        min-width: 260px;
+        max-width: min(380px, calc(100% - 24px));
+        padding: 0.62rem 0.72rem;
+        border-radius: 0.95rem;
+        border: 1px solid rgba(15, 23, 42, 0.16);
+        background: rgba(255, 255, 255, 0.94);
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.2);
+        backdrop-filter: blur(12px);
+      }
+
+      .city-spots-pending.is-hidden {
+        display: none;
+      }
+
+      .city-spots-pending__meta {
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+        flex: 1;
+      }
+
+      .city-spots-pending__meta strong,
+      .city-spots-pending__meta span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .city-spots-pending__meta strong {
+        font-size: 0.87rem;
+      }
+
+      .city-spots-pending__meta span {
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+
+      .city-spots-pending__actions {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+
+      .city-spots-confirm-btn {
+        width: 2rem;
+        height: 2rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        border: 1px solid rgba(15, 23, 42, 0.14);
+        background: #fff;
+        color: #0f172a;
+        font: inherit;
+        font-size: 1rem;
+        font-weight: 800;
+        line-height: 1;
+        cursor: pointer;
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.12);
+      }
+
+      .city-spots-confirm-btn--ok {
+        border-color: #16a34a;
+        background: #16a34a;
+        color: #fff;
+      }
+
+      .city-spots-confirm-btn--cancel {
+        border-color: #ef4444;
+        background: #ef4444;
+        color: #fff;
+      }
+
+      /* ── Route optimization styles ── */
+      .city-spots-route-bar {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        margin-top: 0.35rem;
+      }
+
+      .city-spots-route-info {
+        flex: 1;
+        min-width: 0;
+        padding: 0.5rem 0.7rem;
+        border-radius: var(--radius-md);
+        background: linear-gradient(135deg, rgba(11,145,216,0.07), rgba(233,165,74,0.06));
+        font-size: 0.78rem;
+        color: var(--muted);
+        line-height: 1.45;
+        border: 1px solid rgba(11,145,216,0.1);
+      }
+
+      .city-spots-route-info strong {
+        color: var(--accent-strong);
+        font-weight: 800;
+      }
+
+      .city-spots-route-info.is-hidden {
+        display: none;
+      }
+
+      .city-spots-item--routed {
+        position: relative;
+        border-left: 3px solid var(--accent);
+      }
+
+      .city-spots-seq-badge {
+        flex: 0 0 auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.72rem;
+        height: 1.72rem;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+        color: #fff;
+        font-size: 0.71rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        box-shadow: 0 4px 12px rgba(11, 145, 216, 0.32);
+      }
+
+      .city-spots-seq-badge--start {
+        background: linear-gradient(135deg, #16a34a, #15803d);
+        box-shadow: 0 4px 12px rgba(22, 163, 74, 0.32);
+      }
+
+      .city-spots-seq-badge--end {
+        background: linear-gradient(135deg, #e9a54a, #d97706);
+        box-shadow: 0 4px 12px rgba(233, 165, 74, 0.32);
+      }
+
+      /* ── Start/End point selector ── */
+      .city-spots-endpoint-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+        margin-bottom: 0.6rem;
+      }
+
+      .city-spots-endpoint {
+        position: relative;
+      }
+
+      .city-spots-endpoint__label {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--muted);
+        margin-bottom: 0.3rem;
+        letter-spacing: 0.02em;
+      }
+
+      .city-spots-endpoint__dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        flex-shrink: 0;
+      }
+
+      .city-spots-endpoint__dot--start {
+        background: linear-gradient(135deg, #16a34a, #15803d);
+        box-shadow: 0 2px 6px rgba(22, 163, 74, 0.35);
+      }
+
+      .city-spots-endpoint__dot--end {
+        background: linear-gradient(135deg, #e9a54a, #d97706);
+        box-shadow: 0 2px 6px rgba(233, 165, 74, 0.35);
+      }
+
+      @keyframes city-spots-fade-in {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes city-spots-rise-in {
+        from {
+          opacity: 0;
+          transform: translateY(10px) scale(0.985);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      @media (max-width: 1160px) {
+        html, body {
+          overflow: auto;
+        }
+
+        .city-spots-page {
+          height: auto;
+          min-height: 100svh;
+        }
+
+        .city-spots-shell {
+          min-height: calc(100svh - 32px);
+          grid-template-columns: 1fr;
+        }
+
+        .city-spots-map-shell {
+          min-height: 62vh;
+        }
+
+        .city-spots-map {
+          min-height: 62vh;
+        }
+
+        .city-spots-panel {
+          max-height: none;
+        }
+
+        .city-spots-map-overlay {
+          max-width: calc(100% - 36px);
+        }
+      }
+
+      @media (max-width: 720px) {
+        .city-spots-page {
+          padding: 14px;
+        }
+
+        .city-spots-hero,
+        .city-spots-map-shell,
+        .city-spots-panel {
+          border-radius: 1.2rem;
+        }
+
+        .city-spots-inline {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .city-spots-panel__stats {
+          grid-template-columns: 1fr;
+        }
+
+        .city-spots-hero__chips {
+          justify-content: flex-start;
+        }
+
+        .city-spots-map-overlay,
+        .city-spots-map-toolbar {
+          left: 12px;
+          right: 12px;
+          max-width: none;
+        }
+
+        .city-spots-pending {
+          min-width: 0;
+          max-width: calc(100% - 24px);
+        }
+
+        .city-spots-endpoint-row {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="city-spots-page" aria-label="City Spots">
+      <section class="city-spots-shell">
+        <div class="city-spots-map-shell">
+          <div class="city-spots-map" id="city-spots-map"></div>
+          <div class="city-spots-map-overlay">
+            <div class="city-spots-hero">
+              <div class="city-spots-kicker">专业地图工作台</div>
+              <h1>{{ .Title }}</h1>
+              <p>{{ .Params.subtitle }}. {{ with .Params.description }}{{ . }}{{ else }}{{ .Summary }}{{ end }}</p>
+            </div>
+            <div class="city-spots-badge-row">
+              <span class="city-spots-chip">默认城市：北京</span>
+              <span class="city-spots-chip">切换城市自动清空点位</span>
+              <span class="city-spots-chip">沉浸式全屏布局</span>
+            </div>
+          </div>
+          <div class="city-spots-map-toolbar">
+            <span class="city-spots-map-pill">高德地图服务已连接</span>
+            <span class="city-spots-map-pill">点击地图选择点位</span>
+          </div>
+          <div class="city-spots-pending is-hidden" id="pending-point-panel" aria-live="polite">
+            <div class="city-spots-pending__meta">
+              <strong id="pending-point-name">待确认点位</strong>
+              <span id="pending-point-address">请确认是否添加该位置。</span>
+            </div>
+            <div class="city-spots-pending__actions">
+              <button class="city-spots-confirm-btn city-spots-confirm-btn--ok" id="confirm-point" type="button" aria-label="确认添加点位">√</button>
+              <button class="city-spots-confirm-btn city-spots-confirm-btn--cancel" id="cancel-point" type="button" aria-label="取消添加点位">×</button>
+            </div>
+          </div>
+          <p class="city-spots-status" id="map-status">地图尚未初始化。</p>
+        </div>
+
+        <aside class="city-spots-panel" aria-label="Control panel">
+          <div class="city-spots-panel__top">
+            <h2>City Spots</h2>
+            <p>选择城市并检索地点，快速建立你的收藏点位。</p>
+          </div>
+
+          <div class="city-spots-panel__stats">
+            <div class="city-spots-stat">
+              <span>当前城市</span>
+              <strong id="stat-city">北京</strong>
+            </div>
+            <div class="city-spots-stat">
+              <span>已添加地点</span>
+              <strong id="stat-pins">0</strong>
+            </div>
+          </div>
+
+          <div class="city-spots-section city-spots-stack">
+            <div class="city-spots-section__title">
+              <strong>城市选择</strong>
+              <span class="city-spots-help">切换后会清空已添加点</span>
+            </div>
+            <div class="city-spots-inline">
+              <input class="city-spots-input city-spots-input--static" id="city-input" type="text" placeholder="直接输入城市名，如：西安" />
+              <button class="city-spots-btn" id="apply-city" type="button">切换城市</button>
+            </div>
+          </div>
+
+          <div class="city-spots-section city-spots-stack">
+            <div class="city-spots-section__title">
+              <strong>地点检索</strong>
+              <span class="city-spots-help">仅检索当前城市</span>
+            </div>
+            <div class="city-spots-inline">
+              <input class="city-spots-input" id="poi-keyword" type="text" placeholder="输入关键词，如：博物馆、咖啡馆" />
+              <button class="city-spots-btn city-spots-btn--primary" id="search-poi" type="button">搜索</button>
+            </div>
+            <ul class="city-spots-list" id="search-results"></ul>
+          </div>
+
+          <div class="city-spots-section city-spots-stack">
+            <div class="city-spots-section__title">
+              <strong>已添加地点</strong>
+              <div style="display:flex;align-items:center;gap:0.5rem;">
+                <button class="city-spots-btn city-spots-btn--ghost" id="clear-pins" type="button">清空</button>
+                <button class="city-spots-btn city-spots-btn--ghost" id="optimize-route" type="button">优化路线</button>
+              </div>
+            </div>
+            <div class="city-spots-route-bar">
+              <div class="city-spots-route-info is-hidden" id="route-info"></div>
+            </div>
+            <ul class="city-spots-list" id="pinned-places"></ul>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <script>
+      (function () {
+        var cityCatalog = {
+          beijing: { label: "北京", searchCity: "北京", center: [116.407394, 39.904211] },
+          shanghai: { label: "上海", searchCity: "上海", center: [121.473701, 31.230416] },
+          guangzhou: { label: "广州", searchCity: "广州", center: [113.264385, 23.129112] },
+          shenzhen: { label: "深圳", searchCity: "深圳", center: [114.057868, 22.543099] },
+          hangzhou: { label: "杭州", searchCity: "杭州", center: [120.15507, 30.274084] },
+          chengdu: { label: "成都", searchCity: "成都", center: [104.066541, 30.572269] },
+          nanjing: { label: "南京", searchCity: "南京", center: [118.796877, 32.060255] },
+          wuhan: { label: "武汉", searchCity: "武汉", center: [114.305393, 30.593099] }
+        };
+
+        var amapConfig = window.AMAP_CONFIG || {
+          key: "01c62dbb840ff3a9608824515767257a",
+          securityJsCode: "15ad4d83b7c5222fb9809fcb2d3b9d58"
+        };
+
+        var ui = {
+          cityInput: document.getElementById("city-input"),
+          applyCityButton: document.getElementById("apply-city"),
+          keywordInput: document.getElementById("poi-keyword"),
+          searchButton: document.getElementById("search-poi"),
+          resultsList: document.getElementById("search-results"),
+          pinnedList: document.getElementById("pinned-places"),
+          clearPinsButton: document.getElementById("clear-pins"),
+          status: document.getElementById("map-status"),
+          statCity: document.getElementById("stat-city"),
+          statPins: document.getElementById("stat-pins"),
+          pendingPointPanel: document.getElementById("pending-point-panel"),
+          pendingPointName: document.getElementById("pending-point-name"),
+          pendingPointAddress: document.getElementById("pending-point-address"),
+          confirmPointButton: document.getElementById("confirm-point"),
+          cancelPointButton: document.getElementById("cancel-point"),
+          optimizeRouteButton: document.getElementById("optimize-route"),
+          routeInfo: document.getElementById("route-info")
+        };
+
+        var map = null;
+        var placeSearch = null;
+        var geocoder = null;
+        var infoWindow = null;
+        var currentCity = {
+          key: "beijing",
+          label: cityCatalog.beijing.label,
+          searchCity: cityCatalog.beijing.searchCity,
+          center: cityCatalog.beijing.center
+        };
+        var markers = [];
+        var pinnedPlaces = [];
+        var pendingSelection = null;
+        var pendingMarker = null;
+        var citySwitchToken = 0;
+        var routePolylines = [];
+        var isRouteActive = false;
+
+        function getCurrentCity() {
+          return currentCity;
+        }
+
+        function cloneCityFromCatalog(key) {
+          var city = cityCatalog[key] || cityCatalog.beijing;
+          return {
+            key: key,
+            label: city.label,
+            searchCity: city.searchCity,
+            center: city.center
+          };
+        }
+
+        function findCatalogKeyByLabel(label) {
+          var cityName = (label || "").trim();
+          return Object.keys(cityCatalog).find(function (key) {
+            return cityCatalog[key].label === cityName;
+          }) || null;
+        }
+
+        function applyCityInputs(city) {
+          var cityName = city && city.label ? city.label : "";
+          ui.cityInput.value = cityName;
+        }
+
+        function setCitySwitching(isBusy, cityName) {
+          ui.cityInput.disabled = isBusy;
+          ui.applyCityButton.disabled = isBusy;
+          ui.searchButton.disabled = isBusy;
+
+          if (isBusy) {
+            ui.applyCityButton.classList.add("is-loading");
+            ui.applyCityButton.textContent = "切换中...";
+            setStatus("正在切换到" + cityName + "...");
+          } else {
+            ui.applyCityButton.classList.remove("is-loading");
+            ui.applyCityButton.textContent = "切换城市";
+          }
+        }
+
+        function setStatus(message) {
+          ui.status.textContent = message;
+        }
+
+        function syncStats() {
+          var city = getCurrentCity();
+          ui.statCity.textContent = city.label;
+          ui.statPins.textContent = String(pinnedPlaces.length);
+        }
+
+        function escapeHtml(text) {
+          return String(text)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/\"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+        }
+
+        function renderSearchResults(list) {
+          if (!list.length) {
+            ui.resultsList.innerHTML = "<li class='city-spots-item'><div class='city-spots-item__meta'><strong>未找到地点</strong><span>请尝试更换关键词。</span></div></li>";
+            return;
+          }
+
+          ui.resultsList.innerHTML = list
+            .map(function (poi, index) {
+              var name = escapeHtml(poi.name || "未命名地点");
+              var address = escapeHtml(poi.address || poi.district || "无详细地址");
+              return "<li class='city-spots-item'>" +
+                "<div class='city-spots-item__meta'><strong>" + name + "</strong><span>" + address + "</span></div>" +
+                "<button class='city-spots-btn city-spots-btn--ghost' type='button' data-result-index='" + index + "'>添加</button>" +
+              "</li>";
+            })
+            .join("");
+        }
+
+        function renderPinnedPlaces() {
+          if (!pinnedPlaces.length) {
+            ui.pinnedList.innerHTML = "<li class='city-spots-item'><div class='city-spots-item__meta'><strong>暂无地点</strong><span>可通过搜索或地图点选添加。</span></div></li>";
+            return;
+          }
+
+          ui.pinnedList.innerHTML = pinnedPlaces
+            .map(function (place, index) {
+              var name = escapeHtml(place.name || "未命名地点");
+              var coords = escapeHtml(place.address || (place.lng.toFixed(6) + ", " + place.lat.toFixed(6)));
+              var itemClass = isRouteActive ? "city-spots-item city-spots-item--routed" : "city-spots-item";
+              var seqBadge = "";
+              if (isRouteActive) {
+                var seqClass = "city-spots-seq-badge";
+                if (index === 0) { seqClass += " city-spots-seq-badge--start"; }
+                else if (index === pinnedPlaces.length - 1) { seqClass += " city-spots-seq-badge--end"; }
+                seqBadge = "<span class='" + seqClass + "'>" + (index + 1) + "</span>";
+              }
+              return "<li class='" + itemClass + "'>" +
+                "<div style='display:flex;align-items:center;gap:0.55rem;min-width:0;flex:1;'>" +
+                  seqBadge +
+                  "<div class='city-spots-item__meta'><strong>" + name + "</strong><span>" + coords + "</span></div>" +
+                "</div>" +
+                "<div style='display:flex;align-items:center;gap:0.4rem;'>" +
+                  "<button class='city-spots-btn city-spots-btn--ghost' type='button' data-pin-index='" + index + "' data-action='delete'>删除</button>" +
+                  "<button class='city-spots-btn city-spots-btn--ghost' type='button' data-pin-index='" + index + "' data-action='set-start' title='设为起点'>起点</button>" +
+                  "<button class='city-spots-btn city-spots-btn--ghost' type='button' data-pin-index='" + index + "' data-action='set-end' title='设为终点'>终点</button>" +
+                "</div>" +
+              "</li>";
+            })
+            .join("");
+        }
+
+        function updateMarkerLabels() {
+          pinnedPlaces.forEach(function (place, idx) {
+            if (!place.marker) { return; }
+
+            var label = null;
+            if (place.startIndex === idx) {
+              label = "<div style='" +
+                "display:inline-flex;align-items:center;justify-content:center;" +
+                "width:22px;height:22px;border-radius:999px;" +
+                "background:linear-gradient(135deg,#16a34a,#15803d);" +
+                "color:#fff;font-size:11px;font-weight:800;" +
+                "box-shadow:0 3px 10px rgba(0,0,0,0.25);" +
+                "'>" + "S" + "</div>";
+            } else if (place.endIndex === idx) {
+              label = "<div style='" +
+                "display:inline-flex;align-items:center;justify-content:center;" +
+                "width:22px;height:22px;border-radius:999px;" +
+                "background:linear-gradient(135deg,#e9a54a,#d97706);" +
+                "color:#fff;font-size:11px;font-weight:800;" +
+                "box-shadow:0 3px 10px rgba(0,0,0,0.25);" +
+                "'>" + "E" + "</div>";
+            }
+
+            if (label) {
+              place.marker.setLabel({
+                content: label,
+                direction: "top",
+                offset: new AMap.Pixel(0, -8)
+              });
+            } else {
+              place.marker.setLabel({ content: "", offset: null });
+            }
+          });
+        }
+
+        function clearAllPins() {
+          markers.forEach(function (marker) {
+            marker.setMap(null);
+          });
+          markers = [];
+          pinnedPlaces.forEach(function (place) {
+            place.startIndex = -1;
+            place.endIndex = -1;
+          });
+          pinnedPlaces = [];
+          clearRouteDisplay();
+          renderPinnedPlaces();
+          syncStats();
+        }
+
+        function clearPendingSelection() {
+          pendingSelection = null;
+          if (pendingMarker) {
+            pendingMarker.setMap(null);
+          }
+          pendingMarker = null;
+          ui.pendingPointPanel.classList.add("is-hidden");
+        }
+
+        function getPixelFromLngLat(lng, lat) {
+          if (!map || typeof map.lngLatToContainer !== "function") {
+            return null;
+          }
+
+          var pixel = map.lngLatToContainer([lng, lat]);
+          if (!pixel) {
+            return null;
+          }
+
+          var x = Number(pixel.x != null ? pixel.x : (typeof pixel.getX === "function" ? pixel.getX() : NaN));
+          var y = Number(pixel.y != null ? pixel.y : (typeof pixel.getY === "function" ? pixel.getY() : NaN));
+          if (!Number.isFinite(x) || !Number.isFinite(y)) {
+            return null;
+          }
+
+          return { x: x, y: y };
+        }
+
+        function positionPendingPanel() {
+          if (!pendingSelection || !map) {
+            return;
+          }
+
+          var pixel = getPixelFromLngLat(pendingSelection.lng, pendingSelection.lat);
+          if (!pixel) {
+            return;
+          }
+
+          var mapContainer = map.getContainer ? map.getContainer() : document.getElementById("city-spots-map");
+          if (!mapContainer) {
+            return;
+          }
+
+          var panel = ui.pendingPointPanel;
+          var panelWidth = panel.offsetWidth || 320;
+          var panelHeight = panel.offsetHeight || 64;
+          var containerWidth = mapContainer.clientWidth;
+          var containerHeight = mapContainer.clientHeight;
+          var edgeGap = 12;
+          var markerGap = 16;
+
+          var left = pixel.x + markerGap;
+          var top = pixel.y - panelHeight - markerGap;
+
+          if (top < edgeGap) {
+            top = pixel.y + markerGap;
+          }
+
+          if (left + panelWidth > containerWidth - edgeGap) {
+            left = pixel.x - panelWidth - markerGap;
+          }
+
+          left = Math.max(edgeGap, Math.min(left, containerWidth - panelWidth - edgeGap));
+          top = Math.max(edgeGap, Math.min(top, containerHeight - panelHeight - edgeGap));
+
+          panel.style.left = left + "px";
+          panel.style.top = top + "px";
+        }
+
+        function showPendingSelection() {
+          if (!pendingSelection) {
+            clearPendingSelection();
+            return;
+          }
+
+          ui.pendingPointName.textContent = pendingSelection.name;
+          ui.pendingPointAddress.textContent = pendingSelection.address;
+          ui.pendingPointPanel.classList.remove("is-hidden");
+          requestAnimationFrame(positionPendingPanel);
+        }
+
+        function confirmPendingSelection() {
+          if (!pendingSelection) {
+            return;
+          }
+
+          addPin(
+            pendingSelection.name,
+            pendingSelection.address,
+            pendingSelection.lng,
+            pendingSelection.lat
+          );
+          clearPendingSelection();
+        }
+
+        function moveToCity(cityKey) {
+          var nextCity = cloneCityFromCatalog(cityKey in cityCatalog ? cityKey : "beijing");
+          var localSwitchToken = citySwitchToken + 1;
+          citySwitchToken = localSwitchToken;
+          currentCity = nextCity;
+
+          clearPendingSelection();
+          applyCityInputs(nextCity);
+          setCitySwitching(true, nextCity.label);
+
+          function finalizeSwitch() {
+            if (localSwitchToken !== citySwitchToken || !map) {
+              return;
+            }
+
+            if (typeof map.setZoomAndCenter === "function") {
+              map.setZoomAndCenter(11, nextCity.center);
+            } else {
+              map.setCenter(nextCity.center);
+              map.setZoom(11);
+            }
+
+            if (placeSearch) {
+              placeSearch.setCity(nextCity.searchCity);
+            }
+
+            clearAllPins();
+            ui.resultsList.innerHTML = "";
+            syncStats();
+            setCitySwitching(false);
+            setStatus("已切换到" + nextCity.label + "，已清空当前点位。");
+          }
+
+          if (!map) {
+            syncStats();
+            setCitySwitching(false);
+            return;
+          }
+
+          if (typeof map.setCity === "function" && map.setCity.length >= 2) {
+            map.setCity(nextCity.searchCity, finalizeSwitch);
+            setTimeout(finalizeSwitch, 420);
+          } else {
+            map.setCity(nextCity.searchCity);
+            requestAnimationFrame(finalizeSwitch);
+          }
+        }
+
+        function moveToCustomCity(cityName) {
+          var name = (cityName || "").trim();
+          if (!name) {
+            setStatus("请输入城市名称。");
+            return;
+          }
+
+          var matchedKey = findCatalogKeyByLabel(name);
+          if (matchedKey) {
+            moveToCity(matchedKey);
+            return;
+          }
+
+          if (!geocoder || typeof geocoder.getLocation !== "function") {
+            setStatus("地图服务尚未就绪，请稍后再试。");
+            return;
+          }
+
+          clearPendingSelection();
+          setCitySwitching(true, name);
+
+          geocoder.getLocation(name, function (status, result) {
+            if (status !== "complete" || !result || !result.geocodes || !result.geocodes.length) {
+              setCitySwitching(false);
+              setStatus("未能识别该城市，请检查输入。");
+              return;
+            }
+
+            var location = result.geocodes[0].location;
+            var lng = Number(location && location.lng);
+            var lat = Number(location && location.lat);
+            if (!Number.isFinite(lng) || !Number.isFinite(lat)) {
+              setCitySwitching(false);
+              setStatus("城市定位结果无效，请重试。");
+              return;
+            }
+
+            currentCity = {
+              key: null,
+              label: name,
+              searchCity: name,
+              center: [lng, lat]
+            };
+
+            if (map) {
+              map.setCity(name);
+              if (typeof map.setZoomAndCenter === "function") {
+                map.setZoomAndCenter(11, [lng, lat]);
+              } else {
+                map.setCenter([lng, lat]);
+                map.setZoom(11);
+              }
+            }
+
+            if (placeSearch) {
+              placeSearch.setCity(name);
+            }
+
+            clearAllPins();
+            ui.resultsList.innerHTML = "";
+            syncStats();
+            applyCityInputs(currentCity);
+            setCitySwitching(false);
+            setStatus("已切换到" + name + "，已清空当前点位。");
+          });
+        }
+
+        function addPin(name, address, lng, lat) {
+          if (!map) {
+            return;
+          }
+
+          var duplicate = pinnedPlaces.some(function (place) {
+            return Math.abs(place.lng - lng) < 0.00001 && Math.abs(place.lat - lat) < 0.00001;
+          });
+          if (duplicate) {
+            setStatus("该地点已在列表中。");
+            return;
+          }
+
+          var marker = new AMap.Marker({
+            position: [lng, lat],
+            title: name,
+            map: map
+          });
+
+          markers.push(marker);
+          pinnedPlaces.push({
+            name: name || "未命名地点",
+            address: address || "",
+            lng: lng,
+            lat: lat,
+            marker: marker,
+            startIndex: -1,
+            endIndex: -1
+          });
+
+          marker.on("click", function () {
+            var content = "<div style='font-size:13px;line-height:1.5;'>" +
+              "<strong>" + escapeHtml(name || "未命名地点") + "</strong><br/>" +
+              "<span>" + escapeHtml(address || getCurrentCity().label) + "</span>" +
+              "</div>";
+            if (!infoWindow) {
+              infoWindow = new AMap.InfoWindow({ offset: new AMap.Pixel(0, -20) });
+            }
+            infoWindow.setContent(content);
+            infoWindow.open(map, marker.getPosition());
+          });
+
+          map.setCenter([lng, lat]);
+          map.setZoom(13);
+          if (isRouteActive) { clearRouteDisplay(); }
+          renderPinnedPlaces();
+          syncStats();
+          setStatus("已添加地点：" + (name || "未命名地点"));
+        }
+
+        function addPinFromPoi(poi) {
+          if (!poi || !poi.location) {
+            return;
+          }
+
+          var lng = Number(poi.location.lng);
+          var lat = Number(poi.location.lat);
+          if (!Number.isFinite(lng) || !Number.isFinite(lat)) {
+            return;
+          }
+
+          addPin(poi.name || "未命名地点", poi.address || poi.district || getCurrentCity().label, lng, lat);
+        }
+
+        function addPinFromMapPoint(lnglat) {
+          if (!lnglat) {
+            return;
+          }
+
+          var lng = Number(lnglat.lng != null ? lnglat.lng : lnglat[0]);
+          var lat = Number(lnglat.lat != null ? lnglat.lat : lnglat[1]);
+          if (!Number.isFinite(lng) || !Number.isFinite(lat)) {
+            return;
+          }
+
+          clearPendingSelection();
+
+          pendingMarker = new AMap.Marker({
+            position: [lng, lat],
+            map: map,
+            zIndex: 250,
+            title: "待确认点位"
+          });
+
+          var fallbackName = "地图点位";
+          var fallbackAddress = getCurrentCity().label + " · " + lng.toFixed(5) + ", " + lat.toFixed(5);
+
+          pendingSelection = {
+            name: fallbackName,
+            address: fallbackAddress,
+            lng: lng,
+            lat: lat
+          };
+          showPendingSelection();
+          setStatus("已选中点位，请点击 √ 确认或 × 取消。");
+
+          if (geocoder && typeof geocoder.getAddress === "function") {
+            geocoder.getAddress([lng, lat], function (status, result) {
+              if (!pendingSelection || Math.abs(pendingSelection.lng - lng) > 0.00001 || Math.abs(pendingSelection.lat - lat) > 0.00001) {
+                return;
+              }
+
+              var name = fallbackName;
+              var address = fallbackAddress;
+
+              if (status === "complete" && result && result.regeocode) {
+                address = result.regeocode.formattedAddress || address;
+                if (result.regeocode.pois && result.regeocode.pois.length) {
+                  name = result.regeocode.pois[0].name || name;
+                  address = result.regeocode.pois[0].address || address;
+                }
+              }
+
+              pendingSelection.name = name;
+              pendingSelection.address = address;
+              showPendingSelection();
+            });
+            return;
+          }
+        }
+
+        function searchPlaces() {
+          if (!map || !placeSearch) {
+            setStatus("地图尚未就绪。");
+            return;
+          }
+
+          var keyword = (ui.keywordInput.value || "").trim();
+          if (!keyword) {
+            setStatus("请先输入关键词。");
+            return;
+          }
+
+          var city = getCurrentCity();
+          setStatus("正在“" + city.label + "”搜索“" + keyword + "”...");
+          placeSearch.setCity(city.searchCity);
+          placeSearch.search(keyword, function (status, result) {
+            if (status !== "complete" || !result || !result.poiList || !Array.isArray(result.poiList.pois)) {
+              renderSearchResults([]);
+              setStatus("未找到相关地点。");
+              return;
+            }
+
+            var pois = result.poiList.pois.filter(function (poi) {
+              return poi && poi.location && Number.isFinite(Number(poi.location.lng)) && Number.isFinite(Number(poi.location.lat));
+            });
+
+            renderSearchResults(pois);
+            ui.resultsList.dataset.raw = JSON.stringify(pois.map(function (p) {
+              return {
+                name: p.name,
+                address: p.address,
+                district: p.district,
+                location: {
+                  lng: p.location.lng,
+                  lat: p.location.lat
+                }
+              };
+            }));
+
+            setStatus("在" + city.label + "找到 " + pois.length + " 个地点。");
+          });
+        }
+
+        /* ── Route Optimization ── */
+
+        function haversineKm(lng1, lat1, lng2, lat2) {
+          var R = 6371;
+          var dLat = (lat2 - lat1) * Math.PI / 180;
+          var dLng = (lng2 - lng1) * Math.PI / 180;
+          var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLng / 2) * Math.sin(dLng / 2);
+          return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        }
+
+        function buildDistanceMatrix(places) {
+          var n = places.length;
+          var matrix = [];
+          for (var i = 0; i < n; i++) {
+            matrix[i] = [];
+            for (var j = 0; j < n; j++) {
+              if (i === j) { matrix[i][j] = 0; }
+              else { matrix[i][j] = haversineKm(places[i].lng, places[i].lat, places[j].lng, places[j].lat); }
+            }
+          }
+          return matrix;
+        }
+
+        function nearestNeighborOrder(matrix) {
+          var n = matrix.length;
+          if (n <= 1) { return Array.from({ length: n }, function (_, i) { return i; }); }
+
+          var visited = new Array(n).fill(false);
+          var order = [0];
+          visited[0] = true;
+
+          for (var step = 1; step < n; step++) {
+            var last = order[step - 1];
+            var best = -1;
+            var bestDist = Infinity;
+            for (var j = 0; j < n; j++) {
+              if (!visited[j] && matrix[last][j] < bestDist) {
+                bestDist = matrix[last][j];
+                best = j;
+              }
+            }
+            if (best >= 0) {
+              visited[best] = true;
+              order.push(best);
+            }
+          }
+          return order;
+        }
+
+        function totalRouteDistance(order, matrix) {
+          var dist = 0;
+          for (var i = 1; i < order.length; i++) {
+            dist += matrix[order[i - 1]][order[i]];
+          }
+          return dist;
+        }
+
+        function clearRouteDisplay() {
+          routePolylines.forEach(function (line) { line.setMap(null); });
+          routePolylines = [];
+          isRouteActive = false;
+
+          pinnedPlaces.forEach(function (place) {
+            if (place.marker) {
+              place.marker.setLabel({ content: "", offset: null });
+              place.marker.setContent(null);
+            }
+          });
+
+          ui.routeInfo.classList.add("is-hidden");
+          ui.routeInfo.textContent = "";
+        }
+
+        function displayRoute(orderedPlaces, totalKm) {
+          clearRouteDisplay();
+          isRouteActive = true;
+
+          var path = orderedPlaces.map(function (p) { return [p.lng, p.lat]; });
+
+          var polyline = new AMap.Polyline({
+            path: path,
+            strokeColor: "#0b91d8",
+            strokeWeight: 4,
+            strokeOpacity: 0.72,
+            lineJoin: "round",
+            lineCap: "round",
+            borderWeight: 1,
+            strokeStyle: "solid",
+            showDir: false
+          });
+          polyline.setMap(map);
+          routePolylines.push(polyline);
+
+          orderedPlaces.forEach(function (place, idx) {
+            var marker = place.marker;
+            if (!marker) { return; }
+
+            var isStart = (idx === 0);
+            var isEnd = (idx === orderedPlaces.length - 1);
+            var cssClass = "city-spots-seq-badge";
+            if (isStart) { cssClass += " city-spots-seq-badge--start"; }
+            else if (isEnd) { cssClass += " city-spots-seq-badge--end"; }
+
+            var labelContent = "<div style='" +
+              "display:inline-flex;align-items:center;justify-content:center;" +
+              "width:22px;height:22px;border-radius:999px;" +
+              (isStart ? "background:linear-gradient(135deg,#16a34a,#15803d);" :
+               isEnd ? "background:linear-gradient(135deg,#e9a54a,#d97706);" :
+               "background:linear-gradient(135deg,#0b91d8,#0a74bb);") +
+              "color:#fff;font-size:11px;font-weight:800;" +
+              "box-shadow:0 3px 10px rgba(0,0,0,0.25);" +
+              "'>" + (idx + 1) + "</div>";
+
+            marker.setLabel({
+              content: labelContent,
+              direction: "top",
+              offset: new AMap.Pixel(0, -8)
+            });
+
+            // Update startIndex/endIndex for route display
+            var placeIndex = pinnedPlaces.indexOf(place);
+            if (placeIndex >= 0) {
+              if (isStart) { pinnedPlaces[placeIndex].startIndex = placeIndex; }
+              if (isEnd) { pinnedPlaces[placeIndex].endIndex = placeIndex; }
+            }
+          });
+
+          var infoText = "推荐路线总长约 <strong>" + totalKm.toFixed(1) + "</strong> km · 共 <strong>" + orderedPlaces.length + "</strong> 个地点";
+          ui.routeInfo.innerHTML = infoText;
+          ui.routeInfo.classList.remove("is-hidden");
+
+          if (orderedPlaces.length >= 2) {
+            map.setFitView(polyline, false, [60, 60, 60, 120]);
+          }
+        }
+
+        function optimizeRoute() {
+          clearRouteDisplay();
+
+          if (pinnedPlaces.length < 2) {
+            setStatus("至少需要 2 个地点才能规划路线。");
+            return;
+          }
+
+          // Read custom start/end from stored indices
+          var startIndex = -1;
+          var endIndex = -1;
+          pinnedPlaces.forEach(function (place, idx) {
+            if (place.startIndex >= 0) { startIndex = idx; }
+            if (place.endIndex >= 0) { endIndex = idx; }
+          });
+
+          // Default: first = start, last = end
+          if (startIndex < 0) { startIndex = 0; }
+          if (endIndex < 0) { endIndex = pinnedPlaces.length - 1; }
+
+          // If only 2 pins, just connect them
+          if (pinnedPlaces.length === 2) {
+            var twoCopy = pinnedPlaces.slice();
+            displayRoute(twoCopy, haversineKm(pinnedPlaces[0].lng, pinnedPlaces[0].lat, pinnedPlaces[1].lng, pinnedPlaces[1].lat));
+            setStatus("路线已生成：仅 2 个地点，直接连接。");
+            return;
+          }
+
+          setStatus("正在计算最优路线...");
+
+          setTimeout(function () {
+            var matrix = buildDistanceMatrix(pinnedPlaces);
+
+            // Collect middle indices (everything except start and end)
+            var middleIndices = [];
+            for (var i = 0; i < pinnedPlaces.length; i++) {
+              if (i !== startIndex && i !== endIndex) { middleIndices.push(i); }
+            }
+
+            // No middle points: direct connection
+            if (middleIndices.length === 0) {
+              var directOrder = [startIndex, endIndex];
+              var orderedDirect = directOrder.map(function (idx) { return pinnedPlaces[idx]; });
+              var directDist = matrix[startIndex][endIndex];
+              pinnedPlaces = orderedDirect;
+              markers = orderedDirect.map(function (p) { return p.marker; });
+              displayRoute(orderedDirect, directDist);
+              renderPinnedPlaces();
+              setStatus("路线优化完成！");
+              return;
+            }
+
+            // Build distance sub-matrix for middle points
+            var mLen = middleIndices.length;
+            var middleMatrix = [];
+            for (var mi = 0; mi < mLen; mi++) {
+              middleMatrix[mi] = [];
+              for (var mj = 0; mj < mLen; mj++) {
+                middleMatrix[mi][mj] = matrix[middleIndices[mi]][middleIndices[mj]];
+              }
+            }
+
+            var startDists = middleIndices.map(function (mi) { return matrix[startIndex][mi]; });
+            var endDists = middleIndices.map(function (mi) { return matrix[mi][endIndex]; });
+
+            var bestMiddleOrder = null;
+            var bestTotal = Infinity;
+
+            if (mLen <= 8) {
+              // Full permutation search
+              var perms = permutations(middleIndices.slice());
+              for (var pi = 0; pi < perms.length; pi++) {
+                var perm = perms[pi];
+                var t = startDists[middleIndices.indexOf(perm[0])];
+                for (var ti = 1; ti < perm.length; ti++) {
+                  t += matrix[perm[ti - 1]][perm[ti]];
+                }
+                t += endDists[middleIndices.indexOf(perm[perm.length - 1])];
+                if (t < bestTotal) { bestTotal = t; bestMiddleOrder = perm; }
+              }
+            } else {
+              // Nearest Neighbor heuristic
+              var nnOrder = nearestNeighborOrder(middleMatrix);
+              bestMiddleOrder = nnOrder.map(function (idx) { return middleIndices[idx]; });
+              bestTotal = startDists[middleIndices.indexOf(bestMiddleOrder[0])];
+              for (var ni = 1; ni < bestMiddleOrder.length; ni++) {
+                bestTotal += matrix[bestMiddleOrder[ni - 1]][bestMiddleOrder[ni]];
+              }
+              bestTotal += endDists[middleIndices.indexOf(bestMiddleOrder[bestMiddleOrder.length - 1])];
+            }
+
+            var finalOrder = [startIndex].concat(bestMiddleOrder).concat([endIndex]);
+            var orderedPlaces = finalOrder.map(function (idx) { return pinnedPlaces[idx]; });
+
+            // Reorder pinnedPlaces array while keeping markers in sync
+            var newPinnedPlaces = [];
+            var newMarkers = [];
+            for (var i = 0; i < orderedPlaces.length; i++) {
+              newPinnedPlaces.push(orderedPlaces[i]);
+              newMarkers.push(orderedPlaces[i].marker);
+            }
+            pinnedPlaces = newPinnedPlaces;
+            markers = newMarkers;
+
+            displayRoute(orderedPlaces, bestTotal);
+            renderPinnedPlaces();
+            setStatus("路线优化完成！起点：" + orderedPlaces[0].name + " → 终点：" + orderedPlaces[orderedPlaces.length - 1].name);
+          }, 30);
+        }
+
+        function permutations(arr) {
+          if (arr.length <= 1) { return [arr]; }
+          var result = [];
+          for (var i = 0; i < arr.length; i++) {
+            var rest = arr.slice(0, i).concat(arr.slice(i + 1));
+            var subPerms = permutations(rest);
+            for (var j = 0; j < subPerms.length; j++) {
+              result.push([arr[i]].concat(subPerms[j]));
+            }
+          }
+          return result;
+        }
+
+        function bindEvents() {
+          ui.applyCityButton.addEventListener("click", function () {
+            moveToCustomCity(ui.cityInput.value);
+          });
+
+          ui.cityInput.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+              event.preventDefault();
+              moveToCustomCity(ui.cityInput.value);
+            }
+          });
+
+          ui.confirmPointButton.addEventListener("click", function () {
+            confirmPendingSelection();
+          });
+
+          ui.cancelPointButton.addEventListener("click", function () {
+            clearPendingSelection();
+            setStatus("已取消点位选择。");
+          });
+
+          ui.searchButton.addEventListener("click", function () {
+            searchPlaces();
+          });
+
+          ui.keywordInput.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+              event.preventDefault();
+              searchPlaces();
+            }
+          });
+
+          ui.resultsList.addEventListener("click", function (event) {
+            var button = event.target.closest("button[data-result-index]");
+            if (!button) {
+              return;
+            }
+
+            var raw = ui.resultsList.dataset.raw;
+            var parsed = raw ? JSON.parse(raw) : [];
+            var index = Number(button.dataset.resultIndex);
+            var poi = parsed[index];
+            if (!poi) {
+              return;
+            }
+
+            addPinFromPoi(poi);
+          });
+
+          ui.pinnedList.addEventListener("click", function (event) {
+            var button = event.target.closest("button[data-pin-index]");
+            if (!button) {
+              return;
+            }
+
+            var index = Number(button.dataset.pinIndex);
+            if (!Number.isInteger(index) || index < 0 || index >= pinnedPlaces.length) {
+              return;
+            }
+
+            var action = button.dataset.action;
+            if (action === "delete") {
+              var selected = pinnedPlaces[index];
+              if (selected && selected.marker) {
+                selected.marker.setMap(null);
+              }
+              pinnedPlaces.splice(index, 1);
+              markers = pinnedPlaces.map(function (place) {
+                return place.marker;
+              });
+              if (isRouteActive) { clearRouteDisplay(); }
+              renderPinnedPlaces();
+              syncStats();
+              setStatus("已删除该地点。");
+            } else if (action === "set-start") {
+              if (pinnedPlaces.length < 2) {
+                setStatus("至少需要 2 个地点才能设置起点和终点。");
+                return;
+              }
+              var startPlace = pinnedPlaces[index];
+              var oldStartIndex = startPlace.startIndex;
+              var oldEndIndex = startPlace.endIndex;
+              startPlace.startIndex = -1;
+              startPlace.endIndex = -1;
+
+              // Clear old start marker if it exists
+              if (oldStartIndex >= 0 && oldStartIndex !== index) {
+                var oldStartPlace = pinnedPlaces[oldStartIndex];
+                if (oldStartPlace && oldStartPlace.marker) {
+                  oldStartPlace.marker.setLabel({ content: "", offset: null });
+                  oldStartPlace.marker.setContent(null);
+                }
+              }
+
+              // Clear old end marker if it exists (strict: only one endpoint at a time)
+              if (oldEndIndex >= 0 && oldEndIndex !== index) {
+                var oldEndPlace = pinnedPlaces[oldEndIndex];
+                if (oldEndPlace && oldEndPlace.marker) {
+                  oldEndPlace.marker.setLabel({ content: "", offset: null });
+                  oldEndPlace.marker.setContent(null);
+                }
+              }
+
+              // Set new start label
+              var startLabel = "<div style='" +
+                "display:inline-flex;align-items:center;justify-content:center;" +
+                "width:22px;height:22px;border-radius:999px;" +
+                "background:linear-gradient(135deg,#16a34a,#15803d);" +
+                "color:#fff;font-size:11px;font-weight:800;" +
+                "box-shadow:0 3px 10px rgba(0,0,0,0.25);" +
+                "'>" + "S" + "</div>";
+              startPlace.marker.setLabel({
+                content: startLabel,
+                direction: "top",
+                offset: new AMap.Pixel(0, -8)
+              });
+              startPlace.startIndex = index;
+              startPlace.endIndex = -1;
+
+              // Update all markers
+              updateMarkerLabels();
+              setStatus("已将 " + startPlace.name + " 设为起点。");
+            } else if (action === "set-end") {
+              if (pinnedPlaces.length < 2) {
+                setStatus("至少需要 2 个地点才能设置起点和终点。");
+                return;
+              }
+              var endPlace = pinnedPlaces[index];
+              var oldStartIndex = endPlace.startIndex;
+              var oldEndIndex = endPlace.endIndex;
+              endPlace.startIndex = -1;
+              endPlace.endIndex = -1;
+
+              // Clear old end marker if it exists
+              if (oldEndIndex >= 0 && oldEndIndex !== index) {
+                var oldEndPlace = pinnedPlaces[oldEndIndex];
+                if (oldEndPlace && oldEndPlace.marker) {
+                  oldEndPlace.marker.setLabel({ content: "", offset: null });
+                  oldEndPlace.marker.setContent(null);
+                }
+              }
+
+              // Clear old start marker if it exists (strict: only one endpoint at a time)
+              if (oldStartIndex >= 0 && oldStartIndex !== index) {
+                var oldStartPlace = pinnedPlaces[oldStartIndex];
+                if (oldStartPlace && oldStartPlace.marker) {
+                  oldStartPlace.marker.setLabel({ content: "", offset: null });
+                  oldStartPlace.marker.setContent(null);
+                }
+              }
+
+              // Set new end label
+              var endLabel = "<div style='" +
+                "display:inline-flex;align-items:center;justify-content:center;" +
+                "width:22px;height:22px;border-radius:999px;" +
+                "background:linear-gradient(135deg,#e9a54a,#d97706);" +
+                "color:#fff;font-size:11px;font-weight:800;" +
+                "box-shadow:0 3px 10px rgba(0,0,0,0.25);" +
+                "'>" + "E" + "</div>";
+              endPlace.marker.setLabel({
+                content: endLabel,
+                direction: "top",
+                offset: new AMap.Pixel(0, -8)
+              });
+              endPlace.startIndex = -1;
+              endPlace.endIndex = index;
+
+              // Update all markers
+              updateMarkerLabels();
+              setStatus("已将 " + endPlace.name + " 设为终点。");
+            }
+          });
+
+          ui.clearPinsButton.addEventListener("click", function () {
+            clearAllPins();
+            setStatus("已清空所有地点。");
+          });
+
+          ui.optimizeRouteButton.addEventListener("click", function () {
+            optimizeRoute();
+          });
+
+          window.addEventListener("resize", function () {
+            positionPendingPanel();
+          });
+        }
+
+        function loadAmapScript(key, securityCode) {
+          if (window.AMap && typeof window.AMap.Map === "function") {
+            return Promise.resolve(window.AMap);
+          }
+
+          window._AMapSecurityConfig = {
+            securityJsCode: securityCode
+          };
+
+          return new Promise(function (resolve, reject) {
+            var existing = document.getElementById("amap-jsapi-script");
+            if (existing) {
+              existing.addEventListener("load", function () {
+                resolve(window.AMap);
+              });
+              existing.addEventListener("error", function () {
+                reject(new Error("Failed to load AMap JS API."));
+              });
+              return;
+            }
+
+            var script = document.createElement("script");
+            script.id = "amap-jsapi-script";
+            script.src = "https://webapi.amap.com/maps?v=2.0&key=" + encodeURIComponent(key) + "&plugin=AMap.PlaceSearch,AMap.Geocoder";
+            script.async = true;
+            script.onload = function () {
+              resolve(window.AMap);
+            };
+            script.onerror = function () {
+              reject(new Error("Failed to load AMap JS API."));
+            };
+            document.head.appendChild(script);
+          });
+        }
+
+        function bootstrapMap(key, securityCode) {
+          setStatus("正在加载地图服务...");
+
+          loadAmapScript(key, securityCode)
+            .then(function (AMapRef) {
+              if (!map) {
+                map = new AMapRef.Map("city-spots-map", {
+                  zoom: 11,
+                  center: cityCatalog.beijing.center,
+                  viewMode: "2D"
+                });
+              }
+
+              geocoder = new AMapRef.Geocoder({ extensions: "all" });
+              placeSearch = new AMapRef.PlaceSearch({
+                city: getCurrentCity().searchCity,
+                citylimit: true,
+                pageSize: 20,
+                pageIndex: 1,
+                map: null,
+                panel: null,
+                autoFitView: false
+              });
+
+              map.off("click");
+              map.off("mapmove", positionPendingPanel);
+              map.off("zoomchange", positionPendingPanel);
+              map.on("click", function (event) {
+                addPinFromMapPoint(event.lnglat);
+              });
+              map.on("mapmove", positionPendingPanel);
+              map.on("zoomchange", positionPendingPanel);
+
+              renderPinnedPlaces();
+              syncStats();
+              applyCityInputs(getCurrentCity());
+              setStatus("地图已加载，当前城市：" + getCurrentCity().label + "。点击地图后可确认添加点位。");
+            })
+            .catch(function (error) {
+              setStatus(error && error.message ? error.message : "地图初始化失败。");
+            });
+        }
+
+        bindEvents();
+        renderPinnedPlaces();
+
+          bootstrapMap(amapConfig.key, amapConfig.securityJsCode);
+      })();
+    </script>
+  </body>
+</html>
