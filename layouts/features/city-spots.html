@@ -1007,6 +1007,10 @@
           securityJsCode: "15ad4d83b7c5222fb9809fcb2d3b9d58"
         };
 
+        if (window.AMAP_CONFIG) {
+          amapConfig.securityJsCode = window.AMAP_CONFIG.securityJsCode || window.AMAP_CONFIG.securityCode || amapConfig.securityJsCode;
+        }
+
         var ui = {
           cityInput: document.getElementById("city-input"),
           applyCityButton: document.getElementById("apply-city"),
