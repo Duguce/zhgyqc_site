@@ -33,4 +33,4 @@ Thumbs.db
 *.log
 
 # Local configuration files
-config/config.local.js
+static/config/config.local.js

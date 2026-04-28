@@ -6,7 +6,12 @@
     <title>{{ .Title }}</title>
     <meta name="description" content="{{ with .Params.description }}{{ . }}{{ else }}{{ .Summary }}{{ end }}">
     <!-- Load configuration: prefer local config for development, fallback to production config -->
+    {{ if eq hugo.Environment "development" }}
     <script src="/config/config.local.js" onerror="this.onerror=null; this.src='/config/config.js'"></script>
+    {{ else }}
+    <script src="/config/config.js"></script>
+    {{ end }}
+    <link rel="icon" type="image/png" href="/media/city-spots-icon.png">
     <style>
       :root {
         --bg: #f0f5ff;
@@ -149,6 +154,18 @@
         box-shadow: var(--shadow-md);
         backdrop-filter: blur(20px);
         animation: city-spots-rise-in 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .city-spots-hero__icon {
+        width: 58px;
+        height: 58px;
+        display: block;
+        margin-bottom: 0.8rem;
+        border-radius: 1.2rem;
+        object-fit: cover;
+        box-shadow: 0 14px 30px rgba(12, 18, 34, 0.16);
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        background: rgba(255, 255, 255, 0.85);
       }
 
       .city-spots-hero h1 {
