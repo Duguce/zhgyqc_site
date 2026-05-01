@@ -210,6 +210,8 @@
         line-height: 1.4;
       }
 
+      /* debug panel removed in production */
+
       /* ── Pending Confirmation ── */
       .city-spots-pending {
         position: absolute; left: 14px; top: 14px; z-index: 10;
@@ -670,6 +672,7 @@
               <button class="city-spots-confirm-btn city-spots-confirm-btn--cancel" id="cancel-point" type="button" aria-label="取消添加点位">×</button>
             </div>
           </div>
+          <!-- debug panel removed -->
           <p class="city-spots-status" id="map-status">地图尚未初始化。</p>
         </div>
 
@@ -796,6 +799,7 @@
         var citySwitchToken = 0;
         var routePolylines = [];       // flat list for bulk clear
         var segmentPolylines = [];     // per-segment arrays: segmentPolylines[i] = [poly1, poly2, ...]
+        // per-segment polylines are stored in segmentPolylines
         var isRouteActive = false;
         var driving = null;
         var walking = null;
@@ -846,6 +850,8 @@
         function setStatus(message) {
           ui.status.textContent = message;
         }
+
+        // riding debug removed
 
         function syncStats() {
           var city = getCurrentCity();
@@ -1464,6 +1470,7 @@
         function clearRouteDisplay() {
           clearPolylines();
           isRouteActive = false;
+          // riding debug removed
 
           pinnedPlaces.forEach(function (place) {
             place.segmentTraffic = null;
@@ -1492,6 +1499,7 @@
             return segLines.indexOf(line) === -1;
           });
           segmentPolylines[index] = [];
+          // cleared per-segment polylines above
         }
 
         function displayRoute(orderedPlaces, totalKm) {
@@ -1618,33 +1626,90 @@
             function (status, result) {
               if (!isRouteActive) { return; }
 
-              if (status === "complete" && result && result.routes && result.routes.length) {
-                var route = result.routes[0];
-                var distKm = (route.distance / 1000).toFixed(1);
-                var min = Math.round(route.time / 60);
-                var timeText = min >= 60
-                  ? Math.floor(min / 60) + "h" + (min % 60) + "min"
-                  : min + "分钟";
-                from.segmentTraffic = svc.emoji + " " + svc.label + " " + distKm + "km · 约" + timeText;
-                var drawn = drawSegmentPolyline(route, index);
-                // Fallback: if path extraction failed, draw straight line
-                if (!drawn) {
-                  drawStraightSegment(route, index);
+              try {
+                var route = null;
+                if (result) {
+                  if (result.routes && result.routes.length) {
+                    route = result.routes[0];
+                  } else if (result.route) {
+                    route = result.route;
+                  } else if (result.data && result.data.routes && result.data.routes.length) {
+                    route = result.data.routes[0];
+                  } else if (result.paths && result.paths.length) {
+                    route = result.paths[0];
+                  }
                 }
-              } else {
-                from.segmentTraffic = svc.label + "路线不可用";
+
+                var hasRidingPayload = result && ((result.rides && result.rides.length) || (result.paths && result.paths.length) || result.path);
+                if (status === "complete" && (route || hasRidingPayload)) {
+                  var distMeters = (route && route.distance) || (result && result.distance);
+                  var timeSec = (route && route.time) || (result && result.time);
+                  if ((!distMeters || !timeSec) && route && route.rides && route.rides.length) {
+                    distMeters = distMeters || route.rides[0].distance;
+                    timeSec = timeSec || route.rides[0].time;
+                  }
+                  if ((!distMeters || !timeSec) && result && result.rides && result.rides.length) {
+                    distMeters = distMeters || result.rides[0].distance;
+                    timeSec = timeSec || result.rides[0].time;
+                  }
+                  var distKm = distMeters ? (distMeters / 1000).toFixed(1) : "-";
+                  var min = timeSec ? Math.round(timeSec / 60) : 0;
+                  var timeText = min >= 60
+                    ? Math.floor(min / 60) + "h" + (min % 60) + "min"
+                    : min + "分钟";
+                  var distText = distKm === "-" ? "-" : distKm + "km";
+                  var timeLabel = min ? "约" + timeText : "-";
+                  from.segmentTraffic = svc.emoji + " " + svc.label + " " + distText + " · " + timeLabel;
+
+                  var drawn = false;
+                  var routeCandidates = [];
+                  if (route) { routeCandidates.push(route); }
+                  if (result && result !== route) { routeCandidates.push(result); }
+                  for (var c = 0; c < routeCandidates.length; c++) {
+                    var candidate = routeCandidates[c];
+                    var drawnPts = drawSegmentPolyline(candidate, index);
+                    if (drawnPts >= 2) {
+                      drawn = true;
+                      break;
+                    }
+                  }
+                  // Fallback: if path extraction failed, draw straight line
+                  if (!drawn) {
+                    drawStraightSegment(route || result, index);
+                  }
+
+                  // riding debug removed
+                } else {
+                  from.segmentTraffic = svc.label + "路线不可用";
+                  // riding debug removed
+                }
+              } catch (err) {
+                from.segmentTraffic = svc.label + "绘制异常";
+                // riding debug removed
+              } finally {
+                from.segmentTrafficLoading = false;
+                renderPinnedPlaces();
+                callback();
               }
-              from.segmentTrafficLoading = false;
-              renderPinnedPlaces();
-              callback();
             }
           );
         }
 
         function drawSegmentPolyline(route, segmentIndex) {
-          if (!route || !map) { return; }
+          if (!route || !map) { return 0; }
 
           var pathPoints = [];
+
+          // Prefer a full extraction summary when available (fixes cases where
+          // route contains many points but the step-based parser only picks a few)
+          try {
+            var extracted = extractRoutePoints(route);
+            if (extracted && extracted.length >= 2) {
+              pathPoints = extracted;
+            }
+          } catch (e) {
+            // ignore and continue with original parsing
+          }
 
           // Helper: push clean coords
           function pushPt(pt) {
@@ -1664,26 +1729,60 @@
             }
           }
 
-          // Strategy 1: route.steps[].path (Driving, Walking, Riding)
-          if (route.steps && route.steps.length) {
-            for (var s = 0; s < route.steps.length; s++) {
-              var stepPath = route.steps[s].path;
-              if (!stepPath) { continue; }
-              if (Array.isArray(stepPath)) {
-                for (var p = 0; p < stepPath.length; p++) {
-                  pushPt(stepPath[p]);
+          // Helper: normalize path payloads (array, string, or single point)
+          function pushPathValue(pathValue) {
+            if (!pathValue) { return; }
+            if (typeof pathValue === "string") {
+              var pairs = pathValue.split(";");
+              for (var i = 0; i < pairs.length; i++) {
+                var parts = pairs[i].split(",");
+                if (parts.length >= 2) {
+                  pushPt([Number(parts[0]), Number(parts[1])]);
                 }
-              } else {
-                pushPt(stepPath);
+              }
+              return;
+            }
+            if (Array.isArray(pathValue)) {
+              for (var j = 0; j < pathValue.length; j++) {
+                pushPt(pathValue[j]);
+              }
+              return;
+            }
+            pushPt(pathValue);
+          }
+
+          // Strategy 0: route.rides[] (Riding API variants)
+          if (route.rides && route.rides.length) {
+            for (var r = 0; r < route.rides.length; r++) {
+              var ride = route.rides[r];
+              if (!ride) { continue; }
+              if (ride.steps && ride.steps.length) {
+                for (var rs = 0; rs < ride.steps.length; rs++) {
+                  pushPathValue(ride.steps[rs].path);
+                }
+              }
+              if (pathPoints.length < 2 && ride.path) {
+                pushPathValue(ride.path);
+              }
+              if (pathPoints.length < 2 && ride.paths) {
+                pushPathValue(ride.paths);
               }
             }
           }
 
-          // Strategy 2: route.path as flat array (some API versions)
-          if (pathPoints.length < 2 && route.path && Array.isArray(route.path)) {
-            for (var q = 0; q < route.path.length; q++) {
-              pushPt(route.path[q]);
+          // Strategy 1: route.steps[].path (Driving, Walking, Riding)
+          if (pathPoints.length < 2 && route.steps && route.steps.length) {
+            for (var s = 0; s < route.steps.length; s++) {
+              pushPathValue(route.steps[s].path);
             }
+          }
+
+          // Strategy 2: route.path / route.paths as flat array (some API versions)
+          if (pathPoints.length < 2 && route.path) {
+            pushPathValue(route.path);
+          }
+          if (pathPoints.length < 2 && route.paths) {
+            pushPathValue(route.paths);
           }
 
           // Strategy 3: route.start + route.end as fallback straight line
@@ -1692,7 +1791,7 @@
             pushPt(route.destination);
           }
 
-          if (pathPoints.length < 2) { return false; }
+          if (pathPoints.length < 2) { return 0; }
 
           // Color per mode
           var segMode = pinnedPlaces[segmentIndex].segmentMode || transportMode;
@@ -1711,10 +1810,11 @@
           var outerGlow = new AMap.Polyline({
             path: pathPoints,
             strokeColor: routeColor,
-            strokeWeight: 14,
-            strokeOpacity: 0.08,
+            strokeWeight: segMode === 'riding' ? 18 : 14,
+            strokeOpacity: segMode === 'riding' ? 0.14 : 0.08,
             lineJoin: "round", lineCap: "round",
-            strokeStyle: "solid", showDir: false
+            strokeStyle: "solid", showDir: false,
+            zIndex: 1200
           });
           outerGlow.setMap(map);
           lines.push(outerGlow);
@@ -1723,10 +1823,11 @@
           var innerGlow = new AMap.Polyline({
             path: pathPoints,
             strokeColor: routeColor,
-            strokeWeight: 7,
-            strokeOpacity: 0.18,
+            strokeWeight: segMode === 'riding' ? 9 : 7,
+            strokeOpacity: segMode === 'riding' ? 0.26 : 0.18,
             lineJoin: "round", lineCap: "round",
-            strokeStyle: "solid", showDir: false
+            strokeStyle: "solid", showDir: false,
+            zIndex: 1201
           });
           innerGlow.setMap(map);
           lines.push(innerGlow);
@@ -1735,10 +1836,11 @@
           var whiteCore = new AMap.Polyline({
             path: pathPoints,
             strokeColor: "#ffffff",
-            strokeWeight: 4.5,
-            strokeOpacity: 0.7,
+            strokeWeight: segMode === 'riding' ? 5.5 : 4.5,
+            strokeOpacity: 0.85,
             lineJoin: "round", lineCap: "round",
-            strokeStyle: "solid", showDir: false
+            strokeStyle: "solid", showDir: false,
+            zIndex: 1202
           });
           whiteCore.setMap(map);
           lines.push(whiteCore);
@@ -1747,12 +1849,13 @@
           var main = new AMap.Polyline({
             path: pathPoints,
             strokeColor: routeColor,
-            strokeWeight: 3.2,
-            strokeOpacity: 0.92,
+            strokeWeight: segMode === 'riding' ? 4.6 : 3.2,
+            strokeOpacity: segMode === 'riding' ? 1.0 : 0.92,
             lineJoin: "round", lineCap: "round",
             strokeStyle: "dashed",
             strokeDasharray: [18, 7],
-            showDir: false
+            showDir: false,
+            zIndex: 1203
           });
           main.setMap(map);
           lines.push(main);
@@ -1760,7 +1863,68 @@
           // Store per-segment polylines
           segmentPolylines[segmentIndex] = lines;
           routePolylines = routePolylines.concat(lines);
-          return true;
+          // riding mid-point debug marker removed
+          return pathPoints.length;
+        }
+
+        // Extract route points without drawing — used for debug summaries
+        function extractRoutePoints(route) {
+          var pts = [];
+          if (!route) { return pts; }
+
+          function pushPtDebug(pt) {
+            if (!pt) { return; }
+            if (typeof pt.getLng === 'function') {
+              pts.push([+pt.getLng(), +pt.getLat()]);
+            } else if (typeof pt.lng === 'number' && typeof pt.lat === 'number') {
+              pts.push([+pt.lng, +pt.lat]);
+            } else if (Array.isArray(pt) && pt.length >= 2) {
+              pts.push([+pt[0], +pt[1]]);
+            }
+          }
+
+          function pushPathValueDebug(pathValue) {
+            if (!pathValue) { return; }
+            if (typeof pathValue === 'string') {
+              var pairs = pathValue.split(';');
+              for (var i = 0; i < pairs.length; i++) {
+                var parts = pairs[i].split(',');
+                if (parts.length >= 2) { pushPtDebug([Number(parts[0]), Number(parts[1])]); }
+              }
+              return;
+            }
+            if (Array.isArray(pathValue)) {
+              for (var j = 0; j < pathValue.length; j++) { pushPtDebug(pathValue[j]); }
+              return;
+            }
+            pushPtDebug(pathValue);
+          }
+
+          // ride-level
+          if (route.rides && route.rides.length) {
+            for (var r = 0; r < route.rides.length; r++) {
+              var ride = route.rides[r];
+              if (!ride) { continue; }
+              if (ride.steps && ride.steps.length) {
+                for (var rs = 0; rs < ride.steps.length; rs++) { pushPathValueDebug(ride.steps[rs].path); }
+              }
+              if (route.rides && route.rides.length && ride.path) { pushPathValueDebug(ride.path); }
+              if (ride.paths) { pushPathValueDebug(ride.paths); }
+            }
+          }
+
+          if (route.steps && route.steps.length) {
+            for (var s = 0; s < route.steps.length; s++) { pushPathValueDebug(route.steps[s].path); }
+          }
+          if (route.path) { pushPathValueDebug(route.path); }
+          if (route.paths) { pushPathValueDebug(route.paths); }
+          // fallback
+          if (pts.length < 2) {
+            if (route.origin) { pushPtDebug(route.origin); }
+            if (route.destination) { pushPtDebug(route.destination); }
+          }
+
+          return pts;
         }
 
         function drawStraightSegment(route, segmentIndex) {
