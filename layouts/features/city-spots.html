@@ -500,6 +500,64 @@
       .city-spots-route-info strong { color: var(--accent-deep); font-weight: 750; }
       .city-spots-route-info.is-hidden { display: none; }
 
+      /* ── Route Strategy Selector ── */
+      .city-spots-strategy {
+        display: flex; align-items: center; gap: 0.6rem;
+        padding: 0.4rem 0.55rem;
+        border-radius: var(--radius-md);
+        background: rgba(11,18,33,0.02);
+        border: 1px solid var(--border);
+      }
+      .city-spots-strategy.is-hidden { display: none; }
+      .city-spots-strategy__label {
+        font-size: 0.72rem; font-weight: 700; color: var(--muted);
+        letter-spacing: 0.02em; white-space: nowrap;
+      }
+      .city-spots-strategy__radio {
+        display: inline-flex; align-items: center; gap: 0.25rem;
+        font-size: 0.75rem; font-weight: 600; color: var(--ink);
+        cursor: pointer; white-space: nowrap;
+      }
+      .city-spots-strategy__radio input[type="radio"] {
+        accent-color: var(--accent); margin: 0;
+      }
+      .city-spots-strategy--mode {
+        margin-top: 0.3rem;
+      }
+
+      /* ── Per-segment traffic info ── */
+      .city-spots-item__traffic {
+        margin-top: 0.32rem; padding-top: 0.32rem;
+        border-top: 1px dashed var(--border);
+        font-size: 0.72rem; color: var(--muted);
+        display: flex; align-items: center; gap: 0.35rem;
+      }
+      .city-spots-item__traffic strong {
+        color: var(--accent-deep); font-weight: 700;
+      }
+      .city-spots-seg-mode {
+        display: inline-flex; align-items: center; gap: 0.2rem;
+        margin-left: auto; flex-shrink: 0;
+      }
+      .city-spots-seg-btn {
+        width: 1.55rem; height: 1.55rem;
+        display: inline-flex; align-items: center; justify-content: center;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: #fff;
+        font-size: 0.6rem; line-height: 1;
+        cursor: pointer;
+        padding: 0;
+        opacity: 0.45;
+        transition: opacity 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+      }
+      .city-spots-seg-btn:hover { opacity: 0.85; border-color: var(--accent-border); }
+      .city-spots-seg-btn.sel {
+        opacity: 1;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 2px rgba(10,138,235,0.18);
+      }
+
       .city-spots-item--routed {
         border-left: 3px solid var(--accent);
       }
@@ -666,6 +724,12 @@
             <div class="city-spots-route-bar">
               <div class="city-spots-route-info is-hidden" id="route-info"></div>
             </div>
+            <div class="city-spots-strategy city-spots-strategy--mode is-hidden" id="route-mode">
+              <span class="city-spots-strategy__label">默认交通</span>
+              <label class="city-spots-strategy__radio"><input type="radio" name="route-mode" value="driving" checked> 驾车</label>
+              <label class="city-spots-strategy__radio"><input type="radio" name="route-mode" value="walking"> 步行</label>
+              <label class="city-spots-strategy__radio"><input type="radio" name="route-mode" value="riding"> 骑行</label>
+            </div>
             <ul class="city-spots-list" id="pinned-places"></ul>
           </div>
         </aside>
@@ -711,7 +775,8 @@
           confirmPointButton: document.getElementById("confirm-point"),
           cancelPointButton: document.getElementById("cancel-point"),
           optimizeRouteButton: document.getElementById("optimize-route"),
-          routeInfo: document.getElementById("route-info")
+          routeInfo: document.getElementById("route-info"),
+          routeMode: document.getElementById("route-mode")
         };
 
         var map = null;
@@ -729,8 +794,13 @@
         var pendingSelection = null;
         var pendingMarker = null;
         var citySwitchToken = 0;
-        var routePolylines = [];
+        var routePolylines = [];       // flat list for bulk clear
+        var segmentPolylines = [];     // per-segment arrays: segmentPolylines[i] = [poly1, poly2, ...]
         var isRouteActive = false;
+        var driving = null;
+        var walking = null;
+        var riding = null;
+        var transportMode = "driving";  // "driving" | "walking" | "riding"
 
         function getCurrentCity() {
           return currentCity;
@@ -828,15 +898,47 @@
                 else if (index === pinnedPlaces.length - 1) { seqClass += " city-spots-seq-badge--end"; }
                 seqBadge = "<span class='" + seqClass + "'>" + (index + 1) + "</span>";
               }
+
+              // Segment traffic info (for active route, all except the last item)
+              var trafficHtml = "";
+              if (isRouteActive && index < pinnedPlaces.length - 1) {
+                var nextName = escapeHtml(pinnedPlaces[index + 1].name || "下一站");
+                var segMode = place.segmentMode || transportMode;
+                var drivingSel = segMode === "driving" ? " sel" : "";
+                var walkingSel = segMode === "walking" ? " sel" : "";
+                var ridingSel = segMode === "riding" ? " sel" : "";
+
+                var infoText = "";
+                if (place.segmentTraffic) {
+                  infoText = "→ " + nextName + "&nbsp;&nbsp;<strong>" + place.segmentTraffic + "</strong>";
+                } else if (place.segmentTrafficLoading) {
+                  infoText = "→ " + nextName + "&nbsp;&nbsp;查询中...";
+                } else {
+                  infoText = "→ " + nextName;
+                }
+
+                trafficHtml = "<div class='city-spots-item__traffic'>" +
+                  infoText +
+                  "<span class='city-spots-seg-mode'>" +
+                    "<button class='city-spots-seg-btn" + drivingSel + "' data-sid='" + index + "' data-mode='driving'>🚗</button>" +
+                    "<button class='city-spots-seg-btn" + walkingSel + "' data-sid='" + index + "' data-mode='walking'>🚶</button>" +
+                    "<button class='city-spots-seg-btn" + ridingSel + "' data-sid='" + index + "' data-mode='riding'>🚴</button>" +
+                  "</span>" +
+                "</div>";
+              }
+
               return "<li class='" + itemClass + "'>" +
-                "<div style='display:flex;align-items:center;gap:0.55rem;min-width:0;flex:1;'>" +
-                  seqBadge +
-                  "<div class='city-spots-item__meta'><strong>" + name + "</strong><span>" + coords + "</span></div>" +
-                "</div>" +
-                "<div style='display:flex;align-items:center;gap:0.4rem;'>" +
-                  "<button class='city-spots-btn city-spots-btn--ghost' type='button' data-pin-index='" + index + "' data-action='delete'>删除</button>" +
-                  "<button class='city-spots-btn city-spots-btn--ghost' type='button' data-pin-index='" + index + "' data-action='set-start' title='设为起点'>起点</button>" +
-                  "<button class='city-spots-btn city-spots-btn--ghost' type='button' data-pin-index='" + index + "' data-action='set-end' title='设为终点'>终点</button>" +
+                "<div style='min-width:0;flex:1;'>" +
+                  "<div style='display:flex;align-items:center;gap:0.55rem;'>" +
+                    seqBadge +
+                    "<div class='city-spots-item__meta' style='flex:1;'><strong>" + name + "</strong><span>" + coords + "</span></div>" +
+                    "<div style='display:flex;align-items:center;gap:0.4rem;flex-shrink:0;'>" +
+                      "<button class='city-spots-btn city-spots-btn--ghost' type='button' data-pin-index='" + index + "' data-action='delete'>删除</button>" +
+                      "<button class='city-spots-btn city-spots-btn--ghost' type='button' data-pin-index='" + index + "' data-action='set-start' title='设为起点'>起点</button>" +
+                      "<button class='city-spots-btn city-spots-btn--ghost' type='button' data-pin-index='" + index + "' data-action='set-end' title='设为终点'>终点</button>" +
+                    "</div>" +
+                  "</div>" +
+                  trafficHtml +
                 "</div>" +
               "</li>";
             })
@@ -1164,7 +1266,10 @@
 
           map.setCenter([lng, lat]);
           map.setZoom(13);
-          if (isRouteActive) { clearRouteDisplay(); }
+          if (isRouteActive) {
+            // New pin invalidates previous segment data; clear route
+            clearRouteDisplay();
+          }
           renderPinnedPlaces();
           syncStats();
           setStatus("已添加地点：" + (name || "未命名地点"));
@@ -1357,11 +1462,12 @@
         }
 
         function clearRouteDisplay() {
-          routePolylines.forEach(function (line) { line.setMap(null); });
-          routePolylines = [];
+          clearPolylines();
           isRouteActive = false;
 
           pinnedPlaces.forEach(function (place) {
+            place.segmentTraffic = null;
+            place.segmentTrafficLoading = false;
             if (place.marker) {
               place.marker.setLabel({ content: "", offset: null });
             }
@@ -1369,42 +1475,28 @@
 
           ui.routeInfo.classList.add("is-hidden");
           ui.routeInfo.textContent = "";
+          ui.routeMode.classList.add("is-hidden");
+        }
+
+        function clearPolylines() {
+          routePolylines.forEach(function (line) { line.setMap(null); });
+          routePolylines = [];
+          segmentPolylines = [];
+        }
+
+        function clearSegmentPolylines(index) {
+          if (!segmentPolylines[index] || !segmentPolylines[index].length) { return; }
+          var segLines = segmentPolylines[index];
+          segLines.forEach(function (line) { line.setMap(null); });
+          routePolylines = routePolylines.filter(function (line) {
+            return segLines.indexOf(line) === -1;
+          });
+          segmentPolylines[index] = [];
         }
 
         function displayRoute(orderedPlaces, totalKm) {
           clearRouteDisplay();
           isRouteActive = true;
-
-          var path = orderedPlaces.map(function (p) { return [p.lng, p.lat]; });
-
-          // Glow layer — thick, translucent
-          var glowLine = new AMap.Polyline({
-            path: path,
-            strokeColor: "#0b91d8",
-            strokeWeight: 10,
-            strokeOpacity: 0.16,
-            lineJoin: "round",
-            lineCap: "round",
-            strokeStyle: "solid",
-            showDir: false
-          });
-          glowLine.setMap(map);
-          routePolylines.push(glowLine);
-
-          // Main dashed line
-          var polyline = new AMap.Polyline({
-            path: path,
-            strokeColor: "#0b91d8",
-            strokeWeight: 3.5,
-            strokeOpacity: 0.85,
-            lineJoin: "round",
-            lineCap: "round",
-            strokeStyle: "dashed",
-            strokeDasharray: [14, 8],
-            showDir: false
-          });
-          polyline.setMap(map);
-          routePolylines.push(polyline);
 
           orderedPlaces.forEach(function (place, idx) {
             var marker = place.marker;
@@ -1443,9 +1535,285 @@
           var infoText = "最优路径总长约 <strong>" + totalKm.toFixed(1) + "</strong> km · 共 <strong>" + orderedPlaces.length + "</strong> 个地点";
           ui.routeInfo.innerHTML = infoText;
           ui.routeInfo.classList.remove("is-hidden");
+          ui.routeMode.classList.remove("is-hidden");
 
+          // Fit map to show all markers
           if (orderedPlaces.length >= 2) {
-            map.setFitView(polyline, false, [60, 60, 60, 120]);
+            var allLngLats = orderedPlaces.map(function (p) { return [p.lng, p.lat]; });
+            var bounds = new AMap.Bounds(
+              [Math.min.apply(null, allLngLats.map(function(c) { return c[0]; })),
+               Math.min.apply(null, allLngLats.map(function(c) { return c[1]; }))],
+              [Math.max.apply(null, allLngLats.map(function(c) { return c[0]; })),
+               Math.max.apply(null, allLngLats.map(function(c) { return c[1]; }))]
+            );
+            map.setBounds(bounds, false, [60, 60, 60, 120]);
+          }
+
+          // Kick off per-segment driving/walking/riding queries with real route drawing
+          queryAllSegments();
+        }
+
+        function queryAllSegments() {
+          if (pinnedPlaces.length < 2) { return; }
+
+          // Clear old route lines before drawing new ones
+          clearPolylines();
+
+          // Mark all segments as loading, clear previous results
+          for (var i = 0; i < pinnedPlaces.length - 1; i++) {
+            pinnedPlaces[i].segmentTraffic = null;
+            pinnedPlaces[i].segmentTrafficLoading = true;
+          }
+          renderPinnedPlaces();
+
+          function querySegment(index) {
+            if (index >= pinnedPlaces.length - 1) {
+              updateRouteInfoSummary();
+              return;
+            }
+            if (!isRouteActive) { return; }
+
+            doSegmentQuery(index, function () {
+              setTimeout(function () { querySegment(index + 1); }, 400);
+            });
+          }
+
+          querySegment(0);
+        }
+
+        function querySingleSegment(index) {
+          if (!isRouteActive) { return; }
+          if (index < 0 || index >= pinnedPlaces.length - 1) { return; }
+          // Only remove this segment's old polylines, keep others
+          clearSegmentPolylines(index);
+          doSegmentQuery(index, function () {
+            updateRouteInfoSummary();
+          });
+        }
+
+        function getSegmentService(index) {
+          var segMode = pinnedPlaces[index].segmentMode || transportMode;
+          if (segMode === "walking") return { service: walking, emoji: "🚶", label: "步行" };
+          if (segMode === "riding")  return { service: riding,  emoji: "🚴", label: "骑行" };
+          return { service: driving, emoji: "🚗", label: "驾车" };
+        }
+
+        function doSegmentQuery(index, callback) {
+          var from = pinnedPlaces[index];
+          var to = pinnedPlaces[index + 1];
+          if (!from || !to) { callback(); return; }
+
+          var svc = getSegmentService(index);
+          if (!svc.service) {
+            from.segmentTraffic = "路线不可用";
+            from.segmentTrafficLoading = false;
+            renderPinnedPlaces();
+            callback();
+            return;
+          }
+
+          svc.service.search(
+            [from.lng, from.lat],
+            [to.lng, to.lat],
+            function (status, result) {
+              if (!isRouteActive) { return; }
+
+              if (status === "complete" && result && result.routes && result.routes.length) {
+                var route = result.routes[0];
+                var distKm = (route.distance / 1000).toFixed(1);
+                var min = Math.round(route.time / 60);
+                var timeText = min >= 60
+                  ? Math.floor(min / 60) + "h" + (min % 60) + "min"
+                  : min + "分钟";
+                from.segmentTraffic = svc.emoji + " " + svc.label + " " + distKm + "km · 约" + timeText;
+                var drawn = drawSegmentPolyline(route, index);
+                // Fallback: if path extraction failed, draw straight line
+                if (!drawn) {
+                  drawStraightSegment(route, index);
+                }
+              } else {
+                from.segmentTraffic = svc.label + "路线不可用";
+              }
+              from.segmentTrafficLoading = false;
+              renderPinnedPlaces();
+              callback();
+            }
+          );
+        }
+
+        function drawSegmentPolyline(route, segmentIndex) {
+          if (!route || !map) { return; }
+
+          var pathPoints = [];
+
+          // Helper: push clean coords
+          function pushPt(pt) {
+            var lng, lat;
+            if (!pt) { return; }
+            if (typeof pt.getLng === "function") {
+              lng = pt.getLng(); lat = pt.getLat();
+            } else if (typeof pt.lng === "number" && typeof pt.lat === "number") {
+              lng = pt.lng; lat = pt.lat;
+            } else if (Array.isArray(pt) && pt.length >= 2) {
+              lng = Number(pt[0]); lat = Number(pt[1]);
+            } else {
+              return;
+            }
+            if (Number.isFinite(lng) && Number.isFinite(lat)) {
+              pathPoints.push([lng, lat]);
+            }
+          }
+
+          // Strategy 1: route.steps[].path (Driving, Walking, Riding)
+          if (route.steps && route.steps.length) {
+            for (var s = 0; s < route.steps.length; s++) {
+              var stepPath = route.steps[s].path;
+              if (!stepPath) { continue; }
+              if (Array.isArray(stepPath)) {
+                for (var p = 0; p < stepPath.length; p++) {
+                  pushPt(stepPath[p]);
+                }
+              } else {
+                pushPt(stepPath);
+              }
+            }
+          }
+
+          // Strategy 2: route.path as flat array (some API versions)
+          if (pathPoints.length < 2 && route.path && Array.isArray(route.path)) {
+            for (var q = 0; q < route.path.length; q++) {
+              pushPt(route.path[q]);
+            }
+          }
+
+          // Strategy 3: route.start + route.end as fallback straight line
+          if (pathPoints.length < 2) {
+            pushPt(route.origin);
+            pushPt(route.destination);
+          }
+
+          if (pathPoints.length < 2) { return false; }
+
+          // Color per mode
+          var segMode = pinnedPlaces[segmentIndex].segmentMode || transportMode;
+          var routeColor;
+          if (segMode === "walking") {
+            routeColor = "#10b981";  // green
+          } else if (segMode === "riding") {
+            routeColor = "#8b5cf6";  // purple
+          } else {
+            routeColor = "#0b91d8";  // blue (driving)
+          }
+
+          var lines = [];
+
+          // Outer glow
+          var outerGlow = new AMap.Polyline({
+            path: pathPoints,
+            strokeColor: routeColor,
+            strokeWeight: 14,
+            strokeOpacity: 0.08,
+            lineJoin: "round", lineCap: "round",
+            strokeStyle: "solid", showDir: false
+          });
+          outerGlow.setMap(map);
+          lines.push(outerGlow);
+
+          // Inner glow
+          var innerGlow = new AMap.Polyline({
+            path: pathPoints,
+            strokeColor: routeColor,
+            strokeWeight: 7,
+            strokeOpacity: 0.18,
+            lineJoin: "round", lineCap: "round",
+            strokeStyle: "solid", showDir: false
+          });
+          innerGlow.setMap(map);
+          lines.push(innerGlow);
+
+          // White core
+          var whiteCore = new AMap.Polyline({
+            path: pathPoints,
+            strokeColor: "#ffffff",
+            strokeWeight: 4.5,
+            strokeOpacity: 0.7,
+            lineJoin: "round", lineCap: "round",
+            strokeStyle: "solid", showDir: false
+          });
+          whiteCore.setMap(map);
+          lines.push(whiteCore);
+
+          // Main dashed line
+          var main = new AMap.Polyline({
+            path: pathPoints,
+            strokeColor: routeColor,
+            strokeWeight: 3.2,
+            strokeOpacity: 0.92,
+            lineJoin: "round", lineCap: "round",
+            strokeStyle: "dashed",
+            strokeDasharray: [18, 7],
+            showDir: false
+          });
+          main.setMap(map);
+          lines.push(main);
+
+          // Store per-segment polylines
+          segmentPolylines[segmentIndex] = lines;
+          routePolylines = routePolylines.concat(lines);
+          return true;
+        }
+
+        function drawStraightSegment(route, segmentIndex) {
+          if (!route || !map) { return; }
+          var from = pinnedPlaces[segmentIndex];
+          var to = pinnedPlaces[segmentIndex + 1];
+          if (!from || !to) { return; }
+
+          var segMode = pinnedPlaces[segmentIndex].segmentMode || transportMode;
+          var routeColor = segMode === "walking" ? "#10b981" : segMode === "riding" ? "#8b5cf6" : "#0b91d8";
+          var lines = [];
+
+          var main = new AMap.Polyline({
+            path: [[from.lng, from.lat], [to.lng, to.lat]],
+            strokeColor: routeColor,
+            strokeWeight: 3.2,
+            strokeOpacity: 0.85,
+            lineJoin: "round", lineCap: "round",
+            strokeStyle: "dashed",
+            strokeDasharray: [18, 7],
+            showDir: false
+          });
+          main.setMap(map);
+          lines.push(main);
+
+          segmentPolylines[segmentIndex] = lines;
+          routePolylines = routePolylines.concat(lines);
+        }
+
+        function updateRouteInfoSummary() {
+          var totalKm = 0;
+          var totalMin = 0;
+          for (var i = 0; i < pinnedPlaces.length - 1; i++) {
+            var st = pinnedPlaces[i].segmentTraffic;
+            if (!st) { continue; }
+            var kmMatch = st.match(/([\d.]+)\s*km/);
+            var minMatch = st.match(/(\d+)\s*(分钟|min)/) || st.match(/(\d+)h(\d+)?min/);
+            if (kmMatch) { totalKm += parseFloat(kmMatch[1]); }
+            if (minMatch) {
+              if (minMatch[2]) { totalMin += parseInt(minMatch[1], 10); }
+              else { totalMin += parseInt(minMatch[1], 10) * 60 + (parseInt(minMatch[2], 10) || 0); }
+            }
+          }
+          var modeLabel = transportMode === "walking" ? "步行" : transportMode === "riding" ? "骑行" : "驾车";
+          if (totalKm > 0) {
+            var timeText = totalMin >= 60
+              ? Math.floor(totalMin / 60) + "h" + (totalMin % 60) + "min"
+              : totalMin + "分钟";
+            ui.routeInfo.innerHTML = "最优路径总长约 <strong>" + totalKm.toFixed(1) + "</strong> km" +
+              (totalMin > 0 ? " · " + modeLabel + "约 <strong>" + timeText + "</strong>" : "") +
+              " · 共 <strong>" + pinnedPlaces.length + "</strong> 个地点";
+          } else {
+            ui.routeInfo.innerHTML = "最优路径总长约 <strong>--</strong> km · 共 <strong>" + pinnedPlaces.length + "</strong> 个地点";
           }
         }
 
@@ -1750,6 +2118,40 @@
             optimizeRoute();
           });
 
+          // Global transport mode radio change — resets all segments to this default
+          var modeRadios = document.querySelectorAll("input[name='route-mode']");
+          for (var mi = 0; mi < modeRadios.length; mi++) {
+            modeRadios[mi].addEventListener("change", function () {
+              if (this.checked) {
+                transportMode = this.value;
+              }
+              // Reset per-segment overrides
+              for (var i = 0; i < pinnedPlaces.length - 1; i++) {
+                pinnedPlaces[i].segmentMode = null;
+              }
+              if (isRouteActive) {
+                queryAllSegments();
+              }
+            });
+          }
+
+          // Per-segment transport mode click handler
+          ui.pinnedList.addEventListener("click", function (event) {
+            var segBtn = event.target.closest(".city-spots-seg-btn");
+            if (!segBtn) { return; }
+            if (!isRouteActive) { return; }
+
+            var sid = parseInt(segBtn.dataset.sid, 10);
+            var mode = segBtn.dataset.mode;
+            if (sid < 0 || sid >= pinnedPlaces.length - 1) { return; }
+
+            pinnedPlaces[sid].segmentMode = mode;
+            pinnedPlaces[sid].segmentTraffic = null;
+            pinnedPlaces[sid].segmentTrafficLoading = true;
+            renderPinnedPlaces();
+            querySingleSegment(sid);
+          });
+
           window.addEventListener("resize", function () {
             positionPendingPanel();
           });
@@ -1778,7 +2180,7 @@
 
             var script = document.createElement("script");
             script.id = "amap-jsapi-script";
-            script.src = "https://webapi.amap.com/maps?v=2.0&key=" + encodeURIComponent(key) + "&plugin=AMap.PlaceSearch,AMap.Geocoder";
+            script.src = "https://webapi.amap.com/maps?v=2.0&key=" + encodeURIComponent(key) + "&plugin=AMap.PlaceSearch,AMap.Geocoder,AMap.Driving,AMap.Walking,AMap.Riding";
             script.async = true;
             script.onload = function () {
               resolve(window.AMap);
@@ -1813,6 +2215,19 @@
                 panel: null,
                 autoFitView: false
               });
+
+              if (typeof AMapRef.Driving === "function") {
+                driving = new AMapRef.Driving({
+                  policy: AMapRef.DrivingPolicy.LEAST_TIME,
+                  map: null
+                });
+              }
+              if (typeof AMapRef.Walking === "function") {
+                walking = new AMapRef.Walking({ map: null });
+              }
+              if (typeof AMapRef.Riding === "function") {
+                riding = new AMapRef.Riding({ map: null });
+              }
 
               map.off("click");
               map.off("mapmove", positionPendingPanel);
