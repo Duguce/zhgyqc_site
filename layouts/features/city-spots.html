@@ -474,6 +474,16 @@
         box-shadow: var(--shadow-sm);
         transform: translateY(-1px);
       }
+      .city-spots-item[draggable="true"] { cursor: grab; }
+      .city-spots-item[draggable="true"]:active { cursor: grabbing; }
+      .city-spots-item.is-dragging {
+        opacity: 0.62;
+        transform: scale(0.995);
+      }
+      .city-spots-item.is-drop-target {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 2px rgba(10,138,235,0.16);
+      }
 
       .city-spots-item__meta {
         min-width: 0; display: flex; flex-direction: column; gap: 0.1rem;
@@ -721,7 +731,7 @@
               <strong>已添加地点</strong>
               <div style="display:flex;align-items:center;gap:0.5rem;">
                 <button class="city-spots-btn city-spots-btn--ghost" id="clear-pins" type="button">清空</button>
-                <button class="city-spots-btn city-spots-btn--ghost" id="optimize-route" type="button">智能排序</button>
+                <button class="city-spots-btn city-spots-btn--ghost" id="optimize-route" type="button">生成路线</button>
               </div>
             </div>
             <div class="city-spots-route-bar">
@@ -801,6 +811,7 @@
         var segmentPolylines = [];     // per-segment arrays: segmentPolylines[i] = [poly1, poly2, ...]
         // per-segment polylines are stored in segmentPolylines
         var isRouteActive = false;
+        var dragFromIndex = -1;
         var driving = null;
         var walking = null;
         var riding = null;
@@ -933,15 +944,13 @@
                 "</div>";
               }
 
-              return "<li class='" + itemClass + "'>" +
+              return "<li class='" + itemClass + "' data-pin-item-index='" + index + "' draggable='true'>" +
                 "<div style='min-width:0;flex:1;'>" +
                   "<div style='display:flex;align-items:center;gap:0.55rem;'>" +
                     seqBadge +
                     "<div class='city-spots-item__meta' style='flex:1;'><strong>" + name + "</strong><span>" + coords + "</span></div>" +
                     "<div style='display:flex;align-items:center;gap:0.4rem;flex-shrink:0;'>" +
                       "<button class='city-spots-btn city-spots-btn--ghost' type='button' data-pin-index='" + index + "' data-action='delete'>删除</button>" +
-                      "<button class='city-spots-btn city-spots-btn--ghost' type='button' data-pin-index='" + index + "' data-action='set-start' title='设为起点'>起点</button>" +
-                      "<button class='city-spots-btn city-spots-btn--ghost' type='button' data-pin-index='" + index + "' data-action='set-end' title='设为终点'>终点</button>" +
                     "</div>" +
                   "</div>" +
                   trafficHtml +
@@ -951,50 +960,11 @@
             .join("");
         }
 
-        function updateMarkerLabels() {
-          pinnedPlaces.forEach(function (place, idx) {
-            if (!place.marker) { return; }
-
-            var label = null;
-            if (place.startIndex === idx) {
-              label = "<div style='" +
-                "display:inline-flex;align-items:center;justify-content:center;" +
-                "width:22px;height:22px;border-radius:999px;" +
-                "background:linear-gradient(135deg,#16a34a,#15803d);" +
-                "color:#fff;font-size:11px;font-weight:800;" +
-                "box-shadow:0 3px 10px rgba(0,0,0,0.25);" +
-                "'>" + "S" + "</div>";
-            } else if (place.endIndex === idx) {
-              label = "<div style='" +
-                "display:inline-flex;align-items:center;justify-content:center;" +
-                "width:22px;height:22px;border-radius:999px;" +
-                "background:linear-gradient(135deg,#e9a54a,#d97706);" +
-                "color:#fff;font-size:11px;font-weight:800;" +
-                "box-shadow:0 3px 10px rgba(0,0,0,0.25);" +
-                "'>" + "E" + "</div>";
-            }
-
-            if (label) {
-              place.marker.setLabel({
-                content: label,
-                direction: "top",
-                offset: new AMap.Pixel(0, -8)
-              });
-            } else {
-              place.marker.setLabel({ content: "", offset: null });
-            }
-          });
-        }
-
         function clearAllPins() {
           markers.forEach(function (marker) {
             marker.setMap(null);
           });
           markers = [];
-          pinnedPlaces.forEach(function (place) {
-            place.startIndex = -1;
-            place.endIndex = -1;
-          });
           pinnedPlaces = [];
           clearRouteDisplay();
           renderPinnedPlaces();
@@ -1253,9 +1223,7 @@
             address: address || "",
             lng: lng,
             lat: lat,
-            marker: marker,
-            startIndex: -1,
-            endIndex: -1
+            marker: marker
           });
 
           marker.on("click", function () {
@@ -1532,12 +1500,7 @@
               offset: new AMap.Pixel(0, -8)
             });
 
-            // Update startIndex/endIndex for route display
-            var placeIndex = pinnedPlaces.indexOf(place);
-            if (placeIndex >= 0) {
-              if (isStart) { pinnedPlaces[placeIndex].startIndex = placeIndex; }
-              if (isEnd) { pinnedPlaces[placeIndex].endIndex = placeIndex; }
-            }
+            // route order follows current pinnedPlaces sequence
           });
 
           var infoText = "路线总长度约 <strong>" + totalKm.toFixed(1) + "</strong> km · 共 <strong>" + orderedPlaces.length + "</strong> 个地点";
@@ -1988,104 +1951,20 @@
             return;
           }
 
-          // Read custom start/end from stored indices
-          var startIndex = -1;
-          var endIndex = -1;
-          pinnedPlaces.forEach(function (place, idx) {
-            if (place.startIndex >= 0) { startIndex = idx; }
-            if (place.endIndex >= 0) { endIndex = idx; }
-          });
-
-          // Default: first = start, last = end
-          if (startIndex < 0) { startIndex = 0; }
-          if (endIndex < 0) { endIndex = pinnedPlaces.length - 1; }
-
-          // If only 2 pins, just connect them
-          if (pinnedPlaces.length === 2) {
-            var twoCopy = pinnedPlaces.slice();
-            displayRoute(twoCopy, haversineKm(pinnedPlaces[0].lng, pinnedPlaces[0].lat, pinnedPlaces[1].lng, pinnedPlaces[1].lat));
-            setStatus("路径已生成：仅 2 个地点，直接连线。");
-            return;
+          var orderedPlaces = pinnedPlaces.slice();
+          var totalKm = 0;
+          for (var i = 1; i < orderedPlaces.length; i++) {
+            totalKm += haversineKm(
+              orderedPlaces[i - 1].lng,
+              orderedPlaces[i - 1].lat,
+              orderedPlaces[i].lng,
+              orderedPlaces[i].lat
+            );
           }
 
-          setStatus("正在计算最优路径...");
-
-          setTimeout(function () {
-            var matrix = buildDistanceMatrix(pinnedPlaces);
-
-            // Collect middle indices (everything except start and end)
-            var middleIndices = [];
-            for (var i = 0; i < pinnedPlaces.length; i++) {
-              if (i !== startIndex && i !== endIndex) { middleIndices.push(i); }
-            }
-
-            // No middle points: direct connection
-            if (middleIndices.length === 0) {
-              var directOrder = [startIndex, endIndex];
-              var orderedDirect = directOrder.map(function (idx) { return pinnedPlaces[idx]; });
-              var directDist = matrix[startIndex][endIndex];
-              pinnedPlaces = orderedDirect;
-              markers = orderedDirect.map(function (p) { return p.marker; });
-              displayRoute(orderedDirect, directDist);
-              renderPinnedPlaces();
-              return;
-            }
-
-            // Build distance sub-matrix for middle points
-            var mLen = middleIndices.length;
-            var middleMatrix = [];
-            for (var mi = 0; mi < mLen; mi++) {
-              middleMatrix[mi] = [];
-              for (var mj = 0; mj < mLen; mj++) {
-                middleMatrix[mi][mj] = matrix[middleIndices[mi]][middleIndices[mj]];
-              }
-            }
-
-            var startDists = middleIndices.map(function (mi) { return matrix[startIndex][mi]; });
-            var endDists = middleIndices.map(function (mi) { return matrix[mi][endIndex]; });
-
-            var bestMiddleOrder = null;
-            var bestTotal = Infinity;
-
-            if (mLen <= 8) {
-              // Full permutation search
-              var perms = permutations(middleIndices.slice());
-              for (var pi = 0; pi < perms.length; pi++) {
-                var perm = perms[pi];
-                var t = startDists[middleIndices.indexOf(perm[0])];
-                for (var ti = 1; ti < perm.length; ti++) {
-                  t += matrix[perm[ti - 1]][perm[ti]];
-                }
-                t += endDists[middleIndices.indexOf(perm[perm.length - 1])];
-                if (t < bestTotal) { bestTotal = t; bestMiddleOrder = perm; }
-              }
-            } else {
-              // Nearest Neighbor heuristic
-              var nnOrder = nearestNeighborOrder(middleMatrix);
-              bestMiddleOrder = nnOrder.map(function (idx) { return middleIndices[idx]; });
-              bestTotal = startDists[middleIndices.indexOf(bestMiddleOrder[0])];
-              for (var ni = 1; ni < bestMiddleOrder.length; ni++) {
-                bestTotal += matrix[bestMiddleOrder[ni - 1]][bestMiddleOrder[ni]];
-              }
-              bestTotal += endDists[middleIndices.indexOf(bestMiddleOrder[bestMiddleOrder.length - 1])];
-            }
-
-            var finalOrder = [startIndex].concat(bestMiddleOrder).concat([endIndex]);
-            var orderedPlaces = finalOrder.map(function (idx) { return pinnedPlaces[idx]; });
-
-            // Reorder pinnedPlaces array while keeping markers in sync
-            var newPinnedPlaces = [];
-            var newMarkers = [];
-            for (var i = 0; i < orderedPlaces.length; i++) {
-              newPinnedPlaces.push(orderedPlaces[i]);
-              newMarkers.push(orderedPlaces[i].marker);
-            }
-            pinnedPlaces = newPinnedPlaces;
-            markers = newMarkers;
-
-            displayRoute(orderedPlaces, bestTotal);
-            renderPinnedPlaces();
-          }, 30);
+          displayRoute(orderedPlaces, totalKm);
+          renderPinnedPlaces();
+          setStatus("路径已生成（按当前地点顺序）。");
         }
 
         function permutations(arr) {
@@ -2175,99 +2054,62 @@
               renderPinnedPlaces();
               syncStats();
               setStatus("已删除该地点。");
-            } else if (action === "set-start") {
-              if (pinnedPlaces.length < 2) {
-                setStatus("至少需要 2 个地点才能设置起点和终点。");
-                return;
-              }
-              var startPlace = pinnedPlaces[index];
-              var oldStartIndex = startPlace.startIndex;
-              var oldEndIndex = startPlace.endIndex;
-              startPlace.startIndex = -1;
-              startPlace.endIndex = -1;
-
-              // Clear old start marker if it exists
-              if (oldStartIndex >= 0 && oldStartIndex !== index) {
-                var oldStartPlace = pinnedPlaces[oldStartIndex];
-                if (oldStartPlace && oldStartPlace.marker) {
-                  oldStartPlace.marker.setLabel({ content: "", offset: null });
-                }
-              }
-
-              // Clear old end marker if it exists (strict: only one endpoint at a time)
-              if (oldEndIndex >= 0 && oldEndIndex !== index) {
-                var oldEndPlace = pinnedPlaces[oldEndIndex];
-                if (oldEndPlace && oldEndPlace.marker) {
-                  oldEndPlace.marker.setLabel({ content: "", offset: null });
-                }
-              }
-
-              // Set new start label
-              var startLabel = "<div style='" +
-                "display:inline-flex;align-items:center;justify-content:center;" +
-                "width:22px;height:22px;border-radius:999px;" +
-                "background:linear-gradient(135deg,#16a34a,#15803d);" +
-                "color:#fff;font-size:11px;font-weight:800;" +
-                "box-shadow:0 3px 10px rgba(0,0,0,0.25);" +
-                "'>" + "S" + "</div>";
-              startPlace.marker.setLabel({
-                content: startLabel,
-                direction: "top",
-                offset: new AMap.Pixel(0, -8)
-              });
-              startPlace.startIndex = index;
-              startPlace.endIndex = -1;
-
-              // Update all markers
-              updateMarkerLabels();
-              setStatus("已将 " + startPlace.name + " 设为起点。");
-            } else if (action === "set-end") {
-              if (pinnedPlaces.length < 2) {
-                setStatus("至少需要 2 个地点才能设置起点和终点。");
-                return;
-              }
-              var endPlace = pinnedPlaces[index];
-              var oldStartIndex = endPlace.startIndex;
-              var oldEndIndex = endPlace.endIndex;
-              endPlace.startIndex = -1;
-              endPlace.endIndex = -1;
-
-              // Clear old end marker if it exists
-              if (oldEndIndex >= 0 && oldEndIndex !== index) {
-                var oldEndPlace = pinnedPlaces[oldEndIndex];
-                if (oldEndPlace && oldEndPlace.marker) {
-                  oldEndPlace.marker.setLabel({ content: "", offset: null });
-                }
-              }
-
-              // Clear old start marker if it exists (strict: only one endpoint at a time)
-              if (oldStartIndex >= 0 && oldStartIndex !== index) {
-                var oldStartPlace = pinnedPlaces[oldStartIndex];
-                if (oldStartPlace && oldStartPlace.marker) {
-                  oldStartPlace.marker.setLabel({ content: "", offset: null });
-                }
-              }
-
-              // Set new end label
-              var endLabel = "<div style='" +
-                "display:inline-flex;align-items:center;justify-content:center;" +
-                "width:22px;height:22px;border-radius:999px;" +
-                "background:linear-gradient(135deg,#e9a54a,#d97706);" +
-                "color:#fff;font-size:11px;font-weight:800;" +
-                "box-shadow:0 3px 10px rgba(0,0,0,0.25);" +
-                "'>" + "E" + "</div>";
-              endPlace.marker.setLabel({
-                content: endLabel,
-                direction: "top",
-                offset: new AMap.Pixel(0, -8)
-              });
-              endPlace.startIndex = -1;
-              endPlace.endIndex = index;
-
-              // Update all markers
-              updateMarkerLabels();
-              setStatus("已将 " + endPlace.name + " 设为终点。");
             }
+          });
+
+          ui.pinnedList.addEventListener("dragstart", function (event) {
+            var item = event.target.closest("li[data-pin-item-index]");
+            if (!item) { return; }
+            dragFromIndex = Number(item.dataset.pinItemIndex);
+            if (!Number.isInteger(dragFromIndex) || dragFromIndex < 0 || dragFromIndex >= pinnedPlaces.length) {
+              dragFromIndex = -1;
+              return;
+            }
+            item.classList.add("is-dragging");
+            if (event.dataTransfer) {
+              event.dataTransfer.effectAllowed = "move";
+              event.dataTransfer.setData("text/plain", String(dragFromIndex));
+            }
+          });
+
+          ui.pinnedList.addEventListener("dragover", function (event) {
+            var item = event.target.closest("li[data-pin-item-index]");
+            if (!item) { return; }
+            event.preventDefault();
+            var all = ui.pinnedList.querySelectorAll("li[data-pin-item-index]");
+            all.forEach(function (el) { el.classList.remove("is-drop-target"); });
+            item.classList.add("is-drop-target");
+          });
+
+          ui.pinnedList.addEventListener("drop", function (event) {
+            event.preventDefault();
+            var toItem = event.target.closest("li[data-pin-item-index]");
+            if (!toItem || dragFromIndex < 0) { return; }
+            var toIndex = Number(toItem.dataset.pinItemIndex);
+            if (!Number.isInteger(toIndex) || toIndex < 0 || toIndex >= pinnedPlaces.length || toIndex === dragFromIndex) {
+              return;
+            }
+
+            var moved = pinnedPlaces.splice(dragFromIndex, 1)[0];
+            pinnedPlaces.splice(toIndex, 0, moved);
+            markers = pinnedPlaces.map(function (place) { return place.marker; });
+
+            if (isRouteActive) {
+              clearRouteDisplay();
+            }
+
+            renderPinnedPlaces();
+            setStatus("地点顺序已更新，可点击“生成路线”按该顺序规划。");
+            dragFromIndex = -1;
+          });
+
+          ui.pinnedList.addEventListener("dragend", function () {
+            dragFromIndex = -1;
+            var all = ui.pinnedList.querySelectorAll("li[data-pin-item-index]");
+            all.forEach(function (el) {
+              el.classList.remove("is-dragging");
+              el.classList.remove("is-drop-target");
+            });
           });
 
           ui.clearPinsButton.addEventListener("click", function () {
