@@ -485,6 +485,179 @@
         box-shadow: 0 0 0 2px rgba(10,138,235,0.16);
       }
 
+      /* ── Route Poster Export ── */
+      .city-spots-export-poster {
+        position: fixed;
+        left: -10000px;
+        top: 0;
+        width: 720px;
+        padding: 28px;
+        border-radius: 24px;
+        box-sizing: border-box;
+        color: #0b1221;
+        background:
+          radial-gradient(circle at 10% 10%, rgba(255,255,255,0.98), rgba(255,255,255,0.8) 34%, rgba(255,255,255,0) 60%),
+          radial-gradient(circle at 90% 14%, rgba(255,255,255,0.78), rgba(255,255,255,0) 42%),
+          linear-gradient(152deg, #d5edff 0%, #eef8ff 44%, #fff8ee 100%);
+        box-shadow: 0 22px 70px rgba(11,18,33,0.2);
+      }
+      .city-spots-export-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .city-spots-export-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 5px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 720;
+        letter-spacing: 0.03em;
+        color: #0a74bb;
+        border: 1px solid rgba(10,145,216,0.24);
+        background: rgba(255,255,255,0.86);
+      }
+      .city-spots-export-title {
+        margin: 0;
+        font-size: 34px;
+        line-height: 1.2;
+        font-weight: 820;
+        letter-spacing: 0.01em;
+      }
+      .city-spots-export-subtitle {
+        margin: 7px 0 0 0;
+        color: rgba(11,18,33,0.7);
+        font-size: 16px;
+        font-weight: 600;
+      }
+      .city-spots-export-summary {
+        margin-top: 18px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+      }
+      .city-spots-export-metric {
+        border: 1px solid rgba(11,18,33,0.08);
+        border-radius: 14px;
+        background: rgba(255,255,255,0.88);
+        padding: 12px 12px;
+        box-shadow: 0 8px 22px rgba(11,18,33,0.06);
+      }
+      .city-spots-export-metric label {
+        display: block;
+        margin: 0;
+        font-size: 12px;
+        color: rgba(11,18,33,0.62);
+        letter-spacing: 0.02em;
+      }
+      .city-spots-export-metric strong {
+        display: block;
+        margin-top: 5px;
+        font-size: 20px;
+        font-weight: 780;
+      }
+      .city-spots-export-panel {
+        margin-top: 14px;
+        border: 1px solid rgba(11,18,33,0.1);
+        background: rgba(255,255,255,0.92);
+        border-radius: 18px;
+        padding: 14px 14px 13px;
+      }
+      .city-spots-export-panel h4 {
+        margin: 0 0 10px 0;
+        font-size: 16px;
+        font-weight: 760;
+      }
+      .city-spots-export-places {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .city-spots-export-places li {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        border-bottom: 1px dashed rgba(11,18,33,0.08);
+        padding-bottom: 8px;
+      }
+      .city-spots-export-places li:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+      .city-spots-export-idx {
+        width: 26px;
+        height: 26px;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-size: 13px;
+        font-weight: 760;
+        color: #fff;
+        background: linear-gradient(135deg, #0b91d8, #0a74bb);
+      }
+      .city-spots-export-places li:first-child .city-spots-export-idx {
+        background: linear-gradient(135deg, #16a34a, #15803d);
+      }
+      .city-spots-export-places li:last-child .city-spots-export-idx {
+        background: linear-gradient(135deg, #e9a54a, #d97706);
+      }
+      .city-spots-export-name {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 740;
+      }
+      .city-spots-export-address {
+        margin: 2px 0 0 0;
+        font-size: 12px;
+        color: rgba(11,18,33,0.65);
+      }
+      .city-spots-export-segments {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+      }
+      .city-spots-export-segments li {
+        border-left: 3px solid rgba(10,138,235,0.5);
+        padding: 6px 0 6px 10px;
+        font-size: 13px;
+        color: rgba(11,18,33,0.8);
+        line-height: 1.45;
+        background: linear-gradient(90deg, rgba(10,138,235,0.06), rgba(10,138,235,0));
+        border-radius: 7px;
+      }
+      .city-spots-export-seg-title {
+        margin: 0;
+        font-size: 13px;
+        font-weight: 700;
+        color: rgba(11,18,33,0.9);
+      }
+      .city-spots-export-seg-meta {
+        margin: 2px 0 0 0;
+        font-size: 12px;
+        color: rgba(11,18,33,0.7);
+      }
+      .city-spots-export-foot {
+        margin-top: 12px;
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        font-size: 12px;
+        color: rgba(11,18,33,0.66);
+        border-top: 1px dashed rgba(11,18,33,0.14);
+        padding-top: 10px;
+      }
+
       .city-spots-item__meta {
         min-width: 0; display: flex; flex-direction: column; gap: 0.1rem;
       }
@@ -732,6 +905,7 @@
               <div style="display:flex;align-items:center;gap:0.5rem;">
                 <button class="city-spots-btn city-spots-btn--ghost" id="clear-pins" type="button">清空</button>
                 <button class="city-spots-btn city-spots-btn--ghost" id="optimize-route" type="button">生成路线</button>
+                <button class="city-spots-btn city-spots-btn--ghost" id="export-route-image" type="button">导出路线</button>
               </div>
             </div>
             <div class="city-spots-route-bar">
@@ -745,6 +919,7 @@
             </div>
             <ul class="city-spots-list" id="pinned-places"></ul>
           </div>
+          <div class="city-spots-export-poster" id="route-poster" aria-hidden="true"></div>
         </aside>
       </section>
     </main>
@@ -788,8 +963,10 @@
           confirmPointButton: document.getElementById("confirm-point"),
           cancelPointButton: document.getElementById("cancel-point"),
           optimizeRouteButton: document.getElementById("optimize-route"),
+          exportRouteImageButton: document.getElementById("export-route-image"),
           routeInfo: document.getElementById("route-info"),
-          routeMode: document.getElementById("route-mode")
+          routeMode: document.getElementById("route-mode"),
+          routePoster: document.getElementById("route-poster")
         };
 
         var map = null;
@@ -812,6 +989,7 @@
         // per-segment polylines are stored in segmentPolylines
         var isRouteActive = false;
         var dragFromIndex = -1;
+        var html2CanvasLoading = null;
         var driving = null;
         var walking = null;
         var riding = null;
@@ -860,6 +1038,176 @@
 
         function setStatus(message) {
           ui.status.textContent = message;
+        }
+
+        function formatTimeForPoster(totalMin) {
+          if (!totalMin || totalMin <= 0) { return "待生成"; }
+          if (totalMin >= 60) {
+            return Math.floor(totalMin / 60) + "h" + (totalMin % 60) + "min";
+          }
+          return totalMin + "分钟";
+        }
+
+        function getRouteSummary() {
+          var totalKm = 0;
+          var totalMin = 0;
+          var hasTraffic = false;
+
+          for (var i = 0; i < pinnedPlaces.length - 1; i++) {
+            var st = pinnedPlaces[i].segmentTraffic;
+            if (!st) { continue; }
+            var kmMatch = st.match(/([\d.]+)\s*km/);
+            var minMatch = st.match(/(\d+)\s*(分钟|min)/) || st.match(/(\d+)h(\d+)?min/);
+            if (kmMatch) {
+              totalKm += parseFloat(kmMatch[1]);
+              hasTraffic = true;
+            }
+            if (minMatch) {
+              if (minMatch[2]) { totalMin += parseInt(minMatch[1], 10); }
+              else { totalMin += parseInt(minMatch[1], 10) * 60 + (parseInt(minMatch[2], 10) || 0); }
+            }
+          }
+
+          if (!hasTraffic && pinnedPlaces.length >= 2) {
+            for (var j = 1; j < pinnedPlaces.length; j++) {
+              totalKm += haversineKm(
+                pinnedPlaces[j - 1].lng,
+                pinnedPlaces[j - 1].lat,
+                pinnedPlaces[j].lng,
+                pinnedPlaces[j].lat
+              );
+            }
+          }
+
+          return {
+            totalKm: totalKm,
+            totalMin: totalMin,
+            hasTraffic: hasTraffic
+          };
+        }
+
+        function buildPosterHtml() {
+          var city = escapeHtml(getCurrentCity().label);
+          var summary = getRouteSummary();
+          var now = new Date();
+          var dateText = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, "0") + "-" + String(now.getDate()).padStart(2, "0");
+          var kmText = summary.totalKm > 0 ? summary.totalKm.toFixed(1) + " km" : "--";
+          var timeText = formatTimeForPoster(summary.totalMin);
+
+          var placesHtml = pinnedPlaces.map(function (place, idx) {
+            var name = escapeHtml(place.name || "未命名地点");
+            var address = escapeHtml(place.address || (place.lng.toFixed(6) + ", " + place.lat.toFixed(6)));
+            return "<li>" +
+              "<span class='city-spots-export-idx'>" + (idx + 1) + "</span>" +
+              "<div>" +
+                "<p class='city-spots-export-name'>" + name + "</p>" +
+                "<p class='city-spots-export-address'>" + address + "</p>" +
+              "</div>" +
+            "</li>";
+          }).join("");
+
+          var segHtml = [];
+          for (var i = 0; i < pinnedPlaces.length - 1; i++) {
+            var from = escapeHtml(pinnedPlaces[i].name || ("地点" + (i + 1)));
+            var to = escapeHtml(pinnedPlaces[i + 1].name || ("地点" + (i + 2)));
+            var rawTraffic = pinnedPlaces[i].segmentTraffic || "";
+            var traffic = rawTraffic.replace(/🚗|🚶|🚴/g, "").replace(/\s+/g, " ").trim();
+            if (!traffic) { traffic = "数据待补充"; }
+            segHtml.push("<li>" +
+              "<p class='city-spots-export-seg-title'>第" + (i + 1) + "段 · " + from + " 至 " + to + "</p>" +
+              "<p class='city-spots-export-seg-meta'>通行信息：" + escapeHtml(traffic) + "</p>" +
+            "</li>");
+          }
+
+          return "<div class='city-spots-export-head'>" +
+              "<div>" +
+                "<h3 class='city-spots-export-title'>城市出行路线方案</h3>" +
+                "<p class='city-spots-export-subtitle'>" + city + " · 按当前路线顺序生成</p>" +
+              "</div>" +
+              "<span class='city-spots-export-badge'>ROUTE BRIEF</span>" +
+            "</div>" +
+            "<div class='city-spots-export-summary'>" +
+              "<div class='city-spots-export-metric'><label>路线总里程</label><strong>" + kmText + "</strong></div>" +
+              "<div class='city-spots-export-metric'><label>预计总耗时</label><strong>" + timeText + "</strong></div>" +
+              "<div class='city-spots-export-metric'><label>停靠点数量</label><strong>" + pinnedPlaces.length + " 个</strong></div>" +
+            "</div>" +
+            "<div class='city-spots-export-panel'>" +
+              "<h4>站点顺序（含起终点）</h4>" +
+              "<ul class='city-spots-export-places'>" + placesHtml + "</ul>" +
+            "</div>" +
+            "<div class='city-spots-export-panel'>" +
+              "<h4>分段通行摘要</h4>" +
+              "<ul class='city-spots-export-segments'>" + segHtml.join("") + "</ul>" +
+            "</div>" +
+            "<div class='city-spots-export-foot'>" +
+              "<span>生成日期：" + dateText + "</span>" +
+              "<span>数据来源：高德路线服务（实时计算）</span>" +
+            "</div>";
+        }
+
+        function loadHtml2Canvas() {
+          if (window.html2canvas) { return Promise.resolve(window.html2canvas); }
+          if (html2CanvasLoading) { return html2CanvasLoading; }
+
+          html2CanvasLoading = new Promise(function (resolve, reject) {
+            var existing = document.getElementById("html2canvas-lib");
+            if (existing) {
+              existing.addEventListener("load", function () { resolve(window.html2canvas); });
+              existing.addEventListener("error", function () { reject(new Error("截图组件加载失败")); });
+              return;
+            }
+
+            var script = document.createElement("script");
+            script.id = "html2canvas-lib";
+            script.src = "https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js";
+            script.async = true;
+            script.onload = function () { resolve(window.html2canvas); };
+            script.onerror = function () { reject(new Error("截图组件加载失败")); };
+            document.head.appendChild(script);
+          });
+
+          return html2CanvasLoading;
+        }
+
+        function exportRoutePoster() {
+          if (!isRouteActive || pinnedPlaces.length < 2) {
+            setStatus("请先生成路线，再导出路线。");
+            return;
+          }
+
+          ui.exportRouteImageButton.disabled = true;
+          ui.exportRouteImageButton.classList.add("is-loading");
+          setStatus("正在生成路线图片...");
+
+          loadHtml2Canvas()
+            .then(function (html2canvasRef) {
+              ui.routePoster.innerHTML = buildPosterHtml();
+              return html2canvasRef(ui.routePoster, {
+                backgroundColor: null,
+                useCORS: true,
+                scale: 2
+              });
+            })
+            .then(function (canvas) {
+              var city = getCurrentCity().label;
+              var now = new Date();
+              var stamp = now.getFullYear() + String(now.getMonth() + 1).padStart(2, "0") + String(now.getDate()).padStart(2, "0") + "-" + String(now.getHours()).padStart(2, "0") + String(now.getMinutes()).padStart(2, "0");
+              var fileName = "路线清单-" + city + "-" + stamp + ".png";
+              var link = document.createElement("a");
+              link.download = fileName;
+              link.href = canvas.toDataURL("image/png");
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+              setStatus("路径图片已导出，可在手机查看。");
+            })
+            .catch(function (err) {
+              setStatus(err && err.message ? err.message : "导出路线失败，请重试。");
+            })
+            .finally(function () {
+              ui.exportRouteImageButton.disabled = false;
+              ui.exportRouteImageButton.classList.remove("is-loading");
+            });
         }
 
         // riding debug removed
@@ -2119,6 +2467,10 @@
 
           ui.optimizeRouteButton.addEventListener("click", function () {
             optimizeRoute();
+          });
+
+          ui.exportRouteImageButton.addEventListener("click", function () {
+            exportRoutePoster();
           });
 
           // Global transport mode radio change — resets all segments to this default
