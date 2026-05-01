@@ -648,7 +648,7 @@
           <div class="city-spots-map" id="city-spots-map"></div>
           <div class="city-spots-map-overlay">
             <div class="city-spots-hero">
-              <div class="city-spots-kicker">专业地图工作台</div>
+              <div class="city-spots-kicker">DIY 地图小工具</div>
               <h1>{{ .Title }}</h1>
               <p>{{ .Params.subtitle }}. {{ with .Params.description }}{{ . }}{{ else }}{{ .Summary }}{{ end }}</p>
             </div>
@@ -1540,7 +1540,7 @@
             }
           });
 
-          var infoText = "最优路径总长约 <strong>" + totalKm.toFixed(1) + "</strong> km · 共 <strong>" + orderedPlaces.length + "</strong> 个地点";
+          var infoText = "路线总长度约 <strong>" + totalKm.toFixed(1) + "</strong> km · 共 <strong>" + orderedPlaces.length + "</strong> 个地点";
           ui.routeInfo.innerHTML = infoText;
           ui.routeInfo.classList.remove("is-hidden");
           ui.routeMode.classList.remove("is-hidden");
@@ -1968,16 +1968,15 @@
               else { totalMin += parseInt(minMatch[1], 10) * 60 + (parseInt(minMatch[2], 10) || 0); }
             }
           }
-          var modeLabel = transportMode === "walking" ? "步行" : transportMode === "riding" ? "骑行" : "驾车";
           if (totalKm > 0) {
             var timeText = totalMin >= 60
               ? Math.floor(totalMin / 60) + "h" + (totalMin % 60) + "min"
               : totalMin + "分钟";
-            ui.routeInfo.innerHTML = "最优路径总长约 <strong>" + totalKm.toFixed(1) + "</strong> km" +
-              (totalMin > 0 ? " · " + modeLabel + "约 <strong>" + timeText + "</strong>" : "") +
+            ui.routeInfo.innerHTML = "路线总长度约 <strong>" + totalKm.toFixed(1) + "</strong> km" +
+              (totalMin > 0 ? " · 预计耗时 <strong>" + timeText + "</strong>" : "") +
               " · 共 <strong>" + pinnedPlaces.length + "</strong> 个地点";
           } else {
-            ui.routeInfo.innerHTML = "最优路径总长约 <strong>--</strong> km · 共 <strong>" + pinnedPlaces.length + "</strong> 个地点";
+            ui.routeInfo.innerHTML = "路线总长度约 <strong>--</strong> km · 共 <strong>" + pinnedPlaces.length + "</strong> 个地点";
           }
         }
 
@@ -2029,7 +2028,6 @@
               markers = orderedDirect.map(function (p) { return p.marker; });
               displayRoute(orderedDirect, directDist);
               renderPinnedPlaces();
-              setStatus("路径排序完成！");
               return;
             }
 
@@ -2087,7 +2085,6 @@
 
             displayRoute(orderedPlaces, bestTotal);
             renderPinnedPlaces();
-            setStatus("路径排序完成！起点：" + orderedPlaces[0].name + " → 终点：" + orderedPlaces[orderedPlaces.length - 1].name);
           }, 30);
         }
 
