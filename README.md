@@ -3,6 +3,25 @@
 </h2>
 
 <p align="center">
+  <a href="https://zhgyqc.site/">
+    <img src="https://img.shields.io/badge/%F0%9F%8C%90_Website-zhgyqc.site-2563eb?style=for-the-badge&amp;labelColor=1e3a5f" alt="Website">
+  </a>
+  <a href="https://gohugo.io/">
+    <img src="https://img.shields.io/badge/Built_with-Hugo-FF4088?style=for-the-badge&amp;logo=hugo&amp;logoColor=white" alt="Built with Hugo">
+  </a>
+  <br>
+  <a href="https://github.com/Duguce/zhgyqc_site/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/License-CC_BY--SA_4.0-059669?style=for-the-badge&amp;logo=creativecommons&amp;logoColor=white" alt="License">
+  </a>
+  <a href="https://vercel.com/">
+    <img src="https://img.shields.io/badge/Deployed_on-Vercel-000000?style=for-the-badge&amp;logo=vercel&amp;logoColor=white" alt="Deployed on Vercel">
+  </a>
+  <a href="https://github.com/Duguce/zhgyqc_site">
+    <img src="https://img.shields.io/badge/Source-GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="Source Code">
+  </a>
+</p>
+
+<p align="center">
   <em>
     This is 
     <a href="https://zhgyqc.site/" target="_blank">Qingchen Yu</a>'s 
