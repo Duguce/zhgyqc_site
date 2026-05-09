@@ -1,0 +1,171 @@
+<a name=top></a><!doctype html>
+<html lang=en>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>Qingchen Yu</title>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css>
+<link rel=stylesheet href=../../css/style.css>
+<link rel=stylesheet href=../../css/fonts.css>
+<link href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css rel=stylesheet>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/r.min.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/bash.min.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/python.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/vega@5.17.0></script>
+<script src=https://cdn.jsdelivr.net/npm/vega-lite@4.17.0></script>
+<script src=https://cdn.jsdelivr.net/npm/vega-embed@6.12.2></script>
+<script>hljs.initHighlightingOnLoad()</script>
+<link rel=icon href=https://zhgyqc.vercel.app/media/logo.png>
+</head>
+<body>
+<div class=wrapper>
+<header class=header>
+<nav class=nav>
+<a href=../../ class=nav-logo>
+<img src=../../media/logo.png width=50 height=50 alt=Hugo-ht>
+</a>
+<ul class=nav-links>
+<li><a href=../../cn/blogs/>博客</a></li>
+<li><a href=../../>English</a></li>
+</ul>
+</nav>
+</header>
+<main class=content role=main>
+<style>.scholar-article{--surface:#f6f4ef;--border:#d7d2c6;--ink:#1f2535;--muted:#5c6272;--accent:#8a6f4d;font-family:source serif pro,palatino linotype,Georgia,serif;color:var(--ink);padding-bottom:3rem}.scholar-article[data-variant=moments]{--surface:#f1f6fb;--border:#d0dfea;--accent:#4b6fad}.scholar-hero{background:var(--surface);border:1px solid var(--border);border-radius:1.4rem;padding:2rem;margin-bottom:1.6rem;position:relative;overflow:hidden}.scholar-hero::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 12% 20%,rgba(138,111,77,.22),transparent 45%),linear-gradient(120deg,rgba(31,37,53,8%),transparent 60%);opacity:.5;pointer-events:none}.scholar-article[data-variant=moments] .scholar-hero::after{background:radial-gradient(circle at 15% 20%,rgba(75,111,173,.24),transparent 60%),linear-gradient(130deg,rgba(28,52,94,8%),transparent 55%)}.scholar-hero__body{position:relative;z-index:1}.scholar-hero__badge{font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.65rem;display:inline-block}.scholar-hero h1{font-size:clamp(1.35rem,2.2vw,1.9rem);margin:0 0 .3rem}.scholar-hero__subtitle{font-size:.95rem;color:var(--muted);margin:0 0 .7rem}.scholar-hero__meta{display:flex;flex-wrap:wrap;gap:.6rem;font-size:.9rem;color:var(--muted)}.scholar-hero__meta span{display:inline-flex;align-items:center;gap:.35rem;padding-right:.7rem;border-right:1px solid rgba(0,0,0,8%)}.scholar-hero__meta span:last-child{border-right:none;padding-right:0}.scholar-hero__actions{margin-top:1.1rem;display:flex;gap:.75rem;align-items:center}.scholar-hero__edit{font-size:.85rem;text-decoration:none;color:var(--accent);border:1px solid var(--border);border-radius:999px;padding:.35rem .9rem;background:#fff}.scholar-body{border:1px solid var(--border);border-radius:1.5rem;padding:2rem;background:#fff;box-shadow:0 25px 55px rgba(17,21,32,.1);display:flex;flex-direction:column;gap:1.5rem}.scholar-body.has-toc{display:grid;grid-template-columns:minmax(0,1fr)minmax(220px,260px)}.scholar-body__content{font-size:1.02rem;line-height:1.75;color:#1e2433}.scholar-body__toc{border-left:2px solid var(--border);padding-left:1rem;font-size:.9rem;color:var(--muted)}.scholar-body__toc strong{display:block;margin-bottom:.6rem;font-size:.85rem;text-transform:uppercase;letter-spacing:.1em}.scholar-body__content pre{background:linear-gradient(135deg,#fdfcf7,#eef0f5);border:1px solid rgba(31,37,53,8%);border-radius:1rem;padding:1rem 1.2rem 1.4rem;color:#2a3140;font-size:.92rem;font-family:jetbrains mono,fira code,monospace;overflow:auto;box-shadow:0 28px 55px rgba(12,18,32,.12);position:relative;margin:1.4rem 0}.scholar-body__content pre::before{content:"Code";position:absolute;top:.4rem;right:.8rem;font-size:.7rem;letter-spacing:.2em;color:rgba(31,41,55,.4)}.scholar-body__content pre code{background:0 0;padding:0}.code-copy{position:absolute;bottom:.4rem;right:.6rem;border:1px solid rgba(31,37,53,.2);border-radius:999px;background:#fff;color:#2a3140;font-size:.75rem;padding:.18rem .8rem;cursor:pointer}.code-copy.is-copied{color:var(--accent);border-color:var(--accent)}.scholar-body__content :not(pre)>code{background:#f0efe7;padding:.15rem .35rem;border-radius:.35rem;font-size:.9rem;color:#2a3140;font-family:jetbrains mono,fira code,monospace;border:1px solid rgba(0,0,0,5%)}.scholar-lastupdate{font-size:.9rem;color:var(--muted);margin-top:.5rem}.scholar-tags{margin-top:1.3rem}.scholar-tags__label{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:inline-block;margin-bottom:.6rem}.scholar-tags ul{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:.45rem}.scholar-tags a{text-decoration:none;border:1px solid var(--border);border-radius:999px;padding:.18rem .75rem;font-size:.86rem;color:var(--ink);background:var(--surface)}.scholar-comments{margin-top:1.4rem;padding-top:1rem;border-top:1px solid rgba(31,37,53,.14)}.scholar-article[data-variant=moments] .scholar-comments{border-top-color:rgba(75,111,173,.22)}.scholar-comments__title{margin:0;font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);opacity:.9}.scholar-comments__hint{margin:.2rem 0 0;font-size:.83rem;color:var(--muted);opacity:.85}.scholar-comments #giscus-comments{margin-top:.65rem;max-width:100%;padding:0}.scholar-comments #giscus-comments iframe{border-radius:.55rem}.scholar-nav{margin-top:2rem;display:flex;flex-wrap:wrap;gap:1rem}.scholar-nav__card{flex:1;min-width:220px;border:1px solid var(--border);border-radius:1rem;padding:1rem 1.2rem;text-decoration:none;color:var(--ink);background:#fff;box-shadow:0 18px 36px rgba(15,18,28,8%)}.scholar-nav__label{font-size:.78rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}.scholar-nav__title{margin-top:.35rem;font-size:1rem;font-weight:600}.scholar-backtotop{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:999px;border:1px solid var(--border);margin-top:1.5rem;text-decoration:none;color:var(--ink);background:#fff}@media(max-width:720px){.scholar-hero{padding:1.4rem}.scholar-body,.scholar-body.has-toc{display:flex;flex-direction:column}.scholar-comments{margin-top:1.2rem;padding-top:.85rem}}</style>
+<article class=scholar-article data-variant=blogs>
+<header class=scholar-hero>
+<div class=scholar-hero__body>
+<div class=scholar-hero__badge>Research Journal</div>
+<h1>Python虚拟环境配置</h1>
+<div class=scholar-hero__meta>
+<span>Yu Ching San</span>
+<span>Mar 14, 2023</span>
+<span>1 分钟阅读</span>
+</div>
+<div class=scholar-hero__actions>
+</div>
+</div>
+</header>
+<section class=scholar-body>
+<div class=scholar-body__content>
+<h1 id=安装虚拟环境>安装虚拟环境<a href=#安装虚拟环境 class=header-anchor arialabel=Anchor> # </a></h1>
+<p><strong>windows下安装</strong></p>
+<pre tabindex=0><code>pip install virtualenv # 安装虚拟环境
+pip install virtualenvwrapper-win # 安装虚拟环境扩展包
+</code></pre><p>按照上述步骤安装之后，可以通过<code>pip list|grep vir</code>命令检查是否安装成功，若显示已下内容即可：</p>
+<figure itemprop=associatedMedia itemscope itemtype=http://schema.org/ImageObject>
+<a href=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230314_201854.jpg itemprop=contentUrl>
+<img itemprop=thumbnail src=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230314_201854.jpg width=500>
+</a>
+</figure>
+<p><strong>Ubuntu下安装</strong></p>
+<pre tabindex=0><code>sudo pip install virtualenv # 安装虚拟环境
+sudo pip install virtualenvwrapper # 安装虚拟环境扩展包
+</code></pre><p>注意：给阿里云上的Ubuntu安装虚拟环境扩展包的时候，使用<code>sudo</code>命令可能会报错，这个时候，可以用<code>pip install virtualenvwrapper</code>命令，只给当前用户安装即可。</p>
+<p>除此之外，Ubuntu下安装还需要编辑家目录下的<code>.bashrc</code>文件，通过<code>vim .bashrc</code>进入文件，添加以下三行内容：</p>
+<pre tabindex=0><code>VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+export WORKON_HOME=$HOME/.virtualenvs
+source /usr/local/bin/virtualenvwrapper.sh
+</code></pre><p>保存该文件并退出后，使用<code>source .bashrc</code>使其生效。</p>
+<p>按照上述步骤安装之后，可以通过<code>pip list|grep vir</code>命令检查是否安装成功，若显示已下内容即可：</p>
+<figure itemprop=associatedMedia itemscope itemtype=http://schema.org/ImageObject>
+<a href=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230314_201649.jpg itemprop=contentUrl>
+<img itemprop=thumbnail src=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230314_201649.jpg width=500>
+</a>
+</figure>
+<h1 id=使用虚拟环境>使用虚拟环境<a href=#使用虚拟环境 class=header-anchor arialabel=Anchor> # </a></h1>
+<pre tabindex=0><code>mkvirtualenv 虚拟环境名称 # 创建虚拟环境命令
+workon 虚拟环境名称 # 进入虚拟环境工作
+workon # 查看机器上有多少个虚拟环境
+deactivate # 退出虚拟环境
+rmvirtualenv 虚拟环境名 # 删除虚拟环境
+# 查看虚拟环境中的安装包信息
+pip list
+pip freeze
+pip freeze &gt; requirement.txt # 导出安装包信息
+# 把依赖包导入到虚拟环境中
+pip install - r requirement.txt
+</code></pre><h1 id=pycharm使用虚拟环境>Pycharm使用虚拟环境<a href=#pycharm使用虚拟环境 class=header-anchor arialabel=Anchor> # </a></h1>
+<ul>
+<li>进入 Project Interpreters 界面</li>
+</ul>
+<p>文件(file) ——> 设置(setting) ——> 项目(Project) ——> Project Interpreters</p>
+<ul>
+<li>点击下图中的小齿轮</li>
+</ul>
+<figure itemprop=associatedMedia itemscope itemtype=http://schema.org/ImageObject>
+<a href=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230314_205047.jpg itemprop=contentUrl>
+<img itemprop=thumbnail src=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230314_205047.jpg width=600>
+</a>
+</figure>
+<ul>
+<li>点击添加</li>
+</ul>
+<figure itemprop=associatedMedia itemscope itemtype=http://schema.org/ImageObject>
+<a href=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230314_205112.jpg itemprop=contentUrl>
+<img itemprop=thumbnail src=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230314_205112.jpg width=300>
+</a>
+</figure>
+<ul>
+<li>进行配置</li>
+</ul>
+<figure itemprop=associatedMedia itemscope itemtype=http://schema.org/ImageObject>
+<a href=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230314_205300.jpg itemprop=contentUrl>
+<img itemprop=thumbnail src=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230314_205300.jpg width=600>
+</a>
+</figure>
+<p class=scholar-lastupdate>
+最后一次修改于 2025-11-29
+</p>
+<div class=scholar-tags>
+<span class=scholar-tags__label>Topics</span>
+<ul>
+<li><a href=../../tags/python/>Python</a></li>
+<li><a href=../../tags/virtual-environment/>Virtual Environment</a></li>
+<li><a href=../../tags/configuration/>Configuration</a></li>
+</ul>
+</div>
+<section class=scholar-comments aria-label=Comments>
+<h2 class=scholar-comments__title>Discussion</h2>
+<p class=scholar-comments__hint>Comments from readers</p>
+<div id=giscus-comments></div>
+<script src=https://giscus.app/client.js data-repo=Duguce/zhgyqc_site data-repo-id=R_kgDOIr7f-Q data-category=General data-category-id=DIC_kwDOIr7f-c4C1_sD data-mapping=pathname data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=bottom data-theme=preferred_color_scheme data-lang=en data-loading=lazy crossorigin=anonymous async></script>
+</section>
+</div>
+</section>
+<nav class=scholar-nav>
+<a class=scholar-nav__card href=../../cn/2023-03-12-remote-connection-to-mysql-on-aliyun/>
+<div class=scholar-nav__label>上一篇</div>
+<div class=scholar-nav__title>远程连接阿里云上的MySQL</div>
+</a>
+<a class=scholar-nav__card href=../../cn/2023-03-17-the-jetbrains-family-bucket-is-free-to-use/ style=text-align:right>
+<div class=scholar-nav__label>下一篇</div>
+<div class=scholar-nav__title>Jetbrains全家桶免费使用</div>
+</a>
+</nav>
+<a class=scholar-backtotop href=#top aria-label="Back to top">↑</a>
+</article>
+<script>(function(){const a=document.querySelectorAll('.scholar-body__content pre');a.forEach(b=>{if(b.dataset.hasCopyButton)return;const a=document.createElement('button');a.className='code-copy',a.type='button',a.textContent='Copy',a.addEventListener('click',()=>{const c=b.querySelector('code'),d=c?c.innerText:b.innerText;navigator.clipboard.writeText(d).then(()=>{a.classList.add('is-copied'),a.textContent='Copied',setTimeout(()=>{a.classList.remove('is-copied'),a.textContent='Copy'},1600)})}),b.appendChild(a),b.dataset.hasCopyButton='true'})})()</script>
+</main>
+<footer class=footer>
+<script type=text/javascript src=../../js/math-code.js></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type=text/javascript src=../../js/center-img.js></script>
+<ul class="footer-links footer-links--visible">
+<li><a href=../../cn/blogs/index.xml type=application/rss+xml title="RSS feed">
+订阅 </a>
+</li>
+<li>
+<a href=http://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh target=_blank>
+版权
+<i class="fa fa-cc" aria-hidden=true title="Attribution-NonCommercial-ShareAlike 4.0 International"></i>
+</a>
+</li>
+</ul>
+<div class=copyright-text>
+©
+Qingchen Yu
+2022-2026
+</div>
+</footer>

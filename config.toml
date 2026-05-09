@@ -9,9 +9,9 @@ relativeURLs = true
 canonifyURLs = true
 
 [permalinks]
-cn = "/cn/:year/:month/:day/:slug/"
-en = "/en/:year/:month/:day/:slug/"
-posts = "/posts/:year/:month/:day/:slug/"
+cn = "/cn/:filename/"
+en = "/en/:filename/"
+posts = "/posts/:filename/"
 
 [[menu.en]]
     name = "Home"
