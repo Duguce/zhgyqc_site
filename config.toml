@@ -9,8 +9,8 @@ relativeURLs = true
 canonifyURLs = true
 
 [permalinks]
-cn = "/cn/:filename/"
-en = "/en/:filename/"
+cn = "/blogs/:filename/"
+en = "/moments/:filename/"
 posts = "/posts/:filename/"
 
 [[menu.en]]
@@ -19,16 +19,16 @@ posts = "/posts/:filename/"
     weight = 1
 [[menu.en]]
     name = "Moments"
-    url = "/en/moments/"
+    url = "/moments/"
     weight = 2
 [[menu.en]]
     name = "中文"
-    url = "/cn/blogs/"
+    url = "/blogs/"
     weight = 3
 
 [[menu.cn]]
     name = "博客"
-    url = "/cn/blogs/"
+    url = "/blogs/"
     weight = 3
 [[menu.cn]]
     name = "English"

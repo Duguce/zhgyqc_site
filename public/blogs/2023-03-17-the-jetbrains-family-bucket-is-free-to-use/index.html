@@ -1,0 +1,129 @@
+<a name=top></a><!doctype html>
+<html lang=en>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>Qingchen Yu</title>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css>
+<link rel=stylesheet href=../../css/style.css>
+<link rel=stylesheet href=../../css/fonts.css>
+<link href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css rel=stylesheet>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/r.min.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/bash.min.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/python.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/vega@5.17.0></script>
+<script src=https://cdn.jsdelivr.net/npm/vega-lite@4.17.0></script>
+<script src=https://cdn.jsdelivr.net/npm/vega-embed@6.12.2></script>
+<script>hljs.initHighlightingOnLoad()</script>
+<link rel=icon href=https://zhgyqc.vercel.app/media/logo.png>
+</head>
+<body>
+<div class=wrapper>
+<header class=header>
+<nav class=nav>
+<a href=../../ class=nav-logo>
+<img src=../../media/logo.png width=50 height=50 alt=Hugo-ht>
+</a>
+<ul class=nav-links>
+<li><a href=../../blogs/>博客</a></li>
+<li><a href=../../>English</a></li>
+</ul>
+</nav>
+</header>
+<main class=content role=main>
+<style>.scholar-article{--surface:#f6f4ef;--border:#d7d2c6;--ink:#1f2535;--muted:#5c6272;--accent:#8a6f4d;font-family:source serif pro,palatino linotype,Georgia,serif;color:var(--ink);padding-bottom:3rem}.scholar-article[data-variant=moments]{--surface:#f1f6fb;--border:#d0dfea;--accent:#4b6fad}.scholar-hero{background:var(--surface);border:1px solid var(--border);border-radius:1.4rem;padding:2rem;margin-bottom:1.6rem;position:relative;overflow:hidden}.scholar-hero::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 12% 20%,rgba(138,111,77,.22),transparent 45%),linear-gradient(120deg,rgba(31,37,53,8%),transparent 60%);opacity:.5;pointer-events:none}.scholar-article[data-variant=moments] .scholar-hero::after{background:radial-gradient(circle at 15% 20%,rgba(75,111,173,.24),transparent 60%),linear-gradient(130deg,rgba(28,52,94,8%),transparent 55%)}.scholar-hero__body{position:relative;z-index:1}.scholar-hero__badge{font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.65rem;display:inline-block}.scholar-hero h1{font-size:clamp(1.35rem,2.2vw,1.9rem);margin:0 0 .3rem}.scholar-hero__subtitle{font-size:.95rem;color:var(--muted);margin:0 0 .7rem}.scholar-hero__meta{display:flex;flex-wrap:wrap;gap:.6rem;font-size:.9rem;color:var(--muted)}.scholar-hero__meta span{display:inline-flex;align-items:center;gap:.35rem;padding-right:.7rem;border-right:1px solid rgba(0,0,0,8%)}.scholar-hero__meta span:last-child{border-right:none;padding-right:0}.scholar-hero__actions{margin-top:1.1rem;display:flex;gap:.75rem;align-items:center}.scholar-hero__edit{font-size:.85rem;text-decoration:none;color:var(--accent);border:1px solid var(--border);border-radius:999px;padding:.35rem .9rem;background:#fff}.scholar-body{border:1px solid var(--border);border-radius:1.5rem;padding:2rem;background:#fff;box-shadow:0 25px 55px rgba(17,21,32,.1);display:flex;flex-direction:column;gap:1.5rem}.scholar-body.has-toc{display:grid;grid-template-columns:minmax(0,1fr)minmax(220px,260px)}.scholar-body__content{font-size:1.02rem;line-height:1.75;color:#1e2433}.scholar-body__toc{border-left:2px solid var(--border);padding-left:1rem;font-size:.9rem;color:var(--muted)}.scholar-body__toc strong{display:block;margin-bottom:.6rem;font-size:.85rem;text-transform:uppercase;letter-spacing:.1em}.scholar-body__content pre{background:linear-gradient(135deg,#fdfcf7,#eef0f5);border:1px solid rgba(31,37,53,8%);border-radius:1rem;padding:1rem 1.2rem 1.4rem;color:#2a3140;font-size:.92rem;font-family:jetbrains mono,fira code,monospace;overflow:auto;box-shadow:0 28px 55px rgba(12,18,32,.12);position:relative;margin:1.4rem 0}.scholar-body__content pre::before{content:"Code";position:absolute;top:.4rem;right:.8rem;font-size:.7rem;letter-spacing:.2em;color:rgba(31,41,55,.4)}.scholar-body__content pre code{background:0 0;padding:0}.code-copy{position:absolute;bottom:.4rem;right:.6rem;border:1px solid rgba(31,37,53,.2);border-radius:999px;background:#fff;color:#2a3140;font-size:.75rem;padding:.18rem .8rem;cursor:pointer}.code-copy.is-copied{color:var(--accent);border-color:var(--accent)}.scholar-body__content :not(pre)>code{background:#f0efe7;padding:.15rem .35rem;border-radius:.35rem;font-size:.9rem;color:#2a3140;font-family:jetbrains mono,fira code,monospace;border:1px solid rgba(0,0,0,5%)}.scholar-lastupdate{font-size:.9rem;color:var(--muted);margin-top:.5rem}.scholar-tags{margin-top:1.3rem}.scholar-tags__label{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:inline-block;margin-bottom:.6rem}.scholar-tags ul{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:.45rem}.scholar-tags a{text-decoration:none;border:1px solid var(--border);border-radius:999px;padding:.18rem .75rem;font-size:.86rem;color:var(--ink);background:var(--surface)}.scholar-comments{margin-top:1.4rem;padding-top:1rem;border-top:1px solid rgba(31,37,53,.14)}.scholar-article[data-variant=moments] .scholar-comments{border-top-color:rgba(75,111,173,.22)}.scholar-comments__title{margin:0;font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);opacity:.9}.scholar-comments__hint{margin:.2rem 0 0;font-size:.83rem;color:var(--muted);opacity:.85}.scholar-comments #giscus-comments{margin-top:.65rem;max-width:100%;padding:0}.scholar-comments #giscus-comments iframe{border-radius:.55rem}.scholar-nav{margin-top:2rem;display:flex;flex-wrap:wrap;gap:1rem}.scholar-nav__card{flex:1;min-width:220px;border:1px solid var(--border);border-radius:1rem;padding:1rem 1.2rem;text-decoration:none;color:var(--ink);background:#fff;box-shadow:0 18px 36px rgba(15,18,28,8%)}.scholar-nav__label{font-size:.78rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}.scholar-nav__title{margin-top:.35rem;font-size:1rem;font-weight:600}.scholar-backtotop{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:999px;border:1px solid var(--border);margin-top:1.5rem;text-decoration:none;color:var(--ink);background:#fff}@media(max-width:720px){.scholar-hero{padding:1.4rem}.scholar-body,.scholar-body.has-toc{display:flex;flex-direction:column}.scholar-comments{margin-top:1.2rem;padding-top:.85rem}}</style>
+<article class=scholar-article data-variant=blogs>
+<header class=scholar-hero>
+<div class=scholar-hero__body>
+<div class=scholar-hero__badge>Research Journal</div>
+<h1>Jetbrains全家桶免费使用</h1>
+<div class=scholar-hero__meta>
+<span>Yu Ching San</span>
+<span>Mar 17, 2023</span>
+<span>1 分钟阅读</span>
+</div>
+<div class=scholar-hero__actions>
+</div>
+</div>
+</header>
+<section class=scholar-body>
+<div class=scholar-body__content>
+<blockquote>
+<p><a href=https://www.jetbrains.com/ target=_blank rel="noreferrer noopener">Jetbrains</a>
+是一家专注于提供优秀的开发工具的软件公司，其开发的产品包括IntelliJ IDEA、WebStorm、PyCharm等等。这些工具广受开发者欢迎，因为它们拥有丰富的功能、优秀的性能和良好的用户体验。然而，这些工具的价格也相对较高，可能会对一些开发者造成经济负担。但是，Jetbrains也提供了一些免费使用的渠道，让更多的开发者能够免费使用这些工具。本文将介绍这些渠道，帮助你免费使用Jetbrains全家桶。</p>
+</blockquote>
+<h1 id=面向高校师生的免费使用>面向高校师生的免费使用<a href=#面向高校师生的免费使用 class=header-anchor arialabel=Anchor> # </a></h1>
+<p>Jetbrains的教育优惠地址是 <a href=https://www.jetbrains.com/shop/eform/students target=_blank rel="noreferrer noopener">https://www.jetbrains.com/shop/eform/students</a>
+</p>
+<figure itemprop=associatedMedia itemscope itemtype=http://schema.org/ImageObject>
+<a href=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230317_140229.jpg itemprop=contentUrl>
+<img itemprop=thumbnail src=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230317_140229.jpg width=500>
+</a>
+</figure>
+<p>如果你是一名在校大学生或者高中生，并且正在学习计算机相关专业，那么你可以通过Jetbrains的学生许可证程序免费使用Jetbrains全家桶。这个程序非常简单，只需要提供你的学校邮箱地址或者学生证明即可。你可以在Jetbrains官网的学生许可证页面提交申请，审核通过后，你就可以免费使用Jetbrains全家桶一年。</p>
+<p>通过学生许可证程序获得的许可证是完全正式的，你可以使用它来进行任何的商业或者非商业项目开发。并且，在许可证到期前，你可以再次提交申请，以延长使用时间。这个程序对于在校学生来说，是一个非常棒的福利。</p>
+<h1 id=面向开源开发者的免费使用>面向开源开发者的免费使用<a href=#面向开源开发者的免费使用 class=header-anchor arialabel=Anchor> # </a></h1>
+<p>Jetbrains的开源开发许可地址是 <a href=https://www.jetbrains.com/zh-cn/community/opensource/#support target=_blank rel="noreferrer noopener">https://www.jetbrains.com/zh-cn/community/opensource/#support</a>
+</p>
+<figure itemprop=associatedMedia itemscope itemtype=http://schema.org/ImageObject>
+<a href=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230317_140300.jpg itemprop=contentUrl>
+<img itemprop=thumbnail src=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230317_140300.jpg width=500>
+</a>
+</figure>
+<p>如果你是一名开源开发者，并且正在为开源项目做贡献，那么你可以通过Jetbrains的开源项目许可证程序免费使用Jetbrains全家桶。这个程序也非常简单，只需要提供你参与的开源项目的链接即可。Jetbrains会审核你的项目，并且决定是否为你提供免费的许可证。通过开源项目许可证程序获得的许可证也是完全正式的，你可以使用它来进行任何的商业或者非商业项目开发。</p>
+<p>开源开发者的申请方式我目前暂时也没有试过，不过据说这种方式也不是特别难，具体可以结合官网上对于开源的相关说明进行申请。</p>
+<p class=scholar-lastupdate>
+最后一次修改于 2025-11-29
+</p>
+<div class=scholar-tags>
+<span class=scholar-tags__label>Topics</span>
+<ul>
+<li><a href=../../tags/jetbrains/>Jetbrains</a></li>
+<li><a href=../../tags/free-usage/>Free Usage</a></li>
+<li><a href=../../tags/developer-tools/>Developer Tools</a></li>
+</ul>
+</div>
+<section class=scholar-comments aria-label=Comments>
+<h2 class=scholar-comments__title>Discussion</h2>
+<p class=scholar-comments__hint>Comments from readers</p>
+<div id=giscus-comments></div>
+<script src=https://giscus.app/client.js data-repo=Duguce/zhgyqc_site data-repo-id=R_kgDOIr7f-Q data-category=General data-category-id=DIC_kwDOIr7f-c4C1_sD data-mapping=pathname data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=bottom data-theme=preferred_color_scheme data-lang=en data-loading=lazy crossorigin=anonymous async></script>
+</section>
+</div>
+</section>
+<nav class=scholar-nav>
+<a class=scholar-nav__card href=../../blogs/2023-03-14-python-virtual-environment-configuration/>
+<div class=scholar-nav__label>上一篇</div>
+<div class=scholar-nav__title>Python虚拟环境配置</div>
+</a>
+<a class=scholar-nav__card href=../../blogs/2023-03-18-steps-to-run-a-django-blog-project-in-aliyun/ style=text-align:right>
+<div class=scholar-nav__label>下一篇</div>
+<div class=scholar-nav__title>在阿里云上运行Django博客项目的详细步骤</div>
+</a>
+</nav>
+<a class=scholar-backtotop href=#top aria-label="Back to top">↑</a>
+</article>
+<script>(function(){const a=document.querySelectorAll('.scholar-body__content pre');a.forEach(b=>{if(b.dataset.hasCopyButton)return;const a=document.createElement('button');a.className='code-copy',a.type='button',a.textContent='Copy',a.addEventListener('click',()=>{const c=b.querySelector('code'),d=c?c.innerText:b.innerText;navigator.clipboard.writeText(d).then(()=>{a.classList.add('is-copied'),a.textContent='Copied',setTimeout(()=>{a.classList.remove('is-copied'),a.textContent='Copy'},1600)})}),b.appendChild(a),b.dataset.hasCopyButton='true'})})()</script>
+</main>
+<footer class=footer>
+<script type=text/javascript src=../../js/math-code.js></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type=text/javascript src=../../js/center-img.js></script>
+<ul class="footer-links footer-links--visible">
+<li><a href=../../blogs/index.xml type=application/rss+xml title="RSS feed">
+订阅 </a>
+</li>
+<li>
+<a href=http://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh target=_blank>
+版权
+<i class="fa fa-cc" aria-hidden=true title="Attribution-NonCommercial-ShareAlike 4.0 International"></i>
+</a>
+</li>
+</ul>
+<div class=copyright-text>
+©
+Qingchen Yu
+2022-2026
+</div>
+</footer>

@@ -1,0 +1,151 @@
+<a name=top></a><!doctype html>
+<html lang=en>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>Qingchen Yu</title>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css>
+<link rel=stylesheet href=../../css/style.css>
+<link rel=stylesheet href=../../css/fonts.css>
+<link href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css rel=stylesheet>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/r.min.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/bash.min.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/python.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/vega@5.17.0></script>
+<script src=https://cdn.jsdelivr.net/npm/vega-lite@4.17.0></script>
+<script src=https://cdn.jsdelivr.net/npm/vega-embed@6.12.2></script>
+<script>hljs.initHighlightingOnLoad()</script>
+<link rel=icon href=https://zhgyqc.vercel.app/media/logo.png>
+</head>
+<body>
+<div class=wrapper>
+<header class=header>
+<nav class=nav>
+<a href=../../ class=nav-logo>
+<img src=../../media/logo.png width=50 height=50 alt=Hugo-ht>
+</a>
+<ul class=nav-links>
+<li><a href=../../blogs/>博客</a></li>
+<li><a href=../../>English</a></li>
+</ul>
+</nav>
+</header>
+<main class=content role=main>
+<style>.scholar-article{--surface:#f6f4ef;--border:#d7d2c6;--ink:#1f2535;--muted:#5c6272;--accent:#8a6f4d;font-family:source serif pro,palatino linotype,Georgia,serif;color:var(--ink);padding-bottom:3rem}.scholar-article[data-variant=moments]{--surface:#f1f6fb;--border:#d0dfea;--accent:#4b6fad}.scholar-hero{background:var(--surface);border:1px solid var(--border);border-radius:1.4rem;padding:2rem;margin-bottom:1.6rem;position:relative;overflow:hidden}.scholar-hero::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 12% 20%,rgba(138,111,77,.22),transparent 45%),linear-gradient(120deg,rgba(31,37,53,8%),transparent 60%);opacity:.5;pointer-events:none}.scholar-article[data-variant=moments] .scholar-hero::after{background:radial-gradient(circle at 15% 20%,rgba(75,111,173,.24),transparent 60%),linear-gradient(130deg,rgba(28,52,94,8%),transparent 55%)}.scholar-hero__body{position:relative;z-index:1}.scholar-hero__badge{font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.65rem;display:inline-block}.scholar-hero h1{font-size:clamp(1.35rem,2.2vw,1.9rem);margin:0 0 .3rem}.scholar-hero__subtitle{font-size:.95rem;color:var(--muted);margin:0 0 .7rem}.scholar-hero__meta{display:flex;flex-wrap:wrap;gap:.6rem;font-size:.9rem;color:var(--muted)}.scholar-hero__meta span{display:inline-flex;align-items:center;gap:.35rem;padding-right:.7rem;border-right:1px solid rgba(0,0,0,8%)}.scholar-hero__meta span:last-child{border-right:none;padding-right:0}.scholar-hero__actions{margin-top:1.1rem;display:flex;gap:.75rem;align-items:center}.scholar-hero__edit{font-size:.85rem;text-decoration:none;color:var(--accent);border:1px solid var(--border);border-radius:999px;padding:.35rem .9rem;background:#fff}.scholar-body{border:1px solid var(--border);border-radius:1.5rem;padding:2rem;background:#fff;box-shadow:0 25px 55px rgba(17,21,32,.1);display:flex;flex-direction:column;gap:1.5rem}.scholar-body.has-toc{display:grid;grid-template-columns:minmax(0,1fr)minmax(220px,260px)}.scholar-body__content{font-size:1.02rem;line-height:1.75;color:#1e2433}.scholar-body__toc{border-left:2px solid var(--border);padding-left:1rem;font-size:.9rem;color:var(--muted)}.scholar-body__toc strong{display:block;margin-bottom:.6rem;font-size:.85rem;text-transform:uppercase;letter-spacing:.1em}.scholar-body__content pre{background:linear-gradient(135deg,#fdfcf7,#eef0f5);border:1px solid rgba(31,37,53,8%);border-radius:1rem;padding:1rem 1.2rem 1.4rem;color:#2a3140;font-size:.92rem;font-family:jetbrains mono,fira code,monospace;overflow:auto;box-shadow:0 28px 55px rgba(12,18,32,.12);position:relative;margin:1.4rem 0}.scholar-body__content pre::before{content:"Code";position:absolute;top:.4rem;right:.8rem;font-size:.7rem;letter-spacing:.2em;color:rgba(31,41,55,.4)}.scholar-body__content pre code{background:0 0;padding:0}.code-copy{position:absolute;bottom:.4rem;right:.6rem;border:1px solid rgba(31,37,53,.2);border-radius:999px;background:#fff;color:#2a3140;font-size:.75rem;padding:.18rem .8rem;cursor:pointer}.code-copy.is-copied{color:var(--accent);border-color:var(--accent)}.scholar-body__content :not(pre)>code{background:#f0efe7;padding:.15rem .35rem;border-radius:.35rem;font-size:.9rem;color:#2a3140;font-family:jetbrains mono,fira code,monospace;border:1px solid rgba(0,0,0,5%)}.scholar-lastupdate{font-size:.9rem;color:var(--muted);margin-top:.5rem}.scholar-tags{margin-top:1.3rem}.scholar-tags__label{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:inline-block;margin-bottom:.6rem}.scholar-tags ul{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:.45rem}.scholar-tags a{text-decoration:none;border:1px solid var(--border);border-radius:999px;padding:.18rem .75rem;font-size:.86rem;color:var(--ink);background:var(--surface)}.scholar-comments{margin-top:1.4rem;padding-top:1rem;border-top:1px solid rgba(31,37,53,.14)}.scholar-article[data-variant=moments] .scholar-comments{border-top-color:rgba(75,111,173,.22)}.scholar-comments__title{margin:0;font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);opacity:.9}.scholar-comments__hint{margin:.2rem 0 0;font-size:.83rem;color:var(--muted);opacity:.85}.scholar-comments #giscus-comments{margin-top:.65rem;max-width:100%;padding:0}.scholar-comments #giscus-comments iframe{border-radius:.55rem}.scholar-nav{margin-top:2rem;display:flex;flex-wrap:wrap;gap:1rem}.scholar-nav__card{flex:1;min-width:220px;border:1px solid var(--border);border-radius:1rem;padding:1rem 1.2rem;text-decoration:none;color:var(--ink);background:#fff;box-shadow:0 18px 36px rgba(15,18,28,8%)}.scholar-nav__label{font-size:.78rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}.scholar-nav__title{margin-top:.35rem;font-size:1rem;font-weight:600}.scholar-backtotop{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:999px;border:1px solid var(--border);margin-top:1.5rem;text-decoration:none;color:var(--ink);background:#fff}@media(max-width:720px){.scholar-hero{padding:1.4rem}.scholar-body,.scholar-body.has-toc{display:flex;flex-direction:column}.scholar-comments{margin-top:1.2rem;padding-top:.85rem}}</style>
+<article class=scholar-article data-variant=blogs>
+<header class=scholar-hero>
+<div class=scholar-hero__body>
+<div class=scholar-hero__badge>Research Journal</div>
+<h1>阿里云 Ubuntu 上重新安装 MySQL 8.0 的步骤</h1>
+<div class=scholar-hero__meta>
+<span>Yu Ching San</span>
+<span>Apr 04, 2023</span>
+<span>1 分钟阅读</span>
+</div>
+<div class=scholar-hero__actions>
+</div>
+</div>
+</header>
+<section class=scholar-body>
+<div class=scholar-body__content>
+<h2 id=前言>前言<a href=#前言 class=header-anchor arialabel=Anchor> # </a></h2>
+<p>当您在使用 MySQL 时遇到问题时，可能需要重新安装 MySQL 以解决问题。在卸载并重新安装 MySQL 8.0 是一种可靠的解决方法。通过这种方法，您可以确保从头开始获得干净的 MySQL 安装，消除了可能由之前的安装引起的问题。因此，接下来我们将介绍如何在阿里云 Ubuntu 上执行卸载并重新安装 MySQL 8.0 的步骤，以解决 MySQL 的问题。</p>
+<p><em>emm~本文其实是基于ChatGPT生成的！在我使用MySQL的过程中，遇到了一个无法解决的报错。我试着遵循网上给出的建议，但是问题依旧存在。于是，我想到了使用卸载重装的方法（卸载重装大法yyds！）。我试着按照网上的步骤操作，但是总是卸载不干净。最后，我又想到了向ChatGPT求助，跟着它给出的步骤，终于成功解决了问题。因此，我想把这份卸载重装的步骤整理下来方便后续查看，也希望能帮助其他遇到类似问题的朋友们节省时间成本。</em></p>
+<h2 id=步骤>步骤<a href=#步骤 class=header-anchor arialabel=Anchor> # </a></h2>
+<h3 id=卸载旧版本的-mysql>卸载旧版本的 MySQL<a href=#卸载旧版本的-mysql class=header-anchor arialabel=Anchor> # </a></h3>
+<p>在卸载 MySQL 之前，最好备份您的数据以防止数据丢失。接下来，按照以下步骤卸载旧版本的 MySQL：</p>
+<ul>
+<li>停止 MySQL 服务</li>
+</ul>
+<p>在终端中运行以下命令以停止MySQL服务（<strong>这一步非常重要！！！</strong>）：</p>
+<div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo systemctl stop mysql
+</code></pre></div><ul>
+<li>删除 MySQL 数据目录</li>
+</ul>
+<p>默认情况下，MySQL数据目录位于<code>/var/lib/mysql</code>。在终端中运行以下命令以删除此目录及其内容：</p>
+<div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo rm -rf /var/lib/mysql
+</code></pre></div><ul>
+<li>卸载 MySQL 软件包</li>
+</ul>
+<p>在终端中运行以下命令以卸载 MySQL 软件包：</p>
+<div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo apt-get remove --purge mysql-server mysql-client mysql-common
+sudo apt-get autoremove
+sudo apt-get autoclean
+</code></pre></div><p>第一条命令删除MySQL服务器和客户端软件包，第二条命令将自动删除未使用的依赖项，第三条命令清理apt-cache。</p>
+<ul>
+<li>清除 MySQL 配置文件</li>
+</ul>
+<p>在终端中运行以下命令以清除 MySQL 的配置文件：</p>
+<div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo rm -rf /etc/mysql/
+</code></pre></div><h3 id=添加-mysql-80-的-apt-源>添加 MySQL 8.0 的 APT 源<a href=#添加-mysql-80-的-apt-源 class=header-anchor arialabel=Anchor> # </a></h3>
+<p>接下来，您需要添加 MySQL 8.0 的 APT 源。打开终端并输入以下命令，以添加 MySQL 8.0 的 APT 源：</p>
+<div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>wget -c https://dev.mysql.com/get/mysql-apt-config_0.8.22-1_all.deb
+sudo dpkg -i mysql-apt-config_0.8.22-1_all.deb
+</code></pre></div><p>在安装过程中，您需要选择 MySQL 8.0 版本并更新 APT 存储库。</p>
+<h3 id=安装-mysql-80>安装 MySQL 8.0<a href=#安装-mysql-80 class=header-anchor arialabel=Anchor> # </a></h3>
+<p>在添加 MySQL 8.0 的 APT 源后，您可以使用以下命令在终端中安装 MySQL 8.0：</p>
+<div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo apt-get update
+sudo apt-get install mysql-server
+</code></pre></div><p>在安装过程中，您将被要求创建 MySQL root 用户的密码。</p>
+<h3 id=配置-mysql>配置 MySQL<a href=#配置-mysql class=header-anchor arialabel=Anchor> # </a></h3>
+<p>在安装完成后，您可以使用以下命令来运行 MySQL 安全脚本：</p>
+<div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo mysql_secure_installation
+</code></pre></div><p>该脚本将指导您设置 root 用户密码、删除匿名用户、禁用远程 root 登录、删除测试数据库等等。</p>
+<p>现在，您已经成功地重新安装了 MySQL 8.0。您可以使用以下命令检查 MySQL 版本：</p>
+<div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>mysql --version
+</code></pre></div>
+<p class=scholar-lastupdate>
+最后一次修改于 2025-11-29
+</p>
+<div class=scholar-tags>
+<span class=scholar-tags__label>Topics</span>
+<ul>
+<li><a href=../../tags/mysql/>MySQL</a></li>
+<li><a href=../../tags/reinstallation/>Reinstallation</a></li>
+<li><a href=../../tags/aliyun/>Aliyun</a></li>
+</ul>
+</div>
+<section class=scholar-comments aria-label=Comments>
+<h2 class=scholar-comments__title>Discussion</h2>
+<p class=scholar-comments__hint>Comments from readers</p>
+<div id=giscus-comments></div>
+<script src=https://giscus.app/client.js data-repo=Duguce/zhgyqc_site data-repo-id=R_kgDOIr7f-Q data-category=General data-category-id=DIC_kwDOIr7f-c4C1_sD data-mapping=pathname data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=bottom data-theme=preferred_color_scheme data-lang=en data-loading=lazy crossorigin=anonymous async></script>
+</section>
+</div>
+</section>
+<nav class=scholar-nav>
+<a class=scholar-nav__card href=../../blogs/2023-03-18-steps-to-run-a-django-blog-project-in-aliyun/>
+<div class=scholar-nav__label>上一篇</div>
+<div class=scholar-nav__title>在阿里云上运行Django博客项目的详细步骤</div>
+</a>
+<a class=scholar-nav__card href=../../blogs/2023-06-18-knn/ style=text-align:right>
+<div class=scholar-nav__label>下一篇</div>
+<div class=scholar-nav__title>K-近邻算法概述</div>
+</a>
+</nav>
+<a class=scholar-backtotop href=#top aria-label="Back to top">↑</a>
+</article>
+<script>(function(){const a=document.querySelectorAll('.scholar-body__content pre');a.forEach(b=>{if(b.dataset.hasCopyButton)return;const a=document.createElement('button');a.className='code-copy',a.type='button',a.textContent='Copy',a.addEventListener('click',()=>{const c=b.querySelector('code'),d=c?c.innerText:b.innerText;navigator.clipboard.writeText(d).then(()=>{a.classList.add('is-copied'),a.textContent='Copied',setTimeout(()=>{a.classList.remove('is-copied'),a.textContent='Copy'},1600)})}),b.appendChild(a),b.dataset.hasCopyButton='true'})})()</script>
+</main>
+<footer class=footer>
+<script type=text/javascript src=../../js/math-code.js></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type=text/javascript src=../../js/center-img.js></script>
+<ul class="footer-links footer-links--visible">
+<li><a href=../../blogs/index.xml type=application/rss+xml title="RSS feed">
+订阅 </a>
+</li>
+<li>
+<a href=http://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh target=_blank>
+版权
+<i class="fa fa-cc" aria-hidden=true title="Attribution-NonCommercial-ShareAlike 4.0 International"></i>
+</a>
+</li>
+</ul>
+<div class=copyright-text>
+©
+Qingchen Yu
+2022-2026
+</div>
+</footer>

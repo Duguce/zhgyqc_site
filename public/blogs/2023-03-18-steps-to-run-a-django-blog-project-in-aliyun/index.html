@@ -1,0 +1,170 @@
+<a name=top></a><!doctype html>
+<html lang=en>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>Qingchen Yu</title>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css>
+<link rel=stylesheet href=../../css/style.css>
+<link rel=stylesheet href=../../css/fonts.css>
+<link href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css rel=stylesheet>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/r.min.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/bash.min.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/python.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/vega@5.17.0></script>
+<script src=https://cdn.jsdelivr.net/npm/vega-lite@4.17.0></script>
+<script src=https://cdn.jsdelivr.net/npm/vega-embed@6.12.2></script>
+<script>hljs.initHighlightingOnLoad()</script>
+<link rel=icon href=https://zhgyqc.vercel.app/media/logo.png>
+</head>
+<body>
+<div class=wrapper>
+<header class=header>
+<nav class=nav>
+<a href=../../ class=nav-logo>
+<img src=../../media/logo.png width=50 height=50 alt=Hugo-ht>
+</a>
+<ul class=nav-links>
+<li><a href=../../blogs/>博客</a></li>
+<li><a href=../../>English</a></li>
+</ul>
+</nav>
+</header>
+<main class=content role=main>
+<style>.scholar-article{--surface:#f6f4ef;--border:#d7d2c6;--ink:#1f2535;--muted:#5c6272;--accent:#8a6f4d;font-family:source serif pro,palatino linotype,Georgia,serif;color:var(--ink);padding-bottom:3rem}.scholar-article[data-variant=moments]{--surface:#f1f6fb;--border:#d0dfea;--accent:#4b6fad}.scholar-hero{background:var(--surface);border:1px solid var(--border);border-radius:1.4rem;padding:2rem;margin-bottom:1.6rem;position:relative;overflow:hidden}.scholar-hero::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 12% 20%,rgba(138,111,77,.22),transparent 45%),linear-gradient(120deg,rgba(31,37,53,8%),transparent 60%);opacity:.5;pointer-events:none}.scholar-article[data-variant=moments] .scholar-hero::after{background:radial-gradient(circle at 15% 20%,rgba(75,111,173,.24),transparent 60%),linear-gradient(130deg,rgba(28,52,94,8%),transparent 55%)}.scholar-hero__body{position:relative;z-index:1}.scholar-hero__badge{font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.65rem;display:inline-block}.scholar-hero h1{font-size:clamp(1.35rem,2.2vw,1.9rem);margin:0 0 .3rem}.scholar-hero__subtitle{font-size:.95rem;color:var(--muted);margin:0 0 .7rem}.scholar-hero__meta{display:flex;flex-wrap:wrap;gap:.6rem;font-size:.9rem;color:var(--muted)}.scholar-hero__meta span{display:inline-flex;align-items:center;gap:.35rem;padding-right:.7rem;border-right:1px solid rgba(0,0,0,8%)}.scholar-hero__meta span:last-child{border-right:none;padding-right:0}.scholar-hero__actions{margin-top:1.1rem;display:flex;gap:.75rem;align-items:center}.scholar-hero__edit{font-size:.85rem;text-decoration:none;color:var(--accent);border:1px solid var(--border);border-radius:999px;padding:.35rem .9rem;background:#fff}.scholar-body{border:1px solid var(--border);border-radius:1.5rem;padding:2rem;background:#fff;box-shadow:0 25px 55px rgba(17,21,32,.1);display:flex;flex-direction:column;gap:1.5rem}.scholar-body.has-toc{display:grid;grid-template-columns:minmax(0,1fr)minmax(220px,260px)}.scholar-body__content{font-size:1.02rem;line-height:1.75;color:#1e2433}.scholar-body__toc{border-left:2px solid var(--border);padding-left:1rem;font-size:.9rem;color:var(--muted)}.scholar-body__toc strong{display:block;margin-bottom:.6rem;font-size:.85rem;text-transform:uppercase;letter-spacing:.1em}.scholar-body__content pre{background:linear-gradient(135deg,#fdfcf7,#eef0f5);border:1px solid rgba(31,37,53,8%);border-radius:1rem;padding:1rem 1.2rem 1.4rem;color:#2a3140;font-size:.92rem;font-family:jetbrains mono,fira code,monospace;overflow:auto;box-shadow:0 28px 55px rgba(12,18,32,.12);position:relative;margin:1.4rem 0}.scholar-body__content pre::before{content:"Code";position:absolute;top:.4rem;right:.8rem;font-size:.7rem;letter-spacing:.2em;color:rgba(31,41,55,.4)}.scholar-body__content pre code{background:0 0;padding:0}.code-copy{position:absolute;bottom:.4rem;right:.6rem;border:1px solid rgba(31,37,53,.2);border-radius:999px;background:#fff;color:#2a3140;font-size:.75rem;padding:.18rem .8rem;cursor:pointer}.code-copy.is-copied{color:var(--accent);border-color:var(--accent)}.scholar-body__content :not(pre)>code{background:#f0efe7;padding:.15rem .35rem;border-radius:.35rem;font-size:.9rem;color:#2a3140;font-family:jetbrains mono,fira code,monospace;border:1px solid rgba(0,0,0,5%)}.scholar-lastupdate{font-size:.9rem;color:var(--muted);margin-top:.5rem}.scholar-tags{margin-top:1.3rem}.scholar-tags__label{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:inline-block;margin-bottom:.6rem}.scholar-tags ul{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:.45rem}.scholar-tags a{text-decoration:none;border:1px solid var(--border);border-radius:999px;padding:.18rem .75rem;font-size:.86rem;color:var(--ink);background:var(--surface)}.scholar-comments{margin-top:1.4rem;padding-top:1rem;border-top:1px solid rgba(31,37,53,.14)}.scholar-article[data-variant=moments] .scholar-comments{border-top-color:rgba(75,111,173,.22)}.scholar-comments__title{margin:0;font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);opacity:.9}.scholar-comments__hint{margin:.2rem 0 0;font-size:.83rem;color:var(--muted);opacity:.85}.scholar-comments #giscus-comments{margin-top:.65rem;max-width:100%;padding:0}.scholar-comments #giscus-comments iframe{border-radius:.55rem}.scholar-nav{margin-top:2rem;display:flex;flex-wrap:wrap;gap:1rem}.scholar-nav__card{flex:1;min-width:220px;border:1px solid var(--border);border-radius:1rem;padding:1rem 1.2rem;text-decoration:none;color:var(--ink);background:#fff;box-shadow:0 18px 36px rgba(15,18,28,8%)}.scholar-nav__label{font-size:.78rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}.scholar-nav__title{margin-top:.35rem;font-size:1rem;font-weight:600}.scholar-backtotop{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:999px;border:1px solid var(--border);margin-top:1.5rem;text-decoration:none;color:var(--ink);background:#fff}@media(max-width:720px){.scholar-hero{padding:1.4rem}.scholar-body,.scholar-body.has-toc{display:flex;flex-direction:column}.scholar-comments{margin-top:1.2rem;padding-top:.85rem}}</style>
+<article class=scholar-article data-variant=blogs>
+<header class=scholar-hero>
+<div class=scholar-hero__body>
+<div class=scholar-hero__badge>Research Journal</div>
+<h1>在阿里云上运行Django博客项目的详细步骤</h1>
+<div class=scholar-hero__meta>
+<span>Yu Ching San</span>
+<span>Mar 18, 2023</span>
+<span>1 分钟阅读</span>
+</div>
+<div class=scholar-hero__actions>
+</div>
+</div>
+</header>
+<section class=scholar-body>
+<div class=scholar-body__content>
+<p>本文主要介绍了如何将Django博客系统运行在阿里云上。运行流程主要包括下载项目、在Ubuntu上新建虚拟环境、新建数据库、在本地的PyCharm中配置运行、在阿里云上配置安全组和开放8000端口等步骤。在运行过程中，还需要检查博客网站是否已经启动、博客网站的配置是否正确、本地网络连接是否正常以及防火墙和安全组的设置等问题。通过以上操作，就可以将Django博客系统成功地运行在阿里云上，并实现外网访问。</p>
+<p>Django博客项目是来源于GitHub上的一个开源项目：https://github.com/liangliangyy/DjangoBlog</p>
+<h1 id=基本步骤>基本步骤<a href=#基本步骤 class=header-anchor arialabel=Anchor> # </a></h1>
+<figure itemprop=associatedMedia itemscope itemtype=http://schema.org/ImageObject>
+<a href=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230318_194728.jpg itemprop=contentUrl>
+<img itemprop=thumbnail src=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230318_194728.jpg width=500>
+</a>
+</figure>
+<h2 id=下载项目>下载项目<a href=#下载项目 class=header-anchor arialabel=Anchor> # </a></h2>
+<p>通过以下命令，将博客项目克隆到本地</p>
+<pre tabindex=0><code>git clone git@github.com:liangliangyy/DjangoBlog.git
+</code></pre><h2 id=ubuntu上新建虚拟环境>Ubuntu上新建虚拟环境<a href=#ubuntu上新建虚拟环境 class=header-anchor arialabel=Anchor> # </a></h2>
+<p>以下是在Ubuntu上新建及操作虚拟环境的基本命令：</p>
+<pre tabindex=0><code>mkvirtualenv 虚拟环境名称 # 创建虚拟环境命令
+workon 虚拟环境名称 # 进入虚拟环境工作
+workon # 查看机器上有多个个虚拟环境
+deactivate # 退出虚拟环境
+rmvirtualenv 虚拟环境名 # 删除虚拟环境
+# 查看虚拟环境中的安装包信息
+pip list
+pip freeze
+pip freeze &gt; requirement.txt # 导出安装包信息
+# 把依赖包导入到虚拟环境中
+pip install - r requirement.txt
+</code></pre><p>建好虚拟环境好，在虚拟环境中使用以下命令，将博客项目所使用的相关依赖包导入到虚拟环境中：</p>
+<pre tabindex=0><code>pip install -r requirements_longge.txt
+</code></pre><h2 id=ubuntu上新建数据库>Ubuntu上新建数据库<a href=#ubuntu上新建数据库 class=header-anchor arialabel=Anchor> # </a></h2>
+<p>该博客项目中涉及到数据存储，需要连接MySQL数据库的。因此需要在Ubuntu上新建一个数据库。</p>
+<pre tabindex=0><code>create database django_blog charset=utf8mb4;
+</code></pre><p>然后把项目提供的数据库备份<code>djangoblog.sql</code>导入到新建的数据库中。</p>
+<pre tabindex=0><code>mysql -u root -p django_blog &lt;djangoblo
+</code></pre><h2 id=在本地的pycharm中配置运行>在本地的PyCharm中配置运行<a href=#在本地的pycharm中配置运行 class=header-anchor arialabel=Anchor> # </a></h2>
+<p>首先在PyCharm中打开下载好的博客项目，然后修改DjangoBlog文件夹下的settings中的数据库密码和IP：</p>
+<div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python>DATABASES <span style=color:#666>=</span> {
+    <span style=color:#ba2121>&#39;default&#39;</span>: {
+        <span style=color:#ba2121>&#39;ENGINE&#39;</span>: <span style=color:#ba2121>&#39;django.db.backends.mysql&#39;</span>,
+        <span style=color:#ba2121>&#39;NAME&#39;</span>: os<span style=color:#666>.</span>environ<span style=color:#666>.</span>get(<span style=color:#ba2121>&#39;DJANGO_MYSQL_DATABASE&#39;</span>) <span style=color:#a2f;font-weight:700>or</span> <span style=color:#ba2121>&#39;[数据库名]&#39;</span>,
+        <span style=color:#ba2121>&#39;USER&#39;</span>: os<span style=color:#666>.</span>environ<span style=color:#666>.</span>get(<span style=color:#ba2121>&#39;DJANGO_MYSQL_USER&#39;</span>) <span style=color:#a2f;font-weight:700>or</span> <span style=color:#ba2121>&#39;[用户名]&#39;</span>,
+        <span style=color:#ba2121>&#39;PASSWORD&#39;</span>: os<span style=color:#666>.</span>environ<span style=color:#666>.</span>get(<span style=color:#ba2121>&#39;DJANGO_MYSQL_PASSWORD&#39;</span>) <span style=color:#a2f;font-weight:700>or</span> <span style=color:#ba2121>&#39;[数据库密码]&#39;</span>,
+        <span style=color:#ba2121>&#39;HOST&#39;</span>: os<span style=color:#666>.</span>environ<span style=color:#666>.</span>get(<span style=color:#ba2121>&#39;DJANGO_MYSQL_HOST&#39;</span>) <span style=color:#a2f;font-weight:700>or</span> <span style=color:#ba2121>&#39;localhost&#39;</span>,
+        <span style=color:#ba2121>&#39;PORT&#39;</span>: <span style=color:green>int</span>(
+            os<span style=color:#666>.</span>environ<span style=color:#666>.</span>get(<span style=color:#ba2121>&#39;DJANGO_MYSQL_PORT&#39;</span>) <span style=color:#a2f;font-weight:700>or</span> <span style=color:#666>3306</span>),
+        <span style=color:#ba2121>&#39;OPTIONS&#39;</span>: {
+            <span style=color:#ba2121>&#39;charset&#39;</span>: <span style=color:#ba2121>&#39;utf8mb4&#39;</span>},
+    }}
+</code></pre></div><p>接下来选择上文中新建的Ubuntu内的虚拟环境的解释器，配置成功的效果如下图：</p>
+<figure itemprop=associatedMedia itemscope itemtype=http://schema.org/ImageObject>
+<a href=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230318_200949.jpg itemprop=contentUrl>
+<img itemprop=thumbnail src=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230318_200949.jpg width=500>
+</a>
+</figure>
+<p>然后在本地运行该项目，但这时候可能在本地还是无法访问。出现这种情况的原因一般是阿里云服务器的8000端口没有开启，解决方法有以下几种：</p>
+<ul>
+<li>检查博客网站是否已经启动。可以在Ubuntu上使用命令行检查博客网站的运行状态，确认是否已经启动并正在监听8000端口。如果博客网站没有启动，需要先启动它才能访问。</li>
+<li>检查博客网站的配置是否正确。在博客网站的配置中，需要确保监听的IP地址和端口号都正确，以便外部访问。如果配置有误，需要进行修改并重新启动博客网站。</li>
+<li>检查本地网络连接是否正常。如果无法访问博客网站，有可能是由于本地网络连接存在问题，需要检查网络连接是否正常，并尝试使用其他设备或网络连接访问博客网站。</li>
+<li>检查防火墙是否存在其他限制。如果以上步骤都已经检查过，可以尝试暂时关闭Ubuntu防火墙和阿里云安全组，然后重新尝试访问博客网站。如果能够访问，说明存在其他限制导致无法访问，需要再次检查防火墙和安全组的设置。</li>
+</ul>
+<p>一般经过以上操作，项目就可以正常运行啦！运行效果图如下：</p>
+<figure itemprop=associatedMedia itemscope itemtype=http://schema.org/ImageObject>
+<a href=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230318_201814.jpg itemprop=contentUrl>
+<img itemprop=thumbnail src=https://zhgyqc.oss-cn-hangzhou.aliyuncs.com/snipaste_20230318_201814.jpg width=500>
+</a>
+</figure>
+<p>以上就是本次的分享，感谢阅读！</p>
+<p class=scholar-lastupdate>
+最后一次修改于 2025-11-29
+</p>
+<div class=scholar-tags>
+<span class=scholar-tags__label>Topics</span>
+<ul>
+<li><a href=../../tags/django/>Django</a></li>
+<li><a href=../../tags/blog-project/>Blog Project</a></li>
+<li><a href=../../tags/aliyun/>Aliyun</a></li>
+</ul>
+</div>
+<section class=scholar-comments aria-label=Comments>
+<h2 class=scholar-comments__title>Discussion</h2>
+<p class=scholar-comments__hint>Comments from readers</p>
+<div id=giscus-comments></div>
+<script src=https://giscus.app/client.js data-repo=Duguce/zhgyqc_site data-repo-id=R_kgDOIr7f-Q data-category=General data-category-id=DIC_kwDOIr7f-c4C1_sD data-mapping=pathname data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=bottom data-theme=preferred_color_scheme data-lang=en data-loading=lazy crossorigin=anonymous async></script>
+</section>
+</div>
+</section>
+<nav class=scholar-nav>
+<a class=scholar-nav__card href=../../blogs/2023-03-17-the-jetbrains-family-bucket-is-free-to-use/>
+<div class=scholar-nav__label>上一篇</div>
+<div class=scholar-nav__title>Jetbrains全家桶免费使用</div>
+</a>
+<a class=scholar-nav__card href=../../blogs/2023-04-04-steps-to-reinstall-mysql_8.0-on-aliyun-ubuntu/ style=text-align:right>
+<div class=scholar-nav__label>下一篇</div>
+<div class=scholar-nav__title>阿里云 Ubuntu 上重新安装 MySQL 8.0 的步骤</div>
+</a>
+</nav>
+<a class=scholar-backtotop href=#top aria-label="Back to top">↑</a>
+</article>
+<script>(function(){const a=document.querySelectorAll('.scholar-body__content pre');a.forEach(b=>{if(b.dataset.hasCopyButton)return;const a=document.createElement('button');a.className='code-copy',a.type='button',a.textContent='Copy',a.addEventListener('click',()=>{const c=b.querySelector('code'),d=c?c.innerText:b.innerText;navigator.clipboard.writeText(d).then(()=>{a.classList.add('is-copied'),a.textContent='Copied',setTimeout(()=>{a.classList.remove('is-copied'),a.textContent='Copy'},1600)})}),b.appendChild(a),b.dataset.hasCopyButton='true'})})()</script>
+</main>
+<footer class=footer>
+<script type=text/javascript src=../../js/math-code.js></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type=text/javascript src=../../js/center-img.js></script>
+<ul class="footer-links footer-links--visible">
+<li><a href=../../blogs/index.xml type=application/rss+xml title="RSS feed">
+订阅 </a>
+</li>
+<li>
+<a href=http://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh target=_blank>
+版权
+<i class="fa fa-cc" aria-hidden=true title="Attribution-NonCommercial-ShareAlike 4.0 International"></i>
+</a>
+</li>
+</ul>
+<div class=copyright-text>
+©
+Qingchen Yu
+2022-2026
+</div>
+</footer>
