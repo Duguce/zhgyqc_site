@@ -124,7 +124,7 @@ I am currently a Ph.D. student in Artificial Intelligence at Beihang University.
 
 <div style="display: flex; align-items: center; margin-bottom: 20px;">
     <div style="margin-right: 20px;">
-        <img src="./assets/icsf_framework.jpg" alt="icsf_framework" style="width: 131px; height: auto; border-radius: 8px;">
+        <img src="./assets/icsf_framework.png" alt="icsf_framework" style="width: 131px; height: auto; border-radius: 8px;">
     </div>
     <div>
         <p style="font-size: 16px; line-height: 1.6; margin: 0;">
