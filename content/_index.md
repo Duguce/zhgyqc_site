@@ -65,7 +65,7 @@ I am currently a Ph.D. student in Artificial Intelligence at Beihang University.
     <div>
         <p style="font-size: 16px; line-height: 1.6; margin: 0;">
             <strong>GuessArena: Guess Who I Am? A Self-Adaptive Framework for Evaluating LLMs in Domain-Specific Knowledge and Reasoning</strong><br>
-            <strong>Qingchen Yu</strong><sup>*</sup>, Zifan Zheng<sup>*</sup>, Ding Chen<sup>*</sup>, Simin Niu, Bo Tang, Feiyu Xiong, Zhiyu Li<sup>†</sup><br>
+            <strong>Qingchen Yu</strong><sup>*</sup>, Zifan Zheng<sup>*</sup>, Ding Chen<sup>*</sup>, Simin Niu, Bo Tang, et al.<br>
            <span style="font-size: 16px; background-color: #FFD700; color: #333; font-weight: bold; padding: 3px 6px; border-radius: 5px;">ACL, 2025</span> <a href="https://aclanthology.org/2025.acl-long.534" style="color: #0066cc; text-decoration: none;">ACL Anthology</a> | <a href="https://arxiv.org/abs/2505.22661" style="color: #0066cc; text-decoration: none;">arXiv</a> | <a href="https://github.com/IAAR-Shanghai/GuessArena" style="color: #0066cc; text-decoration: none;">GitHub</a> | <a href="./assets/GuessArena-Poster_ACL25.pdf" style="color: #0066cc; text-decoration: none;">Poster</a>
         </p>
     </div>
@@ -78,7 +78,7 @@ I am currently a Ph.D. student in Artificial Intelligence at Beihang University.
     <div>
         <p style="font-size: 16px; line-height: 1.6; margin: 0;">
             <strong>xFinder: Large Language Models as Automated Evaluators for Reliable Evaluation</strong><br>
-            <strong>Qingchen Yu</strong><sup>*</sup>, Zifan Zheng<sup>*</sup>, Shichao Song<sup>*</sup>, Zhiyu Li<sup>†</sup>, Feiyu Xiong, Bo Tang, Ding Chen<br>
+            <strong>Qingchen Yu</strong><sup>*</sup>, Zifan Zheng<sup>*</sup>, Shichao Song<sup>*</sup>, Zhiyu Li<sup>†</sup>, Feiyu Xiong, et al.<br>
            <span style="font-size: 16px; background-color: #FFD700; color: #333; font-weight: bold; padding: 3px 6px; border-radius: 5px;">ICLR, 2025</span>
             <a href="https://openreview.net/forum?id=7UqQJUKaLM" style="color: #0066cc; text-decoration: none;">OpenReview</a> | <a href="https://arxiv.org/abs/2405.11874" style="color: #0066cc; text-decoration: none;">arXiv</a> | <a href="https://github.com/IAAR-Shanghai/xFinder" style="color: #0066cc; text-decoration: none;">GitHub</a> | <a href="https://huggingface.co/collections/IAAR-Shanghai/xfinder-664b7b21e94e9a93f25a8412" style="color: #0066cc; text-decoration: none;">Models</a> | <a href="https://huggingface.co/datasets/IAAR-Shanghai/KAF-Dataset" style="color: #0066cc; text-decoration: none;">Dataset</a> | <a href="https://mp.weixin.qq.com/s/C5G-rpen9OM4MmBhrByTIQ" style="color: #0066cc; text-decoration: none;">WeChat Article</a> | <a href="./assets/xFinder-Poster_ICLR2025.pdf" style="color: #0066cc; text-decoration: none;">Poster</a>
         </p>
@@ -87,12 +87,12 @@ I am currently a Ph.D. student in Artificial Intelligence at Beihang University.
 
 <div style="display: flex; align-items: center; margin-bottom: 20px;">
     <div style="margin-right: 20px;">
-        <img src="./assets/xverify_framework.png" alt="xverify_framework" style="width: 173px; height: auto; border-radius: 8px;">
+        <img src="./assets/xverify_framework.png" alt="xverify_framework" style="width: 131px; height: auto; border-radius: 8px;">
     </div>
     <div>
         <p style="font-size: 16px; line-height: 1.6; margin: 0;">
             <strong>xVerify: Efficient Answer Verifier for Reasoning Model Evaluations</strong><br>
-            Ding Chen<sup>*</sup>, <strong>Qingchen Yu</strong><sup>*</sup>, Pengyuan Wang<sup>*</sup>, Wentao Zhang<sup>†</sup>, Bo Tang, Feiyu Xiong, Xinchi Li, Minchuan Yang, Zhiyu Li<sup>†</sup><br>
+            Ding Chen<sup>*</sup>, <strong>Qingchen Yu</strong><sup>*</sup>, Pengyuan Wang<sup>*</sup>, Wentao Zhang<sup>†</sup>, Bo Tang, et al.<br>
             <span style="font-size: 16px; background-color: #E0E0E0; color: #555; font-weight: bold; padding: 3px 6px; border-radius: 5px;">arXiv, 2025</span>
             <a href="https://arxiv.org/abs/2504.10481" style="color: #0066cc; text-decoration: none;">arXiv</a> |
             <a href="https://github.com/IAAR-Shanghai/xVerify" style="color: #0066cc; text-decoration: none;">GitHub</a> |
@@ -105,12 +105,12 @@ I am currently a Ph.D. student in Artificial Intelligence at Beihang University.
 
 <div style="display: flex; align-items: center; margin-bottom: 20px;">
     <div style="margin-right: 20px;">
-        <img src="./assets/turtle_framework.png" alt="turtle_framework" style="width: 145px; height: auto; border-radius: 8px;">
+        <img src="./assets/turtle_framework.png" alt="turtle_framework" style="width: 131px; height: auto; border-radius: 8px;">
     </div>
     <div>
         <p style="font-size: 16px; line-height: 1.6; margin: 0;">
             <strong>TurtleBench: Evaluating Top Language Models via Real-World Yes/No Puzzles</strong><br>
-            <strong>Qingchen Yu</strong><sup>*</sup>, Shichao Song<sup>*</sup>, Ke Fang<sup>*</sup>, Yunfeng Shi, Zifan Zheng, Hanyu Wang, Simin Niu, Zhiyu Li<sup>†</sup><br>
+            <strong>Qingchen Yu</strong><sup>*</sup>, Shichao Song<sup>*</sup>, Ke Fang<sup>*</sup>, Yunfeng Shi, Zifan Zheng, et al.<br>
             <span style="font-size: 16px; background-color: #E0E0E0; color: #555; font-weight: bold; padding: 3px 6px; border-radius: 5px;">arXiv, 2024</span>
             <a href="https://ieeexplore.ieee.org/document/11464244" style="color: #0066cc; text-decoration: none;">IEEE Xplore</a> | 
             <a href="https://arxiv.org/abs/2410.05262" style="color: #0066cc; text-decoration: none;">arXiv</a> | 
@@ -124,12 +124,12 @@ I am currently a Ph.D. student in Artificial Intelligence at Beihang University.
 
 <div style="display: flex; align-items: center; margin-bottom: 20px;">
     <div style="margin-right: 20px;">
-        <img src="./assets/icsf_framework.jpg" alt="icsf_framework" style="width: 166px; height: auto; border-radius: 8px;">
+        <img src="./assets/icsf_framework.jpg" alt="icsf_framework" style="width: 131px; height: auto; border-radius: 8px;">
     </div>
     <div>
         <p style="font-size: 16px; line-height: 1.6; margin: 0;">
             <strong>Internal Consistency and Self-Feedback in Large Language Models: A Survey</strong><br>
-            Xun Liang<sup>*</sup>, Shichao Song<sup>*</sup>, Zifan Zheng<sup>*</sup>, Hanyu Wang, <strong>Qingchen Yu</strong>, Xunkai Li, Rong-Hua Li, Feiyu Xiong, Zhiyu Li<sup>†</sup><br>
+            Xun Liang<sup>*</sup>, Shichao Song<sup>*</sup>, Zifan Zheng<sup>*</sup>, Hanyu Wang, <strong>Qingchen Yu</strong>, et al.<br>
             <span style="font-size: 16px; background-color: #E0E0E0; color: #555; font-weight: bold; padding: 3px 6px; border-radius: 5px;">arXiv, 2024</span>
             <a href="https://arxiv.org/abs/2407.14507" style="color: #0066cc; text-decoration: none;">arXiv</a> | <a href="https://github.com/IAAR-Shanghai/ICSFSurvey" style="color: #0066cc; text-decoration: none;">GitHub</a> | <a href="https://mp.weixin.qq.com/s/fSc0Szi-zO6YVwp2oV8Uhg" style="color: #0066cc; text-decoration: none;">WeChat Article</a> | <a href="https://x.com/Ki_Seki_here/status/1836020241538908529" style="color: #0066cc; text-decoration: none;">X Thread</a>
         </p>
@@ -138,12 +138,12 @@ I am currently a Ph.D. student in Artificial Intelligence at Beihang University.
 
 <div style="display: flex; align-items: center; margin-bottom: 20px;">
     <div style="margin-right: 20px;">
-        <img src="./assets/grimoire_framework.jpg" alt="grimoire_framework" style="width: 127px; height: auto; border-radius: 8px;">
+        <img src="./assets/grimoire_framework.jpg" alt="grimoire_framework" style="width: 131px; height: auto; border-radius: 8px;">
     </div>
     <div>
         <p style="font-size: 16px; line-height: 1.6; margin: 0;">
             <strong>Grimoire is All You Need for Enhancing Large Language Models</strong><br>
-            Ding Chen<sup>*</sup>, Shichao Song<sup>*</sup>, <strong>Qingchen Yu</strong>, Zhiyu Li<sup>†</sup>, Wenjin Wang, Feiyu Xiong, Bo Tang<br>
+            Ding Chen<sup>*</sup>, Shichao Song<sup>*</sup>, <strong>Qingchen Yu</strong>, Zhiyu Li<sup>†</sup>, Wenjin Wang, et al.<br>
             <span style="font-size: 16px; background-color: #E0E0E0; color: #555; font-weight: bold; padding: 3px 6px; border-radius: 5px;">arXiv, 2024</span>
             <a href="https://arxiv.org/abs/2401.03385" style="color: #0066cc; text-decoration: none;">arXiv</a> | <a href="https://github.com/IAAR-Shanghai/Grimoire" style="color: #0066cc; text-decoration: none;">GitHub</a> | <a href="https://mp.weixin.qq.com/s/YsMSy0vwxQtzPwWaCoPmzw" style="color: #0066cc; text-decoration: none;">WeChat Article</a>
         </p>
