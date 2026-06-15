@@ -12,8 +12,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -moz-font-feature-settings: "liga" on;
   image-rendering: -webkit-optimize-contrast;
-  background: linear-gradient(180deg, #f8f5ee 0%, #faf8f2 18%, #ffffff 36%);
-  color: #1f2535;
+  background: #ffffff;
+  color: #1e293b;
 } 
 
 body.home-page {
@@ -76,12 +76,17 @@ div.splitbox div.right {
 .footer { 
   text-align: center;
   font-size: 15px;
-  padding: 20px 1.5rem 16px;
-  margin-top: 36px;
-  border-top: 1px solid #e6e0cf;
+  padding: 24px 1.5rem 20px;
+  margin-top: 48px;
+  border-top: 1px solid #e5e7eb;
   position: relative;
-  background: linear-gradient(180deg, #faf8f2 0%, #f5f2e8 100%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  background: 
+    linear-gradient(
+      180deg,
+      #f9fafb 0%,
+      #f3f4f6 100%
+    );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -92,7 +97,7 @@ div.splitbox div.right {
   list-style: none;
   margin: 0;
   padding: 0;
-  color: #8f8575;
+  color: #9ca3af;
   font-size: 0.88rem;
   display: none;
   flex-wrap: wrap;
@@ -114,9 +119,9 @@ div.splitbox div.right {
 }
 
 .footer-links a {
-  color: #7f7667;
+  color: #6b7280;
   text-decoration: none;
-  transition: color 150ms ease, transform 150ms ease, background-color 150ms ease;
+  transition: color 180ms ease, transform 180ms ease, background-color 180ms ease;
   margin: 0 0.55rem;
   padding: 0.18rem 0.6rem;
   border-radius: 999px;
@@ -124,9 +129,9 @@ div.splitbox div.right {
 
 .footer-links a:hover,
 .footer-links a:focus {
-  color: #31291e;
+  color: #6366f1;
   transform: translateY(-1px);
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(99, 102, 241, 0.06);
 }
 
 .footer-links-kudos img {
@@ -136,7 +141,7 @@ div.splitbox div.right {
 .copyright-text {
   margin-top: 0;
   margin-bottom: 0;
-  color: #867e70;
+  color: #9ca3af;
   font-size: 0.79rem;
   letter-spacing: 0.08em;
   line-height: 1.45;
@@ -149,6 +154,9 @@ div.splitbox div.right {
   margin: 0 auto;
   padding: 0 15px;
   text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .nav-logo {
@@ -188,16 +196,16 @@ div.splitbox div.right {
 
 .nav-links a {
   text-decoration: none;
-  color: #374151;
+  color: #4b5563;
   font-weight: 500;
   letter-spacing: 0.3px;
   padding: 8px 2px;
-  transition: all 0.3s ease;
+  transition: color 0.2s ease;
   position: relative;
 }
 
 .nav-links a:hover {
-  color: #7a4d2f;
+  color: #1f2937;
 }
 
 .nav-links a::after {
@@ -206,9 +214,11 @@ div.splitbox div.right {
   width: 0;
   height: 2px;
   bottom: 0;
-  left: 0;
-  background-color: #7a4d2f;
-  transition: width 0.3s ease;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #6366f1;
+  border-radius: 2px;
+  transition: width 0.28s cubic-bezier(0.25, 0.8, 0.25, 1.2);
 }
 
 .nav-links a:hover::after {
@@ -244,7 +254,7 @@ Customize as you prefer*/
   line-height: 1.14;
   letter-spacing: -0.015em;
   font-weight: 560;
-  color: #1d2433;
+  color: #0f172a;
 }
 
 .wrapper {
@@ -254,10 +264,14 @@ Customize as you prefer*/
 
 .header {
   padding: 18px 0;
-  position: relative;
-  background: linear-gradient(180deg, #faf8f2 0%, #f5f1e7 100%);
-  border-bottom: 1px solid #e6dfd0;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7), 0 2px 8px rgba(72, 56, 29, 0.04);
+  position: sticky;
+  top: 0;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  z-index: 10;
 }
 
 .header-anchor:hover,
