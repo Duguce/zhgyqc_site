@@ -76,31 +76,31 @@ div.splitbox div.right {
 .footer { 
   text-align: center;
   font-size: 15px;
-  padding: 28px 1.5rem 24px;
-  margin-top: 48px;
-  border-top: 1px solid #dde2ea;
+  padding: 36px 1.5rem 32px;
+  margin-top: 64px;
+  border-top: 1px solid #d5dce7;
   position: relative;
   background: 
     linear-gradient(
       180deg,
-      #f2f4f8 0%,
-      #e9ecf2 100%
+      #f0f3f8 0%,
+      #e4e9f1 100%
     );
   box-shadow: 
-    inset 0 1px 0 rgba(255, 255, 255, 0.82),
-    0 -1px 3px rgba(0, 0, 0, 0.02),
-    0 -4px 10px rgba(0, 0, 0, 0.03);
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 -1px 3px rgba(0, 0, 0, 0.03),
+    0 -4px 14px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.48rem;
+  gap: 0.64rem;
 }
 
 .footer-links {
   list-style: none;
   margin: 0;
   padding: 0;
-  color: #97a2b0;
+  color: #8592a4;
   font-size: 0.88rem;
   display: none;
   flex-wrap: wrap;
@@ -122,19 +122,21 @@ div.splitbox div.right {
 }
 
 .footer-links a {
-  color: #758192;
+  color: #64748b;
   text-decoration: none;
-  transition: color 180ms ease, transform 180ms ease, background-color 180ms ease;
-  margin: 0 0.55rem;
-  padding: 0.18rem 0.6rem;
+  transition: color 200ms ease, transform 200ms ease, background-color 200ms ease;
+  margin: 0 0.6rem;
+  padding: 0.22rem 0.68rem;
   border-radius: 999px;
+  font-weight: 480;
 }
 
 .footer-links a:hover,
 .footer-links a:focus {
-  color: #3d7ac2;
-  transform: translateY(-1px);
-  background: rgba(61, 122, 194, 0.08);
+  color: #1d6dce;
+  transform: translateY(-1.5px);
+  background: rgba(29, 109, 206, 0.07);
+  box-shadow: 0 2px 6px rgba(29, 109, 206, 0.12);
 }
 
 .footer-links-kudos img {
@@ -142,13 +144,14 @@ div.splitbox div.right {
 }
 
 .copyright-text {
-  margin-top: 0;
+  margin-top: 0.12rem;
   margin-bottom: 0;
-  color: #9ba7b6;
-  font-size: 0.79rem;
-  letter-spacing: 0.08em;
-  line-height: 1.45;
+  color: #8e9aad;
+  font-size: 0.78rem;
+  letter-spacing: 0.09em;
+  line-height: 1.5;
   text-transform: uppercase;
+  font-weight: 450;
 }
 
 /* navigation bar positioning */
@@ -199,43 +202,60 @@ div.splitbox div.right {
 
 .nav-links a {
   text-decoration: none;
-  color: #505b69;
-  font-weight: 500;
-  letter-spacing: 0.3px;
-  padding: 8px 2px;
-  transition: color 0.2s ease;
+  color: #3b4453;
+  font-weight: 520;
+  letter-spacing: 0.4px;
+  padding: 8px 4px;
+  margin: 0 -2px;
+  transition: color 0.22s ease, text-shadow 0.22s ease;
   position: relative;
 }
 
 .nav-links a:hover {
-  color: #3d7ac2;
+  color: #1d6dce;
+  text-shadow: 0 0 0.4px rgba(29, 109, 206, 0.18);
 }
 
 .nav-links a::after {
   content: '';
   position: absolute;
   width: 0;
-  height: 2px;
-  bottom: 0;
+  height: 2.5px;
+  bottom: -2px;
   left: 50%;
   transform: translateX(-50%);
-  background: linear-gradient(90deg, #5494d8, #3d7ac2);
-  border-radius: 2px;
-  transition: width 0.28s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+  background: linear-gradient(90deg, #438ae0, #1d6dce);
+  border-radius: 3px;
+  opacity: 0;
+  transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1.2), opacity 0.2s ease;
 }
 
 .nav-links a:hover::after {
   width: 100%;
+  opacity: 1;
 }
 
 /*The parameter of `max-width` below controls the width of the body text. 
 Customize as you prefer*/
 .content {
   max-width: 750px; 
-  margin: 50px auto auto auto;
+  margin: 64px auto auto auto;
   padding: 0 15px;
   font-size: 19px;
-  line-height: 1.7;
+  line-height: 1.75;
+}
+
+/* Refined link styling in content */
+.content a {
+  color: #1d6dce;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(29, 109, 206, 0.28);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.content a:hover {
+  color: #1253a3;
+  border-bottom-color: #1253a3;
 }
 
 #utterances-comments {
@@ -257,7 +277,7 @@ Customize as you prefer*/
   line-height: 1.14;
   letter-spacing: -0.015em;
   font-weight: 560;
-  color: #1e1b17;
+  color: #111828;
 }
 
 .wrapper {
@@ -266,20 +286,20 @@ Customize as you prefer*/
 }
 
 .header {
-  padding: 18px 0;
+  padding: 22px 0;
   position: sticky;
   top: 0;
   background: 
     linear-gradient(
       180deg,
-      #f8f9fb 0%,
-      #eef1f6 100%
+      #fbfcfd 0%,
+      #f1f4f9 100%
     );
-  border-bottom: 1px solid #dae0e9;
+  border-bottom: 1px solid #d8dfe9;
   box-shadow: 
-    0 1px 0 rgba(255, 255, 255, 0.85),
-    0 2px 4px rgba(0, 0, 0, 0.03),
-    0 4px 12px rgba(0, 0, 0, 0.04);
+    0 1px 0 rgba(255, 255, 255, 0.94),
+    0 2px 5px rgba(0, 0, 0, 0.04),
+    0 6px 18px rgba(0, 0, 0, 0.06);
   z-index: 10;
 }
 
@@ -288,7 +308,7 @@ Customize as you prefer*/
   content: '';
   position: absolute;
   inset: 0;
-  opacity: 0.018;
+  opacity: 0.022;
   background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   pointer-events: none;
 }
@@ -311,8 +331,9 @@ Customize as you prefer*/
 }
 
 pre {
-  border: 1px solid #cccccc; 
-  /*#757575*/
+  border: 1px solid #e2e6ed;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 pre code {
@@ -321,9 +342,12 @@ pre code {
 }
 
 code {
-  padding: 2px 0.25rem;
-  border-radius: 2px;
-  border: 1px solid #757575;
+  padding: 2px 0.35rem;
+  border-radius: 3px;
+  border: 1px solid #d8dde5;
+  background: #f7f8fb;
+  font-size: 0.9em;
+  color: #2d3a4f;
 }
 
 /* table of contents styling. Based on the blog of Zachary Wade Betz: https://zwbetz.com/ */
@@ -491,13 +515,16 @@ ol li {
 
 /*hyperlink texts styling*/
 .list-page a {
-  color: black;
+  color: #1d293d;
   text-decoration: none;
   padding-bottom: 2px;
-  border-bottom: 1px solid;
+  border-bottom: 1px solid rgba(29, 109, 206, 0.25);
+  transition: border-color 0.2s ease, color 0.2s ease;
 }
 
 .list-page a:hover {
+  color: #1d6dce;
+  border-bottom-color: #1d6dce;
 }
 
 .list-page sup a {
@@ -505,13 +532,16 @@ ol li {
 }
 
 .body-text.list-text a {
-  color: black;
+  color: #1d293d;
   text-decoration: none;
   padding-bottom: 2px;
-  border-bottom: 1px solid;
+  border-bottom: 1px solid rgba(29, 109, 206, 0.25);
+  transition: border-color 0.2s ease, color 0.2s ease;
 }
 
 .body-text.list-text a:hover {
+  color: #1d6dce;
+  border-bottom-color: #1d6dce;
 }
 
 .body-text.list-text sup a {
