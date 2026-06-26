@@ -22,7 +22,7 @@ I am currently a Ph.D. student in Artificial Intelligence at Beihang University.
 <div style="margin-bottom: 20px;">
     <div style="margin-bottom: 15px;">
         <div style="display: flex; justify-content: space-between; align-items: center; font-size: 16px; line-height: 1.6; margin: 0;">
-            <span><strong>Beihang University</strong></span>
+            <span><strong><a href="https://ev.buaa.edu.cn">Beihang University</a></strong></span>
             <span>Beijing, China</span>
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; color: #666; font-size: 14px;">
@@ -32,7 +32,7 @@ I am currently a Ph.D. student in Artificial Intelligence at Beihang University.
     </div>
     <div style="margin-bottom: 15px;">
         <div style="display: flex; justify-content: space-between; align-items: center; font-size: 16px; line-height: 1.6; margin: 0;">
-            <span><strong>Shanghai University</strong></span>
+            <span><strong><a href="https://en.shu.edu.cn">Shanghai University</a></strong></span>
             <span>Shanghai, China</span>
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; color: #666; font-size: 14px;">
@@ -42,7 +42,7 @@ I am currently a Ph.D. student in Artificial Intelligence at Beihang University.
     </div>
     <div>
         <div style="display: flex; justify-content: space-between; align-items: center; font-size: 16px; line-height: 1.6; margin: 0;">
-            <span><strong>Henan University of Economics and Law</strong></span>
+            <span><strong><a href="https://www.huel.edu.cn">Henan University of Economics and Law</a></strong></span>
             <span>Zhengzhou, China</span>
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; color: #666; font-size: 14px;">
