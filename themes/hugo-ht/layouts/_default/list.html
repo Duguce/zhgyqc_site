@@ -28,162 +28,253 @@
   {{ $olderLabel := "Earlier" }}
   <main class="content" role="main">
     <style>
-    /* Scholarly list layout */
+    /* ═══ Scholarly List · Refined ═══ */
     .scholar-shell {
-      --shell-surface: #f6f4ef;
-      --shell-border: #d7d2c6;
-      --shell-ink: #1f2535;
-      --shell-muted: #5c6272;
-      --shell-accent: #8a6f4d;
-      --shell-highlight: #d8cfbe;
-      font-family: "Source Serif Pro", "Palatino Linotype", Georgia, serif;
-      color: var(--shell-ink);
-      padding-bottom: 3.2rem;
+      --sl-surface: #faf8f3;
+      --sl-border: #dbd5c4;
+      --sl-border-soft: rgba(139, 130, 110, 0.10);
+      --sl-ink: #1a2133;
+      --sl-ink-soft: #2d3548;
+      --sl-muted: #5c6272;
+      --sl-accent: #8a6f4d;
+      --sl-accent-glow: rgba(138, 111, 77, 0.16);
+      --sl-surface-alt: #f3efe6;
+      --sl-card-bg: #fffefc;
+      --sl-shadow-sm: 0 1px 2px rgba(15, 18, 28, 0.04);
+      --sl-shadow-md: 0 4px 14px rgba(15, 18, 28, 0.06), 0 1px 3px rgba(15, 18, 28, 0.04);
+      --sl-shadow-lg: 0 14px 36px rgba(15, 18, 28, 0.07), 0 4px 10px rgba(15, 18, 28, 0.04);
+      --sl-shadow-xl: 0 24px 56px rgba(12, 16, 30, 0.10), 0 6px 14px rgba(12, 16, 30, 0.05);
+      --sl-radius-sm: 0.6rem;
+      --sl-radius: 1rem;
+      --sl-radius-lg: 1.25rem;
+      --sl-radius-xl: 1.6rem;
+      font-family: "Source Serif 4", "Source Serif Pro", "Charter", "Palatino Linotype", Georgia, "Noto Serif SC", serif;
+      color: var(--sl-ink);
+      padding-bottom: 4rem;
     }
     .scholar-shell[data-variant="moments"] {
-      --shell-surface: #f1f6fb;
-      --shell-border: #d0dfea;
-      --shell-accent: #4b6fad;
-      --shell-highlight: #d8e4f2;
+      --sl-surface: #f4f8fc;
+      --sl-border: #cfdde9;
+      --sl-border-soft: rgba(100, 130, 165, 0.10);
+      --sl-accent: #4b6fad;
+      --sl-accent-glow: rgba(75, 111, 173, 0.16);
+      --sl-surface-alt: #ecf3f9;
+      --sl-card-bg: #fdfeff;
     }
+
+    /* ── Grain texture ── */
+    .scholar-shell {
+      position: relative;
+    }
+    .scholar-shell::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      opacity: 0.025;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='80' height='80' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E");
+    }
+
+    /* ── Hero ── */
     .scholar-hero {
-      background: var(--shell-surface);
-      border: 1px solid var(--shell-border);
-      border-radius: 1.3rem;
-      padding: 1.6rem;
-      margin: 0 auto 1.6rem;
+      background: var(--sl-card-bg);
+      border: 1px solid var(--sl-border);
+      border-radius: var(--sl-radius-xl);
+      padding: 1.8rem 2.2rem;
+      margin: 0 auto 1.8rem;
       max-width: 960px;
       position: relative;
       overflow: hidden;
+      box-shadow: var(--sl-shadow-lg);
+      transition: box-shadow 0.4s ease;
     }
+    .scholar-hero:hover { box-shadow: var(--sl-shadow-xl); }
     .scholar-hero::after {
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 20% 15%, rgba(138, 111, 77, 0.22), transparent 50%),
-                  linear-gradient(120deg, rgba(31, 37, 53, 0.08), transparent 65%);
-      opacity: 0.45;
+      background:
+        radial-gradient(ellipse 65% 55% at 22% 12%, var(--sl-accent-glow), transparent 55%),
+        radial-gradient(ellipse 35% 45% at 80% 85%, rgba(31, 37, 53, 0.04), transparent 55%),
+        linear-gradient(135deg, rgba(31, 37, 53, 0.02) 0%, transparent 50%, rgba(31, 37, 53, 0.03) 100%);
+      opacity: 0.65;
       pointer-events: none;
     }
     .scholar-shell[data-variant="moments"] .scholar-hero::after {
-      background: radial-gradient(circle at 15% 20%, rgba(75, 111, 173, 0.26), transparent 55%),
-                  linear-gradient(130deg, rgba(34, 52, 86, 0.08), transparent 60%);
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 15%, rgba(75, 111, 173, 0.18), transparent 55%),
+        radial-gradient(ellipse 40% 50% at 78% 82%, rgba(40, 70, 120, 0.05), transparent 55%),
+        linear-gradient(140deg, rgba(34, 52, 86, 0.02) 0%, transparent 55%, rgba(34, 52, 86, 0.03) 100%);
     }
-    .scholar-hero__body {
-      position: relative;
-      z-index: 1;
+    .scholar-hero::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 2.2rem; right: 2.2rem;
+      height: 3px;
+      border-radius: 0 0 3px 3px;
+      background: linear-gradient(90deg, transparent, var(--sl-accent), transparent);
+      opacity: 0.3;
+      z-index: 2;
+      pointer-events: none;
     }
+    .scholar-hero__body { position: relative; z-index: 1; }
     .scholar-hero__badge {
-      font-size: 0.8rem;
-      letter-spacing: 0.18em;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--shell-muted);
-      margin-bottom: 0.45rem;
+      color: var(--sl-accent);
+      background: var(--sl-surface-alt);
+      padding: 0.18rem 0.7rem;
+      border-radius: 999px;
+      margin-bottom: 0.55rem;
       display: inline-block;
+      border: 1px solid var(--sl-border-soft);
     }
     .scholar-hero h1 {
-      font-size: clamp(1.95rem, 3vw, 2.6rem);
-      margin-bottom: 0.4rem;
+      font-size: clamp(2rem, 3.2vw, 2.7rem);
+      margin-bottom: 0.5rem;
+      font-weight: 650;
+      letter-spacing: -0.015em;
     }
     .scholar-hero__desc {
       max-width: 700px;
-      font-size: 0.98rem;
-      line-height: 1.45;
-      color: var(--shell-muted);
-      margin-bottom: 0.8rem;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: var(--sl-muted);
+      margin-bottom: 0.9rem;
     }
     .scholar-hero__rich {
       max-width: 700px;
-      color: var(--shell-ink);
-      font-size: 0.95rem;
-      line-height: 1.55;
-      margin-bottom: 0.9rem;
+      color: var(--sl-ink-soft);
+      font-size: 0.96rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
     }
     .scholar-hero__stats {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-      gap: 0.8rem;
-      margin-top: 0.9rem;
+      gap: 0.85rem;
+      margin-top: 1rem;
     }
     .stat-card {
-      background: #fff;
-      border: 1px solid var(--shell-border);
-      border-radius: 0.95rem;
-      padding: 0.85rem 1.1rem;
-      box-shadow: 0 12px 32px rgba(27, 33, 45, 0.08);
+      background: var(--sl-card-bg);
+      border: 1px solid var(--sl-border);
+      border-radius: var(--sl-radius);
+      padding: 0.95rem 1.2rem;
+      box-shadow: var(--sl-shadow-md);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--sl-accent);
+      border-radius: 0 3px 3px 0;
+      opacity: 0.4;
+    }
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--sl-shadow-lg);
     }
     .stat-card__label {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--shell-muted);
-      margin-bottom: 0.2rem;
+      letter-spacing: 0.12em;
+      color: var(--sl-muted);
+      margin-bottom: 0.25rem;
       display: block;
     }
     .stat-card__value {
-      font-size: 1.4rem;
-      font-weight: 600;
+      font-size: 1.55rem;
+      font-weight: 650;
+      color: var(--sl-ink);
     }
+
+    /* ── Panel (entry grid container) ── */
     .scholar-panel {
-      border: 1px solid var(--shell-border);
-      border-radius: 1.3rem;
-      padding: 1.8rem;
-      background: #fff;
-      box-shadow: 0 18px 40px rgba(14, 19, 29, 0.08);
+      border: 1px solid var(--sl-border);
+      border-radius: var(--sl-radius-xl);
+      padding: 2rem;
+      background: var(--sl-card-bg);
+      box-shadow:
+        var(--sl-shadow-xl),
+        inset 0 1px 0 rgba(255,255,255,0.6);
     }
-    .scholar-panel__header {
-      text-align: center;
-      margin-bottom: 1.6rem;
-    }
+    .scholar-panel__header { text-align: center; margin-bottom: 1.8rem; }
     .scholar-panel__header h2 {
-      font-size: 1.25rem;
-      margin-bottom: 0.35rem;
+      font-size: 1.35rem;
+      margin-bottom: 0.4rem;
+      font-weight: 620;
+      color: var(--sl-ink);
     }
     .scholar-panel__header p {
-      color: var(--shell-muted);
+      color: var(--sl-muted);
       font-size: 0.95rem;
       max-width: 520px;
       margin: 0 auto;
     }
+
+    /* ── Entry grid ── */
     .entry-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.1rem;
     }
-      .entry-card {
-        border: 1px solid var(--shell-border);
-        border-radius: 1rem;
-        padding: 0.9rem 1rem;
-        background: #fefdfb;
-        position: relative;
-        overflow: hidden;
-        min-height: 170px;
-        display: grid;
-        grid-template-rows: minmax(1.2rem, auto) minmax(2.6rem, auto) minmax(3.4rem, auto) auto;
-        gap: 0.45rem;
-        transition: transform 160ms ease, box-shadow 160ms ease;
-      }
-      .entry-card[data-has-media="true"] {
-        grid-template-rows: minmax(1.2rem, auto) minmax(2.6rem, auto) 150px auto;
-      }
+    .entry-card {
+      border: 1px solid var(--sl-border);
+      border-radius: var(--sl-radius-lg);
+      padding: 1rem 1.15rem;
+      background: var(--sl-card-bg);
+      position: relative;
+      overflow: hidden;
+      min-height: 180px;
+      display: grid;
+      grid-template-rows: minmax(1.2rem, auto) minmax(2.6rem, auto) minmax(3.8rem, auto) auto;
+      gap: 0.5rem;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: var(--sl-shadow-sm);
+    }
+    .entry-card[data-has-media="true"] {
+      grid-template-rows: minmax(1.2rem, auto) minmax(2.6rem, auto) 150px auto;
+    }
     .entry-card::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(125deg, rgba(138, 111, 77, 0.2), rgba(255, 255, 255, 0));
-      opacity: 0.18;
+      border-radius: inherit;
+      background: linear-gradient(135deg, var(--sl-accent-glow), rgba(255,255,255,0) 55%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
       pointer-events: none;
     }
-    .scholar-shell[data-variant="moments"] .entry-card::before {
-      background: linear-gradient(120deg, rgba(75, 111, 173, 0.22), rgba(255, 255, 255, 0));
+    /* left accent line */
+    .entry-card::after {
+      content: "";
+      position: absolute;
+      left: 0; top: 1rem; bottom: 1rem;
+      width: 3px;
+      border-radius: 0 3px 3px 0;
+      background: var(--sl-accent);
+      opacity: 0.25;
+      transition: opacity 0.3s ease, height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      pointer-events: none;
     }
     .entry-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 36px rgba(20, 24, 35, 0.16);
+      transform: translateY(-5px);
+      box-shadow: var(--sl-shadow-xl);
+      border-color: var(--sl-accent);
     }
+    .entry-card:hover::before { opacity: 0.6; }
+    .entry-card:hover::after { opacity: 0.55; top: 0.6rem; bottom: 0.6rem; }
     .entry-card__meta {
-      font-size: 0.8rem;
-      color: var(--shell-muted);
+      font-size: 0.78rem;
+      color: var(--sl-muted);
       display: flex;
       gap: 0.4rem;
       flex-wrap: wrap;
@@ -194,15 +285,15 @@
     }
     .entry-card h3 {
       margin: 0;
-      font-size: 1.05rem;
+      font-size: 1.08rem;
+      font-weight: 620;
       position: relative;
       z-index: 1;
       display: flex;
       align-items: center;
+      line-height: 1.3;
     }
-    .scholar-shell[data-variant="moments"] .entry-card h3 {
-      text-align: center;
-    }
+    .scholar-shell[data-variant="moments"] .entry-card h3 { text-align: center; }
     .scholar-shell[data-variant="moments"] .entry-card[data-has-media="true"] h3 {
       min-height: 2.8rem;
       display: flex;
@@ -219,151 +310,238 @@
       width: 100%;
     }
     .entry-card h3 a {
-      color: inherit;
+      color: var(--sl-ink);
       text-decoration: none;
       display: inline-block;
       width: 100%;
+      transition: color 0.2s ease;
     }
-    .scholar-shell[data-variant="moments"] .entry-card h3 a {
-      text-align: center;
+    .scholar-shell[data-variant="moments"] .entry-card h3 a { text-align: center; width: 100%; }
+    .entry-card h3 a:hover { color: var(--sl-accent); }
+    .entry-card p {
+      margin: 0;
+      color: var(--sl-muted);
+      font-size: 0.86rem;
+      line-height: 1.45;
+      position: relative;
+      z-index: 1;
+    }
+    .entry-card[data-has-media="false"] p {
+      min-height: 3.8rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .entry-card__media {
+      border-radius: var(--sl-radius-sm);
+      overflow: hidden;
+      background: var(--sl-surface-alt);
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      max-height: 150px;
+      display: block;
+      box-shadow: var(--sl-shadow-sm);
+    }
+    .scholar-shell[data-variant="moments"] .entry-card[data-has-media="true"] .entry-card__media {
+      height: 150px;
+      max-height: none;
+    }
+    .entry-card__media img {
       width: 100%;
+      height: auto;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
     }
-    .entry-card h3 a:hover {
-      text-decoration: underline;
+    .entry-card:hover .entry-card__media img { transform: scale(1.04); }
+    .scholar-shell[data-variant="moments"] .entry-card[data-has-media="true"] .entry-card__media img {
+      height: 100%;
     }
-      .entry-card p {
-        margin: 0;
-        color: var(--shell-muted);
-        font-size: 0.88rem;
-        line-height: 1.4;
-        position: relative;
-        z-index: 1;
-      }
-      .entry-card[data-has-media="false"] p {
-        min-height: 3.4rem;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-      }
-      .entry-card__media {
-        border-radius: 0.75rem;
-        overflow: hidden;
-        background: #ebedf2;
-        position: relative;
-        z-index: 1;
-        margin: 0;
-        max-height: 150px;
-        display: block;
-      }
-      .scholar-shell[data-variant="moments"] .entry-card[data-has-media="true"] .entry-card__media {
-        height: 150px;
-        max-height: none;
-      }
-      .entry-card__media img {
-        width: 100%;
-        height: auto;
-        object-fit: cover;
-        display: block;
-      }
-      .scholar-shell[data-variant="moments"] .entry-card[data-has-media="true"] .entry-card__media img {
-        height: 100%;
-      }
-      .entry-card__media figcaption {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        padding: 0.35rem 0.6rem;
-        font-size: 0.74rem;
-        color: #fff;
-        font-style: italic;
-        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%);
-        text-align: center;
-        line-height: 1.2;
+    .entry-card__media figcaption {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      padding: 0.4rem 0.65rem;
+      font-size: 0.72rem;
+      color: #fff;
+      font-style: italic;
+      background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 100%);
+      text-align: center;
+      line-height: 1.2;
     }
     .entry-card__footer {
       margin-top: auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       position: relative;
       z-index: 1;
     }
+    .entry-card__year {
+      color: var(--sl-muted);
+      font-size: 0.76rem;
+      font-weight: 500;
+    }
     .entry-card__link {
       text-decoration: none;
-      color: var(--shell-accent);
+      color: var(--sl-accent);
       font-weight: 600;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       display: inline-flex;
       align-items: center;
-      gap: 0.2rem;
+      gap: 0.3rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .entry-card__link::after {
-      content: "->";
-      font-size: 0.85rem;
-      transition: transform 150ms ease;
+      content: "→";
+      font-size: 0.88rem;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    .entry-card__link:hover::after {
-      transform: translateX(3px);
+    .entry-card__link:hover {
+      background: var(--sl-accent);
+      color: #fff;
+      border-color: var(--sl-accent);
     }
+    .entry-card__link:hover::after { transform: translateX(3px); }
+
     .entry-empty {
       text-align: center;
-      color: var(--shell-muted);
-      font-size: 0.95rem;
-      margin: 2rem 0 0;
+      color: var(--sl-muted);
+      font-size: 1rem;
+      margin: 2.5rem 0;
+      padding: 2rem;
+      background: var(--sl-surface);
+      border-radius: var(--sl-radius);
+      border: 1px dashed var(--sl-border);
     }
+
+    /* ── Pagination ── */
     .scholar-pagination {
-      margin: 1.6rem auto 0;
+      margin: 1.8rem auto 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.4rem;
-      padding: 0.45rem 0.8rem;
-      border: 1px solid var(--shell-border);
+      gap: 0.3rem;
+      padding: 0.55rem 0.9rem;
+      border: 1px solid var(--sl-border);
       border-radius: 999px;
-      background: #fff;
-      box-shadow: 0 14px 32px rgba(16, 22, 32, 0.08);
+      background: var(--sl-card-bg);
+      box-shadow: var(--sl-shadow-md);
+      width: fit-content;
     }
     .scholar-pagination__button {
       border: 1px solid transparent;
       border-radius: 999px;
-      padding: 0.3rem 0.85rem;
-      font-size: 0.8rem;
-      color: var(--shell-muted);
+      padding: 0.35rem 0.9rem;
+      font-size: 0.82rem;
+      color: var(--sl-muted);
       text-decoration: none;
-      min-width: 2.4rem;
+      min-width: 2.5rem;
       text-align: center;
-      transition: background 140ms ease, color 140ms ease, border-color 140ms ease;
+      font-weight: 500;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .scholar-pagination__button.is-active {
-      background: var(--shell-surface);
-      color: var(--shell-accent);
-      border-color: var(--shell-highlight);
+      background: var(--sl-accent);
+      color: #fff;
+      border-color: var(--sl-accent);
       font-weight: 600;
+      box-shadow: 0 3px 10px var(--sl-accent-glow);
     }
-    .scholar-pagination__button:hover {
-      color: var(--shell-accent);
+    .scholar-pagination__button:hover:not(.is-disabled):not(.is-active) {
+      color: var(--sl-accent);
+      background: var(--sl-surface);
     }
     .scholar-pagination__button.is-disabled {
       pointer-events: none;
-      opacity: 0.35;
+      opacity: 0.28;
     }
     .scholar-pagination__ellipsis {
-      color: var(--shell-muted);
-      font-size: 0.8rem;
-      padding: 0.3rem 0.4rem;
+      color: var(--sl-muted);
+      font-size: 0.82rem;
+      padding: 0.35rem 0.3rem;
       min-width: 1rem;
       text-align: center;
     }
+
+    /* ── Responsive ── */
     @media (max-width: 720px) {
-      .scholar-panel {
+      .scholar-hero {
         padding: 1.4rem;
+        border-radius: var(--sl-radius-lg);
       }
-      .entry-grid {
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      .scholar-hero::before { left: 1.2rem; right: 1.2rem; }
+      .scholar-panel { padding: 1.4rem; }
+      .entry-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+      .scholar-pagination { gap: 0.15rem; padding: 0.45rem 0.5rem; }
+      .scholar-pagination__button {
+        padding: 0.25rem 0.55rem;
+        font-size: 0.74rem;
+        min-width: 1.8rem;
       }
+    }
+
+    /* ═══ Fade-in animation ═══ */
+    @keyframes slFadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .scholar-hero,
+    .scholar-panel {
+      animation: slFadeUp 0.5s ease both;
+    }
+    .scholar-panel { animation-delay: 0.08s; }
+    .entry-card {
+      animation: slFadeUp 0.4s ease both;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .scholar-hero, .scholar-panel, .entry-card { animation: none; }
+    }
+
+    /* ═══ Image hover polish ═══ */
+    .entry-card__media {
+      border: 1px solid var(--sl-border-soft);
+    }
+    .entry-card:hover .entry-card__media {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+
+    /* ═══ Dark mode ═══ */
+    @media (prefers-color-scheme: dark) {
+      .scholar-shell {
+        --sl-surface: #1e1f23;
+        --sl-border: #3a3c42;
+        --sl-border-soft: rgba(255,255,255,0.06);
+        --sl-ink: #e4e6ec;
+        --sl-ink-soft: #c4c7d0;
+        --sl-muted: #8a8d98;
+        --sl-accent: #c4a46c;
+        --sl-accent-glow: rgba(196, 164, 108, 0.12);
+        --sl-surface-alt: #26272c;
+        --sl-card-bg: #232428;
+        --sl-shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+        --sl-shadow-md: 0 4px 14px rgba(0,0,0,0.35);
+        --sl-shadow-lg: 0 14px 36px rgba(0,0,0,0.4);
+        --sl-shadow-xl: 0 24px 56px rgba(0,0,0,0.5);
+      }
+      .scholar-shell[data-variant="moments"] {
+        --sl-surface: #1b2129;
+        --sl-border: #343d4a;
+        --sl-border-soft: rgba(255,255,255,0.06);
+        --sl-accent: #7da3d4;
+        --sl-accent-glow: rgba(125, 163, 212, 0.12);
+        --sl-surface-alt: #232830;
+        --sl-card-bg: #1e232b;
+      }
+      .scholar-shell::before { opacity: 0.04; }
+      .scholar-hero::before { opacity: 0.2; }
+      .entry-card__media { background: #1a1c21; }
+      .stat-card::before { opacity: 0.3; }
     }
     </style>
     <div class="scholar-shell" data-variant="{{ if $isCnBlogs }}blogs{{ else }}moments{{ end }}">
@@ -398,40 +576,40 @@
         </div>
         {{ if gt $totalEntries 0 }}
         <div class="entry-grid" role="list">
-          {{ range $paginator.Pages }}
+          {{ range $idx, $p := $paginator.Pages }}
           {{ $cardScratch := newScratch }}
-          {{ if .Params.summary }}
-            {{ $cardScratch.Set "summary" .Params.summary }}
-          {{ else if .Description }}
-            {{ $cardScratch.Set "summary" .Description }}
-          {{ else if .Summary }}
-            {{ $cardScratch.Set "summary" (.Summary | plainify) }}
+          {{ if $p.Params.summary }}
+            {{ $cardScratch.Set "summary" $p.Params.summary }}
+          {{ else if $p.Description }}
+            {{ $cardScratch.Set "summary" $p.Description }}
+          {{ else if $p.Summary }}
+            {{ $cardScratch.Set "summary" ($p.Summary | plainify) }}
           {{ else }}
-            {{ $cardScratch.Set "summary" (.Plain | plainify) }}
+            {{ $cardScratch.Set "summary" ($p.Plain | plainify) }}
           {{ end }}
           {{ $summary := truncate 150 ($cardScratch.Get "summary") }}
           {{ $imageSrc := "" }}
           {{ $imageCaption := "" }}
           {{ if $isEnMoments }}
-            {{ $imgMatches := findRE `<img[^>]+src="([^"]+)"[^>]*>` .Content 1 }}
+            {{ $imgMatches := findRE `<img[^>]+src="([^"]+)"[^>]*>` $p.Content 1 }}
             {{ if gt (len $imgMatches) 0 }}
               {{ $firstImg := index $imgMatches 0 }}
               {{ $imageSrc = replaceRE `.*src="([^"]+)".*` "$1" $firstImg }}
             {{ end }}
-            {{ $captionMatches := findRE `<em>([^<]+)</em>` .Content 1 }}
+            {{ $captionMatches := findRE `<em>([^<]+)</em>` $p.Content 1 }}
             {{ if gt (len $captionMatches) 0 }}
               {{ $imageCaption = (index $captionMatches 0 | plainify) }}
             {{ end }}
           {{ end }}
-          <article class="entry-card" role="listitem" data-has-media="{{ if and $isEnMoments $imageSrc }}true{{ else }}false{{ end }}">
+          <article class="entry-card" role="listitem" data-has-media="{{ if and $isEnMoments $imageSrc }}true{{ else }}false{{ end }}" style="animation-delay: {{ mul $idx 0.06 }}s">
             <div class="entry-card__meta">
-              <span>{{ .Date.Format "Jan 02, 2006" }}</span>
-              {{ with .Params.location }}<span>&middot; {{ . }}</span>{{ end }}
+              <span>{{ $p.Date.Format "Jan 02, 2006" }}</span>
+              {{ with $p.Params.location }}<span>&middot; {{ . }}</span>{{ end }}
             </div>
-            <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+            <h3><a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a></h3>
             {{ if and $isEnMoments $imageSrc }}
               <figure class="entry-card__media">
-                <img src="{{ $imageSrc }}" alt="{{ cond (gt (len $imageCaption) 0) $imageCaption .Title }}" loading="lazy">
+                <img src="{{ $imageSrc }}" alt="{{ cond (gt (len $imageCaption) 0) $imageCaption $p.Title }}" loading="lazy">
                 {{ if $imageCaption }}
                 <figcaption>{{ $imageCaption }}</figcaption>
                 {{ end }}
@@ -440,8 +618,8 @@
               <p>{{ $summary }}</p>
             {{ end }}
             <div class="entry-card__footer">
-              <span class="entry-card__year">{{ .Date.Format "2006" }}</span>
-              <a href="{{ .RelPermalink }}" class="entry-card__link">{{ $ctaLabel }}</a>
+              <span class="entry-card__year">{{ $p.Date.Format "2006" }}</span>
+              <a href="{{ $p.RelPermalink }}" class="entry-card__link">{{ $ctaLabel }}</a>
             </div>
           </article>
           {{ end }}
