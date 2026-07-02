@@ -281,12 +281,17 @@
   }
   .scholar-body__content blockquote {
     background: var(--sa-surface);
-    border-left: 3px solid var(--sa-accent);
-    margin: 1.4rem 0;
-    padding: 0.8rem 1.5rem;
-    border-radius: 0 var(--sa-radius-sm) var(--sa-radius-sm) 0;
-    color: var(--sa-muted);
+    margin: 1.8rem 0;
+    padding: 1.4rem 1.7rem;
+    border-radius: var(--sa-radius);
+    color: var(--sa-ink-soft);
     font-style: italic;
+    border: none;
+    box-shadow: none;
+    position: static;
+  }
+  .scholar-body__content blockquote p {
+    margin: 0;
   }
 
   /* ── TOC ── */
@@ -319,30 +324,28 @@
 
   /* ── Code blocks ── */
   .scholar-body__content pre {
-    background: #fafbfc;
-    border: 1px solid var(--sa-border);
-    border-left: 3px solid var(--sa-accent);
-    border-radius: 0 var(--sa-radius) var(--sa-radius) 0;
-    padding: 1.2rem 1.4rem 1.5rem;
+    background: var(--sa-surface);
+    border: none;
+    border-radius: var(--sa-radius);
+    padding: 1.3rem 1.5rem 1.6rem;
     color: #2a3140;
     font-size: 0.9rem;
     font-family: "JetBrains Mono", "Fira Code", "SF Mono", "Cascadia Code", monospace;
     overflow: auto;
-    box-shadow: var(--sa-shadow-md);
     position: relative;
-    margin: 1.6rem 0;
+    margin: 1.8rem 0;
     line-height: 1.65;
   }
   .scholar-body__content pre .code-lang {
     position: absolute;
-    top: 0.45rem;
-    right: 0.85rem;
+    top: 0.55rem;
+    right: 0.95rem;
     font-size: 0.64rem;
     font-weight: 500;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--sa-muted);
-    opacity: 0.5;
+    opacity: 0.45;
     font-family: system-ui, -apple-system, sans-serif;
     pointer-events: none;
     z-index: 2;
@@ -352,8 +355,6 @@
     padding: 0;
     border: none;
     font-size: inherit;
-    position: relative;
-    z-index: 1;
   }
   .code-copy {
     position: absolute;
@@ -848,15 +849,14 @@
     .scholar-article::before { opacity: 0.04; }
     .scholar-hero::before { opacity: 0.2; }
     .scholar-body__content pre {
-      background: #1a1c21;
-      border-color: var(--sa-border);
+      background: var(--sa-surface);
     }
     .scholar-body__content :not(pre) > code {
       background: #26272c;
       color: #c4c7d0;
     }
     .scholar-body__content blockquote {
-      background: #1e1f23;
+      background: var(--sa-surface);
     }
     .code-copy {
       background: #2a2c32;
