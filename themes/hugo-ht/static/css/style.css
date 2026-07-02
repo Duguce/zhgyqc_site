@@ -163,7 +163,7 @@ div.splitbox div.right {
 
 /* navigation bar positioning */
 .nav {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 0 15px;
   text-align: right;
@@ -244,7 +244,7 @@ div.splitbox div.right {
 /*The parameter of `max-width` below controls the width of the body text. 
 Customize as you prefer*/
 .content {
-  max-width: 750px; 
+  max-width: 800px; 
   margin: 64px auto auto auto;
   padding: 0 15px;
   font-size: 19px;
@@ -324,7 +324,7 @@ Customize as you prefer*/
 }
 
 #utterances-comments {
-  max-width: 750px;
+  max-width: 800px;
   margin: 28px auto 0;
   padding: 0 15px;
 }
