@@ -148,5 +148,6 @@ I am currently a Ph.D. student in Artificial Intelligence at Beihang University.
 
 <ul>
   <li style="font-size: 18px;">Reviewer for ICLR, CVPR, ECCV, ACM TIST, TMLR</li>
+  <li style="font-size: 18px;">Student Committee Member of <a href="https://github.com/MLNLP-World">the MLNLP Community</a></li>
   <li style="font-size: 18px;">Volunteer for COSCon'25</li>
 </ul>
