@@ -2,7 +2,9 @@
 {{ partial "header.html" . }}
 
 {{ $fileDir := "" }}
-{{ with .File }}{{ $fileDir = .Dir }}{{ end }}
+{{/* Normalised because on Windows this comes back with OS separators, which would
+     fail the prefix tests below and drop the scholar layout. */}}
+{{ with .File }}{{ $fileDir = replace .Dir "\\" "/" }}{{ end }}
 {{ $isBlog := strings.HasPrefix $fileDir "cn/blogs" }}
 {{ $isMoment := strings.HasPrefix $fileDir "en/moments" }}
 {{ $useScholarLayout := or $isBlog $isMoment }}

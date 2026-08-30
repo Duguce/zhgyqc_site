@@ -1,141 +1,129 @@
-# Qingchen Yu
-<div style="display: flex; align-items: center;">
-    <div style="margin-right: 20px;">
-        <img src="./assets/profile.jpg" alt="profile_photo" style="width: 130px; height: auto;">
-    </div>
-    <div>
-        <p>
+---
+title: Qingchen Yu
+---
 
-I am currently a Ph.D. student in Artificial Intelligence at Beihang University. My research interests mainly focus on large language models.<br>
-
-<strong>Email:</strong> zhgyqc[at]163[dot]com
+<div class="hero">
+    <img class="hero-photo" src="./assets/profile.jpg" alt="Portrait of Qingchen Yu">
+    <div class="hero-body">
+        <h1 class="hero-name">Qingchen Yu</h1>
+        <p class="hero-role">Ph.D. Student in Artificial Intelligence &middot; Beihang University</p>
+        <p class="hero-intro">My research interests mainly focus on large language models.</p>
+        <p class="hero-contact"><span class="hero-contact-label">Email</span> zhgyqc[at]163[dot]com</p>
+        <p class="hero-links">
+            <a href="https://scholar.google.com/citations?user=-soHkFYAAAAJ&hl=en"><i class="fa fa-graduation-cap" aria-hidden="true"></i>Google Scholar</a>
+            <a href="https://github.com/Duguce"><i class="fa fa-github" aria-hidden="true"></i>GitHub</a>
+            <a href="./assets/yqc_cv.pdf"><i class="fa fa-file-text-o" aria-hidden="true"></i>CV</a>
+            <a href="https://x.com/zhgyqc_duguce"><i class="fa fa-twitter" aria-hidden="true"></i>Twitter</a>
+            <a href="https://huggingface.co/Duguce"><i class="fa fa-smile-o" aria-hidden="true"></i>Hugging Face</a>
+            <a href="https://dinq.me/qingchen"><i class="fa fa-link" aria-hidden="true"></i>DINQ</a>
         </p>
     </div>
 </div>
 
-<p align="center">
-    <a href="https://github.com/Duguce">GitHub</a> | <a href="https://x.com/zhgyqc_duguce">Twitter</a> | <a href="https://dinq.me/qingchen">DINQ</a><br>
-    <a href="https://scholar.google.com/citations?user=-soHkFYAAAAJ&hl=en">Google Scholar</a> | <a href="./assets/yqc_cv.pdf">CV</a> | <a href="https://huggingface.co/Duguce">Hugging Face</a>
+<h2 class="section-title">Education</h2>
+<div class="timeline">
+    <div class="timeline-item">
+        <div class="timeline-main">
+            <span class="timeline-title"><a href="https://ev.buaa.edu.cn">Beihang University</a></span>
+            <span class="timeline-sub">Ph.D. Student in Artificial Intelligence</span>
+        </div>
+        <div class="timeline-meta">
+            <span class="timeline-place">Beijing, China</span>
+            <span class="timeline-date">2025.09 - Present</span>
+        </div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-main">
+            <span class="timeline-title"><a href="https://en.shu.edu.cn">Shanghai University</a></span>
+            <span class="timeline-sub">M.Mgt. in Management Science and Engineering</span>
+        </div>
+        <div class="timeline-meta">
+            <span class="timeline-place">Shanghai, China</span>
+            <span class="timeline-date">2022.09 - 2025.04</span>
+        </div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-main">
+            <span class="timeline-title"><a href="https://www.huel.edu.cn">Henan University of Economics and Law</a></span>
+            <span class="timeline-sub">B.Mgt. in E-commerce</span>
+        </div>
+        <div class="timeline-meta">
+            <span class="timeline-place">Zhengzhou, China</span>
+            <span class="timeline-date">2018.09 - 2022.06</span>
+        </div>
+    </div>
+</div>
+
+<h2 class="section-title">Selected Publications</h2>
+<p class="pub-note">
+    <sup>*</sup> Contributed Equally; <sup>&dagger;</sup> Corresponding Author
 </p>
-
-<h2 style="text-align: left;">Education</h2>
-<div style="margin-bottom: 20px;">
-    <div style="margin-bottom: 15px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 16px; line-height: 1.6; margin: 0;">
-            <span><strong><a href="https://ev.buaa.edu.cn">Beihang University</a></strong></span>
-            <span>Beijing, China</span>
+<div class="pub-list">
+    <div class="pub-item">
+        <div class="pub-thumb">
+            <img src="./assets/xverify_framework.png" alt="xVerify framework" loading="lazy">
         </div>
-        <div style="display: flex; justify-content: space-between; align-items: center; color: #666; font-size: 14px;">
-            <span>Ph.D. Student in Artificial Intelligence</span>
-            <span>2025.09 - Present</span>
-        </div>
-    </div>
-    <div style="margin-bottom: 15px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 16px; line-height: 1.6; margin: 0;">
-            <span><strong><a href="https://en.shu.edu.cn">Shanghai University</a></strong></span>
-            <span>Shanghai, China</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; align-items: center; color: #666; font-size: 14px;">
-            <span>M.Mgt. in Management Science and Engineering</span>
-            <span>2022.09 - 2025.04</span>
+        <div class="pub-body">
+            <span class="pub-title">xVerify: Efficient Answer Verifier for Reasoning Model Evaluations</span>
+            <span class="pub-authors">Ding Chen<sup>*</sup>, <strong><u>Qingchen Yu</u></strong><sup>*</sup>, Pengyuan Wang<sup>*</sup>, Wentao Zhang<sup>&dagger;</sup>, Bo Tang, et al.</span>
+            <span class="pub-meta">
+                <span class="pub-venue">EMNLP 2026 (Findings)</span>
+                <span class="pub-links"><a href="https://arxiv.org/abs/2504.10481">arXiv</a><a href="https://github.com/IAAR-Shanghai/xVerify">GitHub</a><a href="https://huggingface.co/collections/IAAR-Shanghai/xverify-67e0f6f94c2dc334727da802">Models</a><a href="https://mp.weixin.qq.com/s/Un59Wi_vQB5JBaLASQbHKw">WeChat Article</a><a href="https://x.com/_akhaliq/status/1912419740393349234">X Thread</a></span>
+            </span>
         </div>
     </div>
-    <div>
-        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 16px; line-height: 1.6; margin: 0;">
-            <span><strong><a href="https://www.huel.edu.cn">Henan University of Economics and Law</a></strong></span>
-            <span>Zhengzhou, China</span>
+    <div class="pub-item">
+        <div class="pub-thumb">
+            <img src="./assets/turtle_framework.png" alt="TurtleBench framework" loading="lazy">
         </div>
-        <div style="display: flex; justify-content: space-between; align-items: center; color: #666; font-size: 14px;">
-            <span>B.Mgt. in E-commerce</span>
-            <span>2018.09 - 2022.06</span>
+        <div class="pub-body">
+            <span class="pub-title">TurtleBench: Evaluating Top Language Models via Real-World Yes/No Puzzles</span>
+            <span class="pub-authors"><strong><u>Qingchen Yu</u></strong><sup>*</sup>, Shichao Song<sup>*</sup>, Ke Fang<sup>*</sup>, Yunfeng Shi, Zifan Zheng, et al.</span>
+            <span class="pub-meta">
+                <span class="pub-venue">ICASSP 2026</span>
+                <span class="pub-links"><a href="https://ieeexplore.ieee.org/document/11464244">IEEE Xplore</a><a href="https://arxiv.org/abs/2410.05262">arXiv</a><a href="https://github.com/mazzzystar/TurtleBench">GitHub</a><a href="https://huggingface.co/datasets/Duguce/TurtleBench1.5k">Dataset</a><a href="https://tanghenre.com">Demo</a><a href="https://mazzzystar.github.io/2024/08/09/turtle-benchmark-zh">Blog Post</a><a href="./assets/TurtleBench-Poster_ICASSP2026.pdf">Poster</a></span>
+            </span>
+        </div>
+    </div>
+    <div class="pub-item">
+        <div class="pub-thumb">
+            <img src="./assets/guessarena_framework.png" alt="GuessArena framework" loading="lazy">
+        </div>
+        <div class="pub-body">
+            <span class="pub-title">GuessArena: Guess Who I Am? A <span class="nowrap">Self-Adaptive</span> Framework for Evaluating LLMs in <span class="nowrap">Domain-Specific</span> Knowledge and Reasoning</span>
+            <span class="pub-authors"><strong><u>Qingchen Yu</u></strong><sup>*</sup>, Zifan Zheng<sup>*</sup>, Ding Chen<sup>*</sup>, Simin Niu, Bo Tang, et al.</span>
+            <span class="pub-meta">
+                <span class="pub-venue">ACL 2025</span>
+                <span class="pub-links"><a href="https://aclanthology.org/2025.acl-long.534">ACL Anthology</a><a href="https://arxiv.org/abs/2505.22661">arXiv</a><a href="https://github.com/IAAR-Shanghai/GuessArena">GitHub</a><a href="./assets/GuessArena-Poster_ACL25.pdf">Poster</a></span>
+            </span>
+        </div>
+    </div>
+    <div class="pub-item">
+        <div class="pub-thumb">
+            <img src="./assets/xfinder_framework.jpg" alt="xFinder framework" loading="lazy">
+        </div>
+        <div class="pub-body">
+            <span class="pub-title">xFinder: Large Language Models as Automated Evaluators for Reliable Evaluation</span>
+            <span class="pub-authors"><strong><u>Qingchen Yu</u></strong><sup>*</sup>, Zifan Zheng<sup>*</sup>, Shichao Song<sup>*</sup>, Zhiyu Li<sup>&dagger;</sup>, Feiyu Xiong, et al.</span>
+            <span class="pub-meta">
+                <span class="pub-venue">ICLR 2025</span>
+                <span class="pub-links"><a href="https://openreview.net/forum?id=7UqQJUKaLM">OpenReview</a><a href="https://arxiv.org/abs/2405.11874">arXiv</a><a href="https://github.com/IAAR-Shanghai/xFinder">GitHub</a><a href="https://huggingface.co/collections/IAAR-Shanghai/xfinder-664b7b21e94e9a93f25a8412">Models</a><a href="https://huggingface.co/datasets/IAAR-Shanghai/KAF-Dataset">Dataset</a><a href="https://mp.weixin.qq.com/s/C5G-rpen9OM4MmBhrByTIQ">WeChat Article</a><a href="./assets/xFinder-Poster_ICLR2025.pdf">Poster</a></span>
+            </span>
         </div>
     </div>
 </div>
 
 
-<h2 style="text-align: left;">Selected Publications</h2>
-<p style="font-size: 16px;">
-    <sup>*</sup> Contributed Equally; <sup>†</sup> Corresponding Author
-</p>
-
-
-<div style="display: flex; align-items: center; margin-bottom: 20px;">
-    <div style="margin-right: 20px;">
-        <img src="./assets/xverify_framework.png" alt="xverify_framework" style="width: 131px; height: auto; border-radius: 8px;">
-    </div>
-    <div>
-        <p style="font-size: 16px; line-height: 1.6; margin: 0;">
-            <strong>xVerify: Efficient Answer Verifier for Reasoning Model Evaluations</strong><br>
-            Ding Chen<sup>*</sup>, <strong><u>Qingchen Yu</u></strong><sup>*</sup>, Pengyuan Wang<sup>*</sup>, Wentao Zhang<sup>†</sup>, Bo Tang, et al.<br>
-            <span style="font-size: 16px; background-color: #FFD700; color: #333; font-weight: bold; padding: 3px 6px; border-radius: 5px;">EMNLP 2026 (Findings)</span>
-            <a href="https://arxiv.org/abs/2504.10481" style="color: #0066cc; text-decoration: none;">arXiv</a> |
-            <a href="https://github.com/IAAR-Shanghai/xVerify" style="color: #0066cc; text-decoration: none;">GitHub</a> |
-            <a href="https://huggingface.co/collections/IAAR-Shanghai/xverify-67e0f6f94c2dc334727da802" style="color: #0066cc; text-decoration: none;">Models</a> |
-            <a href="https://mp.weixin.qq.com/s/Un59Wi_vQB5JBaLASQbHKw" style="color: #0066cc; text-decoration: none;">WeChat Article</a> |
-            <a href="https://x.com/_akhaliq/status/1912419740393349234" style="color: #0066cc; text-decoration: none;">X Thread</a>
-        </p>
-    </div>
-</div>
-
-<div style="display: flex; align-items: center; margin-bottom: 20px;">
-    <div style="margin-right: 20px;">
-        <img src="./assets/turtle_framework.png" alt="turtle_framework" style="width: 131px; height: auto; border-radius: 8px;">
-    </div>
-    <div>
-        <p style="font-size: 16px; line-height: 1.6; margin: 0;">
-            <strong>TurtleBench: Evaluating Top Language Models via Real-World Yes/No Puzzles</strong><br>
-            <strong><u>Qingchen Yu</u></strong><sup>*</sup>, Shichao Song<sup>*</sup>, Ke Fang<sup>*</sup>, Yunfeng Shi, Zifan Zheng, et al.<br>
-            <span style="font-size: 16px; background-color: #FFD700; color: #333; font-weight: bold; padding: 3px 6px; border-radius: 5px;">ICASSP 2026</span>
-            <a href="https://ieeexplore.ieee.org/document/11464244" style="color: #0066cc; text-decoration: none;">IEEE Xplore</a> | 
-            <a href="https://arxiv.org/abs/2410.05262" style="color: #0066cc; text-decoration: none;">arXiv</a> | 
-            <a href="https://github.com/mazzzystar/TurtleBench" style="color: #0066cc; text-decoration: none;">GitHub</a> | 
-            <a href="https://huggingface.co/datasets/Duguce/TurtleBench1.5k" style="color: #0066cc; text-decoration: none;">Dataset</a> | 
-            <a href="https://tanghenre.com" style="color: #0066cc; text-decoration: none;">Demo</a> | 
-            <a href="https://mazzzystar.github.io/2024/08/09/turtle-benchmark-zh" style="color: #0066cc; text-decoration: none;">Blog Post</a> | <a href="./assets/TurtleBench-Poster_ICASSP2026.pdf" style="color: #0066cc; text-decoration: none;">Poster</a>
-        </p>
-    </div>
-</div>
-
-<div style="display: flex; align-items: center; margin-bottom: 20px;">
-    <div style="margin-right: 20px;">
-        <img src="./assets/guessarena_framework.png" alt="guessarena_framework" style="width: 191px; height: auto; border-radius: 8px;">
-    </div>
-    <div>
-        <p style="font-size: 16px; line-height: 1.6; margin: 0;">
-            <strong>GuessArena: Guess Who I Am? A Self-Adaptive Framework for Evaluating LLMs in Domain-Specific Knowledge and Reasoning</strong><br>
-            <strong><u>Qingchen Yu</u></strong><sup>*</sup>, Zifan Zheng<sup>*</sup>, Ding Chen<sup>*</sup>, Simin Niu, Bo Tang, et al.<br>
-           <span style="font-size: 16px; background-color: #FFD700; color: #333; font-weight: bold; padding: 3px 6px; border-radius: 5px;">ACL 2025</span> <a href="https://aclanthology.org/2025.acl-long.534" style="color: #0066cc; text-decoration: none;">ACL Anthology</a> | <a href="https://arxiv.org/abs/2505.22661" style="color: #0066cc; text-decoration: none;">arXiv</a> | <a href="https://github.com/IAAR-Shanghai/GuessArena" style="color: #0066cc; text-decoration: none;">GitHub</a> | <a href="./assets/GuessArena-Poster_ACL25.pdf" style="color: #0066cc; text-decoration: none;">Poster</a>
-        </p>
-    </div>
-</div>
-
-<div style="display: flex; align-items: center; margin-bottom: 20px;">
-    <div style="margin-right: 20px;">
-        <img src="./assets/xfinder_framework.jpg" alt="xfinder_framework" style="width: 130px; height: auto; border-radius: 8px;">
-    </div>
-    <div>
-        <p style="font-size: 16px; line-height: 1.6; margin: 0;">
-            <strong>xFinder: Large Language Models as Automated Evaluators for Reliable Evaluation</strong><br>
-            <strong><u>Qingchen Yu</u></strong><sup>*</sup>, Zifan Zheng<sup>*</sup>, Shichao Song<sup>*</sup>, Zhiyu Li<sup>†</sup>, Feiyu Xiong, et al.<br>
-           <span style="font-size: 16px; background-color: #FFD700; color: #333; font-weight: bold; padding: 3px 6px; border-radius: 5px;">ICLR 2025</span>
-            <a href="https://openreview.net/forum?id=7UqQJUKaLM" style="color: #0066cc; text-decoration: none;">OpenReview</a> | <a href="https://arxiv.org/abs/2405.11874" style="color: #0066cc; text-decoration: none;">arXiv</a> | <a href="https://github.com/IAAR-Shanghai/xFinder" style="color: #0066cc; text-decoration: none;">GitHub</a> | <a href="https://huggingface.co/collections/IAAR-Shanghai/xfinder-664b7b21e94e9a93f25a8412" style="color: #0066cc; text-decoration: none;">Models</a> | <a href="https://huggingface.co/datasets/IAAR-Shanghai/KAF-Dataset" style="color: #0066cc; text-decoration: none;">Dataset</a> | <a href="https://mp.weixin.qq.com/s/C5G-rpen9OM4MmBhrByTIQ" style="color: #0066cc; text-decoration: none;">WeChat Article</a> | <a href="./assets/xFinder-Poster_ICLR2025.pdf" style="color: #0066cc; text-decoration: none;">Poster</a>
-        </p>
-    </div>
-</div>
-
-
-<h2 style="text-align: left;">Honors and Awards</h2>
-
-<ul>
-  <li style="font-size: 18px;">Outstanding Graduate Award of Henan (2022)</li>
-  <li style="font-size: 18px;">National Scholarship for Undergraduate Students (2021)</li>
-  <li style="font-size: 18px;">National Second Prize in the China Undergraduate Mathematical Contest in Modeling (2020)</li>
+<h2 class="section-title">Honors and Awards</h2>
+<ul class="fact-list">
+    <li><span>Outstanding Graduate Award of Henan</span><span class="fact-year">2022</span></li>
+    <li><span>National Scholarship for Undergraduate Students</span><span class="fact-year">2021</span></li>
+    <li><span>National Second Prize in the China Undergraduate Mathematical Contest in Modeling</span><span class="fact-year">2020</span></li>
 </ul>
 
-<h2 style="text-align: left;">Academic Services</h2>
-
-<ul>
-  <li style="font-size: 18px;">Reviewer for ICLR, CVPR, ECCV, ACM TIST, TMLR</li>
-  <li style="font-size: 18px;">Student Committee Member of <a href="https://github.com/MLNLP-World">the MLNLP Community</a></li>
-  <li style="font-size: 18px;">Volunteer for COSCon'25</li>
+<h2 class="section-title">Academic Services</h2>
+<ul class="fact-list">
+    <li><span>Reviewer for ICLR, CVPR, ECCV, ACM TIST, TMLR</span></li>
+    <li><span>Student Committee Member of <a href="https://github.com/MLNLP-World">the MLNLP Community</a></span></li>
+    <li><span>Volunteer for COSCon'25</span></li>
 </ul>

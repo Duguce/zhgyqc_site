@@ -1,1 +1,19 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Temple of Heaven on Qingchen Yu</title><link>https://zhgyqc.vercel.app/tags/temple-of-heaven/</link><description>Recent content in Temple of Heaven on Qingchen Yu</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 16 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://zhgyqc.vercel.app/tags/temple-of-heaven/index.xml" rel="self" type="application/rss+xml"/><item><title>A Weekend Stroll at the Temple of Heaven</title><link>https://zhgyqc.vercel.app/moments/2026-05-16-temple-of-heaven-weekend/</link><pubDate>Sat, 16 May 2026 00:00:00 +0000</pubDate><guid>https://zhgyqc.vercel.app/moments/2026-05-16-temple-of-heaven-weekend/</guid><description>The Hall of Prayer for Good Harvests | 祈年殿 The Imperial Vault of Heaven | 皇穹宇</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Temple of Heaven on Qingchen Yu</title>
+    <link>http://localhost:55000/tags/temple-of-heaven/</link>
+    <description>Recent content in Temple of Heaven on Qingchen Yu</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 20 May 2026 13:57:15 +0800</lastBuildDate>
+    <atom:link href="http://localhost:55000/tags/temple-of-heaven/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>A Weekend Stroll at the Temple of Heaven</title>
+      <link>http://localhost:55000/moments/2026-05-16-temple-of-heaven-weekend/</link>
+      <pubDate>Sat, 16 May 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:55000/moments/2026-05-16-temple-of-heaven-weekend/</guid>
+      <description>&#xD;The Hall of Prayer for Good Harvests | 祈年殿&#xD;The Imperial Vault of Heaven | 皇穹宇&#xD;</description>
+    </item>
+  </channel>
+</rss>

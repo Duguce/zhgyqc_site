@@ -1,7 +1,9 @@
 {{ partial "header.html" . }}
 
 {{ $sectionPath := "" }}
-{{ with .File }}{{ $sectionPath = .Path }}{{ end }}
+{{/* Normalised because on Windows this comes back with OS separators, which would
+     fail the prefix tests below and silently fall through to the plain list. */}}
+{{ with .File }}{{ $sectionPath = replace .Path "\\" "/" }}{{ end }}
 {{ $isCnBlogs := strings.HasPrefix $sectionPath "cn/blogs" }}
 {{ $isEnMoments := strings.HasPrefix $sectionPath "en/moments" }}
 {{ $useScholarLayout := or $isCnBlogs $isEnMoments }}

@@ -34,3 +34,6 @@ Thumbs.db
 
 # Local configuration files
 static/config/config.local.js
+
+# Local scratch space: preview builds and screenshots
+.audit/
