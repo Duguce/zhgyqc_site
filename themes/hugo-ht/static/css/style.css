@@ -986,6 +986,10 @@ hr {
   grid-template-columns: 176px 1fr;
   column-gap: 20px;
   align-items: center;
+  /* Height of the tallest entry's four lines (its title runs to two), so every
+     card matches it; shorter entries centre their lines instead of opening a
+     gap. Content-box, so the padding below is added on top. */
+  min-height: 135px;
   padding: 14px 18px;
   border: 1px solid #e7ebf1;
   border-radius: 12px;
@@ -1022,6 +1026,9 @@ hr {
 .pub-body {
   font-size: 16px;
   line-height: 1.6;
+  /* Without this the single-line venue below could push the grid column past
+     the card's width instead of being clipped. */
+  min-width: 0;
 }
 
 .pub-title {
@@ -1046,25 +1053,24 @@ hr {
   margin-top: 3px;
 }
 
-.pub-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 5px 9px;
-  margin-top: 7px;
+/* The venue gets its own line, spelled out. Kept to a single line so all four
+   entries share the same four-line rhythm. */
+.pub-venue {
+  display: block;
+  margin-top: 5px;
+  font-size: 14px;
+  font-style: italic;
+  line-height: 1.5;
+  color: #55606f;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.pub-venue {
-  display: inline-block;
-  background-color: #ffd700;
-  color: #3a3320;
-  font-size: 13.5px;
+.pub-venue-short {
+  font-style: normal;
   font-weight: 700;
-  letter-spacing: 0.01em;
-  line-height: 1.45;
-  padding: 2px 8px;
-  border-radius: 5px;
-  white-space: nowrap;
+  color: #8a6a00;
 }
 
 .pub-links {
@@ -1072,6 +1078,7 @@ hr {
   flex-wrap: wrap;
   align-items: center;
   row-gap: 3px;
+  margin-top: 5px;
   font-size: 15px;
 }
 
@@ -1166,6 +1173,18 @@ hr {
 
   .pub-links a:not(:last-child)::after {
     display: none;
+  }
+}
+
+/* Below this the content column is no longer at its full width, so the venue
+   needs room to wrap and the shared card height would only add dead space. */
+@media only screen and (max-width: 940px) {
+  .pub-item {
+    min-height: 0;
+  }
+
+  .pub-venue {
+    white-space: normal;
   }
 }
 

@@ -66,10 +66,8 @@ title: Qingchen Yu
         <div class="pub-body">
             <span class="pub-title">xVerify: Efficient Answer Verifier for Reasoning Model Evaluations</span>
             <span class="pub-authors">Ding Chen<sup>*</sup>, <strong><u>Qingchen Yu</u></strong><sup>*</sup>, Pengyuan Wang<sup>*</sup>, Wentao Zhang<sup>&dagger;</sup>, Bo Tang, et al.</span>
-            <span class="pub-meta">
-                <span class="pub-venue">EMNLP 2026 (Findings)</span>
-                <span class="pub-links"><a href="https://arxiv.org/abs/2504.10481">arXiv</a><a href="https://github.com/IAAR-Shanghai/xVerify">GitHub</a><a href="https://huggingface.co/collections/IAAR-Shanghai/xverify-67e0f6f94c2dc334727da802">Models</a><a href="https://mp.weixin.qq.com/s/Un59Wi_vQB5JBaLASQbHKw">WeChat Article</a><a href="https://x.com/_akhaliq/status/1912419740393349234">X Thread</a></span>
-            </span>
+            <span class="pub-venue">The 2026 Conference on Empirical Methods in Natural Language Processing <span class="pub-venue-short">(EMNLP 2026 Findings)</span></span>
+            <span class="pub-links"><a href="https://arxiv.org/abs/2504.10481">arXiv</a><a href="https://github.com/IAAR-Shanghai/xVerify">GitHub</a><a href="https://huggingface.co/collections/IAAR-Shanghai/xverify-67e0f6f94c2dc334727da802">Models</a><a href="https://mp.weixin.qq.com/s/Un59Wi_vQB5JBaLASQbHKw">WeChat Article</a><a href="https://x.com/_akhaliq/status/1912419740393349234">X Thread</a></span>
         </div>
     </div>
     <div class="pub-item">
@@ -79,10 +77,8 @@ title: Qingchen Yu
         <div class="pub-body">
             <span class="pub-title">TurtleBench: Evaluating Top Language Models via Real-World Yes/No Puzzles</span>
             <span class="pub-authors"><strong><u>Qingchen Yu</u></strong><sup>*</sup>, Shichao Song<sup>*</sup>, Ke Fang<sup>*</sup>, Yunfeng Shi, Zifan Zheng, et al.</span>
-            <span class="pub-meta">
-                <span class="pub-venue">ICASSP 2026</span>
-                <span class="pub-links"><a href="https://ieeexplore.ieee.org/document/11464244">IEEE Xplore</a><a href="https://arxiv.org/abs/2410.05262">arXiv</a><a href="https://github.com/mazzzystar/TurtleBench">GitHub</a><a href="https://huggingface.co/datasets/Duguce/TurtleBench1.5k">Dataset</a><a href="https://tanghenre.com">Demo</a><a href="https://mazzzystar.github.io/2024/08/09/turtle-benchmark-zh">Blog Post</a><a href="./assets/TurtleBench-Poster_ICASSP2026.pdf">Poster</a></span>
-            </span>
+            <span class="pub-venue">The 2026 IEEE International Conference on Acoustics, Speech and Signal Processing <span class="pub-venue-short">(ICASSP 2026)</span></span>
+            <span class="pub-links"><a href="https://ieeexplore.ieee.org/document/11464244">IEEE Xplore</a><a href="https://arxiv.org/abs/2410.05262">arXiv</a><a href="https://github.com/mazzzystar/TurtleBench">GitHub</a><a href="https://huggingface.co/datasets/Duguce/TurtleBench1.5k">Dataset</a><a href="https://tanghenre.com">Demo</a><a href="https://mazzzystar.github.io/2024/08/09/turtle-benchmark-zh">Blog Post</a><a href="./assets/TurtleBench-Poster_ICASSP2026.pdf">Poster</a></span>
         </div>
     </div>
     <div class="pub-item">
@@ -92,10 +88,8 @@ title: Qingchen Yu
         <div class="pub-body">
             <span class="pub-title">GuessArena: Guess Who I Am? A <span class="nowrap">Self-Adaptive</span> Framework for Evaluating LLMs in <span class="nowrap">Domain-Specific</span> Knowledge and Reasoning</span>
             <span class="pub-authors"><strong><u>Qingchen Yu</u></strong><sup>*</sup>, Zifan Zheng<sup>*</sup>, Ding Chen<sup>*</sup>, Simin Niu, Bo Tang, et al.</span>
-            <span class="pub-meta">
-                <span class="pub-venue">ACL 2025</span>
-                <span class="pub-links"><a href="https://aclanthology.org/2025.acl-long.534">ACL Anthology</a><a href="https://arxiv.org/abs/2505.22661">arXiv</a><a href="https://github.com/IAAR-Shanghai/GuessArena">GitHub</a><a href="./assets/GuessArena-Poster_ACL25.pdf">Poster</a></span>
-            </span>
+            <span class="pub-venue">The 63rd Annual Meeting of the Association for Computational Linguistics <span class="pub-venue-short">(ACL 2025)</span></span>
+            <span class="pub-links"><a href="https://aclanthology.org/2025.acl-long.534">ACL Anthology</a><a href="https://arxiv.org/abs/2505.22661">arXiv</a><a href="https://github.com/IAAR-Shanghai/GuessArena">GitHub</a><a href="./assets/GuessArena-Poster_ACL25.pdf">Poster</a></span>
         </div>
     </div>
     <div class="pub-item">
@@ -105,10 +99,8 @@ title: Qingchen Yu
         <div class="pub-body">
             <span class="pub-title">xFinder: Large Language Models as Automated Evaluators for Reliable Evaluation</span>
             <span class="pub-authors"><strong><u>Qingchen Yu</u></strong><sup>*</sup>, Zifan Zheng<sup>*</sup>, Shichao Song<sup>*</sup>, Zhiyu Li<sup>&dagger;</sup>, Feiyu Xiong, et al.</span>
-            <span class="pub-meta">
-                <span class="pub-venue">ICLR 2025</span>
-                <span class="pub-links"><a href="https://openreview.net/forum?id=7UqQJUKaLM">OpenReview</a><a href="https://arxiv.org/abs/2405.11874">arXiv</a><a href="https://github.com/IAAR-Shanghai/xFinder">GitHub</a><a href="https://huggingface.co/collections/IAAR-Shanghai/xfinder-664b7b21e94e9a93f25a8412">Models</a><a href="https://huggingface.co/datasets/IAAR-Shanghai/KAF-Dataset">Dataset</a><a href="https://mp.weixin.qq.com/s/C5G-rpen9OM4MmBhrByTIQ">WeChat Article</a><a href="./assets/xFinder-Poster_ICLR2025.pdf">Poster</a></span>
-            </span>
+            <span class="pub-venue">The Thirteenth International Conference on Learning Representations <span class="pub-venue-short">(ICLR 2025)</span></span>
+            <span class="pub-links"><a href="https://openreview.net/forum?id=7UqQJUKaLM">OpenReview</a><a href="https://arxiv.org/abs/2405.11874">arXiv</a><a href="https://github.com/IAAR-Shanghai/xFinder">GitHub</a><a href="https://huggingface.co/collections/IAAR-Shanghai/xfinder-664b7b21e94e9a93f25a8412">Models</a><a href="https://huggingface.co/datasets/IAAR-Shanghai/KAF-Dataset">Dataset</a><a href="https://mp.weixin.qq.com/s/C5G-rpen9OM4MmBhrByTIQ">WeChat Article</a><a href="./assets/xFinder-Poster_ICLR2025.pdf">Poster</a></span>
         </div>
     </div>
 </div>
