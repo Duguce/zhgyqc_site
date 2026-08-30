@@ -9,6 +9,13 @@
 {{ $isMoment := strings.HasPrefix $fileDir "en/moments" }}
 {{ $useScholarLayout := or $isBlog $isMoment }}
 
+{{/* TeX is only typeset on pages that actually contain some, so the MathJax
+     payload never reaches photo notes or short posts. */}}
+{{ $hasMath := or (findRE `\\\(` .Content 1) (findRE `\$\$` .Content 1) }}
+{{/* An outline earns its column once a post has enough sections to get lost in;
+     `toc: true` in front matter forces it on regardless. */}}
+{{ $showToc := or (eq .Params.toc true) (and $isBlog (ge (len (findRE `<h[23][ >]` .Content)) 3)) }}
+
 {{ $sectionScratch := newScratch }}
 {{ if $isBlog }}
   {{ $sectionScratch.Set "sectionPage" (.Site.GetPage "section" "cn/blogs") }}
@@ -51,7 +58,7 @@
   {{ end }}
 {{ end }}
 
-<main class="content" role="main">
+<main class="content{{ if $showToc }} is-wide{{ end }}" role="main">
 {{ if $useScholarLayout }}
   <div class="scholar-progress" aria-hidden="true"><div class="scholar-progress__fill" id="scholar-progress-fill"></div></div>
   <style>
@@ -149,24 +156,23 @@
     z-index: 1;
   }
   .scholar-hero__badge {
-    font-size: 0.72rem;
+    font-family: "Noto Sans SC", system-ui, -apple-system, sans-serif;
+    font-size: 0.66rem;
     font-weight: 600;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.26em;
     text-transform: uppercase;
     color: var(--sa-accent);
-    background: var(--sa-surface-alt);
-    padding: 0.2rem 0.75rem;
-    border-radius: 999px;
-    display: inline-block;
-    margin-bottom: 0.9rem;
-    border: 1px solid var(--sa-border-soft);
+    display: block;
+    margin-bottom: 0.85rem;
   }
   .scholar-hero h1 {
+    /* Left, like the badge above it and the chips below: one edge, not three. */
+    text-align: left;
     font-size: clamp(1.5rem, 2.5vw, 2.15rem);
     font-weight: 650;
     line-height: 1.25;
     letter-spacing: -0.012em;
-    margin: 0 0 0.35rem 0;
+    margin: 0 0 0.6rem 0;
     color: var(--sa-ink);
   }
   .scholar-hero__subtitle {
@@ -176,22 +182,25 @@
     line-height: 1.5;
     font-style: italic;
   }
+  /* One quiet line of metadata instead of a row of pills. */
   .scholar-hero__meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.65rem;
-    font-size: 0.88rem;
+    align-items: center;
+    font-family: "Noto Sans SC", system-ui, -apple-system, sans-serif;
+    font-size: 0.82rem;
     color: var(--sa-muted);
   }
-  .scholar-hero__meta span {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.25rem 0.75rem;
-    background: var(--sa-surface-alt);
-    border-radius: 999px;
-    font-size: 0.82rem;
-    border: 1px solid var(--sa-border-soft);
+  .scholar-hero__meta span + span::before {
+    content: "";
+    display: inline-block;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.45;
+    margin: 0 0.7rem;
+    vertical-align: 0.18em;
   }
   .scholar-hero__actions {
     margin-top: 1.2rem;
@@ -220,6 +229,14 @@
     box-shadow: 0 4px 14px var(--sa-accent-glow);
   }
 
+  /* `.wrapper { overflow: hidden }` makes the page its own scroll container,
+     which silently disables every position: sticky inside it. Clipping only the
+     horizontal axis keeps the same guard against sideways overflow. */
+  .wrapper {
+    overflow-x: clip;
+    overflow-y: visible;
+  }
+
   /* ── Body card ── */
   .scholar-body {
     border: 1px solid var(--sa-border);
@@ -234,15 +251,18 @@
     gap: 1.8rem;
     position: relative;
   }
+  /* Stacked by default: the outline only earns a column when the viewport can
+     spare one without squeezing the reading measure. */
   .scholar-body.has-toc {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(230px, 270px);
-    gap: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
   }
   .scholar-body__content {
     font-size: 1.04rem;
     line-height: 1.82;
     color: var(--sa-ink-soft);
+    overflow-wrap: break-word;
   }
   /* Refined headings inside body */
   .scholar-body__content h1,
@@ -296,52 +316,187 @@
     margin: 0;
   }
 
-  /* ── TOC ── */
+  /* ── Outline ──
+     Small sans type against the serif article, so it reads as apparatus rather
+     than as more text to be read. */
   .scholar-body__toc {
-    border-left: 2px solid var(--sa-border);
-    padding-left: 1.3rem;
-    font-size: 0.88rem;
+    order: -1;
+    font-family: "Noto Sans SC", system-ui, -apple-system, sans-serif;
+    font-size: 0.8rem;
     color: var(--sa-muted);
-    position: sticky;
-    top: 6rem;
-    align-self: start;
+    border-bottom: 1px solid var(--sa-border-soft);
+    padding-bottom: 1rem;
   }
-  .scholar-body__toc strong {
-    display: block;
-    margin-bottom: 0.7rem;
-    font-size: 0.78rem;
+  .scholar-body__toc summary {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    cursor: pointer;
+    font-size: 0.68rem;
     text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--sa-accent);
-    font-weight: 650;
+    letter-spacing: 0.22em;
+    color: var(--sa-muted);
+    opacity: 0.72;
+    font-weight: 600;
   }
-  .scholar-body__toc nav ul { padding-left: 0; list-style: none; }
-  .scholar-body__toc nav li { margin-bottom: 0.35rem; }
+  .scholar-body__toc summary::-webkit-details-marker { display: none; }
+  .scholar-body__toc summary::after {
+    content: "";
+    width: 0.36rem;
+    height: 0.36rem;
+    margin-left: auto;
+    border-right: 1.2px solid currentColor;
+    border-bottom: 1.2px solid currentColor;
+    transform: translateY(-2px) rotate(45deg);
+    transition: transform 0.25s ease;
+  }
+  .scholar-toc[open] > summary::after {
+    transform: translateY(1px) rotate(225deg);
+  }
+  .scholar-toc > nav {
+    margin-top: 0.8rem;
+    columns: 2;
+    column-gap: 2.4rem;
+  }
+  .scholar-body__toc nav ul,
+  .scholar-body__toc nav ol { padding-left: 0; margin: 0; list-style: none; }
+  .scholar-body__toc nav ul ul,
+  .scholar-body__toc nav ol ol { padding-left: 0.9rem; margin-top: 0.1rem; }
+  .scholar-body__toc nav li { margin: 0; }
   .scholar-body__toc a {
+    display: block;
+    padding: 0.3rem 0;
+    line-height: 1.45;
     color: var(--sa-muted);
     text-decoration: none;
-    transition: color 0.2s ease;
+    opacity: 0.82;
+    transition: color 0.2s ease, opacity 0.2s ease;
   }
-  .scholar-body__toc a:hover { color: var(--sa-accent); }
+  .scholar-body__toc a:hover {
+    color: var(--sa-ink);
+    opacity: 1;
+  }
+  .scholar-body__toc nav ol ol a { font-size: 0.76rem; }
+
+  /* Wide screens: the outline steps out of the card and into the margin, where
+     a hairline rail marks how far down the article you are. */
+  @media (min-width: 1180px) {
+    .content.is-wide {
+      max-width: 1148px;
+    }
+    .scholar-body.has-toc {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 190px;
+      gap: 3rem;
+      background: none;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      padding: 0;
+    }
+    .scholar-body.has-toc > .scholar-body__content {
+      border: 1px solid var(--sa-border);
+      border-radius: var(--sa-radius-xl);
+      padding: 2.4rem;
+      background: var(--sa-card-bg);
+      box-shadow:
+        var(--sa-shadow-xl),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    }
+    .scholar-body.has-toc > .scholar-body__toc {
+      order: 0;
+      position: sticky;
+      top: 5.5rem;
+      align-self: start;
+      max-height: calc(100vh - 8rem);
+      overflow-y: auto;
+      scrollbar-width: none;
+      border-bottom: none;
+      padding: 0.3rem 0;
+    }
+    .scholar-body__toc::-webkit-scrollbar { width: 0; }
+    /* Always expanded here, so the summary is a plain label again. */
+    .scholar-body__toc summary { cursor: default; margin-bottom: 0.9rem; }
+    .scholar-body__toc summary::after { display: none; }
+    .scholar-toc > nav {
+      margin-top: 0;
+      columns: auto;
+      border-left: 1px solid color-mix(in srgb, var(--sa-border) 70%, transparent);
+    }
+    .scholar-body__toc a {
+      position: relative;
+      padding: 0.32rem 0 0.32rem 0.9rem;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .scholar-body__toc a::before {
+      content: "";
+      position: absolute;
+      left: -1px;
+      top: 0.34rem;
+      bottom: 0.34rem;
+      width: 2px;
+      background: var(--sa-accent);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .scholar-body__toc nav ol ol a { padding-left: 1.7rem; }
+  }
 
   /* ── Code blocks ── */
+  .code-block {
+    position: relative;
+    margin: 1.8rem 0;
+  }
   .scholar-body__content pre {
     background: var(--sa-surface);
     border: none;
     border-radius: var(--sa-radius);
-    padding: 1.3rem 1.5rem 1.6rem;
+    padding: 1.5rem 1.5rem 1.4rem;
     color: #2a3140;
     font-size: 0.9rem;
     font-family: "JetBrains Mono", "Fira Code", "SF Mono", "Cascadia Code", monospace;
-    overflow: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
     position: relative;
-    margin: 1.8rem 0;
+    margin: 0;
     line-height: 1.65;
+    scrollbar-width: thin;
+    scrollbar-color: var(--sa-border) transparent;
   }
-  .scholar-body__content pre .code-lang {
+  .scholar-body__content pre::-webkit-scrollbar {
+    height: 9px;
+  }
+  .scholar-body__content pre::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scholar-body__content pre::-webkit-scrollbar-thumb {
+    background: var(--sa-border);
+    border-radius: 999px;
+    border: 2px solid var(--sa-surface);
+  }
+  /* Soft edge that only appears while there is more code to the right. */
+  .code-block::after {
+    content: "";
     position: absolute;
-    top: 0.55rem;
-    right: 0.95rem;
+    top: 1px;
+    bottom: 10px;
+    right: 1px;
+    width: 3rem;
+    border-radius: 0 var(--sa-radius) var(--sa-radius) 0;
+    background: linear-gradient(90deg, transparent, var(--sa-surface) 72%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  .code-block.is-scrollable:not(.is-at-end)::after {
+    opacity: 1;
+  }
+  .code-block .code-lang {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.9rem;
     font-size: 0.64rem;
     font-weight: 500;
     letter-spacing: 0.12em;
@@ -350,7 +505,12 @@
     opacity: 0.45;
     font-family: system-ui, -apple-system, sans-serif;
     pointer-events: none;
-    z-index: 2;
+    transition: opacity 0.2s ease;
+    z-index: 3;
+  }
+  .code-block:hover .code-lang,
+  .code-block:focus-within .code-lang {
+    opacity: 0;
   }
   .scholar-body__content pre code {
     background: transparent;
@@ -358,10 +518,11 @@
     border: none;
     font-size: inherit;
   }
+  /* Sits where the language label was: one corner, one job at a time. */
   .code-copy {
     position: absolute;
-    bottom: 0.5rem;
-    right: 0.7rem;
+    top: 0.4rem;
+    right: 0.55rem;
     border: 1px solid var(--sa-border);
     border-radius: 999px;
     background: var(--sa-card-bg);
@@ -370,8 +531,20 @@
     padding: 0.22rem 0.85rem;
     cursor: pointer;
     font-family: system-ui, -apple-system, sans-serif;
-    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.2s ease, background 0.25s ease, color 0.25s ease,
+      border-color 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 4;
+  }
+  .code-block:hover .code-copy,
+  .code-copy:focus-visible,
+  .code-copy.is-copied {
+    opacity: 1;
+  }
+  /* Touch devices never hover, so the button has to be there from the start. */
+  @media (hover: none) {
+    .code-block .code-lang { opacity: 0; }
+    .code-copy { opacity: 1; }
   }
   .code-copy:hover {
     background: var(--sa-ink-soft);
@@ -413,12 +586,19 @@
     padding-top: 1rem;
     border-top: 1px solid var(--sa-border-soft);
   }
-  .scholar-tags__label {
-    font-size: 0.74rem;
+  /* Section labels all share one quiet voice: small sans caps, wide tracking. */
+  .scholar-tags__label,
+  .scholar-body__content .scholar-comments__title,
+  .scholar-nav__label {
+    font-family: "Noto Sans SC", system-ui, -apple-system, sans-serif;
+    font-size: 0.68rem;
     font-weight: 600;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--sa-accent);
+    color: var(--sa-muted);
+    opacity: 0.72;
+  }
+  .scholar-tags__label {
     display: inline-block;
     margin-bottom: 0.7rem;
   }
@@ -440,20 +620,18 @@
   }
   .scholar-tags a {
     text-decoration: none;
-    border: 1px solid var(--sa-border);
+    border: 1px solid var(--sa-border-soft);
     border-radius: 999px;
-    padding: 0.22rem 0.85rem;
-    font-size: 0.84rem;
-    color: var(--sa-ink-soft);
-    background: var(--sa-surface);
-    transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    padding: 0.2rem 0.8rem;
+    font-family: "Noto Sans SC", system-ui, -apple-system, sans-serif;
+    font-size: 0.79rem;
+    color: var(--sa-muted);
+    background: none;
+    transition: color 0.25s ease, border-color 0.25s ease;
   }
   .scholar-tags a:hover {
-    background: var(--sa-accent);
-    color: #fff;
+    color: var(--sa-accent);
     border-color: var(--sa-accent);
-    transform: translateY(-1.5px);
-    box-shadow: 0 4px 14px var(--sa-accent-glow);
   }
 
   /* ── Comments ── */
@@ -465,14 +643,10 @@
   .scholar-article[data-variant="moments"] .scholar-comments {
     border-top-color: rgba(75, 111, 173, 0.18);
   }
-  .scholar-comments__title {
+  .scholar-body__content .scholar-comments__title {
     margin: 0;
-    font-size: 0.74rem;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--sa-accent);
-    opacity: 0.85;
+    border-bottom: none;
+    padding-bottom: 0;
   }
   .scholar-comments__hint {
     margin: 0.15rem 0 0;
@@ -495,7 +669,9 @@
     flex-wrap: wrap;
     gap: 1rem;
   }
-  .scholar-nav__card {
+  /* Extra class needed to outdo `.content a`, which would paint these blue. */
+  .scholar-article .scholar-nav__card,
+  .scholar-article .scholar-nav__card:visited {
     flex: 1;
     min-width: 220px;
     border: 1px solid var(--sa-border);
@@ -504,41 +680,21 @@
     text-decoration: none;
     color: var(--sa-ink);
     background: var(--sa-card-bg);
-    box-shadow: var(--sa-shadow-md);
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: border-color 0.3s ease, transform 0.3s ease;
     position: relative;
-    overflow: hidden;
   }
-  .scholar-nav__card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    opacity: 0;
-    background: linear-gradient(135deg, var(--sa-accent-glow), transparent 70%);
-    transition: opacity 0.35s ease;
-  }
-  .scholar-nav__card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--sa-shadow-xl);
+  .scholar-article .scholar-nav__card:hover {
+    transform: translateY(-2px);
     border-color: var(--sa-accent);
   }
-  .scholar-nav__card:hover::after { opacity: 0.5; }
   .scholar-nav__label {
-    font-size: 0.72rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--sa-accent);
-    position: relative;
-    z-index: 1;
+    display: block;
   }
   .scholar-nav__title {
-    margin-top: 0.4rem;
-    font-size: 1rem;
-    font-weight: 620;
-    position: relative;
-    z-index: 1;
+    margin-top: 0.45rem;
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: var(--sa-ink);
   }
 
   /* ── Back to top ── */
@@ -579,12 +735,8 @@
       flex-direction: column;
       padding: 1.4rem;
     }
-    .scholar-body__toc {
-      position: static;
-      border-left: none;
-      border-top: 2px solid var(--sa-border);
-      padding: 1rem 0 0;
-      margin-top: 0.5rem;
+    .scholar-toc > nav {
+      columns: auto;
     }
     .scholar-comments {
       margin-top: 1.4rem;
@@ -609,6 +761,8 @@
   .scholar-body__content h2,
   .scholar-body__content h3 {
     position: relative;
+    /* Clears the sticky site header when jumping from the outline. */
+    scroll-margin-top: 5.5rem;
   }
   .scholar-body__content .heading-anchor {
     position: absolute;
@@ -775,6 +929,8 @@
 
   /* ═══ Image display ═══ */
   .scholar-body__content img {
+    max-width: 100%;
+    height: auto;
     border-radius: var(--sa-radius);
     box-shadow: var(--sa-shadow-md);
     border: 1px solid var(--sa-border-soft);
@@ -783,6 +939,9 @@
   .scholar-body__content img:hover {
     transform: scale(1.02);
     box-shadow: var(--sa-shadow-xl);
+  }
+  .scholar-body__content img.is-zoomable {
+    cursor: zoom-in;
   }
   .scholar-body__content figure {
     margin: 1.6rem 0;
@@ -793,6 +952,23 @@
     font-size: 0.88rem;
     color: var(--sa-muted);
     font-style: italic;
+  }
+  /* Photo notes are written as centred raw HTML blocks: give the block room and
+     treat the italic line under the picture as a caption. */
+  .scholar-body__content div[align="center"] {
+    margin: 1.9rem 0;
+  }
+  .scholar-body__content div[align="center"] p {
+    margin: 0.7rem 0 0;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--sa-muted);
+  }
+  /* A portrait photo at full column width eats a whole screen, so cap the height
+     and let the width follow instead of the authored percentage. */
+  .scholar-article[data-variant="moments"] .scholar-body__content img {
+    width: auto;
+    max-height: 62vh;
   }
 
   /* ═══ Fade-in animation ═══ */
@@ -817,8 +993,86 @@
 
   /* ═══ TOC active highlight ═══ */
   .scholar-body__toc a.is-visible {
-    color: var(--sa-accent);
-    font-weight: 600;
+    color: var(--sa-ink);
+    opacity: 1;
+  }
+  .scholar-body__toc a.is-visible::before {
+    opacity: 1;
+  }
+
+  /* ═══ Maths ═══
+     Long display equations scroll on their own instead of stretching the column. */
+  mjx-container[jax="CHTML"][display="true"] {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.35rem 0;
+    margin: 1.2rem 0 !important;
+    scrollbar-width: thin;
+    scrollbar-color: var(--sa-border) transparent;
+  }
+  mjx-container[jax="CHTML"]:focus,
+  mjx-container[jax="CHTML"] svg:focus {
+    outline: none;
+  }
+
+  /* ═══ Lightbox ═══ */
+  .scholar-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 3rem 2rem;
+    background: rgba(12, 16, 26, 0.86);
+    backdrop-filter: blur(6px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.28s ease, visibility 0.28s ease;
+    cursor: zoom-out;
+  }
+  .scholar-lightbox.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+  .scholar-lightbox img {
+    max-width: min(100%, 1200px);
+    max-height: 82vh;
+    width: auto;
+    border-radius: 0.6rem;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+  }
+  .scholar-lightbox__caption {
+    margin: 0;
+    max-width: 46rem;
+    text-align: center;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.78);
+  }
+  .scholar-lightbox__close {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.6rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.22s ease, transform 0.22s ease;
+  }
+  .scholar-lightbox__close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scholar-lightbox { transition: none; }
   }
 
   /* ═══ Dark mode ═══ */
@@ -889,17 +1143,17 @@
           <span>{{ if eq .Section "cn" }}{{ printf "%d 分钟阅读" .ReadingTime }}{{ else }}{{ printf "%d min read" .ReadingTime }}{{ end }}</span>
           {{ if and $isMoment .Params.location }}<span>{{ .Params.location }}</span>{{ end }}
         </div>
+        {{ with $editScratch.Get "href" }}
         <div class="scholar-hero__actions">
-          {{ with $editScratch.Get "href" }}
           <a class="scholar-hero__edit" href="{{ . }}" target="_blank" rel="noopener">Suggest edit</a>
-          {{ end }}
         </div>
+        {{ end }}
       </div>
     </header>
 
-    <section class="scholar-body {{ if .Params.toc }}has-toc{{ end }}">
+    <section class="scholar-body {{ if $showToc }}has-toc{{ end }}">
       <div class="scholar-body__content">
-        {{ .Content | partial "add-header-anchors" }}
+        {{ .Content }}
         <p class="scholar-lastupdate">
           {{ $lastLabel := default (index $.Site.Params.lang.lastupdate $.Site.Params.defaultLang) (index $.Site.Params.lang.lastupdate $.Section) }}
           {{ $lastLabel }} {{ .Page.Lastmod.Format "2006-01-02" }}
@@ -941,10 +1195,12 @@
         </section>
         {{ end }}
       </div>
-      {{ if .Params.toc }}
+      {{ if $showToc }}
       <aside class="scholar-body__toc">
-        <strong>Outline</strong>
-        {{ .TableOfContents }}
+        <details class="scholar-toc" open>
+          <summary>{{ if $isBlog }}目录{{ else }}Outline{{ end }}</summary>
+          {{ .TableOfContents }}
+        </details>
       </aside>
       {{ end }}
     </section>
@@ -974,40 +1230,35 @@
   </article>
   <script>
   (function() {
-    /* ── Code copy buttons + language labels ── */
+    /* ── Code blocks ──
+       The label and copy button live on a wrapper rather than inside <pre>, so
+       they stay pinned to the visible corner while wide code scrolls under them. */
     const blocks = document.querySelectorAll('.scholar-body__content pre');
     blocks.forEach(block => {
-      /* Language label */
-      if (!block.dataset.hasCodeLabel) {
-        const codeEl = block.querySelector('code');
-        let lang = '';
-        if (codeEl) {
-          const cls = codeEl.className || '';
-          const m = cls.match(/language-(\w+)/);
-          if (m) lang = m[1];
-        }
-        if (!lang) {
-          const cls2 = block.className || '';
-          const m2 = cls2.match(/language-(\w+)/);
-          if (m2) lang = m2[1];
-        }
-        if (lang) {
-          const lbl = document.createElement('span');
-          lbl.className = 'code-lang';
-          lbl.textContent = lang;
-          block.appendChild(lbl);
-        }
-        block.dataset.hasCodeLabel = 'true';
+      if (block.dataset.enhanced) return;
+      block.dataset.enhanced = 'true';
+
+      const wrap = document.createElement('div');
+      wrap.className = 'code-block';
+      block.parentNode.insertBefore(wrap, block);
+      wrap.appendChild(block);
+
+      const codeEl = block.querySelector('code');
+      const cls = (codeEl && codeEl.className) || block.className || '';
+      const lang = (cls.match(/language-(\w+)/) || [])[1];
+      if (lang) {
+        const lbl = document.createElement('span');
+        lbl.className = 'code-lang';
+        lbl.textContent = lang;
+        wrap.appendChild(lbl);
       }
-      /* Copy button */
-      if (block.dataset.hasCopyButton) return;
+
       const btn = document.createElement('button');
       btn.className = 'code-copy';
       btn.type = 'button';
       btn.textContent = 'Copy';
       btn.addEventListener('click', () => {
-        const code = block.querySelector('code');
-        const text = code ? code.innerText : block.innerText;
+        const text = codeEl ? codeEl.innerText : block.innerText;
         navigator.clipboard.writeText(text).then(() => {
           btn.classList.add('is-copied');
           btn.textContent = 'Copied';
@@ -1017,9 +1268,66 @@
           }, 1600);
         });
       });
-      block.appendChild(btn);
-      block.dataset.hasCopyButton = 'true';
+      wrap.appendChild(btn);
+
+      const syncScroll = () => {
+        const overflowing = block.scrollWidth - block.clientWidth > 4;
+        wrap.classList.toggle('is-scrollable', overflowing);
+        wrap.classList.toggle(
+          'is-at-end',
+          overflowing && block.scrollLeft + block.clientWidth >= block.scrollWidth - 4
+        );
+      };
+      syncScroll();
+      block.addEventListener('scroll', syncScroll, { passive: true });
+      window.addEventListener('resize', syncScroll, { passive: true });
     });
+
+    /* ── Click to enlarge figures ── */
+    const zoomables = Array.from(
+      document.querySelectorAll('.scholar-body__content img')
+    ).filter(img => !img.closest('a'));
+    if (zoomables.length > 0) {
+      const overlay = document.createElement('div');
+      overlay.className = 'scholar-lightbox';
+      overlay.setAttribute('aria-hidden', 'true');
+      overlay.innerHTML =
+        '<button class="scholar-lightbox__close" type="button" aria-label="Close">&times;</button>' +
+        '<img alt=""><p class="scholar-lightbox__caption"></p>';
+      document.body.appendChild(overlay);
+      const full = overlay.querySelector('img');
+      const caption = overlay.querySelector('.scholar-lightbox__caption');
+      const closeBox = () => {
+        overlay.classList.remove('is-open');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.documentElement.style.overflow = '';
+      };
+      zoomables.forEach(img => {
+        img.classList.add('is-zoomable');
+        img.addEventListener('click', () => {
+          full.src = img.currentSrc || img.src;
+          full.alt = img.alt || '';
+          /* Captions come either from a real <figcaption> or, in the photo notes,
+             from the italic line written right after the picture. */
+          const fig = img.closest('figure');
+          const cap = fig && fig.querySelector('figcaption');
+          const sibling = img.nextElementSibling;
+          caption.textContent = cap
+            ? cap.textContent.trim()
+            : sibling && /^(P|EM|FIGCAPTION)$/.test(sibling.tagName)
+            ? sibling.textContent.trim()
+            : img.alt || '';
+          caption.hidden = !caption.textContent;
+          overlay.classList.add('is-open');
+          overlay.setAttribute('aria-hidden', 'false');
+          document.documentElement.style.overflow = 'hidden';
+        });
+      });
+      overlay.addEventListener('click', closeBox);
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeBox();
+      });
+    }
 
     /* ── Reading progress bar ── */
     const progressFill = document.getElementById('scholar-progress-fill');
@@ -1040,6 +1348,18 @@
         btt.classList.toggle('is-visible', window.scrollY > 400);
       };
       window.addEventListener('scroll', onBttScroll, { passive: true });
+    }
+
+    /* ── Outline: a rail on wide screens, a folded block when stacked ── */
+    const tocFold = document.querySelector('.scholar-toc');
+    if (tocFold) {
+      const wide = window.matchMedia('(min-width: 1180px)');
+      const syncFold = () => { tocFold.open = wide.matches; };
+      syncFold();
+      wide.addEventListener('change', syncFold);
+      tocFold.addEventListener('click', e => {
+        if (wide.matches && e.target.closest('summary')) e.preventDefault();
+      });
     }
 
     /* ── TOC scroll highlight ── */
@@ -1075,6 +1395,36 @@
     });
   })();
   </script>
+
+  {{ if $hasMath }}
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+        ignoreHtmlClass: 'scholar-body__toc'
+      },
+      chtml: { scale: 0.96 },
+      startup: {
+        pageReady: function () {
+          return MathJax.startup.defaultPageReady().then(function () {
+            document.querySelectorAll('.scholar-body__content').forEach(function (el) {
+              el.classList.add('math-ready');
+            });
+          });
+        }
+      }
+    };
+  </script>
+  {{ $mathCDN := default "//cdnjs.cloudflare.com/ajax/libs" .Site.Params.MathJaxCDN }}
+  {{ $mathVersion := default "3.2.2" .Site.Params.MathJaxVersion }}
+  <script id="MathJax-script" async src="{{ printf "%s/mathjax/%s/es5/tex-mml-chtml.js" $mathCDN $mathVersion }}"></script>
+  {{ end }}
 {{ else }}
   <div style="text-align: center">
     {{ if not .IsHome }}
