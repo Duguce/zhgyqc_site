@@ -58,6 +58,44 @@ I am currently a Ph.D. student in Artificial Intelligence at Beihang University.
     <sup>*</sup> Contributed Equally; <sup>†</sup> Corresponding Author
 </p>
 
+
+<div style="display: flex; align-items: center; margin-bottom: 20px;">
+    <div style="margin-right: 20px;">
+        <img src="./assets/xverify_framework.png" alt="xverify_framework" style="width: 131px; height: auto; border-radius: 8px;">
+    </div>
+    <div>
+        <p style="font-size: 16px; line-height: 1.6; margin: 0;">
+            <strong>xVerify: Efficient Answer Verifier for Reasoning Model Evaluations</strong><br>
+            Ding Chen<sup>*</sup>, <strong><u>Qingchen Yu</u></strong><sup>*</sup>, Pengyuan Wang<sup>*</sup>, Wentao Zhang<sup>†</sup>, Bo Tang, et al.<br>
+            <span style="font-size: 16px; background-color: #FFD700; color: #333; font-weight: bold; padding: 3px 6px; border-radius: 5px;">EMNLP 2026 (Findings)</span>
+            <a href="https://arxiv.org/abs/2504.10481" style="color: #0066cc; text-decoration: none;">arXiv</a> |
+            <a href="https://github.com/IAAR-Shanghai/xVerify" style="color: #0066cc; text-decoration: none;">GitHub</a> |
+            <a href="https://huggingface.co/collections/IAAR-Shanghai/xverify-67e0f6f94c2dc334727da802" style="color: #0066cc; text-decoration: none;">Models</a> |
+            <a href="https://mp.weixin.qq.com/s/Un59Wi_vQB5JBaLASQbHKw" style="color: #0066cc; text-decoration: none;">WeChat Article</a> |
+            <a href="https://x.com/_akhaliq/status/1912419740393349234" style="color: #0066cc; text-decoration: none;">X Thread</a>
+        </p>
+    </div>
+</div>
+
+<div style="display: flex; align-items: center; margin-bottom: 20px;">
+    <div style="margin-right: 20px;">
+        <img src="./assets/turtle_framework.png" alt="turtle_framework" style="width: 131px; height: auto; border-radius: 8px;">
+    </div>
+    <div>
+        <p style="font-size: 16px; line-height: 1.6; margin: 0;">
+            <strong>TurtleBench: Evaluating Top Language Models via Real-World Yes/No Puzzles</strong><br>
+            <strong><u>Qingchen Yu</u></strong><sup>*</sup>, Shichao Song<sup>*</sup>, Ke Fang<sup>*</sup>, Yunfeng Shi, Zifan Zheng, et al.<br>
+            <span style="font-size: 16px; background-color: #FFD700; color: #333; font-weight: bold; padding: 3px 6px; border-radius: 5px;">ICASSP 2026</span>
+            <a href="https://ieeexplore.ieee.org/document/11464244" style="color: #0066cc; text-decoration: none;">IEEE Xplore</a> | 
+            <a href="https://arxiv.org/abs/2410.05262" style="color: #0066cc; text-decoration: none;">arXiv</a> | 
+            <a href="https://github.com/mazzzystar/TurtleBench" style="color: #0066cc; text-decoration: none;">GitHub</a> | 
+            <a href="https://huggingface.co/datasets/Duguce/TurtleBench1.5k" style="color: #0066cc; text-decoration: none;">Dataset</a> | 
+            <a href="https://tanghenre.com" style="color: #0066cc; text-decoration: none;">Demo</a> | 
+            <a href="https://mazzzystar.github.io/2024/08/09/turtle-benchmark-zh" style="color: #0066cc; text-decoration: none;">Blog Post</a> | <a href="./assets/TurtleBench-Poster_ICASSP2026.pdf" style="color: #0066cc; text-decoration: none;">Poster</a>
+        </p>
+    </div>
+</div>
+
 <div style="display: flex; align-items: center; margin-bottom: 20px;">
     <div style="margin-right: 20px;">
         <img src="./assets/guessarena_framework.png" alt="guessarena_framework" style="width: 191px; height: auto; border-radius: 8px;">
@@ -85,56 +123,6 @@ I am currently a Ph.D. student in Artificial Intelligence at Beihang University.
     </div>
 </div>
 
-<div style="display: flex; align-items: center; margin-bottom: 20px;">
-    <div style="margin-right: 20px;">
-        <img src="./assets/xverify_framework.png" alt="xverify_framework" style="width: 131px; height: auto; border-radius: 8px;">
-    </div>
-    <div>
-        <p style="font-size: 16px; line-height: 1.6; margin: 0;">
-            <strong>xVerify: Efficient Answer Verifier for Reasoning Model Evaluations</strong><br>
-            Ding Chen<sup>*</sup>, <strong><u>Qingchen Yu</u></strong><sup>*</sup>, Pengyuan Wang<sup>*</sup>, Wentao Zhang<sup>†</sup>, Bo Tang, et al.<br>
-            <span style="font-size: 16px; background-color: #E0E0E0; color: #555; font-weight: bold; padding: 3px 6px; border-radius: 5px;">EMNLP 2026 (Findings)</span>
-            <a href="https://arxiv.org/abs/2504.10481" style="color: #0066cc; text-decoration: none;">arXiv</a> |
-            <a href="https://github.com/IAAR-Shanghai/xVerify" style="color: #0066cc; text-decoration: none;">GitHub</a> |
-            <a href="https://huggingface.co/collections/IAAR-Shanghai/xverify-67e0f6f94c2dc334727da802" style="color: #0066cc; text-decoration: none;">Models</a> |
-            <a href="https://mp.weixin.qq.com/s/Un59Wi_vQB5JBaLASQbHKw" style="color: #0066cc; text-decoration: none;">WeChat Article</a> |
-            <a href="https://x.com/_akhaliq/status/1912419740393349234" style="color: #0066cc; text-decoration: none;">X Thread</a>
-        </p>
-    </div>
-</div>
-
-<div style="display: flex; align-items: center; margin-bottom: 20px;">
-    <div style="margin-right: 20px;">
-        <img src="./assets/turtle_framework.png" alt="turtle_framework" style="width: 131px; height: auto; border-radius: 8px;">
-    </div>
-    <div>
-        <p style="font-size: 16px; line-height: 1.6; margin: 0;">
-            <strong>TurtleBench: Evaluating Top Language Models via Real-World Yes/No Puzzles</strong><br>
-            <strong><u>Qingchen Yu</u></strong><sup>*</sup>, Shichao Song<sup>*</sup>, Ke Fang<sup>*</sup>, Yunfeng Shi, Zifan Zheng, et al.<br>
-            <span style="font-size: 16px; background-color: #E0E0E0; color: #555; font-weight: bold; padding: 3px 6px; border-radius: 5px;">ICASSP 2026</span>
-            <a href="https://ieeexplore.ieee.org/document/11464244" style="color: #0066cc; text-decoration: none;">IEEE Xplore</a> | 
-            <a href="https://arxiv.org/abs/2410.05262" style="color: #0066cc; text-decoration: none;">arXiv</a> | 
-            <a href="https://github.com/mazzzystar/TurtleBench" style="color: #0066cc; text-decoration: none;">GitHub</a> | 
-            <a href="https://huggingface.co/datasets/Duguce/TurtleBench1.5k" style="color: #0066cc; text-decoration: none;">Dataset</a> | 
-            <a href="https://tanghenre.com" style="color: #0066cc; text-decoration: none;">Demo</a> | 
-            <a href="https://mazzzystar.github.io/2024/08/09/turtle-benchmark-zh" style="color: #0066cc; text-decoration: none;">Blog Post</a> | <a href="./assets/TurtleBench-Poster_ICASSP2026.pdf" style="color: #0066cc; text-decoration: none;">Poster</a>
-        </p>
-    </div>
-</div>
-
-<div style="display: flex; align-items: center; margin-bottom: 20px;">
-    <div style="margin-right: 20px;">
-        <img src="./assets/grimoire_framework.jpg" alt="grimoire_framework" style="width: 131px; height: auto; border-radius: 8px;">
-    </div>
-    <div>
-        <p style="font-size: 16px; line-height: 1.6; margin: 0;">
-            <strong>Grimoire is All You Need for Enhancing Large Language Models</strong><br>
-            Ding Chen<sup>*</sup>, Shichao Song<sup>*</sup>, <strong><u>Qingchen Yu</u></strong>, Zhiyu Li<sup>†</sup>, Wenjin Wang, et al.<br>
-            <span style="font-size: 16px; background-color: #E0E0E0; color: #555; font-weight: bold; padding: 3px 6px; border-radius: 5px;">arXiv 2024</span>
-            <a href="https://arxiv.org/abs/2401.03385" style="color: #0066cc; text-decoration: none;">arXiv</a> | <a href="https://github.com/IAAR-Shanghai/Grimoire" style="color: #0066cc; text-decoration: none;">GitHub</a> | <a href="https://mp.weixin.qq.com/s/YsMSy0vwxQtzPwWaCoPmzw" style="color: #0066cc; text-decoration: none;">WeChat Article</a>
-        </p>
-    </div>
-</div>
 
 <h2 style="text-align: left;">Honors and Awards</h2>
 
