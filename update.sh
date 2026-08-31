@@ -18,16 +18,12 @@ if [ "$(git config --get core.autocrlf)" != "true" ]; then
   exit 1
 fi
 
-# public/ is a local Hugo build artefact: Actions rebuilds the site from source
-# on every push, so committing it only inflates the diff.
-sources=(. ':!public')
-
-if [ -z "$(git status --porcelain -- "${sources[@]}")" ]; then
-  echo "Nothing to commit outside public/."
+if [ -z "$(git status --porcelain)" ]; then
+  echo "Nothing to commit."
   exit 0
 fi
 
-git status --short -- "${sources[@]}"
-git add -A -- "${sources[@]}"
+git status --short
+git add -A
 git commit -m "updating site on $(date '+%a %b %d %H:%M:%S %Y')"
 git push origin master

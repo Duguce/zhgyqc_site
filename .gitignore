@@ -37,3 +37,7 @@ static/config/config.local.js
 
 # Local scratch space: preview builds and screenshots
 .audit/
+
+# Hugo output: Actions rebuilds the site from source on every push and deploys
+# that artefact, so the committed copy served no purpose.
+public/
