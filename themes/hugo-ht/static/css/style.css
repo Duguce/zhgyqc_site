@@ -219,7 +219,8 @@ div.splitbox div.right {
   position: relative;
 }
 
-.nav-links a:hover {
+.nav-links a:hover,
+.nav-links a.is-current {
   color: #1a56b8;
 }
 
@@ -237,9 +238,16 @@ div.splitbox div.right {
   transition: width 0.32s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.22s ease;
 }
 
-.nav-links a:hover::after {
+.nav-links a:hover::after,
+.nav-links a.is-current::after {
   width: 100%;
   opacity: 1;
+}
+
+.nav-links a:focus-visible {
+  outline: 2px solid #1a56b8;
+  outline-offset: 4px;
+  border-radius: 2px;
 }
 
 /*The parameter of `max-width` below controls the width of the body text. 

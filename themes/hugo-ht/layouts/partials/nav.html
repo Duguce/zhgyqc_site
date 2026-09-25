@@ -1,9 +1,9 @@
-<nav class="nav" >
+<nav class="nav" aria-label="{{ if eq .Section "cn" }}主导航{{ else }}Main navigation{{ end }}">
       <a href="{{ "/" | relURL }}" class="nav-logo">
         <img src="{{ print "" .Site.Params.logo.url | relURL }}"
          width="{{ .Site.Params.logo.width }}"
          height="{{ .Site.Params.logo.height }}"
-         alt="{{ .Site.Params.logo.alt }}">
+         alt="{{ .Site.Title }}">
       </a>
 
          <ul class="nav-links" >
@@ -15,7 +15,8 @@
             {{ $menuKey := $.Scratch.Get "menuKey" }}
             {{ $menu := default (index .Site.Menus $defaultMenuKey) (index .Site.Menus $menuKey) }}
             {{ range $menu }}
-                <li><a href="{{ .URL | relURL }}">{{ .Name }}</a></li>
+                {{ $isCurrent := or (and $.IsHome (eq .URL "/")) (and (eq $.Section "en") (eq .URL "/moments/")) (and (eq $.Section "cn") (eq .URL "/blogs/")) }}
+                <li><a href="{{ .URL | relURL }}"{{ if $isCurrent }} class="is-current" aria-current="{{ if $.IsPage }}location{{ else }}page{{ end }}"{{ end }}>{{ .Name }}</a></li>
             {{ end }}
          </ul>
 </nav>

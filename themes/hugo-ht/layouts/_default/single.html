@@ -64,36 +64,31 @@
   <style>
   /* ═══ Scholar Single · Refined ═══ */
   .scholar-article {
-    --sa-surface: #faf8f3;
-    --sa-border: #dbd5c4;
-    --sa-border-soft: rgba(139, 130, 110, 0.12);
-    --sa-ink: #1a2133;
-    --sa-ink-soft: #2d3548;
-    --sa-muted: #5c6272;
-    --sa-accent: #8a6f4d;
-    --sa-accent-glow: rgba(138, 111, 77, 0.18);
-    --sa-surface-alt: #f3efe6;
-    --sa-card-bg: #fffefc;
+    --sa-surface: #f6f9fd;
+    --sa-border: #dce4ee;
+    --sa-border-soft: rgba(27, 90, 183, 0.10);
+    --sa-ink: #1e293b;
+    --sa-ink-soft: #38445a;
+    --sa-muted: #5c6b82;
+    --sa-accent: #1b5ab7;
+    --sa-accent-glow: rgba(27, 90, 183, 0.12);
+    --sa-kicker: #8a6f4d;
+    --sa-surface-alt: #f0f5fb;
+    --sa-card-bg: #fff;
     --sa-shadow-sm: 0 1px 2px rgba(15, 18, 28, 0.04);
     --sa-shadow-md: 0 4px 12px rgba(15, 18, 28, 0.06), 0 1px 3px rgba(15, 18, 28, 0.04);
-    --sa-shadow-lg: 0 12px 32px rgba(15, 18, 28, 0.07), 0 3px 8px rgba(15, 18, 28, 0.04);
-    --sa-shadow-xl: 0 24px 56px rgba(12, 16, 30, 0.10), 0 6px 14px rgba(12, 16, 30, 0.05);
+    --sa-shadow-lg: 0 8px 24px rgba(27, 90, 183, 0.06), 0 2px 8px rgba(15, 18, 28, 0.03);
+    --sa-shadow-xl: 0 14px 36px rgba(27, 90, 183, 0.08), 0 4px 10px rgba(15, 18, 28, 0.04);
     --sa-radius-sm: 0.65rem;
-    --sa-radius: 1.1rem;
-    --sa-radius-lg: 1.4rem;
-    --sa-radius-xl: 1.75rem;
+    --sa-radius: 0.75rem;
+    --sa-radius-lg: 0.875rem;
+    --sa-radius-xl: 1rem;
     font-family: "Source Serif 4", "Noto Serif SC", "Charter", "Palatino Linotype", Georgia, "Songti SC", serif;
     color: var(--sa-ink);
     padding-bottom: 3.5rem;
   }
   .scholar-article[data-variant="moments"] {
-    --sa-surface: #f4f8fc;
-    --sa-border: #cfdde9;
-    --sa-border-soft: rgba(100, 130, 165, 0.12);
-    --sa-accent: #4b6fad;
-    --sa-accent-glow: rgba(75, 111, 173, 0.18);
-    --sa-surface-alt: #ecf3f9;
-    --sa-card-bg: #fdfeff;
+    --sa-kicker: #4b6fad;
   }
 
   /* ── Grain texture shared ── */
@@ -161,7 +156,7 @@
     font-weight: 600;
     letter-spacing: 0.26em;
     text-transform: uppercase;
-    color: var(--sa-accent);
+    color: var(--sa-kicker);
     display: block;
     margin-bottom: 0.85rem;
   }
@@ -1075,77 +1070,25 @@
     .scholar-lightbox { transition: none; }
   }
 
-  /* ═══ Dark mode ═══ */
-  @media (prefers-color-scheme: dark) {
-    .scholar-article {
-      --sa-surface: #1e1f23;
-      --sa-border: #3a3c42;
-      --sa-border-soft: rgba(255,255,255,0.06);
-      --sa-ink: #e4e6ec;
-      --sa-ink-soft: #c4c7d0;
-      --sa-muted: #8a8d98;
-      --sa-accent: #c4a46c;
-      --sa-accent-glow: rgba(196, 164, 108, 0.13);
-      --sa-surface-alt: #26272c;
-      --sa-card-bg: #232428;
-      --sa-shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
-      --sa-shadow-md: 0 4px 12px rgba(0,0,0,0.35);
-      --sa-shadow-lg: 0 12px 32px rgba(0,0,0,0.4);
-      --sa-shadow-xl: 0 24px 56px rgba(0,0,0,0.5);
-    }
-    .scholar-article[data-variant="moments"] {
-      --sa-surface: #1b2129;
-      --sa-border: #343d4a;
-      --sa-border-soft: rgba(255,255,255,0.06);
-      --sa-accent: #7da3d4;
-      --sa-accent-glow: rgba(125, 163, 212, 0.13);
-      --sa-surface-alt: #232830;
-      --sa-card-bg: #1e232b;
-    }
-    .scholar-article::before { opacity: 0.04; }
-    .scholar-hero::before { opacity: 0.2; }
-    .scholar-body__content pre {
-      background: var(--sa-surface);
-    }
-    .scholar-body__content :not(pre) > code {
-      background: #26272c;
-      color: #c4c7d0;
-    }
-    .scholar-body__content blockquote {
-      background: var(--sa-surface);
-    }
-    .code-copy {
-      background: #2a2c32;
-      color: #a0a3ae;
-      border-color: var(--sa-border);
-    }
-    .code-copy:hover { background: #c4c7d0; color: #1a1c21; }
-    .scholar-backtotop { backdrop-filter: blur(12px); }
-    .scholar-progress__fill {
-      background: linear-gradient(90deg, var(--sa-accent), color-mix(in srgb, var(--sa-accent) 60%, #000));
-    }
-    .scholar-body__content tbody tr:nth-child(even) { background: rgba(255,255,255,0.02); }
-    .scholar-body__content tbody tr:hover { background: rgba(255,255,255,0.05); }
-  }
   </style>
 
   <article class="scholar-article" data-variant="{{ if $isMoment }}moments{{ else }}blogs{{ end }}">
     <header class="scholar-hero">
       <div class="scholar-hero__body">
-        <div class="scholar-hero__badge">{{ if $isMoment }}Field Note{{ else }}Research Journal{{ end }}</div>
+        <div class="scholar-hero__badge">{{ if $isMoment }}Field Note{{ else }}写作记录{{ end }}</div>
         <h1>{{ .Title }}</h1>
         {{ with .Params.subtitle }}
         <p class="scholar-hero__subtitle">{{ . }}</p>
         {{ end }}
         <div class="scholar-hero__meta">
           {{ with .Params.author }}<span>{{ . }}</span>{{ end }}
-          {{ if .Params.date }}<span>{{ .Date.Format "Jan 02, 2006" }}</span>{{ end }}
+          {{ if .Params.date }}<span>{{ if $isBlog }}{{ .Date.Format "2006年01月02日" }}{{ else }}{{ .Date.Format "Jan 02, 2006" }}{{ end }}</span>{{ end }}
           <span>{{ if eq .Section "cn" }}{{ printf "%d 分钟阅读" .ReadingTime }}{{ else }}{{ printf "%d min read" .ReadingTime }}{{ end }}</span>
           {{ if and $isMoment .Params.location }}<span>{{ .Params.location }}</span>{{ end }}
         </div>
         {{ with $editScratch.Get "href" }}
         <div class="scholar-hero__actions">
-          <a class="scholar-hero__edit" href="{{ . }}" target="_blank" rel="noopener">Suggest edit</a>
+          <a class="scholar-hero__edit" href="{{ . }}" target="_blank" rel="noopener">{{ if $isBlog }}建议修改{{ else }}Suggest edit{{ end }}</a>
         </div>
         {{ end }}
       </div>
@@ -1160,7 +1103,7 @@
         </p>
         {{ with .Params.tags }}
         <div class="scholar-tags">
-          <span class="scholar-tags__label">Topics</span>
+          <span class="scholar-tags__label">{{ if $isBlog }}标签{{ else }}Topics{{ end }}</span>
           <ul>
             {{ range . }}
             {{ $tagURL := (print "/tags/" (. | urlize) "/") | relURL }}
@@ -1172,9 +1115,9 @@
 
         {{ $giscus := .Site.Params.giscus }}
         {{ if and $giscus.repo $giscus.repoId $giscus.category $giscus.categoryId }}
-        <section class="scholar-comments" aria-label="Comments">
-          <h2 class="scholar-comments__title">Discussion</h2>
-          <p class="scholar-comments__hint">Comments from readers</p>
+        <section class="scholar-comments" aria-label="{{ if $isBlog }}评论{{ else }}Comments{{ end }}">
+          <h2 class="scholar-comments__title">{{ if $isBlog }}评论区{{ else }}Discussion{{ end }}</h2>
+          <p class="scholar-comments__hint">{{ if $isBlog }}欢迎分享你的想法{{ else }}Comments from readers{{ end }}</p>
           <div id="giscus-comments"></div>
           <script src="https://giscus.app/client.js"
             data-repo="{{ $giscus.repo }}"
@@ -1187,7 +1130,7 @@
             data-emit-metadata="{{ default "0" $giscus.emitMetadata }}"
             data-input-position="{{ default "bottom" $giscus.inputPosition }}"
             data-theme="{{ default "light" $giscus.theme }}"
-            data-lang="{{ default "en" $giscus.lang }}"
+            data-lang="{{ if $isBlog }}zh-CN{{ else }}{{ default "en" $giscus.lang }}{{ end }}"
             data-loading="{{ default "lazy" $giscus.loading }}"
             crossorigin="anonymous"
             async>
@@ -1226,7 +1169,7 @@
     </nav>
     {{ end }}
 
-    <a class="scholar-backtotop" id="scholar-backtotop" href="#top" aria-label="Back to top">↑</a>
+    <a class="scholar-backtotop" id="scholar-backtotop" href="#top" aria-label="{{ if $isBlog }}返回顶部{{ else }}Back to top{{ end }}">↑</a>
   </article>
   <script>
   (function() {
@@ -1256,15 +1199,15 @@
       const btn = document.createElement('button');
       btn.className = 'code-copy';
       btn.type = 'button';
-      btn.textContent = 'Copy';
+       btn.textContent = {{ if $isBlog }}'复制'{{ else }}'Copy'{{ end }};
       btn.addEventListener('click', () => {
         const text = codeEl ? codeEl.innerText : block.innerText;
         navigator.clipboard.writeText(text).then(() => {
           btn.classList.add('is-copied');
-          btn.textContent = 'Copied';
+           btn.textContent = {{ if $isBlog }}'已复制'{{ else }}'Copied'{{ end }};
           setTimeout(() => {
             btn.classList.remove('is-copied');
-            btn.textContent = 'Copy';
+             btn.textContent = {{ if $isBlog }}'复制'{{ else }}'Copy'{{ end }};
           }, 1600);
         });
       });
@@ -1292,7 +1235,7 @@
       overlay.className = 'scholar-lightbox';
       overlay.setAttribute('aria-hidden', 'true');
       overlay.innerHTML =
-        '<button class="scholar-lightbox__close" type="button" aria-label="Close">&times;</button>' +
+        '<button class="scholar-lightbox__close" type="button" aria-label="{{ if $isBlog }}关闭图片{{ else }}Close{{ end }}">&times;</button>' +
         '<img alt=""><p class="scholar-lightbox__caption"></p>';
       document.body.appendChild(overlay);
       const full = overlay.querySelector('img');
@@ -1390,7 +1333,7 @@
       a.className = 'heading-anchor';
       a.href = '#' + h.id;
       a.textContent = '#';
-      a.title = 'Link to this section';
+         a.title = {{ if $isBlog }}'链接到此章节'{{ else }}'Link to this section'{{ end }};
       h.prepend(a);
     });
   })();

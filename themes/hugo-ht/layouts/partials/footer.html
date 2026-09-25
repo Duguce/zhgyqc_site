@@ -43,7 +43,7 @@
        {{ end }}
        {{ end }}
       {{ if and (not .IsHome) (ne $rssLink "") }}
-      <li><a href="{{ $rssLink }}" type="application/rss+xml" title="RSS feed">
+      <li><a href="{{ $rssLink }}" type="application/rss+xml" title="{{ if eq .Section "cn" }}RSS 订阅{{ else }}RSS feed{{ end }}">
       {{ default "Subscribe" (index $.Site.Params.lang.subscribe $.Section) }} </a>
       </li>
        <li>
@@ -53,7 +53,7 @@
         <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
        {{ end }}
         {{ default (index $.Site.Params.Lang.license $.Site.Params.defaultLang) (index $.Site.Params.lang.license $.Section) }}
-        <i class="fa fa-cc" aria-hidden="true" title="Attribution-NonCommercial-ShareAlike 4.0 International"></i> 
+        <i class="fa fa-cc" aria-hidden="true" title="{{ if eq .Section "cn" }}知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议{{ else }}Attribution-NonCommercial-ShareAlike 4.0 International{{ end }}"></i>
         </a>
        </li>
        {{ end }}
