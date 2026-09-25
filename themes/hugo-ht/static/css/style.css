@@ -252,6 +252,10 @@ Customize as you prefer*/
   line-height: 1.75;
 }
 
+body.home-page .content {
+  max-width: 1060px;
+}
+
 /* ═══════════════════════════════════════════════════════════════
    Academic link styling · v3
    ───────────────────────────────────────────────────────────
@@ -1017,8 +1021,7 @@ hr {
 .pub-body {
   font-size: 16px;
   line-height: 1.6;
-  /* Without this the single-line venue below could push the grid column past
-     the card's width instead of being clipped. */
+  /* Let long publication text wrap inside the grid column. */
   min-width: 0;
 }
 
@@ -1044,8 +1047,7 @@ hr {
   margin-top: 3px;
 }
 
-/* The venue gets its own line, spelled out. Kept to a single line so all four
-   entries share the same four-line rhythm. */
+/* Keep the full venue visible, wrapping when the available width is smaller. */
 .pub-venue {
   display: block;
   margin-top: 5px;
@@ -1053,9 +1055,7 @@ hr {
   font-style: italic;
   line-height: 1.5;
   color: #55606f;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
 }
 
 .pub-venue-short {
