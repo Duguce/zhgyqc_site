@@ -19,8 +19,6 @@
     {{ $latestStamp = (index $entries 0).Date.Format "2006-01-02" }}
   {{ end }}
   {{ $heroDesc := cond $isCnBlogs "记录阅读、技术与生活中的思考。" "Short notes from daily life and travel." }}
-  {{ $panelTitle := cond $isCnBlogs "文章归档" "Moments" }}
-  {{ $panelDesc := cond $isCnBlogs "阅读近期文章，或按年份浏览。" "Scan recent posts and open any entry." }}
   {{ $ctaLabel := cond $isCnBlogs "阅读文章" "Open moment" }}
   {{ $stat1Label := cond $isCnBlogs "文章数" "Total entries" }}
   {{ $stat2Label := cond $isCnBlogs "写作年份" "Active years" }}
@@ -203,20 +201,6 @@
         var(--sl-shadow-xl),
         inset 0 1px 0 rgba(255,255,255,0.6);
     }
-    .scholar-panel__header { text-align: center; margin-bottom: 1.8rem; }
-    .scholar-panel__header h2 {
-      font-size: 1.35rem;
-      margin-bottom: 0.4rem;
-      font-weight: 620;
-      color: var(--sl-ink);
-    }
-    .scholar-panel__header p {
-      color: var(--sl-muted);
-      font-size: 0.95rem;
-      max-width: 520px;
-      margin: 0 auto;
-    }
-
     /* ── Entry grid ── */
     .entry-grid {
       display: grid;
@@ -534,11 +518,7 @@
           </div>
         </div>
       </section>
-      <section class="scholar-panel" aria-labelledby="scholar-panel-title">
-        <div class="scholar-panel__header" id="scholar-panel-title">
-          <h2>{{ $panelTitle }}</h2>
-          <p>{{ $panelDesc }}</p>
-        </div>
+      <section class="scholar-panel" aria-label="{{ if $isCnBlogs }}文章列表{{ else }}Moment entries{{ end }}">
         {{ if gt $totalEntries 0 }}
         <div class="entry-grid" role="list">
           {{ range $idx, $p := $paginator.Pages }}
