@@ -58,116 +58,60 @@
   {{ end }}
 {{ end }}
 
-<main class="content{{ if $showToc }} is-wide{{ end }}" role="main">
+<main class="content{{ if $useScholarLayout }} scholar-content{{ else if $showToc }} is-wide{{ end }}" role="main">
 {{ if $useScholarLayout }}
-  <div class="scholar-progress" aria-hidden="true"><div class="scholar-progress__fill" id="scholar-progress-fill"></div></div>
   <style>
-  /* ═══ Scholar Single · Refined ═══ */
+  /* Keep the site-wide canvas and navigation continuous around each article. */
+  .content.scholar-content {
+    max-width: 760px;
+    padding: 0 20px;
+  }
   .scholar-article {
-    --sa-surface: #f6f9fd;
-    --sa-border: #dce4ee;
-    --sa-border-soft: rgba(27, 90, 183, 0.10);
-    --sa-ink: #1e293b;
-    --sa-ink-soft: #38445a;
-    --sa-muted: #5c6b82;
-    --sa-accent: #1b5ab7;
-    --sa-accent-glow: rgba(27, 90, 183, 0.12);
-    --sa-kicker: #8a6f4d;
-    --sa-surface-alt: #f0f5fb;
-    --sa-card-bg: #fff;
-    --sa-shadow-sm: 0 1px 2px rgba(15, 18, 28, 0.04);
-    --sa-shadow-md: 0 4px 12px rgba(15, 18, 28, 0.06), 0 1px 3px rgba(15, 18, 28, 0.04);
-    --sa-shadow-lg: 0 8px 24px rgba(27, 90, 183, 0.06), 0 2px 8px rgba(15, 18, 28, 0.03);
-    --sa-shadow-xl: 0 14px 36px rgba(27, 90, 183, 0.08), 0 4px 10px rgba(15, 18, 28, 0.04);
+    --sa-surface: #f1f5f5;
+    --sa-border: #d9e2e3;
+    --sa-border-soft: #e6ebeb;
+    --sa-ink: #23333b;
+    --sa-ink-soft: #3c4c53;
+    --sa-muted: #62737b;
+    --sa-accent: #326b87;
+    --sa-kicker: #8a765d;
+    --sa-surface-alt: #edf3f3;
+    --sa-card-bg: #fbfcfe;
     --sa-radius-sm: 0.65rem;
     --sa-radius: 0.75rem;
     --sa-radius-lg: 0.875rem;
     --sa-radius-xl: 1rem;
     font-family: "Source Serif 4", "Noto Serif SC", "Charter", "Palatino Linotype", Georgia, "Songti SC", serif;
     color: var(--sa-ink);
-    padding-bottom: 3.5rem;
+    box-sizing: border-box;
+    padding: clamp(1.25rem, 4vw, 2.5rem);
+    background: transparent;
   }
   .scholar-article[data-variant="moments"] {
-    --sa-kicker: #4b6fad;
+    --sa-kicker: #5d7e88;
   }
 
-  /* ── Grain texture shared ── */
-  .scholar-article::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    opacity: 0.028;
-    pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='80' height='80' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E");
-  }
-
-  /* ── Hero ── */
   .scholar-hero {
-    background: var(--sa-card-bg);
-    border: 1px solid var(--sa-border);
-    border-radius: var(--sa-radius-xl);
-    padding: 2.2rem 2.4rem;
+    padding: 0 0 2rem;
+    margin: 0 0 2rem;
+    border-bottom: 1px solid var(--sa-border);
+    text-align: center;
+  }
+  .scholar-article:has(.scholar-body.has-toc) .scholar-hero {
+    padding-bottom: 0;
     margin-bottom: 1.8rem;
-    position: relative;
-    overflow: hidden;
-    box-shadow: var(--sa-shadow-lg);
-    transition: box-shadow 0.4s ease;
-  }
-  .scholar-hero:hover {
-    box-shadow: var(--sa-shadow-xl);
-  }
-  .scholar-hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 70% 60% at 18% 15%, var(--sa-accent-glow), transparent 55%),
-      radial-gradient(ellipse 40% 50% at 85% 80%, rgba(31, 37, 53, 0.05), transparent 60%),
-      linear-gradient(135deg, rgba(31, 37, 53, 0.03) 0%, transparent 50%, rgba(31, 37, 53, 0.04) 100%);
-    opacity: 0.7;
-    pointer-events: none;
-  }
-  .scholar-article[data-variant="moments"] .scholar-hero::after {
-    background:
-      radial-gradient(ellipse 65% 55% at 20% 18%, rgba(75, 111, 173, 0.20), transparent 55%),
-      radial-gradient(ellipse 45% 50% at 82% 78%, rgba(40, 70, 120, 0.06), transparent 60%),
-      linear-gradient(140deg, rgba(34, 52, 86, 0.03) 0%, transparent 55%, rgba(34, 52, 86, 0.04) 100%);
-  }
-  /* decorative accent line */
-  .scholar-hero::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 2.4rem; right: 2.4rem;
-    height: 3px;
-    border-radius: 0 0 3px 3px;
-    background: linear-gradient(90deg, transparent, var(--sa-accent), transparent);
-    opacity: 0.35;
-    z-index: 2;
-    pointer-events: none;
+    border-bottom: 0;
   }
   .scholar-hero__body {
-    position: relative;
-    z-index: 1;
-  }
-  .scholar-hero__badge {
-    font-family: "Noto Sans SC", system-ui, -apple-system, sans-serif;
-    font-size: 0.66rem;
-    font-weight: 600;
-    letter-spacing: 0.26em;
-    text-transform: uppercase;
-    color: var(--sa-kicker);
-    display: block;
-    margin-bottom: 0.85rem;
+    max-width: 100%;
   }
   .scholar-hero h1 {
-    /* Left, like the badge above it and the chips below: one edge, not three. */
-    text-align: left;
-    font-size: clamp(1.5rem, 2.5vw, 2.15rem);
+    text-align: center;
+    font-size: clamp(1.65rem, 2.7vw, 2.25rem);
     font-weight: 650;
-    line-height: 1.25;
+    line-height: 1.32;
     letter-spacing: -0.012em;
-    margin: 0 0 0.6rem 0;
+    margin: 0 0 0.8rem 0;
     color: var(--sa-ink);
   }
   .scholar-hero__subtitle {
@@ -182,6 +126,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
     font-family: "Noto Sans SC", system-ui, -apple-system, sans-serif;
     font-size: 0.82rem;
     color: var(--sa-muted);
@@ -202,55 +147,28 @@
     display: flex;
     gap: 0.75rem;
     align-items: center;
+    justify-content: center;
   }
   .scholar-hero__edit {
     font-size: 0.82rem;
     text-decoration: none;
     color: var(--sa-accent);
-    border: 1px solid var(--sa-border);
-    border-radius: 999px;
-    padding: 0.38rem 1rem;
-    background: var(--sa-card-bg);
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border-bottom: 1px solid var(--sa-border);
+    padding: 0.15rem 0;
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
   }
   .scholar-hero__edit:hover {
-    background: var(--sa-accent);
-    color: #fff;
     border-color: var(--sa-accent);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 14px var(--sa-accent-glow);
   }
 
-  /* `.wrapper { overflow: hidden }` makes the page its own scroll container,
-     which silently disables every position: sticky inside it. Clipping only the
-     horizontal axis keeps the same guard against sideways overflow. */
-  .wrapper {
-    overflow-x: clip;
-    overflow-y: visible;
-  }
-
-  /* ── Body card ── */
   .scholar-body {
-    border: 1px solid var(--sa-border);
-    border-radius: var(--sa-radius-xl);
-    padding: 2.4rem;
-    background: var(--sa-card-bg);
-    box-shadow:
-      var(--sa-shadow-xl),
-      inset 0 1px 0 rgba(255,255,255,0.7);
     display: flex;
     flex-direction: column;
-    gap: 1.8rem;
-    position: relative;
+    gap: 1.5rem;
   }
-  /* Stacked by default: the outline only earns a column when the viewport can
-     spare one without squeezing the reading measure. */
   .scholar-body.has-toc {
-    display: flex;
-    flex-direction: column;
     gap: 1.5rem;
   }
   .scholar-body__content {
@@ -258,6 +176,7 @@
     line-height: 1.82;
     color: var(--sa-ink-soft);
     overflow-wrap: break-word;
+    min-width: 0;
   }
   /* Refined headings inside body */
   .scholar-body__content h1,
@@ -277,6 +196,7 @@
   .scholar-body__content h4 { font-size: 1.08rem; font-weight: 580; color: var(--sa-muted); }
   .scholar-body__content h5, .scholar-body__content h6 { font-size: 1rem; font-weight: 560; color: var(--sa-muted); }
   .scholar-body__content h2 { text-align: left; }
+  .scholar-body.has-toc .scholar-body__content > h2:first-child { margin-top: 0.5rem; }
   .scholar-body__content h3,
   .scholar-body__content h4,
   .scholar-body__content h5,
@@ -304,6 +224,7 @@
     color: var(--sa-ink-soft);
     font-style: italic;
     border: none;
+    border-left: 2px solid #9bb4bb;
     box-shadow: none;
     position: static;
   }
@@ -311,133 +232,99 @@
     margin: 0;
   }
 
-  /* ── Outline ──
-     Small sans type against the serif article, so it reads as apparatus rather
-     than as more text to be read. */
+  /* ── Outline ── */
   .scholar-body__toc {
     order: -1;
     font-family: "Noto Sans SC", system-ui, -apple-system, sans-serif;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     color: var(--sa-muted);
-    border-bottom: 1px solid var(--sa-border-soft);
-    padding-bottom: 1rem;
+    width: 100%;
+    max-width: 35rem;
+    margin: 0 auto 0.25rem;
+  }
+  .scholar-toc {
+    border-top: 1px solid var(--sa-border);
+    border-bottom: 1px solid var(--sa-border);
   }
   .scholar-body__toc summary {
+    position: relative;
     display: flex;
     align-items: center;
+    justify-content: center;
+    min-height: 3.6rem;
+    padding: 0.25rem 2.5rem;
     list-style: none;
     cursor: pointer;
-    font-size: 0.68rem;
-    text-transform: uppercase;
-    letter-spacing: 0.22em;
-    color: var(--sa-muted);
-    opacity: 0.72;
-    font-weight: 600;
+    color: var(--sa-ink);
+    transition: color 0.2s ease;
+  }
+  .scholar-body__toc summary:hover { color: var(--sa-accent); }
+  .scholar-body__toc summary:focus-visible {
+    outline: 2px solid var(--sa-accent);
+    outline-offset: 3px;
   }
   .scholar-body__toc summary::-webkit-details-marker { display: none; }
-  .scholar-body__toc summary::after {
-    content: "";
-    width: 0.36rem;
-    height: 0.36rem;
-    margin-left: auto;
+  .scholar-toc__label {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+  }
+  .scholar-toc__chevron {
+    position: absolute;
+    right: 1.1rem;
+    top: 50%;
+    width: 0.48rem;
+    height: 0.48rem;
     border-right: 1.2px solid currentColor;
     border-bottom: 1.2px solid currentColor;
-    transform: translateY(-2px) rotate(45deg);
+    transform: translateY(-70%) rotate(45deg);
     transition: transform 0.25s ease;
   }
-  .scholar-toc[open] > summary::after {
-    transform: translateY(1px) rotate(225deg);
+  .scholar-toc[open] .scholar-toc__chevron {
+    transform: translateY(-25%) rotate(225deg);
   }
   .scholar-toc > nav {
-    margin-top: 0.8rem;
-    columns: 2;
-    column-gap: 2.4rem;
+    margin: 0;
+    padding: 0.8rem 1.4rem 1rem;
+    border-top: 1px solid var(--sa-border);
   }
   .scholar-body__toc nav ul,
-  .scholar-body__toc nav ol { padding-left: 0; margin: 0; list-style: none; }
+  .scholar-body__toc nav ol { padding-left: 0; margin: 0; list-style: none; counter-reset: toc-item; }
   .scholar-body__toc nav ul ul,
-  .scholar-body__toc nav ol ol { padding-left: 0.9rem; margin-top: 0.1rem; }
+  .scholar-body__toc nav ol ol { padding-left: 2.2rem; margin-top: 0.1rem; }
   .scholar-body__toc nav li { margin: 0; }
+  .scholar-body__toc nav > ul > li,
+  .scholar-body__toc nav > ol > li { counter-increment: toc-item; }
+  .scholar-body__toc nav > ul > li + li,
+  .scholar-body__toc nav > ol > li + li {
+    border-top: 1px solid var(--sa-border-soft);
+    margin-top: 0.55rem;
+    padding-top: 0.55rem;
+  }
+  .scholar-body__toc nav > ul > li > a::before,
+  .scholar-body__toc nav > ol > li > a::before {
+    content: counter(toc-item, decimal-leading-zero);
+    display: inline-block;
+    min-width: 2.2rem;
+    font-size: 0.68rem;
+    color: var(--sa-kicker);
+    letter-spacing: 0.04em;
+  }
   .scholar-body__toc a {
     display: block;
-    padding: 0.3rem 0;
-    line-height: 1.45;
+    padding: 0.4rem 0;
+    line-height: 1.55;
     color: var(--sa-muted);
     text-decoration: none;
-    opacity: 0.82;
-    transition: color 0.2s ease, opacity 0.2s ease;
+    transition: color 0.2s ease;
   }
   .scholar-body__toc a:hover {
-    color: var(--sa-ink);
-    opacity: 1;
+    color: var(--sa-accent);
   }
-  .scholar-body__toc nav ol ol a { font-size: 0.76rem; }
-
-  /* Wide screens: the outline steps out of the card and into the margin, where
-     a hairline rail marks how far down the article you are. */
-  @media (min-width: 1180px) {
-    .content.is-wide {
-      max-width: 1148px;
-    }
-    .scholar-body.has-toc {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 190px;
-      gap: 3rem;
-      background: none;
-      border: none;
-      border-radius: 0;
-      box-shadow: none;
-      padding: 0;
-    }
-    .scholar-body.has-toc > .scholar-body__content {
-      border: 1px solid var(--sa-border);
-      border-radius: var(--sa-radius-xl);
-      padding: 2.4rem;
-      background: var(--sa-card-bg);
-      box-shadow:
-        var(--sa-shadow-xl),
-        inset 0 1px 0 rgba(255, 255, 255, 0.7);
-    }
-    .scholar-body.has-toc > .scholar-body__toc {
-      order: 0;
-      position: sticky;
-      top: 5.5rem;
-      align-self: start;
-      max-height: calc(100vh - 8rem);
-      overflow-y: auto;
-      scrollbar-width: none;
-      border-bottom: none;
-      padding: 0.3rem 0;
-    }
-    .scholar-body__toc::-webkit-scrollbar { width: 0; }
-    /* Always expanded here, so the summary is a plain label again. */
-    .scholar-body__toc summary { cursor: default; margin-bottom: 0.9rem; }
-    .scholar-body__toc summary::after { display: none; }
-    .scholar-toc > nav {
-      margin-top: 0;
-      columns: auto;
-      border-left: 1px solid color-mix(in srgb, var(--sa-border) 70%, transparent);
-    }
-    .scholar-body__toc a {
-      position: relative;
-      padding: 0.32rem 0 0.32rem 0.9rem;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-    .scholar-body__toc a::before {
-      content: "";
-      position: absolute;
-      left: -1px;
-      top: 0.34rem;
-      bottom: 0.34rem;
-      width: 2px;
-      background: var(--sa-accent);
-      opacity: 0;
-      transition: opacity 0.25s ease;
-    }
-    .scholar-body__toc nav ol ol a { padding-left: 1.7rem; }
-  }
+  .scholar-body__toc nav > ul > li > a,
+  .scholar-body__toc nav > ol > li > a { font-size: 0.95rem; font-weight: 550; color: var(--sa-ink-soft); }
+  .scholar-body__toc nav ol ol a,
+  .scholar-body__toc nav ul ul a { font-size: 0.86rem; }
 
   /* ── Code blocks ── */
   .code-block {
@@ -528,7 +415,7 @@
     font-family: system-ui, -apple-system, sans-serif;
     opacity: 0;
     transition: opacity 0.2s ease, background 0.25s ease, color 0.25s ease,
-      border-color 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border-color 0.25s ease;
     z-index: 4;
   }
   .code-block:hover .code-copy,
@@ -545,8 +432,6 @@
     background: var(--sa-ink-soft);
     color: #fff;
     border-color: var(--sa-ink-soft);
-    transform: translateY(-1px);
-    box-shadow: 0 3px 10px rgba(0,0,0,0.10);
   }
   .code-copy.is-copied {
     color: #fff;
@@ -603,7 +488,7 @@
     margin: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.35rem 0.85rem;
   }
   .scholar-tags li {
     list-style: none;
@@ -614,74 +499,73 @@
     display: none;
   }
   .scholar-tags a {
-    text-decoration: none;
-    border: 1px solid var(--sa-border-soft);
-    border-radius: 999px;
-    padding: 0.2rem 0.8rem;
+    text-decoration: underline;
+    text-decoration-color: var(--sa-border);
+    text-underline-offset: 0.2em;
     font-family: "Noto Sans SC", system-ui, -apple-system, sans-serif;
     font-size: 0.79rem;
     color: var(--sa-muted);
-    background: none;
-    transition: color 0.25s ease, border-color 0.25s ease;
+    transition: color 0.25s ease, text-decoration-color 0.25s ease;
   }
   .scholar-tags a:hover {
     color: var(--sa-accent);
-    border-color: var(--sa-accent);
+    text-decoration-color: var(--sa-accent);
   }
 
   /* ── Comments ── */
   .scholar-comments {
-    margin-top: 2rem;
-    padding-top: 1.3rem;
+    margin-top: 1.5rem;
+    padding-top: 1.1rem;
     border-top: 1px solid var(--sa-border);
   }
-  .scholar-article[data-variant="moments"] .scholar-comments {
-    border-top-color: rgba(75, 111, 173, 0.18);
-  }
-  .scholar-body__content .scholar-comments__title {
+  .scholar-comments__title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    list-style: none;
     margin: 0;
     border-bottom: none;
     padding-bottom: 0;
   }
-  .scholar-comments__hint {
-    margin: 0.15rem 0 0;
-    font-size: 0.82rem;
-    color: var(--sa-muted);
-    opacity: 0.8;
+  .scholar-comments__title::-webkit-details-marker { display: none; }
+  .scholar-comments__title::after {
+    content: "+";
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0;
   }
+  .scholar-comments[open] .scholar-comments__title::after { content: "−"; }
   .scholar-comments #giscus-comments {
     margin-top: 0.8rem;
     max-width: 100%;
     padding: 0;
-    border-radius: var(--sa-radius);
-    overflow: hidden;
+  }
+  .scholar-comments #giscus-comments:empty {
+    display: none;
   }
 
   /* ── Prev/Next nav ── */
   .scholar-nav {
     margin-top: 2rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--sa-border);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
   }
   /* Extra class needed to outdo `.content a`, which would paint these blue. */
   .scholar-article .scholar-nav__card,
   .scholar-article .scholar-nav__card:visited {
-    flex: 1;
-    min-width: 220px;
-    border: 1px solid var(--sa-border);
-    border-radius: var(--sa-radius);
-    padding: 1.1rem 1.3rem;
+    min-width: 0;
     text-decoration: none;
     color: var(--sa-ink);
-    background: var(--sa-card-bg);
-    transition: border-color 0.3s ease, transform 0.3s ease;
-    position: relative;
+    transition: color 0.2s ease;
   }
   .scholar-article .scholar-nav__card:hover {
-    transform: translateY(-2px);
-    border-color: var(--sa-accent);
+    color: var(--sa-accent);
   }
+  .scholar-nav__card.is-next { grid-column: 2; text-align: right; }
   .scholar-nav__label {
     display: block;
   }
@@ -692,52 +576,32 @@
     color: var(--sa-ink);
   }
 
-  /* ── Back to top ── */
   .scholar-backtotop {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 999px;
-    border: 1px solid var(--sa-border);
-    margin-top: 1.8rem;
+    display: block;
+    width: fit-content;
+    margin: 1.8rem auto 0;
     text-decoration: none;
-    color: var(--sa-ink);
-    background: var(--sa-card-bg);
-    font-size: 1.1rem;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow: var(--sa-shadow-sm);
+    color: var(--sa-muted);
+    font-size: 0.8rem;
   }
   .scholar-backtotop:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--sa-shadow-md);
-    background: var(--sa-accent);
-    color: #fff;
-    border-color: var(--sa-accent);
+    color: var(--sa-accent);
   }
 
   /* ── Responsive ── */
   @media (max-width: 720px) {
+    .content.scholar-content { padding: 0 16px; }
+    .scholar-article { padding: 1.4rem 1.2rem; }
     .scholar-hero {
-      padding: 1.5rem;
-      border-radius: var(--sa-radius);
-    }
-    .scholar-hero::before { left: 1.2rem; right: 1.2rem; }
-    .scholar-body,
-    .scholar-body.has-toc {
-      display: flex;
-      flex-direction: column;
-      padding: 1.4rem;
-    }
-    .scholar-toc > nav {
-      columns: auto;
+      padding-bottom: 1.4rem;
+      margin-bottom: 1.4rem;
     }
     .scholar-comments {
       margin-top: 1.4rem;
       padding-top: 1rem;
     }
-    .scholar-nav { flex-direction: column; }
+    .scholar-nav { grid-template-columns: 1fr; }
+    .scholar-nav__card.is-next { grid-column: 1; text-align: left; }
   }
 
   /* ═══ Smooth scrolling ═══ */
@@ -748,7 +612,7 @@
 
   /* ═══ Custom selection ═══ */
   .scholar-article ::selection {
-    background: var(--sa-accent-glow);
+    background: #e7edf6;
     color: var(--sa-ink);
   }
 
@@ -767,8 +631,7 @@
     color: var(--sa-muted);
     text-decoration: none;
     opacity: 0;
-    transform: translateX(6px);
-    transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: opacity 0.2s ease;
     line-height: inherit;
     font-weight: 400;
   }
@@ -777,68 +640,10 @@
   .scholar-body__content h2:focus-within .heading-anchor,
   .scholar-body__content h3:focus-within .heading-anchor {
     opacity: 0.5;
-    transform: translateX(0);
   }
   .scholar-body__content .heading-anchor:hover {
     opacity: 1;
     color: var(--sa-accent);
-  }
-
-  /* ═══ Progress bar ═══ */
-  .scholar-progress {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    height: 2.5px;
-    z-index: 100;
-    background: transparent;
-    pointer-events: none;
-  }
-  .scholar-progress__fill {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, var(--sa-accent), color-mix(in srgb, var(--sa-accent) 70%, #fff));
-    border-radius: 0 2px 2px 0;
-    transition: width 80ms linear;
-  }
-
-  /* ═══ Floating back-to-top ═══ */
-  .scholar-backtotop {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 999px;
-    border: 1px solid var(--sa-border);
-    text-decoration: none;
-    color: var(--sa-ink);
-    background: var(--sa-card-bg);
-    font-size: 1.1rem;
-    z-index: 50;
-    opacity: 0;
-    transform: translateY(12px);
-    pointer-events: none;
-    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow: var(--sa-shadow-md);
-    backdrop-filter: blur(8px);
-  }
-  .scholar-backtotop.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-  .scholar-backtotop:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--sa-shadow-lg);
-    background: var(--sa-accent);
-    color: #fff;
-    border-color: var(--sa-accent);
-  }
-  @media (max-width: 720px) {
-    .scholar-backtotop { bottom: 1.2rem; right: 1.2rem; width: 40px; height: 40px; }
   }
 
   /* ═══ List styling ═══ */
@@ -888,14 +693,19 @@
   }
 
   /* ═══ Table styling ═══ */
+  .scholar-body__content .table-scroll {
+    max-width: 100%;
+    overflow-x: auto;
+    margin: 1.4rem 0;
+    scrollbar-width: thin;
+  }
   .scholar-body__content table {
     width: 100%;
+    min-width: 34rem;
     border-collapse: collapse;
     font-size: 0.92rem;
-    margin: 1.4rem 0;
-    border-radius: var(--sa-radius-sm);
-    overflow: hidden;
-    box-shadow: var(--sa-shadow-sm);
+    margin: 0;
+    border: 1px solid var(--sa-border);
   }
   .scholar-body__content thead {
     background: var(--sa-surface);
@@ -926,14 +736,9 @@
   .scholar-body__content img {
     max-width: 100%;
     height: auto;
-    border-radius: var(--sa-radius);
-    box-shadow: var(--sa-shadow-md);
-    border: 1px solid var(--sa-border-soft);
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
-  }
-  .scholar-body__content img:hover {
-    transform: scale(1.02);
-    box-shadow: var(--sa-shadow-xl);
+    display: block;
+    margin-inline: auto;
+    border-radius: 2px;
   }
   .scholar-body__content img.is-zoomable {
     cursor: zoom-in;
@@ -944,9 +749,9 @@
   }
   .scholar-body__content figcaption {
     margin-top: 0.6rem;
-    font-size: 0.88rem;
+    font-size: 0.8rem;
     color: var(--sa-muted);
-    font-style: italic;
+    font-style: normal;
   }
   /* Photo notes are written as centred raw HTML blocks: give the block room and
      treat the italic line under the picture as a caption. */
@@ -955,44 +760,16 @@
   }
   .scholar-body__content div[align="center"] p {
     margin: 0.7rem 0 0;
-    font-size: 0.88rem;
+    font-size: 0.8rem;
     line-height: 1.6;
     color: var(--sa-muted);
   }
+  .scholar-body__content div[align="center"] p em { font-style: normal; }
   /* A portrait photo at full column width eats a whole screen, so cap the height
      and let the width follow instead of the authored percentage. */
   .scholar-article[data-variant="moments"] .scholar-body__content img {
     width: auto;
     max-height: 62vh;
-  }
-
-  /* ═══ Fade-in animation ═══ */
-  @keyframes scholarFadeUp {
-    from { opacity: 0; transform: translateY(18px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  .scholar-hero,
-  .scholar-body,
-  .scholar-nav,
-  .scholar-comments {
-    animation: scholarFadeUp 0.55s ease both;
-  }
-  .scholar-body      { animation-delay: 0.08s; }
-  .scholar-nav       { animation-delay: 0.14s; }
-  .scholar-comments  { animation-delay: 0.18s; }
-  @media (prefers-reduced-motion: reduce) {
-    .scholar-hero, .scholar-body, .scholar-nav, .scholar-comments {
-      animation: none;
-    }
-  }
-
-  /* ═══ TOC active highlight ═══ */
-  .scholar-body__toc a.is-visible {
-    color: var(--sa-ink);
-    opacity: 1;
-  }
-  .scholar-body__toc a.is-visible::before {
-    opacity: 1;
   }
 
   /* ═══ Maths ═══
@@ -1022,7 +799,6 @@
     gap: 1rem;
     padding: 3rem 2rem;
     background: rgba(12, 16, 26, 0.86);
-    backdrop-filter: blur(6px);
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.28s ease, visibility 0.28s ease;
@@ -1036,15 +812,14 @@
     max-width: min(100%, 1200px);
     max-height: 82vh;
     width: auto;
-    border-radius: 0.6rem;
-    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+    border-radius: 2px;
   }
   .scholar-lightbox__caption {
     margin: 0;
     max-width: 46rem;
     text-align: center;
     font-size: 0.9rem;
-    font-style: italic;
+    font-style: normal;
     color: rgba(255, 255, 255, 0.78);
   }
   .scholar-lightbox__close {
@@ -1060,11 +835,10 @@
     font-size: 1.4rem;
     line-height: 1;
     cursor: pointer;
-    transition: background 0.22s ease, transform 0.22s ease;
+    transition: background 0.22s ease;
   }
   .scholar-lightbox__close:hover {
     background: rgba(255, 255, 255, 0.2);
-    transform: scale(1.05);
   }
   @media (prefers-reduced-motion: reduce) {
     .scholar-lightbox { transition: none; }
@@ -1075,7 +849,6 @@
   <article class="scholar-article" data-variant="{{ if $isMoment }}moments{{ else }}blogs{{ end }}">
     <header class="scholar-hero">
       <div class="scholar-hero__body">
-        <div class="scholar-hero__badge">{{ if $isMoment }}Field Note{{ else }}写作记录{{ end }}</div>
         <h1>{{ .Title }}</h1>
         {{ with .Params.subtitle }}
         <p class="scholar-hero__subtitle">{{ . }}</p>
@@ -1115,9 +888,8 @@
 
         {{ $giscus := .Site.Params.giscus }}
         {{ if and $giscus.repo $giscus.repoId $giscus.category $giscus.categoryId }}
-        <section class="scholar-comments" aria-label="{{ if $isBlog }}评论{{ else }}Comments{{ end }}">
-          <h2 class="scholar-comments__title">{{ if $isBlog }}评论区{{ else }}Discussion{{ end }}</h2>
-          <p class="scholar-comments__hint">{{ if $isBlog }}欢迎分享你的想法{{ else }}Comments from readers{{ end }}</p>
+        <details class="scholar-comments">
+          <summary class="scholar-comments__title">{{ if $isBlog }}评论区{{ else }}Discussion{{ end }}</summary>
           <div id="giscus-comments"></div>
           <script src="https://giscus.app/client.js"
             data-repo="{{ $giscus.repo }}"
@@ -1135,13 +907,16 @@
             crossorigin="anonymous"
             async>
           </script>
-        </section>
+        </details>
         {{ end }}
       </div>
       {{ if $showToc }}
       <aside class="scholar-body__toc">
-        <details class="scholar-toc" open>
-          <summary>{{ if $isBlog }}目录{{ else }}Outline{{ end }}</summary>
+        <details class="scholar-toc">
+          <summary>
+            <span class="scholar-toc__label">{{ if $isBlog }}文章目录{{ else }}Contents{{ end }}</span>
+            <span class="scholar-toc__chevron" aria-hidden="true"></span>
+          </summary>
           {{ .TableOfContents }}
         </details>
       </aside>
@@ -1155,13 +930,13 @@
     {{ $nextLabel := cond (eq .Section "cn") "下一篇" "Next" }}
     <nav class="scholar-nav">
       {{ if $prev }}
-      <a class="scholar-nav__card" href="{{ $prev.RelPermalink }}">
+      <a class="scholar-nav__card is-prev" href="{{ $prev.RelPermalink }}">
         <div class="scholar-nav__label">{{ $prevLabel }}</div>
         <div class="scholar-nav__title">{{ truncate 60 $prev.Title }}</div>
       </a>
       {{ end }}
       {{ if $next }}
-      <a class="scholar-nav__card" href="{{ $next.RelPermalink }}" style="text-align:right;">
+      <a class="scholar-nav__card is-next" href="{{ $next.RelPermalink }}">
         <div class="scholar-nav__label">{{ $nextLabel }}</div>
         <div class="scholar-nav__title">{{ truncate 60 $next.Title }}</div>
       </a>
@@ -1169,10 +944,18 @@
     </nav>
     {{ end }}
 
-    <a class="scholar-backtotop" id="scholar-backtotop" href="#top" aria-label="{{ if $isBlog }}返回顶部{{ else }}Back to top{{ end }}">↑</a>
+    <a class="scholar-backtotop" href="#top">↑ {{ if $isBlog }}返回顶部{{ else }}Back to top{{ end }}</a>
   </article>
   <script>
   (function() {
+    /* Keep wide tables inside the centered reading column. */
+    document.querySelectorAll('.scholar-body__content table').forEach(table => {
+      const wrap = document.createElement('div');
+      wrap.className = 'table-scroll';
+      table.parentNode.insertBefore(wrap, table);
+      wrap.appendChild(table);
+    });
+
     /* ── Code blocks ──
        The label and copy button live on a wrapper rather than inside <pre>, so
        they stay pinned to the visible corner while wide code scrolls under them. */
@@ -1270,59 +1053,6 @@
       document.addEventListener('keydown', e => {
         if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeBox();
       });
-    }
-
-    /* ── Reading progress bar ── */
-    const progressFill = document.getElementById('scholar-progress-fill');
-    if (progressFill) {
-      const onScroll = () => {
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const pct = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
-        progressFill.style.width = pct + '%';
-      };
-      window.addEventListener('scroll', onScroll, { passive: true });
-    }
-
-    /* ── Floating back-to-top ── */
-    const btt = document.getElementById('scholar-backtotop');
-    if (btt) {
-      const onBttScroll = () => {
-        btt.classList.toggle('is-visible', window.scrollY > 400);
-      };
-      window.addEventListener('scroll', onBttScroll, { passive: true });
-    }
-
-    /* ── Outline: a rail on wide screens, a folded block when stacked ── */
-    const tocFold = document.querySelector('.scholar-toc');
-    if (tocFold) {
-      const wide = window.matchMedia('(min-width: 1180px)');
-      const syncFold = () => { tocFold.open = wide.matches; };
-      syncFold();
-      wide.addEventListener('change', syncFold);
-      tocFold.addEventListener('click', e => {
-        if (wide.matches && e.target.closest('summary')) e.preventDefault();
-      });
-    }
-
-    /* ── TOC scroll highlight ── */
-    const tocLinks = document.querySelectorAll('.scholar-body__toc a[href^="#"]');
-    if (tocLinks.length > 0) {
-      const headingIds = [];
-      tocLinks.forEach(link => {
-        const id = link.getAttribute('href').slice(1);
-        const el = document.getElementById(id);
-        if (el) headingIds.push({ id, el, link });
-      });
-      const onTocScroll = () => {
-        let current = null;
-        headingIds.forEach(({ el, link }) => {
-          if (el.getBoundingClientRect().top < 120) current = link;
-        });
-        tocLinks.forEach(l => l.classList.remove('is-visible'));
-        if (current) current.classList.add('is-visible');
-      };
-      window.addEventListener('scroll', onTocScroll, { passive: true });
     }
 
     /* ── Heading anchor links ── */
