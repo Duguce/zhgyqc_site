@@ -6,7 +6,8 @@
     <title>{{ .Site.Title }}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!--     <script src="https://d3js.org/d3.v6.min.js"></script> -->
-    <link rel="stylesheet" href="{{ "/css/style.css" | relURL }}" />
+    {{ $styleVersion := readFile "themes/hugo-ht/static/css/style.css" | md5 }}
+    <link rel="stylesheet" href="{{ "/css/style.css" | relURL }}?v={{ $styleVersion }}" />
     <link rel="stylesheet" href="{{ "/css/fonts.css" | relURL }}" />
     {{ partial "head_custom.html" . }}
   </head>

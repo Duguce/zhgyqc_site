@@ -61,9 +61,9 @@ posts = "/posts/:filename/"
       loading = "lazy"
 
 [params.logo]
-    url = "media/logo.png"
-    width = 50.0
-    height = 50.0
+    url = "media/logo.svg"
+    width = 34.0
+    height = 34.0
     alt = "Hugo-ht"
 
 [params.lang]

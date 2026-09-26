@@ -405,6 +405,7 @@
     .scholar-pagination {
       margin: 1.8rem auto 0;
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       justify-content: center;
       gap: 0.3rem;
@@ -414,8 +415,10 @@
       background: var(--sl-card-bg);
       box-shadow: var(--sl-shadow-md);
       width: fit-content;
+      max-width: 100%;
+      box-sizing: border-box;
     }
-    .scholar-pagination__button {
+    .content .scholar-pagination__button {
       border: 1px solid transparent;
       border-radius: 999px;
       padding: 0.35rem 0.9rem;
@@ -426,15 +429,20 @@
       text-align: center;
       font-weight: 500;
       transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-sizing: border-box;
+      white-space: nowrap;
+      letter-spacing: 0;
+      box-shadow: none;
+      text-shadow: none;
     }
-    .scholar-pagination__button.is-active {
+    .content .scholar-pagination__button.is-active {
       background: var(--sl-accent);
       color: #fff;
       border-color: var(--sl-accent);
       font-weight: 600;
       box-shadow: 0 3px 10px var(--sl-accent-glow);
     }
-    .scholar-pagination__button:hover:not(.is-disabled):not(.is-active) {
+    .content .scholar-pagination__button:hover:not(.is-disabled):not(.is-active) {
       color: var(--sl-accent);
       background: var(--sl-surface);
     }
@@ -458,12 +466,29 @@
       }
       .scholar-hero::before { left: 1.2rem; right: 1.2rem; }
       .scholar-panel { padding: 1.4rem; }
-      .entry-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
-      .scholar-pagination { gap: 0.15rem; padding: 0.45rem 0.5rem; }
-      .scholar-pagination__button {
-        padding: 0.25rem 0.55rem;
+      .entry-grid { grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)); }
+      .entry-card { min-width: 0; overflow-wrap: anywhere; }
+      .scholar-pagination {
+        gap: 0.35rem;
+        padding: 0;
+        width: 100%;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+      }
+      .content .scholar-pagination__button {
+        padding: 0.45rem 0.5rem;
         font-size: 0.74rem;
-        min-width: 1.8rem;
+        min-width: 2.25rem;
+        min-height: 2.5rem;
+      }
+      .scholar-pagination__button:first-child,
+      .scholar-pagination__button:last-child {
+        order: 1;
+        flex: 1 1 40%;
+        margin-top: 0.35rem;
+        border-color: var(--sl-border);
       }
     }
 
