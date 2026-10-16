@@ -7,13 +7,13 @@
     <meta name="description" content="{{ with .Params.description }}{{ . }}{{ else }}{{ .Summary }}{{ end }}">
     <!-- Load configuration: prefer local config for development, fallback to production config -->
     {{ if eq hugo.Environment "development" }}
-    <script src="/config/config.local.js" onerror="this.onerror=null; this.src='/config/config.js'"></script>
+    <script src="{{ "config/config.local.js" | relURL }}" onerror="this.onerror=null; this.src='{{ "config/config.js" | relURL }}'"></script>
     {{ else }}
-    <script src="/config/config.js"></script>
+    <script src="{{ "config/config.js" | relURL }}"></script>
     {{ end }}
     {{ partial "stylesheet.html" "css/tokens.css" }}
     {{ partial "stylesheet.html" "css/city-spots.css" }}
-    <link rel="icon" type="image/png" href="/media/city-spots-icon.png">
+    <link rel="icon" type="image/png" href="{{ "media/city-spots-icon.png" | relURL }}">
   </head>
   <body>
     <main class="city-spots-page" aria-label="City Spots">

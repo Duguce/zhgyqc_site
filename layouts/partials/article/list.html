@@ -47,17 +47,6 @@
         {{ if gt $totalEntries 0 }}
         <div class="entry-grid" role="list">
           {{ range $idx, $p := $paginator.Pages }}
-          {{ $cardScratch := newScratch }}
-          {{ if $p.Params.summary }}
-            {{ $cardScratch.Set "summary" $p.Params.summary }}
-          {{ else if $p.Description }}
-            {{ $cardScratch.Set "summary" $p.Description }}
-          {{ else if $p.Summary }}
-            {{ $cardScratch.Set "summary" ($p.Summary | plainify) }}
-          {{ else }}
-            {{ $cardScratch.Set "summary" ($p.Plain | plainify) }}
-          {{ end }}
-          {{ $summary := truncate 150 ($cardScratch.Get "summary") }}
           {{ $cover := false }}
           {{ $imageCaption := default $p.Params.cover_alt $p.Params.cover_caption }}
           {{ if and $isEnMoments $p.Params.cover }}
@@ -77,7 +66,19 @@
                 {{ end }}
               </figure>
             {{ else }}
-              <p>{{ $summary }}</p>
+              {{/* Only text cards need a summary. Rendering a photo post's
+                   Summary would process its full image shortcodes needlessly. */}}
+              {{ $summary := "" }}
+              {{ if $p.Params.summary }}
+                {{ $summary = $p.Params.summary }}
+              {{ else if $p.Description }}
+                {{ $summary = $p.Description }}
+              {{ else if $p.Summary }}
+                {{ $summary = $p.Summary | plainify }}
+              {{ else }}
+                {{ $summary = $p.Plain | plainify }}
+              {{ end }}
+              <p>{{ truncate 150 $summary }}</p>
             {{ end }}
             <div class="entry-card__footer">
               <span class="entry-card__year">{{ $p.Date.Format "2006" }}</span>

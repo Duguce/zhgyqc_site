@@ -67,6 +67,15 @@ Install the release specified in `.hugo-version` from [Hugo releases](https://gi
 
 The canonical production URL comes from `config.toml`: `https://zhgyqc.site/`. A host can override it with `make verify BASE_URL=https://example.com/`. `BUILD_DIR` selects an alternative output directory. Build commands clean stale files from that directory, so use a dedicated generated-output folder.
 
+Verify both hosting layouts after changing URL handling:
+
+```sh
+make verify BUILD_DIR=.audit/verify-root
+make verify BASE_URL=https://duguce.github.io/zhgyqc_site/ BUILD_DIR=.audit/verify-pages
+```
+
+Hugo resource and page permalinks already include the deployment prefix; keep `relativeURLs` and `canonifyURLs` disabled to avoid rewriting that prefix twice. For a static URL inside Markdown HTML, use the `site-url` shortcode, for example `{{< site-url "media/video/summer-palace-lake.mp4" >}}`. CSS media paths should be relative to the stylesheet. The 120-second template timeout allows cold image processing on hosting workers; photo cards skip unused article summaries.
+
 On macOS, run `make publish` from the project directory, or use the portable script with an optional commit message:
 
 ```sh
@@ -151,7 +160,7 @@ Code highlighting runs at build time. MathJax loads only on pages containing `\(
 
 ### Deployment contract
 
-- **Local and GitHub Pages:** `.hugo-version` is the version source. Actions reads it to install Hugo Extended, then runs `make verify` with the Pages base URL. Checkout includes full Git history for article modification dates. The source needs no npm or Sass install step.
+- **Local and GitHub Pages:** `.hugo-version` is the version source. Actions reads it to install Hugo Extended, verifies the canonical-domain build, then builds and verifies with the Pages base URL. Checkout includes full Git history for article modification dates. The source needs no npm or Sass install step.
 - **Vercel:** `vercel.json` runs `make build` and publishes `public/`. Set `HUGO_VERSION` to the value in `.hugo-version`, `HUGO_EXTENDED=true` and Node.js **24.x** in Vercel project settings. Vercel installs Hugo before running the build, so it does not automatically read `.hugo-version`; the build check rejects a mismatch. When changing Hugo versions, update that platform setting too.
 - **Verification:** `scripts/check-site.py` uses no third-party Python packages. It also checks that the 30 historical raw-media URLs still return the exact source-file bytes. It validates local output only; external URLs and remote service availability are not part of this check.
 

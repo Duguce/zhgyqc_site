@@ -42,7 +42,11 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
-      - name: Build and verify
+      - name: Verify canonical domain build
+        env:
+          HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
+        run: make verify BUILD_DIR="${{ runner.temp }}/site-root"
+      - name: Build and verify Pages deployment
         env:
           HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
           HUGO_ENVIRONMENT: production

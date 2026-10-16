@@ -78,13 +78,12 @@
           {{ $lastLabel := default (index $.Site.Params.lang.lastupdate $.Site.Params.defaultLang) (index $.Site.Params.lang.lastupdate $language.menuKey) }}
           {{ $lastLabel }} {{ .Page.Lastmod.Format "2006-01-02" }}
         </p>
-        {{ with .Params.tags }}
+        {{ with .GetTerms "tags" }}
         <div class="scholar-tags">
           <span class="scholar-tags__label">{{ if $isBlog }}标签{{ else }}Topics{{ end }}</span>
           <ul>
             {{ range . }}
-            {{ $tagURL := (print "/tags/" (. | urlize) "/") | relURL }}
-            <li><a href="{{ $tagURL }}">{{ . }}</a></li>
+            <li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>
             {{ end }}
           </ul>
         </div>
@@ -189,14 +188,13 @@
       {{ $lastLabel := default (index $.Site.Params.lang.lastupdate $.Site.Params.defaultLang) (index $.Site.Params.lang.lastupdate $language.menuKey) }}
       {{ $lastLabel }} {{ .Page.Lastmod.Format "2006-01-02" }}
     </p>
-    {{ with .Params.tags }}
+    {{ with .GetTerms "tags" }}
     <div class="post-tags" style="margin-top: 0.8rem;">
       <ul style="list-style: none; padding-left: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.4rem;">
         {{ range . }}
-        {{ $tagURL := (print "/tags/" (. | urlize) "/") | relURL }}
         <li>
-          <a href="{{ $tagURL }}" style="display: inline-block; font-size: 0.88rem; color: #2e3240; text-decoration: none; background: #f8f9fb; border: 1px solid #e3e5ec; padding: 0.12rem 0.65rem; border-radius: 999px;">
-            {{ . }}
+          <a href="{{ .RelPermalink }}" style="display: inline-block; font-size: 0.88rem; color: #2e3240; text-decoration: none; background: #f8f9fb; border: 1px solid #e3e5ec; padding: 0.12rem 0.65rem; border-radius: 999px;">
+            {{ .LinkTitle }}
           </a>
         </li>
         {{ end }}

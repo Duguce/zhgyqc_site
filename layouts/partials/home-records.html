@@ -27,7 +27,7 @@
       <span class="pub-title">{{ .title }}</span>
       <span class="pub-authors">{{ range $index, $author := .authors }}{{ if $index }}, {{ end }}{{ if .self }}<strong><u>{{ .name }}</u></strong>{{ else }}{{ .name }}{{ end }}{{ if .equal }}<sup>*</sup>{{ end }}{{ if .corresponding }}<sup>&dagger;</sup>{{ end }}{{ end }}</span>
       <span class="pub-venue">{{ .venue }} <span class="pub-venue-short">({{ .venue_short }})</span></span>
-      <span class="pub-links">{{ range .links }}<a href="{{ .url | relURL }}">{{ .label }}</a>{{ end }}</span>
+      <span class="pub-links">{{ range .links }}<a href="{{ strings.TrimPrefix "/" .url | relURL }}">{{ .label }}</a>{{ end }}</span>
     </div>
   </div>
   {{ end }}

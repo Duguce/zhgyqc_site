@@ -5,8 +5,12 @@ theme = "hugo-ht"
 footnotereturnlinkcontents = "↩"
 enableGitInfo = true
 enableRobotsTXT = true
-relativeURLs = true
-canonifyURLs = true
+# Templates and Hugo resources generate URLs with the baseURL path already.
+# Legacy HTML rewriting would add that path a second time on project sites.
+relativeURLs = false
+canonifyURLs = false
+# Cold image processing can exceed the 30s template limit on hosting workers.
+timeout = "120s"
 
 [permalinks]
 cn = "/blogs/:filename/"
