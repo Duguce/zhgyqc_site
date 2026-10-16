@@ -12,17 +12,15 @@ tags:
   - Summer Palace
   - Nature
   - Video
+cover: "summer-palace-architecture.jpg"
+cover_alt: "A Corner of the Summer Palace"
+cover_caption: "A Corner of the Summer Palace | 颐和园一角"
 ---
 
-<div align="center">
-  <img src="https://raw.githubusercontent.com/Duguce/zhgyqc_site/master/content/assets/summer-palace-architecture.jpg" width="60%" />
-  <p align="center">
-    <em>A Corner of the Summer Palace | 颐和园一角</em>
-  </p>
-</div>
+{{< photo src="summer-palace-architecture.jpg" alt="A Corner of the Summer Palace" caption="A Corner of the Summer Palace | 颐和园一角" width="60" >}}
 
 <div align="center">
-  <video src="https://raw.githubusercontent.com/Duguce/zhgyqc_site/master/content/assets/summer-palace-lake.mp4" width="80%" controls></video>
+  <video src="/assets/summer-palace-lake.mp4" width="80%" controls preload="none"></video>
   <p align="center">
     <em>A peaceful moment by the lake | 颐和园湖畔的宁静时刻</em>
   </p>

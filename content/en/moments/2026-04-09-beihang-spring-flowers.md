@@ -13,18 +13,11 @@ tags:
   - Flowers
   - Photography
   - Beijing
+cover: "beihang-pink-flowers.jpg"
+cover_alt: "Vibrant Pink Crabapple Blossoms"
+cover_caption: "Vibrant Pink Crabapple Blossoms | 校园里盛开的粉色海棠"
 ---
 
-<div align="center">
-  <img src="https://raw.githubusercontent.com/Duguce/zhgyqc_site/master/content/assets/beihang-pink-flowers.jpg" width="60%" />
-  <p align="center">
-    <em>Vibrant Pink Crabapple Blossoms | 校园里盛开的粉色海棠</em>
-  </p>
-</div>
+{{< photo src="beihang-pink-flowers.jpg" alt="Vibrant Pink Crabapple Blossoms" caption="Vibrant Pink Crabapple Blossoms | 校园里盛开的粉色海棠" width="60" >}}
 
-<div align="center">
-  <img src="https://raw.githubusercontent.com/Duguce/zhgyqc_site/master/content/assets/beihang-white-flowers.jpg" width="60%" />
-  <p align="center">
-    <em>Elegant White Crabapple Blossoms | 洁白淡雅的白海棠</em>
-  </p>
-</div>
+{{< photo src="beihang-white-flowers.jpg" alt="Elegant White Crabapple Blossoms" caption="Elegant White Crabapple Blossoms | 洁白淡雅的白海棠" width="60" >}}

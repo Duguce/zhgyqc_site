@@ -12,19 +12,12 @@ tags:
   - Beihai Park
   - City Walk
   - Night View
+cover: "beihai-white-dagoba-day.jpg"
+cover_alt: "The White Dagoba Across the Lake"
+cover_caption: "The White Dagoba Across the Lake | 湖对岸的北海白塔"
 ---
 
-<div align="center">
-  <img src="https://raw.githubusercontent.com/Duguce/zhgyqc_site/master/content/assets/beihai-white-dagoba-day.jpg" width="80%" />
-  <p align="center">
-    <em>The White Dagoba Across the Lake | 湖对岸的北海白塔</em>
-  </p>
-</div>
+{{< photo src="beihai-white-dagoba-day.jpg" alt="The White Dagoba Across the Lake" caption="The White Dagoba Across the Lake | 湖对岸的北海白塔" width="80" >}}
 
 
-<div align="center">
-  <img src="https://raw.githubusercontent.com/Duguce/zhgyqc_site/master/content/assets/beihai-white-dagoba-night.jpg" width="80%" />
-  <p align="center">
-    <em>Evening Lights at Beihai Park | 华灯初上的北海公园</em>
-  </p>
-</div>
+{{< photo src="beihai-white-dagoba-night.jpg" alt="Evening Lights at Beihai Park" caption="Evening Lights at Beihai Park | 华灯初上的北海公园" width="80" >}}

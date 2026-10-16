@@ -21,6 +21,8 @@ release/*
 
 # OS files
 .DS_Store
+._*
+.AppleDouble/
 Thumbs.db
 
 # IDE/editor
@@ -34,6 +36,23 @@ Thumbs.db
 
 # Local configuration files
 static/config/config.local.js
+*.local.*
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Local editor, agent, and hosting settings
+/.codex/
+/.agents/
+/.vercel/
+/.netlify/
+
+# Local dependency and tool caches
+node_modules/
+.cache/
+.hugo_cache/
+.hugo_build.lock
 
 # Local scratch space: preview builds and screenshots
 .audit/
@@ -41,3 +60,6 @@ static/config/config.local.js
 # Hugo output: Actions rebuilds the site from source on every push and deploys
 # that artefact, so the committed copy served no purpose.
 public/
+
+# Hugo generates responsive images and compiled resources during builds.
+resources/_gen/

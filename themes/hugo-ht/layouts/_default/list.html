@@ -27,502 +27,11 @@
   {{ $newerLabel := cond $isCnBlogs "较新文章" "Newer" }}
   {{ $olderLabel := cond $isCnBlogs "更早文章" "Earlier" }}
   <main class="content" role="main">
-    <style>
-    /* ═══ Scholarly List · Refined ═══ */
-    .scholar-shell {
-      --sl-surface: #f6f9fd;
-      --sl-border: #dce4ee;
-      --sl-border-soft: rgba(27, 90, 183, 0.10);
-      --sl-ink: #1e293b;
-      --sl-ink-soft: #38445a;
-      --sl-muted: #5c6b82;
-      --sl-accent: #1b5ab7;
-      --sl-accent-glow: rgba(27, 90, 183, 0.12);
-      --sl-kicker: #8a6f4d;
-      --sl-surface-alt: #f0f5fb;
-      --sl-card-bg: #fff;
-      --sl-shadow-sm: 0 1px 2px rgba(15, 18, 28, 0.04);
-      --sl-shadow-md: 0 4px 14px rgba(15, 18, 28, 0.06), 0 1px 3px rgba(15, 18, 28, 0.04);
-      --sl-shadow-lg: 0 8px 24px rgba(27, 90, 183, 0.06), 0 2px 8px rgba(15, 18, 28, 0.03);
-      --sl-shadow-xl: 0 14px 36px rgba(27, 90, 183, 0.08), 0 4px 10px rgba(15, 18, 28, 0.04);
-      --sl-radius-sm: 0.6rem;
-      --sl-radius: 0.75rem;
-      --sl-radius-lg: 0.875rem;
-      --sl-radius-xl: 1rem;
-      font-family: "Source Serif 4", "Noto Serif SC", "Charter", "Palatino Linotype", Georgia, "Songti SC", serif;
-      color: var(--sl-ink);
-      padding-bottom: 4rem;
-    }
-    .scholar-shell[data-variant="moments"] {
-      --sl-kicker: #4b6fad;
-    }
-
-    /* ── Grain texture ── */
-    .scholar-shell {
-      position: relative;
-    }
-    .scholar-shell::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      opacity: 0.025;
-      pointer-events: none;
-      background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='80' height='80' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E");
-    }
-
-    /* ── Hero ── */
-    .scholar-hero {
-      background: var(--sl-card-bg);
-      border: 1px solid var(--sl-border);
-      border-radius: var(--sl-radius-xl);
-      padding: 1.8rem 2.2rem;
-      margin: 0 auto 1.8rem;
-      max-width: 960px;
-      position: relative;
-      overflow: hidden;
-      box-shadow: var(--sl-shadow-lg);
-      transition: box-shadow 0.4s ease;
-    }
-    .scholar-hero:hover { box-shadow: var(--sl-shadow-xl); }
-    .scholar-hero::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 65% 55% at 22% 12%, var(--sl-accent-glow), transparent 55%),
-        radial-gradient(ellipse 35% 45% at 80% 85%, rgba(31, 37, 53, 0.04), transparent 55%),
-        linear-gradient(135deg, rgba(31, 37, 53, 0.02) 0%, transparent 50%, rgba(31, 37, 53, 0.03) 100%);
-      opacity: 0.65;
-      pointer-events: none;
-    }
-    .scholar-shell[data-variant="moments"] .scholar-hero::after {
-      background:
-        radial-gradient(ellipse 60% 50% at 20% 15%, rgba(75, 111, 173, 0.18), transparent 55%),
-        radial-gradient(ellipse 40% 50% at 78% 82%, rgba(40, 70, 120, 0.05), transparent 55%),
-        linear-gradient(140deg, rgba(34, 52, 86, 0.02) 0%, transparent 55%, rgba(34, 52, 86, 0.03) 100%);
-    }
-    .scholar-hero::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 2.2rem; right: 2.2rem;
-      height: 3px;
-      border-radius: 0 0 3px 3px;
-      background: linear-gradient(90deg, transparent, var(--sl-accent), transparent);
-      opacity: 0.3;
-      z-index: 2;
-      pointer-events: none;
-    }
-    .scholar-hero__body { position: relative; z-index: 1; }
-    .scholar-hero__badge {
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--sl-kicker);
-      background: var(--sl-surface-alt);
-      padding: 0.18rem 0.7rem;
-      border-radius: 999px;
-      margin-bottom: 0.55rem;
-      display: inline-block;
-      border: 1px solid var(--sl-border-soft);
-    }
-    .scholar-hero h1 {
-      font-size: clamp(2rem, 3.2vw, 2.7rem);
-      margin-bottom: 0.5rem;
-      font-weight: 650;
-      letter-spacing: -0.015em;
-    }
-    .scholar-hero__desc {
-      max-width: 700px;
-      font-size: 1rem;
-      line-height: 1.5;
-      color: var(--sl-muted);
-      margin-bottom: 0.9rem;
-    }
-    .scholar-hero__rich {
-      width: 100%;
-      color: var(--sl-ink-soft);
-      font-size: 0.96rem;
-      line-height: 1.6;
-      margin-bottom: 1rem;
-    }
-    .scholar-hero__stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-      gap: 0.85rem;
-      margin-top: 1rem;
-    }
-    .stat-card {
-      background: var(--sl-card-bg);
-      border: 1px solid var(--sl-border);
-      border-radius: var(--sl-radius);
-      padding: 0.95rem 1.2rem;
-      box-shadow: var(--sl-shadow-md);
-      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      position: relative;
-      overflow: hidden;
-    }
-    .stat-card::before {
-      content: "";
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 3px;
-      background: var(--sl-accent);
-      border-radius: 0 3px 3px 0;
-      opacity: 0.4;
-    }
-    .stat-card:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--sl-shadow-lg);
-    }
-    .stat-card__label {
-      font-size: 0.68rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--sl-muted);
-      margin-bottom: 0.25rem;
-      display: block;
-    }
-    .stat-card__value {
-      font-size: 1.55rem;
-      font-weight: 650;
-      color: var(--sl-ink);
-    }
-
-    /* ── Panel (entry grid container) ── */
-    .scholar-panel {
-      border: 1px solid var(--sl-border);
-      border-radius: var(--sl-radius-xl);
-      padding: 2rem;
-      background: var(--sl-card-bg);
-      box-shadow:
-        var(--sl-shadow-xl),
-        inset 0 1px 0 rgba(255,255,255,0.6);
-    }
-    /* ── Entry grid ── */
-    .entry-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1.1rem;
-    }
-    .entry-card {
-      border: 1px solid var(--sl-border);
-      border-radius: var(--sl-radius-lg);
-      padding: 1rem 1.15rem;
-      background: var(--sl-card-bg);
-      position: relative;
-      overflow: hidden;
-      min-height: 180px;
-      display: grid;
-      grid-template-rows: minmax(1.2rem, auto) minmax(2.6rem, auto) minmax(3.8rem, auto) auto;
-      gap: 0.5rem;
-      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-shadow: var(--sl-shadow-sm);
-    }
-    .entry-card[data-has-media="true"] {
-      grid-template-rows: minmax(1.2rem, auto) minmax(2.6rem, auto) 150px auto;
-    }
-    .entry-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      background: linear-gradient(135deg, var(--sl-accent-glow), rgba(255,255,255,0) 55%);
-      opacity: 0;
-      transition: opacity 0.35s ease;
-      pointer-events: none;
-    }
-    /* left accent line */
-    .entry-card::after {
-      content: "";
-      position: absolute;
-      left: 0; top: 1rem; bottom: 1rem;
-      width: 3px;
-      border-radius: 0 3px 3px 0;
-      background: var(--sl-accent);
-      opacity: 0.25;
-      transition: opacity 0.3s ease, height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-      pointer-events: none;
-    }
-    .entry-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--sl-shadow-xl);
-      border-color: var(--sl-accent);
-    }
-    .entry-card:hover::before { opacity: 0.6; }
-    .entry-card:hover::after { opacity: 0.55; top: 0.6rem; bottom: 0.6rem; }
-    .entry-card__meta {
-      font-size: 0.78rem;
-      color: var(--sl-muted);
-      display: flex;
-      gap: 0.4rem;
-      flex-wrap: wrap;
-      align-items: center;
-      min-height: 1.2rem;
-      position: relative;
-      z-index: 1;
-    }
-    .entry-card h3 {
-      margin: 0;
-      font-size: 1.08rem;
-      font-weight: 620;
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      line-height: 1.3;
-    }
-    .scholar-shell[data-variant="moments"] .entry-card h3 { text-align: center; }
-    .scholar-shell[data-variant="moments"] .entry-card[data-has-media="true"] h3 {
-      min-height: 2.8rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-    .scholar-shell[data-variant="moments"] .entry-card[data-has-media="true"] h3 a {
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      text-align: center;
-      width: 100%;
-    }
-    .entry-card h3 a {
-      color: var(--sl-ink);
-      text-decoration: none;
-      display: inline-block;
-      width: 100%;
-      transition: color 0.2s ease;
-    }
-    .scholar-shell[data-variant="moments"] .entry-card h3 a { text-align: center; width: 100%; }
-    .entry-card h3 a:hover { color: var(--sl-accent); }
-    .entry-card p {
-      margin: 0;
-      color: var(--sl-muted);
-      font-size: 0.86rem;
-      line-height: 1.45;
-      position: relative;
-      z-index: 1;
-    }
-    .entry-card[data-has-media="false"] p {
-      min-height: 3.8rem;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-    .entry-card__media {
-      border-radius: var(--sl-radius-sm);
-      overflow: hidden;
-      background: var(--sl-surface-alt);
-      position: relative;
-      z-index: 1;
-      margin: 0;
-      max-height: 150px;
-      display: block;
-      box-shadow: var(--sl-shadow-sm);
-    }
-    .scholar-shell[data-variant="moments"] .entry-card[data-has-media="true"] .entry-card__media {
-      height: 150px;
-      max-height: none;
-    }
-    .entry-card__media img {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.5s ease;
-    }
-    .entry-card:hover .entry-card__media img { transform: scale(1.04); }
-    .scholar-shell[data-variant="moments"] .entry-card[data-has-media="true"] .entry-card__media img {
-      height: 100%;
-    }
-    .entry-card__media figcaption {
-      position: absolute;
-      left: 0; right: 0; bottom: 0;
-      padding: 0.4rem 0.65rem;
-      font-size: 0.72rem;
-      color: #fff;
-      font-style: italic;
-      background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 100%);
-      text-align: center;
-      line-height: 1.2;
-    }
-    .entry-card__footer {
-      margin-top: auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.8rem;
-      position: relative;
-      z-index: 1;
-    }
-    .entry-card__year {
-      color: var(--sl-muted);
-      font-size: 0.76rem;
-      font-weight: 500;
-    }
-    .entry-card__link {
-      text-decoration: none;
-      color: var(--sl-accent);
-      font-weight: 600;
-      font-size: 0.8rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      padding: 0.25rem 0.6rem;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    .entry-card__link::after {
-      content: "→";
-      font-size: 0.88rem;
-      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    .entry-card__link:hover {
-      background: var(--sl-accent);
-      color: #fff;
-      border-color: var(--sl-accent);
-    }
-    .entry-card__link:hover::after { transform: translateX(3px); }
-
-    .entry-empty {
-      text-align: center;
-      color: var(--sl-muted);
-      font-size: 1rem;
-      margin: 2.5rem 0;
-      padding: 2rem;
-      background: var(--sl-surface);
-      border-radius: var(--sl-radius);
-      border: 1px dashed var(--sl-border);
-    }
-
-    /* ── Pagination ── */
-    .scholar-pagination {
-      margin: 1.8rem auto 0;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      gap: 0.3rem;
-      padding: 0.55rem 0.9rem;
-      border: 1px solid var(--sl-border);
-      border-radius: 999px;
-      background: var(--sl-card-bg);
-      box-shadow: var(--sl-shadow-md);
-      width: fit-content;
-      max-width: 100%;
-      box-sizing: border-box;
-    }
-    .content .scholar-pagination__button {
-      border: 1px solid transparent;
-      border-radius: 999px;
-      padding: 0.35rem 0.9rem;
-      font-size: 0.82rem;
-      color: var(--sl-muted);
-      text-decoration: none;
-      min-width: 2.5rem;
-      text-align: center;
-      font-weight: 500;
-      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-sizing: border-box;
-      white-space: nowrap;
-      letter-spacing: 0;
-      box-shadow: none;
-      text-shadow: none;
-    }
-    .content .scholar-pagination__button.is-active {
-      background: var(--sl-accent);
-      color: #fff;
-      border-color: var(--sl-accent);
-      font-weight: 600;
-      box-shadow: 0 3px 10px var(--sl-accent-glow);
-    }
-    .content .scholar-pagination__button:hover:not(.is-disabled):not(.is-active) {
-      color: var(--sl-accent);
-      background: var(--sl-surface);
-    }
-    .scholar-pagination__button.is-disabled {
-      pointer-events: none;
-      opacity: 0.28;
-    }
-    .scholar-pagination__ellipsis {
-      color: var(--sl-muted);
-      font-size: 0.82rem;
-      padding: 0.35rem 0.3rem;
-      min-width: 1rem;
-      text-align: center;
-    }
-
-    /* ── Responsive ── */
-    @media (max-width: 720px) {
-      .scholar-hero {
-        padding: 1.4rem;
-        border-radius: var(--sl-radius-lg);
-      }
-      .scholar-hero::before { left: 1.2rem; right: 1.2rem; }
-      .scholar-panel { padding: 1.4rem; }
-      .entry-grid { grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)); }
-      .entry-card { min-width: 0; overflow-wrap: anywhere; }
-      .scholar-pagination {
-        gap: 0.35rem;
-        padding: 0;
-        width: 100%;
-        border: 0;
-        border-radius: 0;
-        background: transparent;
-        box-shadow: none;
-      }
-      .content .scholar-pagination__button {
-        padding: 0.45rem 0.5rem;
-        font-size: 0.74rem;
-        min-width: 2.25rem;
-        min-height: 2.5rem;
-      }
-      .scholar-pagination__button:first-child,
-      .scholar-pagination__button:last-child {
-        order: 1;
-        flex: 1 1 40%;
-        margin-top: 0.35rem;
-        border-color: var(--sl-border);
-      }
-    }
-
-    /* ═══ Fade-in animation ═══ */
-    @keyframes slFadeUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .scholar-hero,
-    .scholar-panel {
-      animation: slFadeUp 0.5s ease both;
-    }
-    .scholar-panel { animation-delay: 0.08s; }
-    .entry-card {
-      animation: slFadeUp 0.4s ease both;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .scholar-hero, .scholar-panel, .entry-card { animation: none; }
-    }
-
-    /* ═══ Image hover polish ═══ */
-    .entry-card__media {
-      border: 1px solid var(--sl-border-soft);
-    }
-    .entry-card:hover .entry-card__media {
-      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-    }
-
-    </style>
     <div class="scholar-shell" data-variant="{{ if $isCnBlogs }}blogs{{ else }}moments{{ end }}">
       <section class="scholar-hero" aria-labelledby="scholar-hero-title">
         <div class="scholar-hero__body">
           <div class="scholar-hero__badge">{{ $badgeLabel }}</div>
-          {{/* Removed explicit H1 to keep focus on secondary header */}}
+          <h1 id="scholar-hero-title">{{ .Title }}</h1>
           <p class="scholar-hero__desc">{{ $heroDesc }}</p>
           {{ with .Content }}
           <div class="scholar-hero__rich">{{ . }}</div>
@@ -558,28 +67,22 @@
             {{ $cardScratch.Set "summary" ($p.Plain | plainify) }}
           {{ end }}
           {{ $summary := truncate 150 ($cardScratch.Get "summary") }}
-          {{ $imageSrc := "" }}
-          {{ $imageCaption := "" }}
-          {{ if $isEnMoments }}
-            {{ $imgMatches := findRE `<img[^>]+src="([^"]+)"[^>]*>` $p.Content 1 }}
-            {{ if gt (len $imgMatches) 0 }}
-              {{ $firstImg := index $imgMatches 0 }}
-              {{ $imageSrc = replaceRE `.*src="([^"]+)".*` "$1" $firstImg }}
-            {{ end }}
-            {{ $captionMatches := findRE `<em>([^<]+)</em>` $p.Content 1 }}
-            {{ if gt (len $captionMatches) 0 }}
-              {{ $imageCaption = (index $captionMatches 0 | plainify) }}
-            {{ end }}
+          {{ $cover := false }}
+          {{ $imageCaption := default $p.Params.cover_alt $p.Params.cover_caption }}
+          {{ if and $isEnMoments $p.Params.cover }}
+            {{ $cover = $p.Resources.GetMatch $p.Params.cover }}
+            {{ if not $cover }}{{ $cover = $.Site.Home.Resources.GetMatch (printf "assets/%s" $p.Params.cover) }}{{ end }}
+            {{ if not $cover }}{{ errorf "Cover %q not found for %s" $p.Params.cover $p.File.Path }}{{ end }}
           {{ end }}
-          <article class="entry-card" role="listitem" data-has-media="{{ if and $isEnMoments $imageSrc }}true{{ else }}false{{ end }}" style="animation-delay: {{ mul $idx 0.06 }}s">
+          <article class="entry-card" role="listitem" data-has-media="{{ if and $isEnMoments $cover }}true{{ else }}false{{ end }}" style="animation-delay: {{ mul $idx 0.06 }}s">
             <div class="entry-card__meta">
                <span>{{ if $isCnBlogs }}{{ $p.Date.Format "2006年01月02日" }}{{ else }}{{ $p.Date.Format "Jan 02, 2006" }}{{ end }}</span>
               {{ with $p.Params.location }}<span>&middot; {{ . }}</span>{{ end }}
             </div>
-            <h3><a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a></h3>
-            {{ if and $isEnMoments $imageSrc }}
+            <h2 class="entry-card__title"><a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a></h2>
+            {{ if and $isEnMoments $cover }}
               <figure class="entry-card__media">
-                <img src="{{ $imageSrc }}" alt="{{ cond (gt (len $imageCaption) 0) $imageCaption $p.Title }}" loading="lazy">
+                {{ partial "responsive-image.html" (dict "resource" $cover "alt" (default $p.Title $p.Params.cover_alt) "widths" (slice 480 800) "defaultWidth" 480 "sizes" "(max-width: 720px) calc(100vw - 6rem), 400px") }}
                 {{ if $imageCaption }}
                 <figcaption>{{ $imageCaption }}</figcaption>
                 {{ end }}
@@ -596,15 +99,19 @@
         </div>
         {{ if gt $paginator.TotalPages 1 }}
         <nav class="scholar-pagination" aria-label="{{ if $isCnBlogs }}分页导航{{ else }}Pagination{{ end }}">
-          <a class="scholar-pagination__button {{ if not $paginator.HasPrev }}is-disabled{{ end }}" href="{{ if $paginator.HasPrev }}{{ $paginator.Prev.URL }}{{ else }}#{{ end }}">{{ $newerLabel }}</a>
+          {{ if $paginator.HasPrev }}
+          <a class="scholar-pagination__button" href="{{ $paginator.Prev.URL }}" rel="prev">{{ $newerLabel }}</a>
+          {{ else }}
+          <span class="scholar-pagination__button is-disabled" aria-disabled="true">{{ $newerLabel }}</span>
+          {{ end }}
           {{ if le $paginator.TotalPages 7 }}
             {{ range $page := seq 1 $paginator.TotalPages }}
               {{ $pageURL := (index $paginator.Pagers (sub $page 1)).URL }}
-              <a class="scholar-pagination__button {{ if eq $page $paginator.PageNumber }}is-active{{ end }}" href="{{ $pageURL }}">{{ $page }}</a>
+              <a class="scholar-pagination__button {{ if eq $page $paginator.PageNumber }}is-active{{ end }}" href="{{ $pageURL }}"{{ if eq $page $paginator.PageNumber }} aria-current="page"{{ end }}>{{ $page }}</a>
             {{ end }}
           {{ else }}
             {{ $pageURL := (index $paginator.Pagers 0).URL }}
-            <a class="scholar-pagination__button {{ if eq 1 $paginator.PageNumber }}is-active{{ end }}" href="{{ $pageURL }}">1</a>
+            <a class="scholar-pagination__button {{ if eq 1 $paginator.PageNumber }}is-active{{ end }}" href="{{ $pageURL }}"{{ if eq 1 $paginator.PageNumber }} aria-current="page"{{ end }}>1</a>
             {{ if gt $paginator.PageNumber 4 }}
               <span class="scholar-pagination__ellipsis">…</span>
             {{ end }}
@@ -618,15 +125,19 @@
             {{ end }}
             {{ range $page := seq $start $end }}
               {{ $pageURL := (index $paginator.Pagers (sub $page 1)).URL }}
-              <a class="scholar-pagination__button {{ if eq $page $paginator.PageNumber }}is-active{{ end }}" href="{{ $pageURL }}">{{ $page }}</a>
+              <a class="scholar-pagination__button {{ if eq $page $paginator.PageNumber }}is-active{{ end }}" href="{{ $pageURL }}"{{ if eq $page $paginator.PageNumber }} aria-current="page"{{ end }}>{{ $page }}</a>
             {{ end }}
             {{ if lt $paginator.PageNumber (sub $paginator.TotalPages 3) }}
               <span class="scholar-pagination__ellipsis">…</span>
             {{ end }}
             {{ $pageURL := (index $paginator.Pagers (sub $paginator.TotalPages 1)).URL }}
-            <a class="scholar-pagination__button {{ if eq $paginator.TotalPages $paginator.PageNumber }}is-active{{ end }}" href="{{ $pageURL }}">{{ $paginator.TotalPages }}</a>
+            <a class="scholar-pagination__button {{ if eq $paginator.TotalPages $paginator.PageNumber }}is-active{{ end }}" href="{{ $pageURL }}"{{ if eq $paginator.TotalPages $paginator.PageNumber }} aria-current="page"{{ end }}>{{ $paginator.TotalPages }}</a>
           {{ end }}
-          <a class="scholar-pagination__button {{ if not $paginator.HasNext }}is-disabled{{ end }}" href="{{ if $paginator.HasNext }}{{ $paginator.Next.URL }}{{ else }}#{{ end }}">{{ $olderLabel }}</a>
+          {{ if $paginator.HasNext }}
+          <a class="scholar-pagination__button" href="{{ $paginator.Next.URL }}" rel="next">{{ $olderLabel }}</a>
+          {{ else }}
+          <span class="scholar-pagination__button is-disabled" aria-disabled="true">{{ $olderLabel }}</span>
+          {{ end }}
         </nav>
         {{ end }}
         {{ else }}
@@ -644,6 +155,7 @@
   <main class = "content">
   <div class="list-page{{ if .IsHome }} home-list-page{{ end }}">
   {{ .Content }}
+  {{ if .IsHome }}{{ partial "home-records.html" . }}{{ end }}
 
   {{if not .IsHome}}
   <ul>

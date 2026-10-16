@@ -11,20 +11,13 @@ tags:
   - Conference
   - Open Source
   - Beijing
+cover: "cast-committee-inauguration.jpg"
+cover_alt: "The Unveiling Ceremony of the CAST Open Source Innovation Committee"
+cover_caption: "The Unveiling Ceremony of the CAST Open Source Innovation Committee"
 ---
 
 *On November 22, 2025, I attended the **2nd Open Source Technology Academic Conference** held at the Beijing E-Town International Convention & Exhibition Center. It was a privilege to witness the official inauguration of the **CAST Open Source Innovation Committee**. The event brought together experts and developers to discuss the future of the open-source ecosystem, and I gained valuable insights into the latest community developments and industrial applications.*
 
-<div align="center">
-  <img src="https://raw.githubusercontent.com/Duguce/zhgyqc_site/master/content/assets/cast-committee-inauguration.jpg" width="75%" />
-  <p align="center">
-    <em>The Unveiling Ceremony of the CAST Open Source Innovation Committee</em>
-  </p>
-</div>
+{{< photo src="cast-committee-inauguration.jpg" alt="The Unveiling Ceremony of the CAST Open Source Innovation Committee" caption="The Unveiling Ceremony of the CAST Open Source Innovation Committee" width="75" >}}
 
-<div align="center">
-  <img src="https://raw.githubusercontent.com/Duguce/zhgyqc_site/master/content/assets/conference-exhibition-hall.jpg" width="75%" />
-  <p align="center">
-    <em>Exploring the Open Source Community Exhibition and Booths</em>
-  </p>
-</div>
+{{< photo src="conference-exhibition-hall.jpg" alt="Exploring the Open Source Community Exhibition and Booths" caption="Exploring the Open Source Community Exhibition and Booths" width="75" >}}

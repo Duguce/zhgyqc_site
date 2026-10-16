@@ -1,0 +1,9 @@
+{{- $hasMath := false -}}
+{{- if isset .Params "math" -}}
+  {{- $hasMath = eq .Params.math true -}}
+{{- else if .IsPage -}}
+  {{/* Ignore code samples: a shell command containing $$ is not an equation. */}}
+  {{- $prose := replaceRE `(?s)<pre\b[^>]*>.*?</pre>|<code\b[^>]*>.*?</code>` "" .Content -}}
+  {{- $hasMath = gt (len (findRE `\\\(|\\\[|\$\$` $prose 1)) 0 -}}
+{{- end -}}
+{{- return $hasMath -}}

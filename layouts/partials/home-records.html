@@ -1,0 +1,49 @@
+<h2 class="section-title">Education</h2>
+<div class="timeline">
+  {{ range .Site.Data.home.education }}
+  <div class="timeline-item">
+    <div class="timeline-main">
+      <span class="timeline-title"><a href="{{ .url }}">{{ .institution }}</a></span>
+      <span class="timeline-sub">{{ .degree }}</span>
+    </div>
+    <div class="timeline-meta">
+      <span class="timeline-place">{{ .location }}</span>
+      <span class="timeline-date">{{ .dates }}</span>
+    </div>
+  </div>
+  {{ end }}
+</div>
+
+<h2 class="section-title">Selected Publications</h2>
+<p class="pub-note"><sup>*</sup> Contributed Equally; <sup>&dagger;</sup> Corresponding Author</p>
+<div class="pub-list">
+  {{ range .Site.Data.publications }}
+  <div class="pub-item">
+    <div class="pub-thumb">
+      {{ $image := $.Site.Home.Resources.GetMatch (printf "assets/%s" .image) }}
+      {{ if not $image }}{{ errorf "Publication image %q not found" .image }}{{ end }}
+      {{ partial "responsive-image.html" (dict "resource" $image "alt" .image_alt "widths" (slice 352 704) "defaultWidth" 352 "sizes" "(max-width: 720px) calc(100vw - 4.25rem), 176px") }}
+    </div>
+    <div class="pub-body">
+      <span class="pub-title">{{ .title }}</span>
+      <span class="pub-authors">{{ range $index, $author := .authors }}{{ if $index }}, {{ end }}{{ if .self }}<strong><u>{{ .name }}</u></strong>{{ else }}{{ .name }}{{ end }}{{ if .equal }}<sup>*</sup>{{ end }}{{ if .corresponding }}<sup>&dagger;</sup>{{ end }}{{ end }}</span>
+      <span class="pub-venue">{{ .venue }} <span class="pub-venue-short">({{ .venue_short }})</span></span>
+      <span class="pub-links">{{ range .links }}<a href="{{ .url | relURL }}">{{ .label }}</a>{{ end }}</span>
+    </div>
+  </div>
+  {{ end }}
+</div>
+
+<h2 class="section-title">Honors and Awards</h2>
+<ul class="fact-list">
+  {{ range .Site.Data.home.awards }}
+  <li><span>{{ .text }}</span><span class="fact-year">{{ .year }}</span></li>
+  {{ end }}
+</ul>
+
+<h2 class="section-title">Academic Services</h2>
+<ul class="fact-list">
+  {{ range .Site.Data.home.services }}
+  <li><span>{{ .text }}{{ if .link_url }}<a href="{{ .link_url }}">{{ .link_label }}</a>{{ end }}</span></li>
+  {{ end }}
+</ul>

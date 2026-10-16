@@ -11,19 +11,12 @@ tags:
   - Xi'an
   - City Walk
   - Architecture
+cover: "big-wild-goose-pagoda.jpg"
+cover_alt: "The Big Wild Goose Pagoda"
+cover_caption: "The Big Wild Goose Pagoda | 大雁塔"
 ---
 
 
-<div align="center">
-  <img src="https://raw.githubusercontent.com/Duguce/zhgyqc_site/master/content/assets/big-wild-goose-pagoda.jpg" width="60%" />
-  <p align="center">
-    <em>The Big Wild Goose Pagoda | 大雁塔</em>
-  </p>
-</div>
+{{< photo src="big-wild-goose-pagoda.jpg" alt="The Big Wild Goose Pagoda" caption="The Big Wild Goose Pagoda | 大雁塔" width="60" >}}
 
-<div align="center">
-  <img src="https://raw.githubusercontent.com/Duguce/zhgyqc_site/master/content/assets/xian-bell-tower-night.jpg" width="60%" />
-  <p align="center">
-    <em>The Bell Tower at Night | 晚上的钟楼</em>
-  </p>
-</div>
+{{< photo src="xian-bell-tower-night.jpg" alt="The Bell Tower at Night" caption="The Bell Tower at Night | 晚上的钟楼" width="60" >}}

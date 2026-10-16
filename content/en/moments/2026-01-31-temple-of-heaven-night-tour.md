@@ -11,11 +11,9 @@ tags:
   - Beijing
   - Architecture
   - Night View
+cover: "temple-of-heaven-evening.jpg"
+cover_alt: "The Hall of Prayer for Good Harvests"
+cover_caption: "The Hall of Prayer for Good Harvests | 夜暮中的祈年殿"
 ---
 
-<div align="center">
-  <img src="https://raw.githubusercontent.com/Duguce/zhgyqc_site/master/content/assets/temple-of-heaven-evening.jpg" width="60%" />
-  <p align="center">
-    <em>The Hall of Prayer for Good Harvests | 夜暮中的祈年殿</em>
-  </p>
-</div>
+{{< photo src="temple-of-heaven-evening.jpg" alt="The Hall of Prayer for Good Harvests" caption="The Hall of Prayer for Good Harvests | 夜暮中的祈年殿" width="60" >}}

@@ -13,7 +13,7 @@ else
 DRAFT_FLAGS =
 endif
 
-.PHONY: help check setup build serve preview clean deploy
+.PHONY: help check setup build serve preview clean publish deploy
 
 help:
 	@echo "Available targets:"
@@ -23,7 +23,8 @@ help:
 	@echo "  make serve    Run a live-reload server for local editing."
 	@echo "  make preview  Build drafts and future-dated posts once for review."
 	@echo "  make clean    Remove generated assets."
-	@echo "  make deploy   Build the site and push via update.sh."
+	@echo "  make publish  Commit and push source changes; CI builds and deploys."
+	@echo "  make deploy   Build locally, then publish source changes."
 
 check:
 	@command -v $(HUGO) >/dev/null 2>&1 || { \
@@ -50,6 +51,8 @@ clean:
 	rm -rf public
 	rm -rf .hugo_build.lock
 
+publish:
+	@/bin/sh ./update.sh
+
 deploy: build
-	@chmod +x update.sh
-	./update.sh
+	@$(MAKE) publish

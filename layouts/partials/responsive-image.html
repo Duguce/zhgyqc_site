@@ -1,0 +1,18 @@
+{{- $image := .resource -}}
+{{- $widths := .widths | default (slice 480 800 1200 1600) -}}
+{{- $maxWidth := index $widths (sub (len $widths) 1) -}}
+{{- $candidates := slice -}}
+{{- range $widths -}}
+  {{- if lt . $image.Width -}}
+    {{- $variant := $image.Resize (printf "%dx webp q82" .) -}}
+    {{- $candidates = $candidates | append (printf "%s %dw" $variant.RelPermalink $variant.Width) -}}
+  {{- end -}}
+{{- end -}}
+{{- $largest := $image.Resize (printf "%dx webp q82" (int (math.Min $maxWidth $image.Width))) -}}
+{{- $candidates = $candidates | append (printf "%s %dw" $largest.RelPermalink $largest.Width) -}}
+{{- $fallback := $image.Resize (printf "%dx webp q82" (int (math.Min (.defaultWidth | default 800) $image.Width))) -}}
+<img src="{{ $fallback.RelPermalink }}"
+     srcset="{{ delimit ($candidates | uniq) ", " }}"
+     sizes="{{ .sizes | default "(max-width: 720px) calc(100vw - 6rem), 640px" }}"
+     width="{{ $fallback.Width }}" height="{{ $fallback.Height }}"
+     alt="{{ .alt }}" loading="{{ .loading | default "lazy" }}" decoding="async"{{ if .zoom }} data-full-src="{{ $image.RelPermalink }}"{{ end }}>

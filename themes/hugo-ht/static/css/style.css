@@ -13,12 +13,12 @@ body {
   -moz-font-feature-settings: "liga" on;
   image-rendering: -webkit-optimize-contrast;
   /* Faint tint so white cards and panels read as raised surfaces. */
-  background: #fbfcfe;
-  color: #1e293b;
+  background: var(--site-bg);
+  color: var(--site-ink);
 } 
 
 body.home-page {
-  background: #fbfcfe;
+  background: var(--site-bg);
 }
 
 /* ── Text selection ── */
@@ -85,7 +85,7 @@ div.splitbox div.right {
   font-size: 14px;
   padding: 30px 1.5rem 28px;
   margin-top: auto;
-  border-top: 1px solid #dce4ee;
+  border-top: 1px solid var(--site-border);
   position: relative;
   background: linear-gradient(180deg, #f8fafc 0%, #f4f7fb 100%);
   display: flex;
@@ -245,7 +245,7 @@ div.splitbox div.right {
 /*The parameter of `max-width` below controls the width of the body text. 
 Customize as you prefer*/
 .content {
-  max-width: 880px; 
+  max-width: var(--site-content-width);
   margin: 64px auto auto auto;
   padding: 0 15px;
   font-size: 19px;
@@ -253,7 +253,7 @@ Customize as you prefer*/
 }
 
 body.home-page .content {
-  max-width: 900px;
+  max-width: var(--site-home-width);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -273,7 +273,7 @@ body.home-page .content {
 
 /* --- Content body links --- */
 .content a {
-  color: #1b5ab7;
+  color: var(--site-accent);
   text-decoration: underline;
   text-decoration-thickness: 1.5px;
   text-underline-offset: 0.18em;
@@ -329,7 +329,7 @@ body.home-page .content {
 }
 
 #utterances-comments {
-  max-width: 880px;
+  max-width: var(--site-content-width);
   margin: 28px auto 0;
   padding: 0 15px;
 }
@@ -370,8 +370,8 @@ body.home-page .content {
   padding: 11px 0;
   position: sticky;
   top: 0;
-  background: linear-gradient(180deg, #fbfcfe 0%, #f8fafc 100%);
-  border-bottom: 1px solid #dce4ee;
+  background: linear-gradient(180deg, var(--site-bg) 0%, #f8fafc 100%);
+  border-bottom: 1px solid var(--site-border);
   z-index: 10;
 }
 
@@ -400,7 +400,7 @@ body.home-page .content {
 }
 
 .article-toolbar a:hover, .article-toolbar a:focus {
-  color: #1b5ab7;
+  color: var(--site-accent);
   letter-spacing: 0.01em;
   background-size: 100% 1px;
 }
@@ -451,7 +451,7 @@ code {
 }
 
 .toc a:hover {
-  color: #1b5ab7;
+  color: var(--site-accent);
   letter-spacing: 0.012em;
   background-size: 100% 1.5px;
   box-shadow:
@@ -552,7 +552,7 @@ figcaption a {
 }
 
 figcaption a:hover {
-  color: #1b5ab7;
+  color: var(--site-accent);
   letter-spacing: 0.01em;
   background-size: 100% 1px;
 } 
@@ -629,7 +629,7 @@ ol li {
   color: #1b2d45;
   text-decoration: none;
   letter-spacing: 0;
-  background-image: linear-gradient(105deg, #1b5ab7, #3b4f8a);
+  background-image: linear-gradient(105deg, var(--site-accent), #3b4f8a);
   background-position: 0 calc(100% - 1px);
   background-repeat: no-repeat;
   background-size: 0% 1.5px;
@@ -642,7 +642,7 @@ ol li {
 }
 
 .list-page a:hover {
-  color: #1b5ab7;
+  color: var(--site-accent);
   letter-spacing: 0.015em;
   background-size: 100% 1.5px;
   box-shadow:
@@ -659,7 +659,7 @@ ol li {
   color: #1b2d45;
   text-decoration: none;
   letter-spacing: 0;
-  background-image: linear-gradient(105deg, #1b5ab7, #3b4f8a);
+  background-image: linear-gradient(105deg, var(--site-accent), #3b4f8a);
   background-position: 0 calc(100% - 1px);
   background-repeat: no-repeat;
   background-size: 0% 1.5px;
@@ -672,7 +672,7 @@ ol li {
 }
 
 .body-text.list-text a:hover {
-  color: #1b5ab7;
+  color: var(--site-accent);
   letter-spacing: 0.015em;
   background-size: 100% 1.5px;
   box-shadow:
@@ -812,7 +812,7 @@ hr {
 }
 
 .content .hero-links a:hover {
-  color: #1b5ab7;
+  color: var(--site-accent);
   border-color: #bfd0e8;
   background-color: #f7faff;
   box-shadow: 0 2px 10px rgba(27, 90, 183, 0.08);
@@ -828,7 +828,7 @@ hr {
 }
 
 .content .hero-links a:hover .fa {
-  color: #1b5ab7;
+  color: var(--site-accent);
 }
 
 .section-title {
@@ -949,8 +949,8 @@ hr {
 
 .content .timeline-title a:hover,
 .content .fact-list a:hover {
-  color: #1b5ab7;
-  text-decoration-color: #1b5ab7;
+  color: var(--site-accent);
+  text-decoration-color: var(--site-accent);
   text-underline-offset: 0.16em;
   letter-spacing: 0;
   box-shadow: none;
@@ -1075,7 +1075,7 @@ hr {
 }
 
 .content .pub-links a {
-  color: #1b5ab7;
+  color: var(--site-accent);
   background-image: none;
   text-decoration: underline;
   text-decoration-thickness: 1.5px;
@@ -1158,7 +1158,7 @@ hr {
 
 /* Below this width the link row has to wrap, which would leave a divider
    dangling at the end of a line, so space the links out instead. */
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: var(--site-home-width)) {
   .pub-links {
     column-gap: 13px;
   }

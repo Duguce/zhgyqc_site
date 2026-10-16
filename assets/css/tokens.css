@@ -1,0 +1,23 @@
+/* Shared defaults; individual page types can keep their own accent palette. */
+:root {
+  --site-bg: #fbfcfe;
+  --site-ink: #1e293b;
+  --site-muted: #5c6b82;
+  --site-accent: #1b5ab7;
+  --site-border: #dce4ee;
+  --site-surface: #fff;
+  --site-radius-sm: 0.65rem;
+  --site-radius: 0.75rem;
+  --site-radius-lg: 0.875rem;
+  --site-radius-xl: 1rem;
+  --site-space-1: 0.5rem;
+  --site-space-2: 1rem;
+  --site-space-3: 1.5rem;
+  --site-space-4: 2rem;
+  --site-content-width: 880px;
+  --site-home-width: 900px;
+  --site-reading-width: 760px;
+  --site-font-body: "Source Serif 4", "Noto Serif SC", "Charter", "Palatino Linotype", Georgia, "Songti SC", "STSong", "SimSun", serif;
+  --site-font-ui: "Noto Sans SC", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --site-font-code: "JetBrains Mono", "Fira Code", "SF Mono", "Cascadia Code", "Menlo", "Monaco", "Courier New", monospace;
+}

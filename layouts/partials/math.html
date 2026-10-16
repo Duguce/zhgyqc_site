@@ -1,0 +1,27 @@
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+      ignoreHtmlClass: 'scholar-body__toc'
+    },
+    chtml: { scale: 0.96 },
+    startup: {
+      pageReady: function () {
+        return MathJax.startup.defaultPageReady().then(function () {
+          document.querySelectorAll('.scholar-body__content').forEach(function (el) {
+            el.classList.add('math-ready');
+          });
+        });
+      }
+    }
+  };
+</script>
+{{ $mathCDN := default "https://cdnjs.cloudflare.com/ajax/libs" .Site.Params.MathJaxCDN }}
+{{ $mathVersion := default "3.2.2" .Site.Params.MathJaxVersion }}
+<script id="MathJax-script" async src="{{ printf "%s/mathjax/%s/es5/tex-mml-chtml.js" $mathCDN $mathVersion }}"></script>
