@@ -1,0 +1,15 @@
+{{/* Publish historical raw-image URLs from the single current source file.
+     This fixed migration manifest does not create aliases for new posts. */}}
+{{- range $name, $src := .Site.Data.legacy_media.shared -}}
+  {{- $image := partial "media/image.html" (dict "page" $ "src" $src) -}}
+  {{- $alias := $image | resources.Copy (printf "assets/%s" $name) -}}
+  {{- $alias.Publish -}}
+{{- end -}}
+{{- range .Site.Data.legacy_media.bundles -}}
+  {{- $page := $.Site.GetPage . -}}
+  {{- if not $page -}}{{- errorf "Legacy media bundle %q not found" . -}}{{- end -}}
+  {{- range $page.Resources.Match "images/*" -}}
+    {{- $alias := . | resources.Copy (printf "assets/%s" (path.Base .Name)) -}}
+    {{- $alias.Publish -}}
+  {{- end -}}
+{{- end -}}

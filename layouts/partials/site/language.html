@@ -1,0 +1,3 @@
+{{- $code := .Params.contentLanguage | default .Site.LanguageCode -}}
+{{- $menuKey := .Params.menuKey | default .Site.Params.defaultLang | default "en" -}}
+{{- return (dict "code" $code "menuKey" $menuKey "isChinese" (eq $code "zh-CN")) -}}

@@ -1,0 +1,9 @@
+{{ define "main" }}
+{{ partial "media/legacy-aliases.html" . }}
+<main class="content">
+  <div class="list-page home-list-page">
+    {{ .Content }}
+    {{ partial "home-records.html" . }}
+  </div>
+</main>
+{{ end }}

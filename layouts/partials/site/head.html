@@ -1,0 +1,17 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ .Site.Title }}</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{{ partial "stylesheet.html" "css/tokens.css" }}
+{{ partial "stylesheet.html" "css/base.css" }}
+{{ partial "stylesheet.html" "css/fonts.css" }}
+{{ if .IsHome }}
+  {{ partial "stylesheet.html" "css/home.css" }}
+{{ else if eq .Type "features" }}
+  {{ if .IsPage }}{{ partial "stylesheet.html" "css/feature.css" }}{{ else }}{{ partial "stylesheet.html" "css/features-index.css" }}{{ end }}
+{{ else if in (slice "blogs" "moments") .Type }}
+  {{ if .IsPage }}{{ partial "stylesheet.html" "css/scholar-article.css" }}{{ else }}{{ partial "stylesheet.html" "css/scholar-list.css" }}{{ end }}
+{{ else if eq .Kind "taxonomy" }}
+  {{ partial "stylesheet.html" "css/terms.css" }}
+{{ end }}
+{{ partial "head_custom.html" . }}

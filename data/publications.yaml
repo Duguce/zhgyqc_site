@@ -1,5 +1,5 @@
 - title: "xVerify: Efficient Answer Verifier for Reasoning Model Evaluations"
-  image: "xverify_framework.png"
+  image: "images/publications/xverify_framework.png"
   image_alt: "xVerify framework"
   authors:
     - name: "Ding Chen"
@@ -27,7 +27,7 @@
     - label: "X Thread"
       url: "https://x.com/_akhaliq/status/1912419740393349234"
 - title: "TurtleBench: Evaluating Top Language Models via Real-World Yes/No Puzzles"
-  image: "turtle_framework.png"
+  image: "images/publications/turtle_framework.png"
   image_alt: "TurtleBench framework"
   authors:
     - name: "Qingchen Yu"
@@ -56,9 +56,9 @@
     - label: "Blog Post"
       url: "https://mazzzystar.github.io/2024/08/09/turtle-benchmark-zh"
     - label: "Poster"
-      url: "./assets/TurtleBench-Poster_ICASSP2026.pdf"
+      url: "/files/TurtleBench-Poster_ICASSP2026.pdf"
 - title: "GuessArena: Guess Who I Am? A Self-Adaptive Framework for Evaluating LLMs in Domain-Specific Knowledge and Reasoning"
-  image: "guessarena_framework.png"
+  image: "images/publications/guessarena_framework.png"
   image_alt: "GuessArena framework"
   authors:
     - name: "Qingchen Yu"
@@ -81,9 +81,9 @@
     - label: "GitHub"
       url: "https://github.com/IAAR-Shanghai/GuessArena"
     - label: "Poster"
-      url: "./assets/GuessArena-Poster_ACL25.pdf"
+      url: "/files/GuessArena-Poster_ACL25.pdf"
 - title: "xFinder: Large Language Models as Automated Evaluators for Reliable Evaluation"
-  image: "xfinder_framework.jpg"
+  image: "images/publications/xfinder_framework.jpg"
   image_alt: "xFinder framework"
   authors:
     - name: "Qingchen Yu"
@@ -113,4 +113,4 @@
     - label: "WeChat Article"
       url: "https://mp.weixin.qq.com/s/C5G-rpen9OM4MmBhrByTIQ"
     - label: "Poster"
-      url: "./assets/xFinder-Poster_ICLR2025.pdf"
+      url: "/files/xFinder-Poster_ICLR2025.pdf"

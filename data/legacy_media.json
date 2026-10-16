@@ -1,0 +1,31 @@
+{
+  "shared": {
+    "grimoire_framework.jpg": "images/publications/grimoire_framework.jpg",
+    "guessarena_framework.png": "images/publications/guessarena_framework.png",
+    "profile.jpg": "images/profile/profile.jpg",
+    "shellcrash-config-example.png": "images/posts/shellcrash-config-example.png",
+    "turtle_framework.png": "images/publications/turtle_framework.png",
+    "xfinder_framework.jpg": "images/publications/xfinder_framework.jpg",
+    "xverify_framework.png": "images/publications/xverify_framework.png"
+  },
+  "bundles": [
+    "/en/moments/2025-11-22-open-source-tech",
+    "/en/moments/2025-11-27-visit-gongdelin-relics",
+    "/en/moments/2025-12-06-xian-city-walk",
+    "/en/moments/2026-01-14-at-the-crossroads",
+    "/en/moments/2026-01-31-temple-of-heaven-night-tour",
+    "/en/moments/2026-03-19-tiananmen-square",
+    "/en/moments/2026-03-22-summer-palace-moment",
+    "/en/moments/2026-04-09-beihang-spring-flowers",
+    "/en/moments/2026-05-16-temple-of-heaven-weekend",
+    "/en/moments/2026-06-01-capturing-the-moon",
+    "/en/moments/2026-08-23-beihai-park-stroll"
+  ],
+  "static": {
+    "GuessArena-Poster_ACL25.pdf": "files/GuessArena-Poster_ACL25.pdf",
+    "TurtleBench-Poster_ICASSP2026.pdf": "files/TurtleBench-Poster_ICASSP2026.pdf",
+    "xFinder-Poster_ICLR2025.pdf": "files/xFinder-Poster_ICLR2025.pdf",
+    "yqc_cv.pdf": "files/yqc_cv.pdf",
+    "summer-palace-lake.mp4": "media/video/summer-palace-lake.mp4"
+  }
+}

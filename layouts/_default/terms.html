@@ -1,0 +1,73 @@
+{{ define "main" }}
+
+{{ $terms := sort .Data.Terms "Page.Title" }}
+{{ $scratch := newScratch }}
+{{ $scratch.Set "totalEntries" 0 }}
+{{ $scratch.Set "maxCount" 0 }}
+{{ range $terms }}
+  {{ $scratch.Set "totalEntries" (add ($scratch.Get "totalEntries") .Count) }}
+  {{ if gt .Count ($scratch.Get "maxCount") }}
+    {{ $scratch.Set "maxCount" .Count }}
+  {{ end }}
+{{ end }}
+{{ $totalEntries := $scratch.Get "totalEntries" }}
+{{ $maxCountBase := $scratch.Get "maxCount" }}
+{{ $maxCount := cond (lt $maxCountBase 1) 1 $maxCountBase }}
+
+<main class="content" role="main">
+
+<div class="terms-page" data-page="terms-index">
+  <section class="terms-hero" aria-labelledby="terms-hero-title">
+    <div class="terms-hero__badge">Research Index</div>
+    <div class="terms-hero__body">
+      <h1 id="terms-hero-title">{{ .Title }}</h1>
+      <p class="terms-hero__desc">
+        Curated vocabulary that anchors essays, field notes, and experiments. Use these tags to trace how ideas evolve across the archive.
+      </p>
+      <div class="terms-hero__stats">
+        <div class="stat-card">
+          <span class="stat-card__label">Total tags</span>
+          <span class="stat-card__value">{{ len $terms }}</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-card__label">Citations across posts</span>
+          <span class="stat-card__value">{{ $totalEntries }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="terms-panel" aria-labelledby="terms-panel-title">
+    <div class="terms-panel__header" id="terms-panel-title">
+      <div>
+        <h2>Scholarly threads</h2>
+        <p>Sorted alphabetically for calm scanning, each card highlights the relative weight of a topic across the site.</p>
+      </div>
+      <div class="terms-panel__legend">
+        <span class="legend-dot"></span>
+        <span>Relative frequency</span>
+      </div>
+    </div>
+
+    <div class="terms-grid" role="list">
+      {{ range $terms }}
+      {{ $weight := div (mul .Count 100) $maxCount }}
+      {{ $entryLabel := cond (eq .Count 1) "entry" "entries" }}
+      <article class="term-card" role="listitem" style="--term-weight: {{ $weight }};">
+        <div class="term-card__header">
+          <a href="{{ .Page.RelPermalink }}" class="term-card__link" title="{{ .Page.Title }}">
+            <span class="term-card__name">{{ .Page.Title }}</span>
+            <span class="term-card__icon" aria-hidden="true">&rarr;</span>
+          </a>
+          <span class="term-card__count">{{ .Count }} {{ $entryLabel }}</span>
+        </div>
+        <div class="term-card__progress" aria-hidden="true">
+          <span></span>
+        </div>
+      </article>
+      {{ end }}
+    </div>
+  </section>
+</div>
+</main>
+{{ end }}

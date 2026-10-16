@@ -1,4 +1,4 @@
-baseURL = "https://zhgyqc.vercel.app"
+baseURL = "https://zhgyqc.site/"
 languageCode = "en"
 title = "Qingchen Yu"
 theme = "hugo-ht"
@@ -141,4 +141,20 @@ posts = "/posts/:filename/"
 quality = 100
 
 [outputs]
-home = ["HTML", "RSS", "SITEMAP"]
+home = ["HTML", "RSS"]
+
+# Keep existing download URLs without duplicating the source files. The default
+# static mount must remain explicit when adding mounts for this component.
+[[module.mounts]]
+source = "static"
+target = "static"
+
+[[module.mounts]]
+source = "static/files"
+target = "static/assets"
+includeFiles = ["yqc_cv.pdf", "TurtleBench-Poster_ICASSP2026.pdf", "GuessArena-Poster_ACL25.pdf", "xFinder-Poster_ICLR2025.pdf"]
+
+[[module.mounts]]
+source = "static/media/video"
+target = "static/assets"
+includeFiles = ["summer-palace-lake.mp4"]

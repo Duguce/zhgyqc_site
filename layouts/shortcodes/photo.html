@@ -1,7 +1,5 @@
 {{- $src := .Get "src" -}}
-{{- $image := .Page.Resources.GetMatch $src -}}
-{{- if not $image -}}{{- $image = .Site.Home.Resources.GetMatch (printf "assets/%s" $src) -}}{{- end -}}
-{{- if not $image -}}{{- errorf "Photo %q not found in %s" $src .Position -}}{{- end -}}
+{{- $image := partial "media/image.html" (dict "page" .Page "src" $src) -}}
 {{- $width := .Get "width" | default "80" -}}
 {{- $size := "wide" -}}
 {{- if eq $width "60" -}}{{- $size = "narrow" -}}{{- else if eq $width "75" -}}{{- $size = "medium" -}}{{- end -}}

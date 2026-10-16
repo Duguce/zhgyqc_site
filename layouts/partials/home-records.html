@@ -20,8 +20,7 @@
   {{ range .Site.Data.publications }}
   <div class="pub-item">
     <div class="pub-thumb">
-      {{ $image := $.Site.Home.Resources.GetMatch (printf "assets/%s" .image) }}
-      {{ if not $image }}{{ errorf "Publication image %q not found" .image }}{{ end }}
+      {{ $image := partial "media/image.html" (dict "page" $ "src" .image) }}
       {{ partial "responsive-image.html" (dict "resource" $image "alt" .image_alt "widths" (slice 352 704) "defaultWidth" 352 "sizes" "(max-width: 720px) calc(100vw - 4.25rem), 176px") }}
     </div>
     <div class="pub-body">

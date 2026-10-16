@@ -1,0 +1,75 @@
+{{ $language := partial "site/language.html" . }}
+      <footer class="footer">
+
+  {{ $rssLink := "" }}
+  {{ if not .IsHome }}
+    {{ if .Site.Params.singleLang }}
+      {{ $rssLink = printf "/%s/index.xml" $.Site.Params.blogDirName }}
+    {{ else }}
+      {{ with .CurrentSection }}
+        {{ $rssLink = printf "%sindex.xml" .RelPermalink }}
+      {{ end }}
+      {{ if and (eq $rssLink "") .File }}
+        {{ $dir := strings.TrimSuffix "/" .File.Dir }}
+        {{ if $dir }}
+          {{ $rssLink = printf "/%s/index.xml" $dir }}
+        {{ end }}
+      {{ end }}
+      {{ if and (eq $rssLink "") .Section }}
+        {{ $rssLink = printf "/%s/%s/index.xml" .Section $.Site.Params.blogDirName }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+
+  {{ partial "foot_custom.html" . }}
+  {{ $hasFooterLinks := false }}
+  {{ if .IsHome }}
+    {{ with .Site.Params.GithubRepo }}
+      {{ $hasFooterLinks = true }}
+    {{ end }}
+  {{ end }}
+  {{ if and (not .IsHome) (ne $rssLink "") }}
+    {{ $hasFooterLinks = true }}
+  {{ end }}
+
+     <ul class="footer-links{{ if $hasFooterLinks }} footer-links--visible{{ end }}">
+      {{ if .IsHome }}
+       {{ with .Site.Params.GithubRepo}}
+       <li>
+        <a href='{{ . }}' class="footer-links-kudos" target="_blank"> 
+          {{ default (index $.Site.Params.Lang.sourceCode $.Site.Params.defaultLang) (index $.Site.Params.lang.sourceCode $language.menuKey) }} 
+          <i class="fa fa-github" style="font-size: 24px"></i>
+        </a>
+       </li>
+       {{ end }}
+       {{ end }}
+      {{ if and (not .IsHome) (ne $rssLink "") }}
+      <li><a href="{{ $rssLink }}" type="application/rss+xml" title="{{ if $language.isChinese }}RSS 订阅{{ else }}RSS feed{{ end }}">
+      {{ default "Subscribe" (index $.Site.Params.lang.subscribe $language.menuKey) }} </a>
+      </li>
+       <li>
+       {{ if $language.isChinese}}
+       <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">
+       {{ else }}
+        <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+       {{ end }}
+        {{ default (index $.Site.Params.Lang.license $.Site.Params.defaultLang) (index $.Site.Params.lang.license $language.menuKey) }}
+        <i class="fa fa-cc" aria-hidden="true" title="{{ if $language.isChinese }}知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议{{ else }}Attribution-NonCommercial-ShareAlike 4.0 International{{ end }}"></i>
+        </a>
+       </li>
+       {{ end }}
+     </ul>
+     <div class="copyright-text">
+            {{ with .Site.Params.copyright }}
+            {{ .| markdownify }}
+            {{ end }}
+            {{ default (index $.Site.Params.lang.author $.Site.Params.defaultLang) (index $.Site.Params.lang.author $language.menuKey) }}
+            {{ with .Site.Params.copyrightYear }}
+            {{ .| markdownify }}
+            {{ end }}
+     </div>
+
+</footer>
+
+
+

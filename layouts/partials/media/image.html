@@ -1,0 +1,13 @@
+{{/* Page resources take precedence over shared images. Legacy shared names
+     remain supported by the migration manifest, without coupling to Home. */}}
+{{- $page := .page -}}
+{{- $src := .src -}}
+{{- $image := $page.Resources.GetMatch $src -}}
+{{- if not $image -}}{{- $image = resources.Get $src -}}{{- end -}}
+{{- if not $image -}}
+  {{- with index $page.Site.Data.legacy_media.shared $src -}}
+    {{- $image = resources.Get . -}}
+  {{- end -}}
+{{- end -}}
+{{- if not $image -}}{{- errorf "Image %q not found for %s" $src $page.RelPermalink -}}{{- end -}}
+{{- return $image -}}

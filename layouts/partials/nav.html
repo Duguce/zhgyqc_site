@@ -1,0 +1,18 @@
+{{ $language := partial "site/language.html" . }}
+<nav class="nav" aria-label="{{ if $language.isChinese }}主导航{{ else }}Main navigation{{ end }}">
+      <a href="{{ "/" | relURL }}" class="nav-logo">
+        <img src="{{ print "" .Site.Params.logo.url | relURL }}"
+         width="{{ .Site.Params.logo.width }}"
+         height="{{ .Site.Params.logo.height }}"
+         alt="{{ .Site.Title }}">
+      </a>
+
+         <ul class="nav-links" >
+            {{ $defaultMenuKey := default "en" .Site.Params.defaultLang }}
+            {{ $menu := default (index .Site.Menus $defaultMenuKey) (index .Site.Menus $language.menuKey) }}
+            {{ range $menu }}
+                {{ $isCurrent := or (and $.IsHome (eq .URL "/")) (and (eq $.Type "moments") (eq .URL "/moments/")) (and (eq $.Type "blogs") (eq .URL "/blogs/")) }}
+                <li><a href="{{ .URL | relURL }}"{{ if $isCurrent }} class="is-current" aria-current="{{ if $.IsPage }}location{{ else }}page{{ end }}"{{ end }}>{{ .Name }}</a></li>
+            {{ end }}
+         </ul>
+</nav>

@@ -1,0 +1,7 @@
+{{/* Compatibility wrapper for standalone layouts using the original partial API. */}}
+<!DOCTYPE html>
+<html lang="{{ (partial "site/language.html" .).code }}">
+  <head>{{ partial "site/head.html" . }}</head>
+  <body{{ if .IsHome }} class="home-page"{{ end }}>
+    <div class="wrapper">
+      {{ partial "site/header.html" . }}

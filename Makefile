@@ -1,58 +1,57 @@
 HUGO ?= hugo
-BASE_URL ?= https://zhgyqc.vercel.app
+PYTHON ?= python3
+# Leave empty to use config.toml; hosting providers may override the base URL.
+BASE_URL ?=
 BUILD_DIR ?= public
-RESOURCES_DIR ?= resources/_gen
 PORT ?= 1313
-THEME ?= hugo-ht
 ENV ?= production
 DRAFTS ?= true
 
-ifeq ($(DRAFTS),true)
-DRAFT_FLAGS = --buildDrafts --buildFuture --buildExpired
-else
-DRAFT_FLAGS =
+ifneq ($(strip $(BASE_URL)),)
+BASE_URL_FLAG = --baseURL "$(BASE_URL)"
+VERIFY_URL_FLAG = --base-url "$(BASE_URL)"
 endif
 
-.PHONY: help check setup build serve preview clean publish deploy
+ifeq ($(DRAFTS),true)
+DRAFT_FLAGS = --buildDrafts --buildFuture --buildExpired
+endif
+
+.PHONY: help check build verify serve preview clean publish deploy
 
 help:
 	@echo "Available targets:"
-	@echo "  make check    Ensure Hugo is installed."
-	@echo "  make setup    Initialize git submodules if the theme is vendored that way."
+	@echo "  make check    Check the Hugo Extended version against .hugo-version."
 	@echo "  make build    Render the production site into $(BUILD_DIR)."
-	@echo "  make serve    Run a live-reload server for local editing."
-	@echo "  make preview  Build drafts and future-dated posts once for review."
-	@echo "  make clean    Remove generated assets."
+	@echo "  make verify   Build and check local links, resources, and critical pages."
+	@echo "  make serve    Run the Hugo live-reload server."
+	@echo "  make preview  Build drafts and future-dated posts for review."
+	@echo "  make clean    Remove generated output and the build lock."
 	@echo "  make publish  Commit and push source changes; CI builds and deploys."
-	@echo "  make deploy   Build locally, then publish source changes."
+	@echo "  make deploy   Verify locally, then publish source changes."
 
 check:
-	@command -v $(HUGO) >/dev/null 2>&1 || { \
-		echo "Hugo is not installed. Visit https://gohugo.io/getting-started/installing/"; \
-		exit 1; \
-	}
-
-setup:
-	@git submodule status >/dev/null 2>&1 && git submodule update --init --recursive || \
-		echo "No git submodules to init; skipping."
+	@sh scripts/check-hugo.sh "$(HUGO)"
 
 build: check
-	$(HUGO) --gc --minify --environment $(ENV) --baseURL $(BASE_URL) \
-		--destination $(BUILD_DIR) --themesDir themes --theme $(THEME)
+	"$(HUGO)" --gc --minify --cleanDestinationDir --printPathWarnings --panicOnWarning \
+		--environment "$(ENV)" --destination "$(BUILD_DIR)" $(BASE_URL_FLAG)
+
+verify: build
+	"$(PYTHON)" scripts/check-site.py "$(BUILD_DIR)" $(VERIFY_URL_FLAG)
 
 serve: check
-	$(HUGO) server $(DRAFT_FLAGS) --bind 0.0.0.0 --port $(PORT)
+	"$(HUGO)" server $(DRAFT_FLAGS) --bind 0.0.0.0 --port "$(PORT)"
 
-preview: clean check
-	$(HUGO) --environment staging --baseURL $(BASE_URL) $(DRAFT_FLAGS) \
-		--destination $(BUILD_DIR) --themesDir themes --theme $(THEME)
+preview: check
+	"$(HUGO)" --environment staging $(BASE_URL_FLAG) $(DRAFT_FLAGS) \
+		--destination "$(BUILD_DIR)" --printPathWarnings --panicOnWarning
 
 clean:
-	rm -rf public
-	rm -rf .hugo_build.lock
+	rm -rf -- "$(BUILD_DIR)"
+	rm -f .hugo_build.lock
 
 publish:
-	@/bin/sh ./update.sh
+	@sh ./update.sh
 
-deploy: build
+deploy: verify
 	@$(MAKE) publish
