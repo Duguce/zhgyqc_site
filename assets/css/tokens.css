@@ -1,15 +1,21 @@
-/* Shared defaults; individual page types can keep their own accent palette. */
+/* Warm paper, blue-grey ink, and quiet shared surfaces. */
 :root {
-  --site-bg: #fbfcfe;
-  --site-ink: #1e293b;
-  --site-muted: #5c6b82;
-  --site-accent: #1b5ab7;
-  --site-border: #dce4ee;
-  --site-surface: #fff;
-  --site-radius-sm: 0.65rem;
-  --site-radius: 0.75rem;
-  --site-radius-lg: 0.875rem;
-  --site-radius-xl: 1rem;
+  --site-bg: #f8f7f3;
+  --site-ink: #25313d;
+  --site-ink-soft: #444e55;
+  --site-muted: #6a706f;
+  --site-accent: #526d82;
+  --site-accent-hover: #344d61;
+  --site-border: #e3e1da;
+  --site-border-soft: #eceae3;
+  --site-border-hover: #b7c0c3;
+  --site-surface: #fffefb;
+  --site-surface-soft: #f1f0ea;
+  --site-gold: #806325;
+  --site-radius-sm: 0.25rem;
+  --site-radius: 0.5rem;
+  --site-radius-lg: 0.5rem;
+  --site-radius-xl: 0.5rem;
   --site-space-1: 0.5rem;
   --site-space-2: 1rem;
   --site-space-3: 1.5rem;

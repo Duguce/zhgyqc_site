@@ -4,17 +4,17 @@
   padding: 0 20px;
 }
 .scholar-article {
-  --sa-surface: #f1f5f5;
-  --sa-border: #d9e2e3;
-  --sa-border-soft: #e6ebeb;
-  --sa-ink: #23333b;
-  --sa-ink-soft: #3c4c53;
-  --sa-muted: #62737b;
-  --sa-accent: #326b87;
-  --sa-kicker: #8a765d;
-  --sa-surface-alt: #edf3f3;
+  --sa-surface: var(--site-surface-soft);
+  --sa-border: var(--site-border);
+  --sa-border-soft: var(--site-border-soft);
+  --sa-ink: var(--site-ink);
+  --sa-ink-soft: var(--site-ink-soft);
+  --sa-muted: var(--site-muted);
+  --sa-accent: var(--site-accent);
+  --sa-kicker: var(--site-muted);
+  --sa-surface-alt: var(--site-border-soft);
   --sa-card-bg: var(--site-bg);
-  --sa-radius-sm: 0.65rem;
+  --sa-radius-sm: var(--site-radius-sm);
   --sa-radius: var(--site-radius);
   --sa-radius-lg: var(--site-radius-lg);
   --sa-radius-xl: var(--site-radius-xl);
@@ -25,7 +25,7 @@
   background: transparent;
 }
 .scholar-article[data-variant="moments"] {
-  --sa-kicker: #5d7e88;
+  --sa-kicker: var(--site-muted);
 }
 
 .scholar-hero {
@@ -161,7 +161,7 @@
   color: var(--sa-ink-soft);
   font-style: italic;
   border: none;
-  border-left: 2px solid #9bb4bb;
+  border-left: 2px solid var(--site-border-hover);
   box-shadow: none;
   position: static;
 }
@@ -273,7 +273,7 @@
   border: none;
   border-radius: var(--sa-radius);
   padding: 1.5rem 1.5rem 1.4rem;
-  color: #2a3140;
+  color: var(--site-ink);
   font-size: 0.9rem;
   font-family: "JetBrains Mono", "Fira Code", "SF Mono", "Cascadia Code", monospace;
   overflow-x: auto;
@@ -549,7 +549,7 @@ html { scroll-behavior: smooth; }
 
 /* ═══ Custom selection ═══ */
 .scholar-article ::selection {
-  background: #e7edf6;
+  background: var(--site-border);
   color: var(--sa-ink);
 }
 
@@ -675,7 +675,7 @@ html { scroll-behavior: smooth; }
   height: auto;
   display: block;
   margin-inline: auto;
-  border-radius: 2px;
+  border-radius: var(--site-radius-sm);
 }
 .scholar-body__content img.is-zoomable {
   cursor: zoom-in;
@@ -732,7 +732,7 @@ mjx-container[jax="CHTML"] svg:focus {
   margin-inline: auto;
   padding: 0;
   border: 0;
-  border-radius: 2px;
+  border-radius: var(--site-radius-sm);
   background: transparent;
   cursor: zoom-in;
   line-height: 0;
@@ -779,7 +779,7 @@ mjx-container[jax="CHTML"] svg:focus {
   max-width: min(100%, 1200px);
   max-height: 82vh;
   width: auto;
-  border-radius: 2px;
+  border-radius: var(--site-radius-sm);
 }
 .scholar-lightbox__caption {
   margin: 0;

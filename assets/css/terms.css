@@ -1,11 +1,11 @@
 /* Tags page refinement */
 .terms-page {
-  --terms-surface: #f6f4ef;
-  --terms-border: #d7d2c6;
-  --terms-ink: #1f2535;
-  --terms-muted: #5c6272;
-  --terms-accent: #8a6f4d;
-  --terms-highlight: #d8cfbe;
+  --terms-surface: var(--site-surface-soft);
+  --terms-border: var(--site-border);
+  --terms-ink: var(--site-ink);
+  --terms-muted: var(--site-muted);
+  --terms-accent: var(--site-accent);
+  --terms-highlight: var(--site-border-soft);
   font-family: "Source Serif Pro", "Palatino Linotype", Georgia, serif;
   color: var(--terms-ink);
   padding-bottom: 3rem;
@@ -13,7 +13,7 @@
 .terms-hero {
   background: var(--terms-surface);
   border: 1px solid var(--terms-border);
-  border-radius: 1.4rem;
+  border-radius: var(--site-radius);
   padding: 1.6rem;
   margin: 0 auto 1.6rem;
   max-width: 960px;
@@ -24,8 +24,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 25% 20%, rgba(138, 111, 77, 0.24), transparent 45%),
-              linear-gradient(120deg, rgba(31, 37, 53, 0.05), transparent 60%);
+  background: none;
   opacity: 0.5;
   pointer-events: none;
 }
@@ -57,12 +56,12 @@
   margin-top: 1.05rem;
 }
 .stat-card {
-  background: #fff;
+  background: var(--site-surface);
   border: 1px solid var(--terms-border);
-  border-radius: 0.9rem;
+  border-radius: var(--site-radius);
   padding: 0.85rem 1.2rem;
   min-width: 0;
-  box-shadow: 0 10px 25px rgba(28, 34, 51, 0.07);
+  box-shadow: 0 1px 4px rgba(45, 42, 33, 0.03);
 }
 .stat-card__label {
   display: block;
@@ -78,10 +77,10 @@
 }
 .terms-panel {
   border: 1px solid var(--terms-border);
-  border-radius: 1.3rem;
+  border-radius: var(--site-radius);
   padding: 1.9rem;
-  background: #fff;
-  box-shadow: 0 16px 38px rgba(19, 23, 33, 0.07);
+  background: var(--site-surface);
+  box-shadow: 0 2px 8px rgba(45, 42, 33, 0.03);
 }
 .terms-panel__header {
   display: flex;
@@ -126,9 +125,9 @@
 }
 .term-card {
   position: relative;
-  background: #fefdfb;
+  background: var(--site-surface);
   border: 1px solid var(--terms-border);
-  border-radius: 1rem;
+  border-radius: var(--site-radius);
   padding: 0.85rem 0.95rem;
   overflow: hidden;
   transition: transform 180ms ease, box-shadow 180ms ease;
@@ -137,13 +136,13 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(120deg, rgba(138, 111, 77, 0.15), rgba(255, 255, 255, 0));
+  background: var(--site-surface-soft);
   opacity: calc(0.18 + (var(--term-weight) / 600));
   pointer-events: none;
 }
 .term-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 18px 30px rgba(31, 37, 53, 0.12);
+  box-shadow: 0 3px 12px rgba(45, 42, 33, 0.04);
 }
 .term-card__header {
   display: flex;
@@ -198,7 +197,7 @@
   width: calc(var(--term-weight) * 1%);
   max-width: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, var(--terms-accent), #b08c66);
+  background: var(--terms-accent);
 }
 @media (max-width: 768px) {
   .terms-hero,
