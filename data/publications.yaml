@@ -16,6 +16,8 @@
   venue: "The 2026 Conference on Empirical Methods in Natural Language Processing"
   venue_short: "EMNLP 2026 Findings"
   links:
+    - label: "ACL Anthology"
+      url: "https://aclanthology.org/2026.findings-emnlp.159"
     - label: "arXiv"
       url: "https://arxiv.org/abs/2504.10481"
     - label: "GitHub"
