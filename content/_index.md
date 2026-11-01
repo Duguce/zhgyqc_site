@@ -6,7 +6,7 @@ title: Qingchen Yu
     <img class="hero-photo" src="{{< image-url "images/profile/profile.jpg" >}}" width="640" height="900" alt="Portrait of Qingchen Yu" decoding="async">
     <div class="hero-body">
         <h1 class="hero-name">Qingchen Yu</h1>
-        <p class="hero-role">Ph.D. Student in Artificial Intelligence &middot; Beihang University</p>
+        <p class="hero-role">Ph.D. Student in Artificial Intelligence</p>
         <p class="hero-intro">My research interests mainly focus on large language models.</p>
         <p class="hero-contact"><span class="hero-contact-label">Email</span> zhgyqc[at]163[dot]com</p>
         <p class="hero-links">
