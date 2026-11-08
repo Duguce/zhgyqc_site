@@ -50,6 +50,13 @@ posts = "/posts/:filename/"
     copyright = "&copy;"
     copyrightYear = "2022-2026"
 
+    [params.analytics]
+      enabled = true
+      site = "https://zhgyqc.goatcounter.com"
+      startedAt = "2026-11-08"
+      hostname = "zhgyqc.site"
+      timezone = "Asia/Shanghai"
+
     [params.giscus]
       repo = "Duguce/zhgyqc_site"
       repoId = "R_kgDOIr7f-Q"

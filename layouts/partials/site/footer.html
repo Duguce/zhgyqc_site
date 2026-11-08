@@ -2,7 +2,7 @@
       <footer class="footer">
 
   {{ $rssLink := "" }}
-  {{ if not .IsHome }}
+  {{ if and (not .IsHome) (ne .Type "stats") }}
     {{ if .Site.Params.singleLang }}
       {{ $rssLink = printf "/%s/index.xml" $.Site.Params.blogDirName }}
     {{ else }}
@@ -22,7 +22,7 @@
   {{ end }}
 
   {{ partial "foot_custom.html" . }}
-  {{ $hasFooterLinks := false }}
+  {{ $hasFooterLinks := true }}
   {{ if .IsHome }}
     {{ with .Site.Params.GithubRepo }}
       {{ $hasFooterLinks = true }}
@@ -33,6 +33,7 @@
   {{ end }}
 
      <ul class="footer-links{{ if $hasFooterLinks }} footer-links--visible{{ end }}">
+      <li><a href="{{ "stats/" | relURL }}"{{ if eq .Type "stats" }} aria-current="page"{{ end }}>{{ if $language.isChinese }}访客统计{{ else }}Site Statistics{{ end }}</a></li>
       {{ if .IsHome }}
        {{ with .Site.Params.GithubRepo}}
        <li>

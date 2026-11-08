@@ -1,0 +1,54 @@
+{{ define "main" }}
+<main class="content stats-page" id="site-statistics" data-source="{{ "stats/data.json" | relURL }}" data-site-root="{{ .Site.Home.RelPermalink }}">
+  <header class="stats-header">
+    <p class="stats-eyebrow">Readership</p>
+    <h1>{{ .Title }}</h1>
+    <p class="stats-intro">A quiet record of visits across the site.</p>
+  </header>
+
+  <div class="stats-controls">
+    <p id="stats-range">Recent visits</p>
+    <fieldset class="stats-periods">
+      <legend class="stats-sr-only">Date range</legend>
+      <button type="button" data-period="7" aria-pressed="false" disabled>7 days</button>
+      <button type="button" data-period="30" aria-pressed="true" disabled>30 days</button>
+    </fieldset>
+  </div>
+  <p class="stats-status" id="stats-status" role="status" aria-live="polite">Loading statistics…</p>
+  <p class="stats-notice" id="stats-notice" hidden></p>
+  <noscript><p class="stats-notice">Enable JavaScript to view statistics.</p></noscript>
+
+  <section aria-label="Visit overview" class="stats-overview">
+    <div class="stats-metric"><h2>Visits</h2><p id="stats-total">—</p></div>
+    <div class="stats-metric"><h2>Daily average</h2><p id="stats-average">—</p></div>
+    <div class="stats-metric"><h2>Pages visited</h2><p id="stats-page-count">—</p></div>
+  </section>
+
+  <section class="stats-panel stats-trend" aria-labelledby="stats-trend-title">
+    <div class="stats-panel-heading"><h2 id="stats-trend-title">Daily visits</h2><span id="stats-coverage"></span></div>
+    <div id="stats-chart" class="stats-chart"><p class="stats-placeholder">Statistics will appear here when data is ready.</p></div>
+    <details class="stats-chart-table"><summary>View daily numbers</summary><div id="stats-daily-table"></div></details>
+  </section>
+
+  <div class="stats-details">
+    <section class="stats-panel" aria-labelledby="stats-pages-title">
+      <h2 id="stats-pages-title">Top pages</h2>
+      <ol class="stats-ranking" id="stats-pages"><li class="stats-placeholder">Waiting for data</li></ol>
+    </section>
+    <section class="stats-panel" aria-labelledby="stats-sources-title">
+      <h2 id="stats-sources-title">Sources</h2>
+      <ol class="stats-ranking" id="stats-sources"><li class="stats-placeholder">Waiting for data</li></ol>
+    </section>
+  </div>
+
+  <footer class="stats-method" aria-label="Statistics details">
+    <dl class="stats-metadata">
+      <div><dt>Tracking since</dt><dd id="stats-started">—</dd></div>
+      <div><dt>Data through</dt><dd id="stats-through">—</dd></div>
+      <div><dt>Last updated</dt><dd id="stats-updated">—</dd></div>
+    </dl>
+    <div class="stats-colophon"><p>Per-page sessions · Beijing time (UTC+8)</p><a href="https://www.goatcounter.com/help/sessions" rel="noopener" target="_blank">GoatCounter <span aria-hidden="true">↗</span></a></div>
+  </footer>
+</main>
+{{ partial "script.html" "js/stats.js" }}
+{{ end }}

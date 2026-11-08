@@ -11,6 +11,8 @@ import sys
 from urllib.parse import unquote, urljoin, urlsplit
 import xml.etree.ElementTree as ET
 
+from stats_snapshot import SnapshotError, validate_snapshot
+
 
 class Document(HTMLParser):
     def __init__(self, path):
@@ -33,6 +35,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("directory", type=Path)
     parser.add_argument("--base-url", help="Use the same override supplied to Hugo.")
+    parser.add_argument("--require-stats-data", action="store_true", help="Require the public Pages statistics snapshot.")
     args = parser.parse_args()
     root = args.directory.resolve()
     project = Path(__file__).resolve().parents[1]
@@ -98,11 +101,21 @@ def main():
                 if any(tag == "a" and a.get("href") == "#" for tag, a in pagination):
                     errors.add("{}: disabled pagination must not link to #".format(relative))
 
-    for required in ("index.html", "blogs/index.html", "moments/index.html"):
+    for required in ("index.html", "blogs/index.html", "moments/index.html", "stats/index.html"):
         if required not in documents:
             errors.add("Missing critical page: " + required)
         elif len(documents[required].attrs("h1")) != 1:
             errors.add("{}: expected one page heading (h1)".format(required))
+    stats_path = root / "stats/data.json"
+    if stats_path.is_file():
+        try:
+            if stats_path.stat().st_size > 100000:
+                raise SnapshotError("Public snapshot is too large")
+            validate_snapshot(json.loads(stats_path.read_text()))
+        except (SnapshotError, ValueError, KeyError, TypeError) as exc:
+            errors.add("Invalid public statistics snapshot: " + str(exc))
+    elif args.require_stats_data:
+        errors.add("Missing stats/data.json")
     if not (root / "robots.txt").is_file():
         errors.add("Missing robots.txt")
     sitemap = root / "sitemap.xml"

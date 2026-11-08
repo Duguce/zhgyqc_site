@@ -12,7 +12,7 @@
             {{ $menu := default (index .Site.Menus $defaultMenuKey) (index .Site.Menus $language.menuKey) }}
             {{ range $menu }}
                 {{ $isCurrent := or (and $.IsHome (eq .URL $.Site.Home.RelPermalink)) (and (eq $.Type "moments") (eq .URL ("moments/" | relURL))) (and (eq $.Type "blogs") (eq .URL ("blogs/" | relURL))) }}
-                <li><a href="{{ .URL | relURL }}"{{ if $isCurrent }} class="is-current" aria-current="{{ if $.IsPage }}location{{ else }}page{{ end }}"{{ end }}>{{ .Name }}</a></li>
+                <li><a href="{{ .URL | relURL }}"{{ if $isCurrent }} class="is-current" aria-current="{{ if $.IsPage }}location{{ else }}page{{ end }}"{{ end }}>{{ if and (eq $.Type "stats") (eq .URL "/blogs/") }}Blog{{ else }}{{ .Name }}{{ end }}</a></li>
             {{ end }}
          </ul>
 </nav>

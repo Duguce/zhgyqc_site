@@ -158,6 +158,76 @@ Shared images belong in `assets/images/`; downloadable PDFs in `static/files/`; 
 
 Code highlighting runs at build time. MathJax loads only on pages containing `\(...\)`, `\[...\]` or `$$...$$` outside code samples. Front matter `math: true` or `math: false` overrides detection. Pages needing Vega may opt in with `vega: true`; initialize charts after `DOMContentLoaded`.
 
+### Public visitor statistics
+
+`/stats/` presents a public aggregate of homepage, blog and Moments visits. Its
+footer entry uses the current page's language; the statistics interface is entirely
+in English. Chinese article titles use readable English URL slugs in its ranking,
+without changing the original articles. The page reuses the site's warm
+palette and loads its own small CSS/JavaScript module; charts use SVG and include
+an accessible daily-values table.
+
+The free setup uses GoatCounter for collection and the existing GitHub Actions
+and Pages deployment for sanitized JSON snapshots. Vercel proxies only
+`/stats/data.json` to the public Pages copy. Updating the snapshot does not require
+a new source commit or a Vercel build.
+
+1. Create the free GoatCounter account and verify its email. Keep its dashboard
+   private; a public dashboard or public visitor-counter setting is not required.
+2. Configure `[params.analytics]` in `config.toml`: the public GoatCounter site
+   URL, actual tracking start date, canonical hostname and enable switch.
+3. Create a token with **Read statistics** permission for this site only. Store it
+   as the repository Actions secret `GOATCOUNTER_API_KEY`, never in source, a
+   workflow argument, or public JSON. The token is not needed on Vercel.
+4. Publish source using `sh ./update.sh "<commit message>"`. Actions publishes a
+   first snapshot. The same workflow refreshes it every six hours and supports
+   manual runs from the Actions tab. Failed scheduled refreshes leave the current
+   deployment intact. Source pushes may reuse the last validated snapshot or
+   publish an explicit not-ready state, so statistics do not prevent normal site
+   updates.
+
+Only production visits on the configured hostname are collected. Development,
+preview deployments, `/stats/`, taxonomy and feature pages do not load the
+tracker. To opt out on a particular browser, set
+`localStorage.setItem('site-analytics-opt-out', 'true')` in that site's browser
+console; remove that key to opt in again.
+
+`scripts/stats_snapshot.py` reads the rendered public-content catalog, limits API
+requests, and publishes only the 7/30-day aggregate counts, daily trend, five
+popular pages and five source labels. Content titles come from Hugo, not from API
+responses. Referrer paths, query strings, event names, IP addresses and account
+details are not published. API pagination must complete; partial results fail the
+refresh instead of silently undercounting. Displayed dates use Asia/Shanghai and
+queries end at the last completed hour. GoatCounter's hourly API end boundary is
+inclusive; the exporter converts its own half-open ranges accordingly.
+
+"Visits" follow GoatCounter's per-page session counting, including its repeat
+visit deduplication. They are not a count of individual people or every refresh.
+The snapshot includes the data cutoff separately from the generation timestamp.
+Data older than 24 hours is marked stale; unavailable data is never displayed as
+zero. Statistics begin on the actual activation date, with no fabricated history.
+
+Tests cover Beijing midnight, incomplete hours, private-data filtering,
+pagination, empty data and fallback behavior:
+
+```sh
+python3 -m unittest discover -s tests -p 'test_*.py'
+```
+
+For an offline build, `make verify` needs no credentials. To generate an explicit
+not-ready snapshot without a token, run
+`python3 scripts/stats_snapshot.py public public/stats/data.json`. The Pages
+workflow checks the final snapshot with `--require-stats-data`. Demo data is
+rejected by that production validation and is used only in local previews.
+
+GoatCounter's hosted free service is subject to reasonable usage. Standard
+Ubuntu Actions compute is free for a public repository; image resources are
+cached, and temporary Pages artifacts are removed after deployment. Existing
+Pages and Vercel bandwidth/request limits still apply. Public-repository
+scheduled workflows may be disabled after 60 days of repository inactivity;
+re-enable the workflow in Actions if necessary. Scheduling can also be delayed,
+so the page always shows the actual last-update time.
+
 ### Deployment contract
 
 - **Local and GitHub Pages:** `.hugo-version` is the version source. Actions reads it to install Hugo Extended, verifies the canonical-domain build, then builds and verifies with the Pages base URL. Checkout includes full Git history for article modification dates. The source needs no npm or Sass install step.

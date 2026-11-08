@@ -1,5 +1,20 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "make build",
-  "outputDirectory": "public"
+  "outputDirectory": "public",
+  "rewrites": [
+    {
+      "source": "/stats/data.json",
+      "destination": "https://duguce.github.io/zhgyqc_site/stats/data.json"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/stats/data.json",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=300, s-maxage=300" },
+        { "key": "x-vercel-enable-rewrite-caching", "value": "1" }
+      ]
+    }
+  ]
 }

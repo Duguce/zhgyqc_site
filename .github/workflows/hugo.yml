@@ -7,6 +7,9 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+  # UTC; the public statistics page displays all dates in Beijing time.
+  schedule:
+    - cron: "23 */6 * * *"
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -29,16 +32,31 @@ jobs:
   # Build job
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      artifact_id: ${{ steps.upload.outputs.artifact_id }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          # Queued refreshes must not republish an older source revision.
+          ref: master
+      - name: Check statistics aggregation
+        run: python3 -m unittest discover -s tests -p 'test_*.py'
       - name: Install Hugo CLI
         run: |
           HUGO_VERSION="$(cat .hugo-version)"
           wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
           && sudo dpkg -i ${{ runner.temp }}/hugo.deb
+      - name: Cache Hugo image resources
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ runner.temp }}/hugo_cache
+            resources/_gen
+          key: ${{ runner.os }}-hugo-${{ hashFiles('.hugo-version', 'assets/**', 'content/**', 'data/**', 'layouts/**') }}
+          restore-keys: ${{ runner.os }}-hugo-
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
@@ -46,19 +64,38 @@ jobs:
         env:
           HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
         run: make verify BUILD_DIR="${{ runner.temp }}/site-root"
+      - name: Prepare public statistics snapshot
+        env:
+          GOATCOUNTER_API_KEY: ${{ secrets.GOATCOUNTER_API_KEY }}
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = schedule ]; then
+            python3 scripts/stats_snapshot.py "${{ runner.temp }}/site-root" "${{ runner.temp }}/stats-data.json" --strict
+          else
+            python3 scripts/stats_snapshot.py "${{ runner.temp }}/site-root" "${{ runner.temp }}/stats-data.json"
+          fi
       - name: Build and verify Pages deployment
         env:
           HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
           HUGO_ENVIRONMENT: production
         run: |
           make verify BASE_URL="${{ steps.pages.outputs.base_url }}/"
+          mkdir -p public/stats
+          cp "${{ runner.temp }}/stats-data.json" public/stats/data.json
+          python3 scripts/check-site.py public --base-url "${{ steps.pages.outputs.base_url }}/" --require-stats-data
       - name: Upload artifact
+        id: upload
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./public
+          retention-days: 1
 
   # Deployment job
   deploy:
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+      actions: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -68,3 +105,9 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Remove temporary deployment artifact
+        if: always() && needs.build.outputs.artifact_id != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARTIFACT_ID: ${{ needs.build.outputs.artifact_id }}
+        run: gh api --method DELETE "repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID"

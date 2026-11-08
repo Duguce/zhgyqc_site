@@ -1,0 +1,11 @@
+{{- $tracked := or .IsHome (and (in (slice "blogs" "moments") .Type) (in (slice "page" "section") .Kind)) -}}
+{{- if $tracked -}}
+<meta name="stats-scope" content="{{ if .IsHome }}home{{ else }}{{ .Type }}{{ end }}">
+<meta name="stats-title" content="{{ .Title }}">
+{{- with .Site.Params.analytics -}}
+  {{- if and .enabled .site (eq hugo.Environment "production") (not hugo.IsServer) -}}
+    {{- $asset := resources.Get "js/analytics.js" | minify | fingerprint -}}
+<script defer src="{{ $asset.RelPermalink }}" integrity="{{ $asset.Data.Integrity }}" crossorigin="anonymous" data-analytics-site="{{ .site }}" data-analytics-host="{{ .hostname }}"></script>
+  {{- end -}}
+{{- end -}}
+{{- end -}}
