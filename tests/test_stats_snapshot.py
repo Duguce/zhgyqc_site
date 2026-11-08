@@ -143,6 +143,15 @@ class StatisticsTests(unittest.TestCase):
             self.assertEqual(len(client.referrers(1, NOW - timedelta(days=1), NOW)), 3)
             self.assertEqual(request.call_args_list[1].args[1]['offset'], 2)
 
+    def test_new_site_does_not_require_unvisited_paths_to_exist(self):
+        client = MemoryAPI()
+        with patch.object(client, 'get', return_value={'hits': None, 'more': False}) as request:
+            data = validate_snapshot(collect(client, CATALOG, '2026-11-08', NOW))
+            self.assertEqual(data['periods']['30']['total'], 0)
+            for call in request.call_args_list:
+                self.assertNotIn('include_paths', call.args[1])
+                self.assertNotIn('path_by_name', call.args[1])
+
     def test_failed_scheduled_refresh_does_not_overwrite_previous_output(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory); (root/'stats').mkdir()

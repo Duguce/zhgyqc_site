@@ -151,7 +151,7 @@ class GoatCounter:
             except (URLError, TimeoutError, json.JSONDecodeError, OSError):
                 raise SnapshotError("Statistics API could not be read") from None
 
-    def hits(self, start, end, allowed_paths=None):
+    def hits(self, start, end):
         if end <= start:
             return []
         result, seen = [], set()
@@ -159,8 +159,6 @@ class GoatCounter:
             # GoatCounter stores hourly buckets and uses an inclusive end.
             # Internally we use [start, end), so exclude the following hour.
             params = {"start": stamp(start), "end": stamp(end - timedelta(hours=1)), "limit": 100}
-            if allowed_paths is not None:
-                params.update(path_by_name="true", include_paths=",".join(allowed_paths))
             if seen:
                 params["exclude_paths"] = ",".join(str(item) for item in sorted(seen))
             data = self.get("stats/hits", params)
@@ -217,7 +215,9 @@ def collect(client, catalog, started_at, now):
     while current <= local_now.date():
         begin = datetime.combine(current, day_time(), BEIJING)
         end = min(begin + timedelta(days=1), cutoff)
-        rows = client.hits(begin, end, list(catalog)) if end > begin else []
+        # New/unvisited pages have no provider path ID yet. Fetch complete
+        # pages using ID-based pagination, then apply the public catalog here.
+        rows = client.hits(begin, end) if end > begin else []
         day_counts = Counter()
         for row in rows:
             route = row.get("path")
