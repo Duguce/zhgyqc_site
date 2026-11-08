@@ -9,7 +9,7 @@
   {{ .Content }}
 
   <ul>
-    {{ range .Pages.GroupByDate "2006" }}
+    {{ range (where .Pages "Type" "ne" "stats").GroupByDate "2006" }}
     <h2 style="text-align: left;">{{ .Key }}</h2>
     {{ range .Pages.GroupByDate "2006-01-02" }}
     {{ range .Pages }}

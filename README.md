@@ -1,6 +1,4 @@
-<h2 align="center">
-    Qingchen Yu Personal Website
-</h2>
+<h1 align="center">Qingchen Yu</h1>
 
 <p align="center">
   <a href="https://zhgyqc.site/">
@@ -21,220 +19,118 @@
   </a>
 </p>
 
-<p align="center">
-  <em>
-    This is 
-    <a href="https://zhgyqc.site/" target="_blank">Qingchen Yu</a>'s 
-    personal website powered by 
-    <a href="https://gohugo.io/" target="_blank">Hugo</a> 
-    and the 
-    <a href="https://github.com/hongtaoh/hugo-ht" target="_blank">hugo-ht</a> 
-    theme.
-  </em>
-</p>
+<p align="center"><em>Personal academic website · Research, writing, and moments.</em></p>
 
+## Development
 
-### Requirements
-
-- Hugo **Extended 0.128.0**, pinned in `.hugo-version`. Local builds and CI check this exact version, including the Extended edition.
-- Git and Make. `make verify` also needs Python 3 (standard library only).
-- The site has no npm dependencies. Vercel currently uses Node.js **24.x** for its hosting environment.
-
-### Quick Start
+Requires **Hugo Extended 0.128.0**, Git, Make, and Python 3. No npm dependencies.
 
 ```sh
 git clone https://github.com/Duguce/zhgyqc_site.git
 cd zhgyqc_site
-make check
 make serve
 ```
 
-Install the release specified in `.hugo-version` from [Hugo releases](https://github.com/gohugoio/hugo/releases). If Hugo is outside your PATH, pass its location to Make, for example `make serve HUGO=/path/to/hugo`.
+<table align="center">
+  <thead><tr><th align="left" width="240">Command</th><th align="left">Purpose</th></tr></thead>
+  <tbody>
+    <tr><td nowrap><code>make check</code></td><td>Check the pinned Hugo version</td></tr>
+    <tr><td nowrap><code>make serve</code></td><td>Live preview at localhost:1313</td></tr>
+    <tr><td nowrap><code>make build</code></td><td>Production output in <code>public/</code></td></tr>
+    <tr><td nowrap><code>make verify</code></td><td>Build and validate the site</td></tr>
+    <tr><td nowrap><code>make preview</code></td><td>Build unpublished content</td></tr>
+    <tr><td nowrap><code>make clean</code></td><td>Clear generated output</td></tr>
+    <tr><td nowrap><code>sh ./update.sh</code></td><td>Commit and push to <code>master</code></td></tr>
+  </tbody>
+</table>
 
-`make serve` opens the live-reload site at `http://localhost:1313`. It includes drafts, future-dated and expired posts for editing; use `DRAFTS=false` to hide them.
+Preview includes unpublished content; use `make serve DRAFTS=false` for published posts only. Override the Hugo binary with `HUGO=/path/to/hugo`.
 
-### Common Tasks
+## Content
 
-| Command | Purpose |
-| --- | --- |
-| `make check` | Check the Hugo version and Extended edition. |
-| `make build` | Build production output in `public/`; fail on Hugo warnings, including duplicate output paths. |
-| `make verify` | Build and check generated local links, resources, sitemap, critical page headings, language and pagination. |
-| `make preview` | Build drafts, future-dated and expired posts once for review. |
-| `make clean` | Remove `BUILD_DIR` (default `public/`) and the build lock. |
-| `make publish` | Commit and push source changes to `origin/master`; hosting services build and deploy. No local Hugo installation is needed. |
-| `make deploy` | Verify locally, then publish source changes. |
+<table align="center">
+  <thead><tr><th align="left">Edit</th><th align="left">Source</th></tr></thead>
+  <tbody>
+    <tr><td>Profile and introduction</td><td><code>content/_index.md</code></td></tr>
+    <tr><td>Publications and author marks</td><td><code>data/publications.yaml</code></td></tr>
+    <tr><td>Education, awards, and service</td><td><code>data/home.yaml</code></td></tr>
+    <tr><td>Chinese articles</td><td><code>content/cn/blogs/</code></td></tr>
+    <tr><td>English photo journals</td><td><code>content/en/moments/</code></td></tr>
+    <tr><td>Design tokens and page styles</td><td><code>assets/css/</code></td></tr>
+    <tr><td>Site templates and shortcodes</td><td><code>layouts/</code></td></tr>
+  </tbody>
+</table>
 
-The canonical production URL comes from `config.toml`: `https://zhgyqc.site/`. A host can override it with `make verify BASE_URL=https://example.com/`. `BUILD_DIR` selects an alternative output directory. Build commands clean stale files from that directory, so use a dedicated generated-output folder.
-
-Verify both hosting layouts after changing URL handling:
-
-```sh
-make verify BUILD_DIR=.audit/verify-root
-make verify BASE_URL=https://duguce.github.io/zhgyqc_site/ BUILD_DIR=.audit/verify-pages
-```
-
-Hugo resource and page permalinks already include the deployment prefix; keep `relativeURLs` and `canonifyURLs` disabled to avoid rewriting that prefix twice. For a static URL inside Markdown HTML, use the `site-url` shortcode, for example `{{< site-url "media/video/summer-palace-lake.mp4" >}}`. CSS media paths should be relative to the stylesheet. The 120-second template timeout allows cold image processing on hosting workers; photo cards skip unused article summaries.
-
-On macOS, run `make publish` from the project directory, or use the portable script with an optional commit message:
-
-```sh
-sh ./update.sh "Update homepage"
-```
-
-Publishing requires the `master` branch and Git access to `origin`. The script retries pushing existing commits when there are no new changes. `.gitignore` excludes generated output, caches, local environment files, editor and agent settings, hosting metadata and preview screenshots. Shared site configuration and deployment workflows remain tracked.
-
-### Project Layout
-
-```text
-.hugo-version                  # Hugo version used by local checks and CI
-config.toml                    # Canonical URL, menus, content and output settings
-Makefile                       # Shared build, verify, preview and publish commands
-assets/
-  css/                         # Tokens, base styles, fonts and page styles
-  js/                          # Page scripts
-  images/                      # Shared profile, publication and article images
-content/
-  _index.md                    # Homepage introduction and profile links
-  cn/blogs/                    # Chinese articles
-  en/moments/<entry>/           # Moment bundles: index.md + images/
-data/                          # Homepage records, papers and legacy media mapping
-layouts/
-  index.html                   # Homepage layout
-  _default/baseof.html         # Shared document shell
-  blogs/                       # Blog list and article entry points
-  moments/                     # Moments list and article entry points
-  partials/site/               # Shared head, header, footer and language metadata
-  partials/article/            # Shared listing and article rendering
-  partials/media/              # Image resolution and historical URL publishing
-  shortcodes/                  # Site shortcodes
-scripts/                       # Version and rendered-site checks
-static/
-  files/                       # CV and publication posters
-  media/video/                 # Directly served videos
-  config/                      # Shared client configuration
-  ...                          # Verification files and other public assets
-themes/hugo-ht/                # Bundled base shortcodes, media and attribution
-.github/workflows/hugo.yml     # Build, verify and deploy to GitHub Pages
-vercel.json                    # Vercel uses the same make build entry point
-```
-
-Site-owned templates belong in root `layouts/`, and styles/scripts in root `assets/`. The theme is a **bundled, trimmed copy**, not a Git submodule. Its remaining shortcodes and media are runtime dependencies; retain its MIT license and attribution. The original upstream README is reference material, not this project's setup guide.
-
-`cn` and `en` are content sections, not Hugo translation sites. Their existing routes stay `/blogs/` and `/moments/`. Section `_index.md` files declare `type`, `contentLanguage` and `menuKey` via `cascade`; templates use those values instead of testing filesystem paths. Keep explicit `url` values when moving published content into a bundle.
-
-### Maintaining content and styles
-
-- The homepage introduction and profile links live in `content/_index.md`. The `image-url` shortcode resolves the shared profile image.
-- Edit `data/publications.yaml` to maintain papers. `image` paths are relative to `assets/`, such as `images/publications/xverify_framework.png`. Author flags `self`, `equal` and `corresponding` control name emphasis and contribution marks. Entries appear in file order.
-- Education, awards and academic services live in `data/home.yaml`; `layouts/partials/home-records.html` renders these records.
-- `assets/css/tokens.css` contains shared design values; `base.css` contains general rules; `fonts.css` selects fonts; `home.css`, `scholar-list.css`, `scholar-article.css` and `terms.css` contain page styles. Hugo minifies and fingerprints stylesheets and scripts through shared partials.
-- `layouts/robots.txt` is the authoritative robots template. `layouts/_default/sitemap.xml` customizes Hugo's standard sitemap; do not add a second home sitemap output.
-
-Create a Moment bundle using the supplied directory archetype:
+<details>
+<summary>New Moments &amp; media</summary>
 
 ```sh
 hugo new content --kind moments en/moments/my-note
 ```
 
-Put the cover at `content/en/moments/my-note/images/cover.jpg`, edit `index.md`, choose a stable `url` before publishing, then set `draft: false`. The surrounding section supplies the content type and language settings.
+Edit the generated `index.md`, add images to its bundle, and set:
 
 ```yaml
 url: /moments/my-note/
-cover: "images/cover.jpg"
-cover_alt: "A description of the scene"
-cover_caption: "A short caption"
+cover: images/cover.jpg
+cover_alt: A description of the scene
+draft: false
 ```
-
-Render photos with the `photo` shortcode:
 
 ```text
-{{< photo src="images/cover.jpg" alt="A description of the scene" caption="A short caption" width="80" >}}
+{{< photo src="images/cover.jpg" alt="A description" caption="A short caption" width="80" >}}
 ```
 
-The shortcode preserves aspect ratios and generates WebP versions up to 1600 pixels wide. Listing thumbnails use versions up to 800 pixels wide. Width presets `60`, `75` and `80` control display size; originals load only when readers open the image preview. Shared and bundled images use the same `media/image.html` lookup helper.
+- Photos generate responsive WebP automatically. Keep published URLs stable.
+- Shared images: `assets/images/` · Downloads: `static/files/` · Videos: `static/media/video/`.
+- Legacy media mappings: `data/legacy_media.json`.
+- Optional front matter: `math: true` or `vega: true`. Code highlighting runs at build time.
 
-Shared images belong in `assets/images/`; downloadable PDFs in `static/files/`; videos in `static/media/video/`. The old `/assets/<filename>` addresses remain available: `data/legacy_media.json` maps historical images to their current sources, and narrowly scoped static mounts in `config.toml` retain the old PDF/video paths. These compatibility rules preserve external links without duplicating source files. New content should use its bundle or the new public directories.
+</details>
 
-Code highlighting runs at build time. MathJax loads only on pages containing `\(...\)`, `\[...\]` or `$$...$$` outside code samples. Front matter `math: true` or `math: false` overrides detection. Pages needing Vega may opt in with `vega: true`; initialize charts after `DOMContentLoaded`.
+## Deployment
 
-### Public visitor statistics
-
-`/stats/` presents a public aggregate of homepage, blog and Moments visits. Its
-footer entry uses the current page's language; the statistics interface is entirely
-in English. Chinese article titles use readable English URL slugs in its ranking,
-without changing the original articles. The page reuses the site's warm
-palette and loads its own small CSS/JavaScript module; charts use SVG and include
-an accessible daily-values table.
-
-The free setup uses GoatCounter for collection and the existing GitHub Actions
-and Pages deployment for sanitized JSON snapshots. Vercel proxies only
-`/stats/data.json` to the public Pages copy. Updating the snapshot does not require
-a new source commit or a Vercel build.
-
-1. Create the free GoatCounter account and verify its email. Keep its dashboard
-   private; a public dashboard or public visitor-counter setting is not required.
-2. Configure `[params.analytics]` in `config.toml`: the public GoatCounter site
-   URL, actual tracking start date, canonical hostname and enable switch.
-3. Create a token with **Read statistics** permission for this site only. Store it
-   as the repository Actions secret `GOATCOUNTER_API_KEY`, never in source, a
-   workflow argument, or public JSON. The token is not needed on Vercel.
-4. Publish source using `sh ./update.sh "<commit message>"`. Actions publishes a
-   first snapshot. The same workflow refreshes it every six hours and supports
-   manual runs from the Actions tab. Failed scheduled refreshes leave the current
-   deployment intact. Source pushes may reuse the last validated snapshot or
-   publish an explicit not-ready state, so statistics do not prevent normal site
-   updates.
-
-Only production visits on the configured hostname are collected. Development,
-preview deployments, `/stats/`, taxonomy and feature pages do not load the
-tracker. To opt out on a particular browser, set
-`localStorage.setItem('site-analytics-opt-out', 'true')` in that site's browser
-console; remove that key to opt in again.
-
-`scripts/stats_snapshot.py` reads the rendered public-content catalog, limits API
-requests, and publishes only the 7/30-day aggregate counts, daily trend, five
-popular pages and five source labels. Content titles come from Hugo, not from API
-responses. Referrer paths, query strings, event names, IP addresses and account
-details are not published. API pagination must complete; partial results fail the
-refresh instead of silently undercounting. Displayed dates use Asia/Shanghai and
-queries end at the last completed hour. GoatCounter's hourly API end boundary is
-inclusive; the exporter converts its own half-open ranges accordingly.
-
-"Visits" follow GoatCounter's per-page session counting, including its repeat
-visit deduplication. They are not a count of individual people or every refresh.
-The snapshot includes the data cutoff separately from the generation timestamp.
-Data older than 24 hours is marked stale; unavailable data is never displayed as
-zero. Statistics begin on the actual activation date, with no fabricated history.
-
-Tests cover Beijing midnight, incomplete hours, private-data filtering,
-pagination, empty data and fallback behavior:
+Publish from `master`, with an optional commit message:
 
 ```sh
+sh ./update.sh "docs: update site"
+```
+
+- **GitHub Pages** — Actions verifies both URL layouts; `.hugo-version` pins Hugo.
+- **Vercel** — `make build` → `public/`; set `HUGO_VERSION=0.128.0`, `HUGO_EXTENDED=true`, and Node.js **24.x**.
+- **URLs** — `config.toml` sets the canonical domain. Keep `relativeURLs` and `canonifyURLs` disabled.
+
+<details>
+<summary>Verification</summary>
+
+```sh
+make verify BUILD_DIR=.audit/root
+make verify BASE_URL=https://duguce.github.io/zhgyqc_site/ BUILD_DIR=.audit/pages
 python3 -m unittest discover -s tests -p 'test_*.py'
 ```
 
-For an offline build, `make verify` needs no credentials. To generate an explicit
-not-ready snapshot without a token, run
-`python3 scripts/stats_snapshot.py public public/stats/data.json`. The Pages
-workflow checks the final snapshot with `--require-stats-data`. Demo data is
-rejected by that production validation and is used only in local previews.
+Checks cover local links, media, sitemap, headings, language, pagination, and statistics aggregation. Builds clear `BUILD_DIR`; use a dedicated output folder.
 
-GoatCounter's hosted free service is subject to reasonable usage. Standard
-Ubuntu Actions compute is free for a public repository; image resources are
-cached, and temporary Pages artifacts are removed after deployment. Existing
-Pages and Vercel bandwidth/request limits still apply. Public-repository
-scheduled workflows may be disabled after 60 days of repository inactivity;
-re-enable the workflow in Actions if necessary. Scheduling can also be delayed,
-so the page always shows the actual last-update time.
+</details>
 
-### Deployment contract
+<details>
+<summary>Visitor statistics</summary>
 
-- **Local and GitHub Pages:** `.hugo-version` is the version source. Actions reads it to install Hugo Extended, verifies the canonical-domain build, then builds and verifies with the Pages base URL. Checkout includes full Git history for article modification dates. The source needs no npm or Sass install step.
-- **Vercel:** `vercel.json` runs `make build` and publishes `public/`. Set `HUGO_VERSION` to the value in `.hugo-version`, `HUGO_EXTENDED=true` and Node.js **24.x** in Vercel project settings. Vercel installs Hugo before running the build, so it does not automatically read `.hugo-version`; the build check rejects a mismatch. When changing Hugo versions, update that platform setting too.
-- **Verification:** `scripts/check-site.py` uses no third-party Python packages. It also checks that the 30 historical raw-media URLs still return the exact source-file bytes. It validates local output only; external URLs and remote service availability are not part of this check.
+- **Page:** `/stats/`, accessible directly; no site-wide entry.
+- **Collection:** GoatCounter on the production homepage, blogs, and Moments.
+- **Setup:** `[params.analytics]` in `config.toml`; site-only, read-only token in the Actions secret `GOATCOUNTER_API_KEY`.
+- **Refresh:** every six hours via Actions → Pages JSON → Vercel rewrite; no data commits.
+- **Data:** per-page sessions, Beijing time, completed hours only; referrers reduced to domains. Missing data is never shown as zero.
+- **Scheduling:** GitHub may pause scheduled runs after 60 days of repository inactivity.
 
-### Licensing
-- The root `LICENSE` (CC BY-SA 4.0) governs all original material published in this repository, including articles, media assets, and any custom configuration authored by me.
-- The bundled theme retains its own `themes/hugo-ht/LICENSE.md` (MIT); any modifications or redistribution of the theme must comply with that MIT license in addition to the attribution requirements for my content.
-- Templates and styles derived from the theme retain that MIT attribution after moving into root `layouts/` and `assets/`; their new location does not change their origin.
+Browser opt-out:
+
+```js
+localStorage.setItem('site-analytics-opt-out', 'true')
+```
+
+</details>
+
+## License
+
+Original work: [CC BY-SA 4.0](LICENSE). The bundled [hugo-ht](https://github.com/hongtaoh/hugo-ht) theme and derived files retain their [MIT license and attribution](themes/hugo-ht/LICENSE.md).
