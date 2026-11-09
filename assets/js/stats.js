@@ -7,6 +7,8 @@
   const average = new Intl.NumberFormat('en-US', {maximumFractionDigits: 1});
   const clock = new Intl.DateTimeFormat('en-US', {timeZone: 'Asia/Shanghai', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'});
   const calendar = new Intl.DateTimeFormat('en-US', {timeZone: 'Asia/Shanghai', year: 'numeric', month: 'short', day: 'numeric'});
+  const shortCalendar = new Intl.DateTimeFormat('en-US', {timeZone: 'Asia/Shanghai', month: 'short', day: 'numeric'});
+  const compact = new Intl.NumberFormat('en-US', {notation: 'compact', maximumFractionDigits: 1});
   const buttons = [...root.querySelectorAll('[data-period]')];
   let snapshot, period = '30';
 
@@ -42,8 +44,8 @@
     }
     if (!Number.isFinite(Date.parse(data.generatedAt)) || !Number.isFinite(Date.parse(data.dataThrough)) || !/^\d{4}-\d{2}-\d{2}$/.test(data.startedAt)) throw new Error('Invalid timestamp');
   }
-  function dateLabel(value) { return value.slice(5).replace('-', '/'); }
-  function date(value) { return calendar.format(new Date(`${value}T00:00:00+08:00`)); }
+  function date(value, format = calendar) { return format.format(new Date(`${value}T00:00:00+08:00`)); }
+  function visitsLabel(count) { return `${number.format(count)} ${count === 1 ? 'visit' : 'visits'}`; }
   function pageLabel(page) {
     if (!/[\u3400-\u9fff]/.test(page.title)) return page.title;
     const slug = page.path.split('/').filter(Boolean).at(-1).replace(/^\d{4}-\d{2}-\d{2}-/, '');
@@ -56,72 +58,133 @@
   }
   function renderChart(daily) {
     const host = byId('chart');
-    host.replaceChildren();
-    if (!daily.some(d => d.visits > 0)) {
-      host.append(element('p', 'No visits recorded in this period.', 'stats-placeholder'));
-    } else {
-      const ns = 'http://www.w3.org/2000/svg';
-      const width = Math.max(260, Math.round(host.clientWidth || 700));
-      const height = width < 450 ? 180 : 210;
-      const left = 40, right = 4, top = 12, bottom = 30;
-      const plotWidth = width - left - right, plotHeight = height - top - bottom;
-      const max = Math.max(...daily.map(d => d.visits));
-      const upper = Math.max(2, Math.ceil(max / 2) * 2);
-      const svg = document.createElementNS(ns, 'svg');
-      svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
-      svg.setAttribute('role', 'img');
-      svg.setAttribute('aria-labelledby', 'stats-svg-title stats-svg-desc');
-      function shape(tag, attrs, text) {
-        const node = document.createElementNS(ns, tag);
-        for (const [name, value] of Object.entries(attrs)) node.setAttribute(name, String(value));
-        if (text !== undefined) node.textContent = text;
-        svg.append(node);
-        return node;
-      }
-      shape('title', {id: 'stats-svg-title'}, 'Daily visits');
-      shape('desc', {id: 'stats-svg-desc'}, `Visits from ${daily[0].date} to ${daily.at(-1).date}. Exact values are available in the daily numbers table below.`);
-      for (const value of [0, upper / 2, upper]) {
-        const y = top + plotHeight * (1 - value / upper);
-        shape('line', {x1: left, y1: y, x2: width - right, y2: y, class: 'stats-grid-line'});
-        shape('text', {x: left - 8, y: y + 4, 'text-anchor': 'end'}, number.format(value));
-      }
-      const step = daily.length > 1 ? plotWidth / (daily.length - 1) : 0;
-      const points = daily.map((day, i) => [left + (step ? i * step : plotWidth / 2), top + plotHeight * (1 - day.visits / upper)]);
-      const line = points.map(([x, y], i) => `${i ? 'L' : 'M'} ${x} ${y}`).join(' ');
-      const defs = shape('defs', {});
-      const gradient = document.createElementNS(ns, 'linearGradient');
-      gradient.id = 'stats-area-fill'; gradient.setAttribute('x2', '0'); gradient.setAttribute('y2', '1');
-      for (const [offset, opacity] of [['0%', '.16'], ['100%', '.01']]) {
-        const stop = document.createElementNS(ns, 'stop');
-        stop.setAttribute('offset', offset); stop.setAttribute('stop-color', '#526d82'); stop.setAttribute('stop-opacity', opacity); gradient.append(stop);
-      }
-      defs.append(gradient);
-      if (daily.length > 1) {
-        shape('path', {d: `${line} L ${points.at(-1)[0]} ${top + plotHeight} L ${points[0][0]} ${top + plotHeight} Z`, fill: 'url(#stats-area-fill)'});
-        shape('path', {d: line, class: 'stats-line'});
-      }
-      daily.forEach((day, i) => {
-        const point = shape('circle', {cx: points[i][0], cy: points[i][1], r: daily.length <= 7 || i === daily.length - 1 ? 3.5 : 0, class: 'stats-point'});
-        const title = document.createElementNS(ns, 'title');
-        title.textContent = `${day.date}: ${number.format(day.visits)}`;
-        point.append(title);
-      });
-      const labels = [...new Set([0, Math.floor((daily.length - 1) / 2), daily.length - 1])];
-      for (const i of labels) shape('text', {x: points[i][0], y: height - 6, 'text-anchor': daily.length === 1 ? 'middle' : i === 0 ? 'start' : i === daily.length - 1 ? 'end' : 'middle'}, dateLabel(daily[i].date));
-      host.append(svg);
+    const previousDay = host.querySelector('[aria-pressed="true"]')?.dataset.date;
+    const restoreFocus = host.contains(document.activeElement);
+    const max = Math.max(...daily.map(day => day.visits));
+    if (max === 0) {
+      host.replaceChildren(element('p', 'No visits recorded in this period.', 'stats-placeholder'));
+      return;
     }
-    const table = element('table');
-    const head = element('thead'), headRow = element('tr');
-    headRow.append(element('th', 'Date'), element('th', 'Visits'));
-    head.append(headRow);
-    const body = element('tbody');
-    daily.forEach(day => {
-      const row = element('tr');
-      row.append(element('td', day.date), element('td', number.format(day.visits)));
-      body.append(row);
+
+    const ns = 'http://www.w3.org/2000/svg';
+    const sparse = daily.length <= 3;
+    const width = host.clientWidth || 700;
+    const narrow = width < 440;
+    const height = sparse ? 156 : narrow ? 176 : 208;
+    const top = sparse ? 26 : 12;
+    const baseline = height - 29;
+    const plotWidth = sparse ? Math.min(width - 62, daily.length * 168) : width - 50;
+    const left = sparse ? (width - plotWidth) / 2 : 38;
+    const step = plotWidth / daily.length;
+    const unit = 10 ** Math.floor(Math.log10(Math.max(1, max / 2)));
+    const upper = Math.ceil(max / (2 * unit)) * 2 * unit;
+    const scaleY = value => baseline - (baseline - top) * value / upper;
+    const points = daily.map((day, i) => [left + (i + .5) * step, scaleY(day.visits)]);
+    const svg = document.createElementNS(ns, 'svg');
+    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+
+    function shape(tag, attrs, text, parent = svg) {
+      const node = document.createElementNS(ns, tag);
+      for (const [name, value] of Object.entries(attrs)) node.setAttribute(name, String(value));
+      if (text !== undefined) node.textContent = text;
+      parent.append(node);
+      return node;
+    }
+
+    const defs = shape('defs', {});
+    const gradient = shape('linearGradient', {id: 'stats-chart-fill', x2: '0%', y2: '100%'}, undefined, defs);
+    shape('stop', {offset: '0%', 'stop-opacity': sparse ? .85 : .20}, undefined, gradient);
+    shape('stop', {offset: '100%', 'stop-opacity': sparse ? .42 : .02}, undefined, gradient);
+
+    for (const value of [0, upper / 2, upper]) {
+      const y = scaleY(value);
+      shape('line', {x1: left, y1: y, x2: left + plotWidth, y2: y, class: value === 0 ? 'stats-baseline' : 'stats-grid-line'});
+      shape('text', {x: left - 8, y: y + 4, 'text-anchor': 'end'}, compact.format(value));
+    }
+    const labelCount = Math.min(daily.length, sparse || narrow ? 3 : 5);
+    for (let label = 0; label < labelCount; label++) {
+      const i = Math.round(label * (daily.length - 1) / Math.max(1, labelCount - 1));
+      shape('text', {x: points[i][0], y: height - 7, 'text-anchor': 'middle'}, date(daily[i].date, shortCalendar));
+    }
+
+    if (sparse) {
+      svg.setAttribute('role', 'img');
+      svg.setAttribute('aria-label', daily.map(day => `${date(day.date)}: ${visitsLabel(day.visits)}`).join('; '));
+      const barWidth = Math.min(48, step * .46);
+      daily.forEach((day, i) => {
+        const [x, y] = points[i];
+        const bar = day.visits
+          ? shape('rect', {x: x - barWidth / 2, y, width: barWidth, height: baseline - y, rx: 5, fill: 'url(#stats-chart-fill)'})
+          : shape('circle', {cx: x, cy: y, r: 3, class: 'stats-chart-zero'});
+        shape('title', {}, `${date(day.date)}: ${visitsLabel(day.visits)}`, bar);
+        const exact = number.format(day.visits);
+        const label = exact.length * 8 <= step - 8 ? exact : compact.format(day.visits);
+        shape('text', {x, y: y - 9, 'text-anchor': 'middle', class: 'stats-chart-value'}, label);
+      });
+      host.replaceChildren(svg);
+      return;
+    }
+
+    svg.setAttribute('aria-hidden', 'true');
+    const line = points.map(([x, y], i) => `${i ? 'L' : 'M'} ${x} ${y}`).join(' ');
+    shape('path', {d: `${line} L ${points.at(-1)[0]} ${baseline} L ${points[0][0]} ${baseline} Z`, fill: 'url(#stats-chart-fill)'});
+    const guide = shape('line', {y1: top, y2: baseline, class: 'stats-chart-guide'});
+    shape('path', {d: line, class: 'stats-line'});
+    const point = shape('circle', {r: 5, class: 'stats-point'});
+    const stage = element('div', undefined, 'stats-chart-stage');
+    const readout = element('div', undefined, 'stats-chart-readout');
+    const readoutDate = element('span');
+    const readoutVisits = element('strong');
+    readout.append(readoutDate, readoutVisits);
+    readout.setAttribute('aria-hidden', 'true');
+    const targets = element('div', undefined, 'stats-chart-targets');
+    targets.setAttribute('role', 'group');
+    targets.setAttribute('aria-label', 'Daily visits. Use the arrow keys to move between dates.');
+    targets.style.inset = `${100 * top / height}% ${100 * (width - left - plotWidth) / width}% ${100 * (height - baseline) / height}% ${100 * left / width}%`;
+
+    let active;
+    const days = daily.map((day, i) => {
+      const button = element('button');
+      button.type = 'button';
+      button.tabIndex = -1;
+      button.dataset.date = day.date;
+      button.setAttribute('aria-label', `${date(day.date)}: ${visitsLabel(day.visits)}`);
+      button.setAttribute('aria-pressed', 'false');
+      button.addEventListener('pointerenter', event => { if (event.pointerType === 'mouse') select(i); });
+      button.addEventListener('click', () => select(i));
+      button.addEventListener('focus', () => select(i));
+      button.addEventListener('keydown', event => {
+        const next = {ArrowLeft: i - 1, ArrowRight: i + 1, Home: 0, End: daily.length - 1}[event.key];
+        if (next === undefined) return;
+        event.preventDefault();
+        days[Math.max(0, Math.min(next, days.length - 1))].focus();
+      });
+      return button;
     });
-    table.append(head, body);
-    byId('daily-table').replaceChildren(table);
+
+    function select(i) {
+      if (active !== undefined) {
+        days[active].tabIndex = -1;
+        days[active].setAttribute('aria-pressed', 'false');
+      }
+      active = i;
+      days[i].tabIndex = 0;
+      days[i].setAttribute('aria-pressed', 'true');
+      readoutDate.textContent = date(daily[i].date, shortCalendar);
+      readoutVisits.textContent = visitsLabel(daily[i].visits);
+      const [x, y] = points[i];
+      guide.setAttribute('x1', x);
+      guide.setAttribute('x2', x);
+      point.setAttribute('cx', x);
+      point.setAttribute('cy', y);
+    }
+
+    const previousIndex = daily.findIndex(day => day.date === previousDay);
+    select(previousIndex === -1 ? daily.length - 1 : previousIndex);
+    targets.append(...days);
+    stage.append(svg, targets);
+    host.replaceChildren(readout, stage);
+    if (restoreFocus) days[active].focus({preventScroll: true});
   }
   function renderPages(pages) {
     const host = byId('pages'); host.replaceChildren();
