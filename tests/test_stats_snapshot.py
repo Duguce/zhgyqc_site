@@ -8,6 +8,7 @@ import sys
 import tempfile
 import unittest
 from unittest.mock import patch
+from urllib.error import HTTPError
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 from stats_snapshot import (GoatCounter, SnapshotError, catalog_from_build, collect,
@@ -187,6 +188,15 @@ class StatisticsTests(unittest.TestCase):
         with patch.object(client, 'get', side_effect=responses) as request:
             self.assertEqual(len(client.referrers(1, NOW - timedelta(days=1), NOW)), 3)
             self.assertEqual(request.call_args_list[1].args[1]['offset'], 2)
+
+    def test_fixed_api_route_retries_temporary_not_found(self):
+        client = GoatCounter('https://example.goatcounter.com', 'test-secret-never-publish')
+        unavailable = HTTPError(client.site, 404, 'Not Found', {}, io.BytesIO(b'private response'))
+        response = io.BytesIO(b'{"hits":null,"more":false}')
+        with patch.object(client.opener, 'open', side_effect=[unavailable, response]) as request, \
+                patch('stats_snapshot.time.sleep'):
+            self.assertEqual(client.hits(NOW - timedelta(days=1), NOW), [])
+            self.assertEqual(request.call_count, 2)
 
     def test_new_site_does_not_require_unvisited_paths_to_exist(self):
         client = MemoryAPI()

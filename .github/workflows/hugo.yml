@@ -70,7 +70,7 @@ jobs:
         env:
           GOATCOUNTER_API_KEY: ${{ secrets.GOATCOUNTER_API_KEY }}
         run: |
-          if [ "$GITHUB_EVENT_NAME" = schedule ]; then
+          if [ "$GITHUB_EVENT_NAME" != push ]; then
             python3 scripts/stats_snapshot.py "${{ runner.temp }}/site-root" "${{ runner.temp }}/stats-data.json" --strict
           else
             python3 scripts/stats_snapshot.py "${{ runner.temp }}/site-root" "${{ runner.temp }}/stats-data.json"

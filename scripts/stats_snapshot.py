@@ -143,11 +143,15 @@ class GoatCounter:
                     raise SnapshotError("Statistics API returned an invalid object")
                 return result
             except HTTPError as exc:
-                if exc.code in (429, 500, 502, 503, 504) and attempt < 2:
+                status = exc.code
+                exc.close()
+                # These are fixed, read-only routes. GoatCounter can return
+                # temporary 404s for requests that otherwise succeed.
+                if status in (404, 429, 500, 502, 503, 504) and attempt < 2:
                     time.sleep(2 ** (attempt + 1))
                     continue
                 # Never log response bodies, request headers, or credentials.
-                raise SnapshotError("Statistics API returned HTTP " + str(exc.code)) from None
+                raise SnapshotError(f"Statistics API {endpoint} returned HTTP {status} (request {self.requests})") from None
             except (URLError, TimeoutError, json.JSONDecodeError, OSError):
                 raise SnapshotError("Statistics API could not be read") from None
 
@@ -383,6 +387,8 @@ def main():
             data = None
         write_snapshot(args.output, data or {"version": 1, "state": "not_configured"})
         print("Used previous valid snapshot." if data else "Used explicit not-ready state; no synthetic visit counts.")
+        if os.environ.get("GITHUB_ACTIONS") == "true":
+            print("::warning::GoatCounter refresh failed. This deployment does not include newly generated statistics.")
         return 0
 
 
