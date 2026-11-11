@@ -1,5 +1,6 @@
 from contextlib import redirect_stderr, redirect_stdout
 from datetime import datetime, timedelta, timezone
+import hashlib
 import io
 import json
 from pathlib import Path
@@ -11,6 +12,7 @@ from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 from stats_snapshot import (GoatCounter, SnapshotError, catalog_from_build, collect,
                             main, public_path, source_name, validate_snapshot, write_snapshot)
+from verify_stats_snapshot import verify
 
 
 CATALOG = {'/': {'title': 'Home', 'kind': 'home'},
@@ -58,6 +60,49 @@ def example():
 
 
 class StatisticsTests(unittest.TestCase):
+    def test_provider_paths_merge_into_public_urls_with_all_sources(self):
+        catalog = {**CATALOG, '/moments/': {'title': 'Moments', 'kind': 'moments'},
+                   '/moments/page/2/': {'title': 'More moments', 'kind': 'moments'}}
+        client = MemoryAPI()
+        hour = '2026-11-07T16:00:00+00:00'
+        client.events = [
+            (hour, 1, '/', 7, False, ''),
+            (hour, 2, '/blogs/example', 8, False, 'a.example.org'),
+            (hour, 3, '/blogs/example/', 1, False, 'b.example.org'),
+            (hour, 4, '/moments', 4, False, ''),
+            (hour, 5, '/moments/page/2', 3, False, ''),
+            (hour, 6, '/blogs/unpublished', 100, False, 'private.example.org'),
+            (hour, 7, '/blogs/example', 100, True, 'event.example.org'),
+        ]
+        snapshot = validate_snapshot(collect(client, catalog, '2026-11-08', NOW))
+        for period in snapshot['periods'].values():
+            self.assertEqual(period['total'], 23)
+            self.assertEqual(period['pageCount'], 4)
+            self.assertEqual({row['path']: row['visits'] for row in period['pages']}, {
+                '/': 7, '/blogs/example/': 9, '/moments/': 4, '/moments/page/2/': 3,
+            })
+            self.assertEqual({row['name']: row['visits'] for row in period['sources']}, {
+                'Direct or unknown': 14, 'a.example.org': 8, 'b.example.org': 1,
+            })
+
+    def test_publish_waits_for_each_endpoint_to_serve_the_new_snapshot(self):
+        pages = 'https://pages.example.org/stats/data.json'
+        site = 'https://site.example.org/stats/data.json'
+        fresh = b'new snapshot'
+        expected = hashlib.sha256(fresh).hexdigest()
+        with patch('verify_stats_snapshot.urlopen', side_effect=[io.BytesIO(body) for body in (b'old', fresh, fresh)]) as request, \
+                patch('verify_stats_snapshot.time.sleep'), redirect_stdout(io.StringIO()):
+            self.assertEqual(verify([pages, site], expected), [])
+        self.assertEqual([call.args[0].full_url for call in request.call_args_list], [pages, site, pages])
+
+    def test_publish_reports_endpoints_still_serving_the_old_snapshot(self):
+        site = 'https://site.example.org/stats/data.json'
+        expected = hashlib.sha256(b'new snapshot').hexdigest()
+        with patch('verify_stats_snapshot.urlopen', return_value=io.BytesIO(b'old')), \
+                patch('verify_stats_snapshot.time.monotonic', side_effect=[0, 0, 0, 1, 1]), \
+                patch('verify_stats_snapshot.time.sleep'):
+            self.assertEqual(verify([site], expected, timeout=1), [site])
+
     def test_beijing_midnight_and_completed_hour(self):
         data = validate_snapshot(example())
         period = data['periods']['30']

@@ -219,14 +219,23 @@ def collect(client, catalog, started_at, now):
         # pages using ID-based pagination, then apply the public catalog here.
         rows = client.hits(begin, end) if end > begin else []
         day_counts = Counter()
+        day_path_ids = set()
         for row in rows:
             route = row.get("path")
-            if row.get("event") or route not in catalog:
+            if row.get("event") or not isinstance(route, str):
                 continue
-            day_counts[route] += integer(row.get("count"))
-            path_ids[route] = row["path_id"]
+            # GoatCounter strips trailing slashes. Keep Hugo's URL for the public link.
+            if route not in catalog and not route.endswith("/"):
+                route += "/"
+            if route not in catalog:
+                continue
+            visits = integer(row.get("count"))
+            if visits:
+                day_counts[route] += visits
+                day_path_ids.add(row["path_id"])
         days.append(current)
         counts[current] = day_counts
+        path_ids[current] = day_path_ids
         current += timedelta(days=1)
     periods = {}
     for window in PERIODS:
@@ -240,10 +249,9 @@ def collect(client, catalog, started_at, now):
         total = sum(day["visits"] for day in daily)
         begin = datetime.combine(begin_date, day_time(), BEIJING)
         sources = Counter()
-        for route, value in page_counts.items():
-            if value == 0:
-                continue
-            for ref in client.referrers(path_ids[route], begin, cutoff):
+        # URL aliases share a page count but can have distinct provider IDs.
+        for path_id in sorted(set().union(*(path_ids[day] for day in selected))):
+            for ref in client.referrers(path_id, begin, cutoff):
                 sources[source_name(ref.get("name", ""), ref.get("ref_scheme", ""))] += integer(ref.get("count"))
         if sum(sources.values()) > total:
             raise SnapshotError("Referrer counts exceed visits for the same time range")
