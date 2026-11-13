@@ -78,57 +78,60 @@ div.splitbox div.right {
  margin-left: calc(50% - 50vw);
 }
 
-/* Quiet framing for the site: a light tint and a single fine edge. */
-
-.footer { 
-  text-align: center;
-  font-size: 14px;
-  padding: 30px 1.5rem 28px;
-  margin-top: auto;
-  border-top: 1px solid var(--site-border);
-  position: relative;
-  background: var(--site-surface-soft);
+.footer {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
+  gap: 0 1rem;
+  box-sizing: border-box;
+  min-block-size: 4.5rem;
+  padding: 0.75rem 1.25rem;
+  margin-top: auto;
+  border-block-start: 1px solid var(--site-border);
+  background: var(--site-bg);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  text-align: center;
 }
 
 .footer-links {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  color: var(--site-muted);
-  font-size: 0.86rem;
-  display: none;
+  display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem 0.7rem;
+  gap: 0 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.footer-links.footer-links--visible {
-  display: flex;
+.footer-divider {
+  align-self: center;
+  height: 0.85em;
+  border-inline-start: 1px solid var(--site-border-hover);
 }
 
 .footer-links li {
   margin: 0;
-  padding: 0;
-  display: inline-flex;
-  align-items: center;
-  white-space: nowrap;
+  font-size: inherit;
 }
 
 .footer-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  min-block-size: 44px;
+  padding-inline: 0.25rem;
   color: var(--site-ink-soft);
-  text-decoration: none;
-  transition: color 0.2s ease, text-decoration-color 0.2s ease;
-  padding: 0.25rem 0.3rem;
   font-weight: 500;
-  letter-spacing: 0.015em;
   text-decoration: underline;
   text-decoration-color: transparent;
-  text-underline-offset: 0.3em;
+  text-underline-offset: 0.25em;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.footer-links .fa {
+  font-size: 0.85em;
 }
 
 .footer-links a:hover,
@@ -142,19 +145,21 @@ div.splitbox div.right {
   outline-offset: 3px;
 }
 
-.footer-links-kudos img {
-  margin-left: 2px;
+.copyright-text {
+  margin: 0;
+  color: var(--site-muted);
+  font-variant-numeric: tabular-nums;
 }
 
-.copyright-text {
-  margin-top: 0.2rem;
-  margin-bottom: 0;
-  color: var(--site-muted);
-  font-size: 0.72rem;
-  letter-spacing: 0.075em;
-  line-height: 1.5;
-  text-transform: uppercase;
-  font-weight: 450;
+@media (max-width: 480px) {
+  .footer {
+    flex-direction: column;
+    row-gap: 0.125rem;
+  }
+
+  .footer-divider {
+    display: none;
+  }
 }
 
 /* navigation bar positioning */
