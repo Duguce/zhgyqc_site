@@ -17,27 +17,21 @@ cn = "/blogs/:filename/"
 en = "/moments/:filename/"
 posts = "/posts/:filename/"
 
-[[menu.en]]
+[[menu.main]]
+    identifier = "home"
     name = "Home"
     url = "/"
     weight = 1
-[[menu.en]]
+[[menu.main]]
+    identifier = "moments"
     name = "Moments"
     url = "/moments/"
     weight = 2
-[[menu.en]]
-    name = "中文"
+[[menu.main]]
+    identifier = "blogs"
+    name = "Blog"
     url = "/blogs/"
     weight = 3
-
-[[menu.cn]]
-    name = "博客"
-    url = "/blogs/"
-    weight = 3
-[[menu.cn]]
-    name = "English"
-    url = "/"
-    weight = 4
 
 [params]
     description = "Personal website of Qingchen Yu"
