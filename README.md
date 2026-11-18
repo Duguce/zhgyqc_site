@@ -61,12 +61,11 @@ Preview includes unpublished content; use `make serve DRAFTS=false` for publishe
   </tbody>
 </table>
 
-### Theme and responsive layout
+### Theme
 
 - `assets/css/tokens.css` is the shared source for light and dark colors, widths, spacing, and fonts. New page styles should use `--site-*` semantic tokens instead of fixed light colors.
 - The shared head loads `assets/css/theme.css` and `assets/js/theme.js`; the header uses `layouts/partials/site/theme-control.html`. Standalone templates should include `site/theme-bootstrap.html` before styles, then the shared theme stylesheet, script, and control.
 - The initial theme follows the device setting. The icon button then switches directly between light and dark; a manual choice is saved in local storage.
-- Use fluid widths with `max-width`, `minmax(0, 1fr)`, and wrapping layouts. Keep code and tables scrollable within their own area; avoid page-wide horizontal scrolling. Check at 320px and at enlarged text before adding a new page.
 
 <details>
 <summary>New Moments &amp; media</summary>

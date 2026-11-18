@@ -431,18 +431,6 @@
   }
 }
 
-/* Below this width the link row has to wrap, which would leave a divider
-   dangling at the end of a line, so space the links out instead. */
-@media only screen and (max-width: 900px) {
-  .pub-links {
-    column-gap: 13px;
-  }
-
-  .pub-links a:not(:last-child)::after {
-    display: none;
-  }
-}
-
 /* Below this the content column is no longer at its full width, so the venue
    needs room to wrap and the shared card height would only add dead space. */
 @media only screen and (max-width: 940px) {

@@ -15,7 +15,6 @@
   display: flex;
   align-items: center;
   gap: clamp(0.75rem, 2vw, 1.5rem);
-  min-width: 0;
 }
 
 .theme-toggle {
@@ -49,30 +48,6 @@
 :root[data-theme-preference="light"] .theme-toggle__glyph[data-theme-icon="light"],
 :root[data-theme-preference="dark"] .theme-toggle__glyph[data-theme-icon="dark"] { display: block; }
 
-/* Content may shrink inside flex and grid containers, while its own code or
-   tables retain a local scroll area instead of widening the whole page. */
-.wrapper > main,
-.content,
-.scholar-shell,
-.scholar-article,
-.feature-page,
-.feature-body,
-.feature-sidebar,
-.stats-page { min-width: 0; }
-.content,
-.scholar-article,
-.feature-content { overflow-wrap: break-word; }
-.content pre,
-.feature-content pre { max-width: 100%; overflow-x: auto; }
-.content table,
-.feature-content table { display: block; max-width: 100%; overflow-x: auto; }
-.content img,
-.content video,
-.feature-content img,
-.feature-content video { height: auto; max-width: 100%; }
-.content iframe,
-.feature-content iframe { max-width: 100%; }
-
 /* The feature pages intentionally have their own visual accents, but inherit
    the site's text, surfaces and theme state. */
 .features-index {
@@ -82,7 +57,6 @@
   --line: var(--site-border);
   --line-subtle: var(--site-border-soft);
 }
-.features-title { white-space: normal; overflow-wrap: anywhere; }
 :root[data-theme="dark"] .features-index {
   background: linear-gradient(160deg, var(--site-bg), var(--site-surface-soft));
 }
@@ -180,42 +154,13 @@
   text-shadow: none;
 }
 
-@media (max-width: 420px) {
-  .header { padding: 0.35rem 0 0.15rem; }
-  .nav {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: center;
-    gap: 0 0.5rem;
-    padding-inline: 1rem;
-  }
-  .nav-actions { display: contents; }
-  .nav-logo { grid-column: 1; grid-row: 1; }
-  .nav .theme-toggle { grid-column: 2; grid-row: 1; justify-self: end; }
-  .nav-links {
-    grid-column: 1 / -1;
-    grid-row: 2;
-    justify-content: center;
-    gap: clamp(1rem, 5vw, 1.75rem);
-  }
-  .nav-links a { padding-block: 0.35rem; }
-  .content { margin-top: 2rem; padding-inline: 1rem; }
-}
-
-@media (max-width: 1200px) {
-  :root:has(.city-spots-page),
-  body:has(.city-spots-page) { overflow: auto; }
-  .city-spots-page { width: 100%; height: auto; min-height: 100svh; }
-  .city-spots-shell { height: auto; }
-  .city-spots-panel { height: auto; }
-}
-
-@media (max-width: 720px) {
-  .city-spots-page { width: 100%; }
-  .city-spots-map-shell { min-width: 0; }
-  .city-spots-panel { min-width: 0; }
-  .city-spots-section__title { flex-wrap: wrap; }
-  .city-spots-strategy { flex-wrap: wrap; }
+/* Keep the added theme control clear of the existing links on narrow phones. */
+@media (max-width: 360px) {
+  .nav { padding-inline: 12px; }
+  .nav-actions { gap: 6px; }
+  .nav-links { gap: 6px; font-size: 12px; }
+  .theme-toggle { width: 32px; height: 32px; }
+  .theme-toggle__glyph { width: 20px; height: 20px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
