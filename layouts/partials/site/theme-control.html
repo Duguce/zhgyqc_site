@@ -1,0 +1,20 @@
+{{ $language := partial "site/language.html" . }}
+{{ $label := cond $language.isChinese "外观模式" "Appearance" }}
+<button type="button" class="theme-toggle" data-theme-toggle data-theme-label="{{ $label }}" data-theme-action="{{ if $language.isChinese }}点击切换至{{ else }}Switch to{{ end }}" data-theme-system="{{ if $language.isChinese }}自动{{ else }}Auto{{ end }}" data-theme-light="{{ if $language.isChinese }}白天{{ else }}Light{{ end }}" data-theme-dark="{{ if $language.isChinese }}黑夜{{ else }}Dark{{ end }}" aria-label="{{ $label }}" title="{{ $label }}">
+  <svg class="visually-hidden" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="theme-icon-system" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" stroke-width="1.55"/>
+      <path d="M12 4.5a7.5 7.5 0 0 1 0 15Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="theme-icon-light" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="3.7" fill="none" stroke="currentColor" stroke-width="1.65"/>
+      <path d="M12 2.5v2.1m0 14.8v2.1M2.5 12h2.1m14.8 0h2.1M5.28 5.28l1.48 1.48m10.48 10.48 1.48 1.48M18.72 5.28l-1.48 1.48M6.76 17.24l-1.48 1.48" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="theme-icon-dark" viewBox="0 0 24 24">
+      <path d="M20.2 14.8A8.5 8.5 0 0 1 9.2 3.8 8.5 8.5 0 1 0 20.2 14.8Z" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round"/>
+    </symbol>
+  </svg>
+  <svg class="theme-toggle__glyph" data-theme-icon="system" aria-hidden="true"><use href="#theme-icon-system"/></svg>
+  <svg class="theme-toggle__glyph" data-theme-icon="light" aria-hidden="true"><use href="#theme-icon-light"/></svg>
+  <svg class="theme-toggle__glyph" data-theme-icon="dark" aria-hidden="true"><use href="#theme-icon-dark"/></svg>
+</button>

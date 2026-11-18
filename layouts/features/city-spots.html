@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ .Title }}</title>
+    {{ partial "site/theme-bootstrap.html" . }}
     <meta name="description" content="{{ with .Params.description }}{{ . }}{{ else }}{{ .Summary }}{{ end }}">
     <!-- Load configuration: prefer local config for development, fallback to production config -->
     {{ if eq hugo.Environment "development" }}
@@ -13,6 +14,8 @@
     {{ end }}
     {{ partial "stylesheet.html" "css/tokens.css" }}
     {{ partial "stylesheet.html" "css/city-spots.css" }}
+    {{ partial "stylesheet.html" "css/theme.css" }}
+    {{ partial "script.html" "js/theme.js" }}
     <link rel="icon" type="image/png" href="{{ "media/city-spots-icon.png" | relURL }}">
   </head>
   <body>
@@ -52,6 +55,7 @@
 
         <aside class="city-spots-panel" aria-label="Control panel">
           <div class="city-spots-panel__top">
+            {{ partial "site/theme-control.html" . }}
             <h2>City Spots</h2>
             <p>选择城市并检索地点，快速建立你的收藏点位。</p>
           </div>

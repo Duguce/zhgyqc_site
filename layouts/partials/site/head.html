@@ -1,6 +1,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ if eq .Type "stats" }}{{ .Title }} · {{ end }}{{ .Site.Title }}</title>
+{{ partial "site/theme-bootstrap.html" . }}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {{ partial "stylesheet.html" "css/tokens.css" }}
 {{ partial "stylesheet.html" "css/base.css" }}
@@ -16,6 +17,8 @@
 {{ else if eq .Kind "taxonomy" }}
   {{ partial "stylesheet.html" "css/terms.css" }}
 {{ end }}
+{{ partial "stylesheet.html" "css/theme.css" }}
+{{ partial "script.html" "js/theme.js" }}
 {{ partial "head_custom.html" . }}
 {{ partial "site/analytics.html" . }}
 {{ if eq .Type "stats" }}

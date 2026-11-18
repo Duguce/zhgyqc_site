@@ -7,6 +7,7 @@
          alt="{{ .Site.Title }}">
       </a>
 
+      <div class="nav-actions">
          <ul class="nav-links" lang="en">
             {{ $current := .Type }}
             {{ if .IsHome }}{{ $current = "home" }}{{ end }}
@@ -14,4 +15,6 @@
                 <li><a href="{{ .URL | relURL }}"{{ if eq .Identifier $current }} class="is-current" aria-current="{{ if $.IsPage }}location{{ else }}page{{ end }}"{{ end }}>{{ .Name }}</a></li>
             {{ end }}
          </ul>
+         {{ partial "site/theme-control.html" . }}
+      </div>
 </nav>

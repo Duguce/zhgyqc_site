@@ -1,11 +1,11 @@
 .feature-page {
-  --page-panel: rgba(255, 255, 255, 0.78);
-  --page-panel-strong: #ffffff;
-  --page-line: rgba(31, 37, 53, 0.1);
-  --page-ink: #1f2535;
-  --page-muted: #5b6275;
-  --page-shadow: 0 28px 74px rgba(16, 20, 31, 0.12);
-  --page-shadow-soft: 0 18px 42px rgba(16, 20, 31, 0.08);
+  --page-panel: var(--site-surface);
+  --page-panel-strong: var(--site-surface);
+  --page-line: var(--site-border);
+  --page-ink: var(--site-ink);
+  --page-muted: var(--site-muted);
+  --page-shadow: 0 12px 38px var(--site-shadow);
+  --page-shadow-soft: 0 8px 24px var(--site-shadow);
   position: relative;
   overflow: hidden;
   padding: 0.4rem 0 3rem;
@@ -48,7 +48,7 @@
   border-radius: 2rem;
   padding: clamp(1.5rem, 3vw, 2.4rem);
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(247, 243, 236, 0.86)),
+    linear-gradient(135deg, var(--site-surface), var(--site-surface-soft)),
     radial-gradient(circle at top left, color-mix(in srgb, var(--feature-accent) 14%, transparent), transparent 42%),
     radial-gradient(circle at 88% 12%, rgba(31, 37, 53, 0.08), transparent 34%);
   box-shadow: var(--page-shadow);
@@ -63,7 +63,7 @@
 }
 .feature-page--editorial .feature-hero {
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(244, 240, 232, 0.9)),
+    linear-gradient(135deg, var(--site-surface), var(--site-surface-soft)),
     radial-gradient(circle at top left, color-mix(in srgb, var(--feature-accent) 10%, transparent), transparent 40%);
 }
 .feature-hero::before {
@@ -127,7 +127,7 @@
   padding: 0.5rem 0.85rem;
   border-radius: 999px;
   border: 1px solid var(--page-line);
-  background: rgba(255, 255, 255, 0.75);
+  background: var(--site-surface);
   color: var(--page-ink);
   font-weight: 600;
   text-decoration: none;
@@ -206,8 +206,8 @@
   align-items: center;
   padding: 0.28rem 0.65rem;
   border-radius: 999px;
-  background: rgba(31, 37, 53, 0.06);
-  color: #2b3244;
+  background: var(--site-surface-soft);
+  color: var(--page-ink);
   font-size: 0.75rem;
 }
 .feature-page--immersive .feature-sidebar__list span {
@@ -225,14 +225,14 @@
 .feature-content :not(pre) > code {
   padding: 0.16rem 0.38rem;
   border-radius: 0.35rem;
-  background: rgba(31, 37, 53, 0.07);
+  background: var(--site-surface-soft);
 }
 .feature-content pre {
   border-radius: 1rem;
   padding: 1rem 1.1rem 1.2rem;
   overflow: auto;
-  background: linear-gradient(135deg, #fbfaf7, #eef2f7);
-  border: 1px solid rgba(31, 37, 53, 0.08);
+  background: var(--site-surface-soft);
+  border: 1px solid var(--site-border);
   box-shadow: 0 22px 46px rgba(16, 20, 31, 0.12);
 }
 .feature-page--immersive .feature-content pre {
@@ -252,7 +252,7 @@
   padding: 0.48rem 0.78rem;
   border-radius: 999px;
   border: 1px solid var(--page-line);
-  background: rgba(255, 255, 255, 0.76);
+  background: var(--site-surface);
   color: var(--page-ink);
   text-decoration: none;
   font-size: 0.88rem;

@@ -104,7 +104,7 @@
             data-reactions-enabled="{{ default "1" $giscus.reactionsEnabled }}"
             data-emit-metadata="{{ default "0" $giscus.emitMetadata }}"
             data-input-position="{{ default "bottom" $giscus.inputPosition }}"
-            data-theme="{{ default "light" $giscus.theme }}"
+            data-theme="preferred_color_scheme"
             data-lang="{{ if $isBlog }}zh-CN{{ else }}{{ default "en" $giscus.lang }}{{ end }}"
             data-loading="{{ default "lazy" $giscus.loading }}"
             crossorigin="anonymous"
@@ -169,7 +169,7 @@
 
   <span class="article-toolbar">
     {{ with $editScratch.Get "href" }}
-      <a href='{{ . }}' style="font-size: 24px; color: black;" target="_blank">
+      <a href='{{ . }}' style="font-size: 24px; color: var(--site-ink);" target="_blank">
         <i class="fa fa-edit" aria-hidden="true"></i>
       </a>
     {{ end }}
@@ -184,7 +184,7 @@
 
   <div class="body-text list-text">
     {{ .Content | partial "add-header-anchors" }}
-    <p style="color:#777;">
+    <p style="color:var(--site-muted);">
       {{ $lastLabel := default (index $.Site.Params.lang.lastupdate $.Site.Params.defaultLang) (index $.Site.Params.lang.lastupdate $language.menuKey) }}
       {{ $lastLabel }} {{ .Page.Lastmod.Format "2006-01-02" }}
     </p>
@@ -193,7 +193,7 @@
       <ul style="list-style: none; padding-left: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.4rem;">
         {{ range . }}
         <li>
-          <a href="{{ .RelPermalink }}" style="display: inline-block; font-size: 0.88rem; color: #2e3240; text-decoration: none; background: #f8f9fb; border: 1px solid #e3e5ec; padding: 0.12rem 0.65rem; border-radius: 999px;">
+          <a href="{{ .RelPermalink }}" style="display: inline-block; font-size: 0.88rem; color: var(--site-ink); text-decoration: none; background: var(--site-surface-soft); border: 1px solid var(--site-border); padding: 0.12rem 0.65rem; border-radius: 999px;">
             {{ .LinkTitle }}
           </a>
         </li>
@@ -203,7 +203,7 @@
     {{ end }}
   </div>
 
-  <a href="#top"><i class="fa fa-chevron-up" style="font-size: 30px; color: black;"></i></a>
+  <a href="#top"><i class="fa fa-chevron-up" style="font-size: 30px; color: var(--site-ink);"></i></a>
 {{ end }}
 </main>
 

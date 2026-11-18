@@ -1,0 +1,223 @@
+/* Shared controls and responsive safety rules. New pages use --site-* tokens. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  min-width: 0;
+}
+
+.theme-toggle {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--site-ink-soft);
+  cursor: pointer;
+  transition: background 160ms ease, color 160ms ease;
+}
+.theme-toggle:hover {
+  background: var(--site-surface-soft);
+  color: var(--site-accent-hover);
+}
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--site-accent);
+  outline-offset: 3px;
+}
+.theme-toggle__glyph {
+  display: none;
+  width: 23px;
+  height: 23px;
+}
+:root[data-theme-preference="system"] .theme-toggle__glyph[data-theme-icon="system"],
+:root[data-theme-preference="light"] .theme-toggle__glyph[data-theme-icon="light"],
+:root[data-theme-preference="dark"] .theme-toggle__glyph[data-theme-icon="dark"] { display: block; }
+
+/* Content may shrink inside flex and grid containers, while its own code or
+   tables retain a local scroll area instead of widening the whole page. */
+.wrapper > main,
+.content,
+.scholar-shell,
+.scholar-article,
+.feature-page,
+.feature-body,
+.feature-sidebar,
+.stats-page { min-width: 0; }
+.content,
+.scholar-article,
+.feature-content { overflow-wrap: break-word; }
+.content pre,
+.feature-content pre { max-width: 100%; overflow-x: auto; }
+.content table,
+.feature-content table { display: block; max-width: 100%; overflow-x: auto; }
+.content img,
+.content video,
+.feature-content img,
+.feature-content video { height: auto; max-width: 100%; }
+.content iframe,
+.feature-content iframe { max-width: 100%; }
+
+/* The feature pages intentionally have their own visual accents, but inherit
+   the site's text, surfaces and theme state. */
+.features-index {
+  --bg: var(--site-bg);
+  --ink: var(--site-ink);
+  --muted: var(--site-muted);
+  --line: var(--site-border);
+  --line-subtle: var(--site-border-soft);
+}
+.features-title { white-space: normal; overflow-wrap: anywhere; }
+:root[data-theme="dark"] .features-index {
+  background: linear-gradient(160deg, var(--site-bg), var(--site-surface-soft));
+}
+:root[data-theme="dark"] .features-title {
+  color: var(--site-ink);
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  text-shadow: none;
+}
+:root[data-theme="dark"] .features-tagline {
+  background: var(--site-accent-wash);
+  border-color: var(--site-border);
+}
+
+/* A standalone map shares the same theme preference and semantic palette.
+   The exported route poster deliberately retains its printable light colors. */
+.city-spots-panel__top .theme-toggle {
+  float: right;
+  margin-left: 0.5rem;
+}
+.city-spots-map-toolbar { bottom: 3rem; }
+
+:root[data-theme="dark"] {
+  --ink: var(--site-ink);
+  --muted: var(--site-ink-soft);
+  --muted-soft: var(--site-muted);
+  --accent: #88bee4;
+  --accent-glow: #88bee4;
+  --accent-deep: #b3d8f1;
+  --accent-surface: #263d4c;
+  --accent-border: #42637a;
+  --surface: #202b36;
+  --surface-strong: #26323d;
+  --surface-card: #26323d;
+  --border: #3c4b58;
+  --border-strong: #5b6d7b;
+  --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.12);
+  --shadow-sm: 0 3px 12px rgba(0, 0, 0, 0.15);
+  --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 18px 55px rgba(0, 0, 0, 0.22);
+  --shadow-xl: 0 30px 80px rgba(0, 0, 0, 0.25);
+}
+:root[data-theme="dark"]:has(.city-spots-page),
+:root[data-theme="dark"] .city-spots-page,
+:root[data-theme="dark"] body:has(.city-spots-page) { background: var(--site-bg); }
+:root[data-theme="dark"] body:has(.city-spots-page)::after {
+  background-image: radial-gradient(circle, rgba(167, 193, 210, 0.09) 1px, transparent 1px);
+}
+:root[data-theme="dark"] .city-spots-status {
+  background: linear-gradient(0deg, var(--surface-strong), var(--surface));
+}
+:root[data-theme="dark"] .city-spots-input,
+:root[data-theme="dark"] .city-spots-btn:not(.city-spots-btn--primary),
+:root[data-theme="dark"] .city-spots-item,
+:root[data-theme="dark"] .city-spots-seg-btn { background: var(--surface-card); color: var(--ink); }
+:root[data-theme="dark"] .city-spots-btn:hover:not(:disabled),
+:root[data-theme="dark"] .city-spots-btn--ghost:hover:not(:disabled) { background: var(--accent-surface); }
+:root[data-theme="dark"] .city-spots-strategy { background: var(--surface); }
+:root[data-theme="dark"] .city-spots-btn.is-loading {
+  background: linear-gradient(105deg, var(--surface), var(--surface-card), var(--surface));
+  background-size: 220% 100%;
+}
+:root[data-theme="dark"] .city-spots-map-shell::after,
+:root[data-theme="dark"] .city-spots-panel::after { border-color: var(--border); }
+:root[data-theme="dark"] .city-spots-btn--primary,
+:root[data-theme="dark"] .city-spots-confirm-btn--ok,
+:root[data-theme="dark"] .city-spots-confirm-btn--cancel { color: #111c25; }
+
+:root[data-theme="dark"] .feature-hero::before {
+  opacity: 0.14;
+}
+:root[data-theme="dark"] .feature-hero__eyebrow,
+:root[data-theme="dark"] .feature-hero__summary,
+:root[data-theme="dark"] .feature-sidebar p { color: var(--site-ink-soft); }
+:root[data-theme="dark"] .feature-page--immersive .feature-hero__eyebrow,
+:root[data-theme="dark"] .feature-page--immersive .feature-hero__summary,
+:root[data-theme="dark"] .feature-page--immersive .feature-sidebar p { color: #cbd5df; }
+:root[data-theme="dark"] .feature-page--immersive .feature-content pre { color: #e8e9e5; }
+:root[data-theme="dark"] .feature-page--immersive .feature-sidebar__list span { color: #e8e9e5; }
+:root[data-theme="dark"] .scholar-shell {
+  --sl-accent-glow: var(--site-accent-wash);
+  --sl-shadow-sm: 0 1px 2px var(--site-shadow);
+  --sl-shadow-md: 0 1px 4px var(--site-shadow);
+  --sl-shadow-lg: 0 2px 8px var(--site-shadow);
+  --sl-shadow-xl: 0 3px 12px var(--site-shadow);
+}
+:root[data-theme="dark"] .content a {
+  text-decoration-color: var(--site-accent-wash);
+}
+:root[data-theme="dark"] .content a:hover,
+:root[data-theme="dark"] .content a:visited:hover,
+:root[data-theme="dark"] .list-page a:hover,
+:root[data-theme="dark"] .body-text.list-text a:hover {
+  box-shadow: none;
+  text-shadow: none;
+}
+
+@media (max-width: 420px) {
+  .header { padding: 0.35rem 0 0.15rem; }
+  .nav {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 0 0.5rem;
+    padding-inline: 1rem;
+  }
+  .nav-actions { display: contents; }
+  .nav-logo { grid-column: 1; grid-row: 1; }
+  .nav .theme-toggle { grid-column: 2; grid-row: 1; justify-self: end; }
+  .nav-links {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-content: center;
+    gap: clamp(1rem, 5vw, 1.75rem);
+  }
+  .nav-links a { padding-block: 0.35rem; }
+  .content { margin-top: 2rem; padding-inline: 1rem; }
+}
+
+@media (max-width: 1200px) {
+  :root:has(.city-spots-page),
+  body:has(.city-spots-page) { overflow: auto; }
+  .city-spots-page { width: 100%; height: auto; min-height: 100svh; }
+  .city-spots-shell { height: auto; }
+  .city-spots-panel { height: auto; }
+}
+
+@media (max-width: 720px) {
+  .city-spots-page { width: 100%; }
+  .city-spots-map-shell { min-width: 0; }
+  .city-spots-panel { min-width: 0; }
+  .city-spots-section__title { flex-wrap: wrap; }
+  .city-spots-strategy { flex-wrap: wrap; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle { transition: none; }
+}

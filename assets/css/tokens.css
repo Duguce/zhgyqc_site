@@ -12,6 +12,9 @@
   --site-surface: #fffefb;
   --site-surface-soft: #f1f0ea;
   --site-gold: #806325;
+  --site-accent-wash: rgba(82, 109, 130, 0.14);
+  --site-shadow: rgba(45, 42, 33, 0.04);
+  --site-on-accent: #ffffff;
   --site-radius-sm: 0.25rem;
   --site-radius: 0.5rem;
   --site-radius-lg: 0.5rem;
@@ -26,4 +29,47 @@
   --site-font-body: "Source Serif 4", "Noto Serif SC", "Charter", "Palatino Linotype", Georgia, "Songti SC", "STSong", "SimSun", serif;
   --site-font-ui: "Noto Sans SC", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   --site-font-code: "JetBrains Mono", "Fira Code", "SF Mono", "Cascadia Code", "Menlo", "Monaco", "Courier New", monospace;
+  color-scheme: light;
+}
+
+/* All pages inherit the same semantic palette. The system preference is the
+   no-JavaScript fallback; the explicit attribute is set before CSS loads. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --site-bg: #171d23;
+    --site-ink: #e8e9e5;
+    --site-ink-soft: #c5cbd0;
+    --site-muted: #a7b1b8;
+    --site-accent: #a7c1d2;
+    --site-accent-hover: #d0dfeb;
+    --site-border: #39444d;
+    --site-border-soft: #303a43;
+    --site-border-hover: #647784;
+    --site-surface: #202830;
+    --site-surface-soft: #252e36;
+    --site-gold: #d0b782;
+    --site-accent-wash: rgba(167, 193, 210, 0.16);
+    --site-shadow: rgba(0, 0, 0, 0.18);
+    --site-on-accent: #17212a;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --site-bg: #171d23;
+  --site-ink: #e8e9e5;
+  --site-ink-soft: #c5cbd0;
+  --site-muted: #a7b1b8;
+  --site-accent: #a7c1d2;
+  --site-accent-hover: #d0dfeb;
+  --site-border: #39444d;
+  --site-border-soft: #303a43;
+  --site-border-hover: #647784;
+  --site-surface: #202830;
+  --site-surface-soft: #252e36;
+  --site-gold: #d0b782;
+  --site-accent-wash: rgba(167, 193, 210, 0.16);
+  --site-shadow: rgba(0, 0, 0, 0.18);
+  --site-on-accent: #17212a;
+  color-scheme: dark;
 }

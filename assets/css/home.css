@@ -280,7 +280,7 @@
   justify-content: center;
   padding: 4px;
   box-sizing: border-box;
-  background: #fff;
+  background: var(--site-surface);
   box-shadow: inset 0 0 0 1px var(--site-border-soft);
   border-radius: var(--site-radius-sm);
   overflow: hidden;
@@ -433,7 +433,7 @@
 
 /* Below this width the link row has to wrap, which would leave a divider
    dangling at the end of a line, so space the links out instead. */
-@media only screen and (max-width: var(--site-home-width)) {
+@media only screen and (max-width: 900px) {
   .pub-links {
     column-gap: 13px;
   }

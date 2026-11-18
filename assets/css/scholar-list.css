@@ -403,7 +403,7 @@
 }
 .content .scholar-pagination__button.is-active {
   background: var(--sl-accent);
-  color: #fff;
+  color: var(--site-on-accent);
   border-color: var(--sl-accent);
   font-weight: 600;
   box-shadow: 0 3px 10px var(--sl-accent-glow);
