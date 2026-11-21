@@ -1,33 +1,30 @@
-.wrapper > .photo-wall {
-  margin-bottom: 0;
-}
+.wrapper > .photo-wall { margin: 0; }
 
 .photo-wall__grid {
-  --photo-columns: 4;
-  --photo-gap: 4px;
-  --photo-column: calc((100% - (var(--photo-columns) - 1) * var(--photo-gap)) / var(--photo-columns));
-  display: flex;
-  flex-wrap: wrap;
-  align-content: stretch;
-  block-size: 100vh;
-  block-size: 100dvh;
-  column-gap: var(--photo-gap);
-  row-gap: min(var(--photo-gap), calc(100dvh / var(--photo-count) / 3));
-  overflow: clip;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-auto-rows: minmax(0, 1fr);
+  gap: 2px;
+  height: 100vh;
+  height: 100dvh;
   background: var(--site-bg);
 }
 
 .photo-wall__tile {
-  flex: 1 0 var(--photo-column);
   position: relative;
+  display: block;
   min-width: 0;
+  min-height: 0;
   overflow: hidden;
   cursor: zoom-in;
   background: var(--site-surface-soft);
 }
 
-.photo-wall__tile--wide {
-  flex-basis: calc(2 * var(--photo-column) + var(--photo-gap));
+.photo-wall__grid.is-arranged > a { position: absolute; }
+
+@media (orientation: portrait) {
+  .photo-wall__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px; }
 }
 
 .photo-wall__tile img {
@@ -45,80 +42,99 @@
   outline-offset: -3px;
 }
 
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .photo-wall__tile img { transition: transform 200ms ease-out; }
-  .photo-wall__tile:hover img { transform: scale(1.025); }
-}
-
 .photo-wall__viewer {
-  width: max-content;
-  max-width: min(96vw, 1440px);
-  max-height: 96dvh;
-  padding: 0;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: max(4px, env(safe-area-inset-top)) max(clamp(10px, 3vw, 52px), env(safe-area-inset-right)) max(4px, env(safe-area-inset-bottom)) max(clamp(10px, 3vw, 52px), env(safe-area-inset-left));
   border: 0;
-  background: #202629;
-  color: #f6f5ef;
+  background: var(--site-bg);
+  color: var(--site-ink);
 }
-
-.photo-wall__viewer::backdrop {
-  background: rgb(14 19 22 / 82%);
+.photo-wall__viewer[open] {
+  display: grid;
+  grid-template-rows: 48px minmax(0, 1fr) 48px;
+  row-gap: clamp(2px, 0.8vh, 10px);
 }
-
-.photo-wall__toolbar {
-  display: flex;
-  justify-content: flex-end;
-}
-
+.photo-wall__viewer::backdrop { background: var(--site-bg); }
 .photo-wall__frame {
   display: grid;
-  grid-template: "prev image next" / 44px minmax(0, 1fr) 44px;
   place-items: center;
-  padding-bottom: 0.5rem;
+  min-height: 0;
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+  touch-action: pan-y pinch-zoom;
 }
-
 .photo-wall__image {
-  grid-area: image;
   display: block;
-  width: auto;
   height: auto;
+  width: auto;
+  max-height: 100%;
   max-width: 100%;
-  max-height: min(80dvh, calc(96dvh - 52px));
   object-fit: contain;
 }
-
-.photo-wall__control[data-step="-1"] { grid-area: prev; }
-.photo-wall__control[data-step="1"] { grid-area: next; }
-
+.photo-wall__toolbar {
+  display: flex;
+  justify-self: center;
+  align-items: center;
+  gap: 6px;
+}
+.photo-wall__position {
+  min-width: 5ch;
+  text-align: center;
+  font: 500 0.8rem/1 var(--site-font-ui);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.07em;
+  color: var(--site-muted);
+}
 .photo-wall__control {
+  position: relative;
   display: grid;
   place-items: center;
   width: 44px;
   height: 44px;
   border: 0;
+  border-radius: 50%;
+  padding: 0;
   background: transparent;
-  color: inherit;
-  font: 1.45rem/1 var(--site-font-ui);
+  color: var(--site-ink-soft);
   cursor: pointer;
 }
-
-.photo-wall__control:hover { background: rgb(246 245 239 / 12%); }
-.photo-wall__control:focus-visible { outline: 2px solid currentColor; outline-offset: -3px; }
+.photo-wall__control[data-close] { place-self: center end; }
+.photo-wall__control[data-step]::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-top: 1.5px solid;
+  border-right: 1.5px solid;
+  transform: rotate(45deg);
+}
+.photo-wall__control[data-step="-1"]::before { transform: rotate(-135deg); }
+.photo-wall__control[data-close]::before,
+.photo-wall__control[data-close]::after {
+  content: "";
+  grid-area: 1 / 1;
+  width: 18px;
+  height: 1.5px;
+  background: currentColor;
+  transform: rotate(45deg);
+}
+.photo-wall__control[data-close]::after { transform: rotate(-45deg); }
+@media (hover: hover) {
+  .photo-wall__control:hover { background: var(--site-accent-wash); }
+}
+.photo-wall__control:focus-visible { outline: 2px solid var(--site-accent); }
 .photo-wall__control[hidden] { display: none; }
 
-@media (min-aspect-ratio: 8/5) {
-  .photo-wall__grid { --photo-columns: 6; }
-}
-
-@media (max-width: 600px) {
-  .photo-wall__grid {
-    --photo-columns: 3;
-    --photo-gap: 3px;
+@media (max-height: 480px) and (orientation: landscape) {
+  .photo-wall__viewer[open] {
+    grid-template: minmax(0, 1fr) 44px / minmax(0, 1fr) 44px;
+    column-gap: 8px;
   }
-  .photo-wall__frame {
-    grid-template:
-      "image image" auto
-      "prev next" 44px / 1fr 1fr;
-    padding: 0;
-  }
-  .photo-wall__image { max-height: min(76dvh, calc(96dvh - 88px)); }
+  .photo-wall__frame { grid-area: 1 / 1 / 3 / 2; }
+  .photo-wall__control[data-close] { grid-area: 1 / 2; align-self: start; }
+  .photo-wall__toolbar { grid-area: 2 / 2; flex-direction: column; align-self: end; }
 }

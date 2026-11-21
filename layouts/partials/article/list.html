@@ -26,7 +26,7 @@
             <h1 id="scholar-hero-title">{{ .Title }}</h1>
             {{ if $isEnMoments }}
               {{ with .Site.GetPage "/photos" }}
-                <a class="scholar-hero__photos" href="{{ .RelPermalink }}">Photos <span aria-hidden="true">↗</span></a>
+                <a class="scholar-hero__photos" href="{{ .RelPermalink }}">{{ .Title }} <span aria-hidden="true">↗</span></a>
               {{ end }}
             {{ end }}
           </div>

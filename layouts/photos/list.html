@@ -13,6 +13,11 @@
   {{ else if .Params.cover }}
     {{ $photos = slice (dict "src" .Params.cover "alt" .Params.cover_alt) }}
   {{ end }}
+  {{ if and $photos (eq .Type "moments") }}
+    {{ with index $.Params.additional_photos .File.ContentBaseName }}
+      {{ $photos = $photos | append . }}
+    {{ end }}
+  {{ end }}
   {{ $seen := slice }}
   {{ range $photo := $photos }}
     {{ if not $photo.src }}
@@ -33,30 +38,33 @@
 {{ end }}
 {{ $photos := (sort $featured "rank") | append $recent }}
 <main class="photo-wall" aria-label="{{ .Title }}">
-  <div class="photo-wall__grid" style="--photo-count: {{ math.Max (len $photos) 1 }}">
+  <div class="photo-wall__grid" data-exhibit="{{ .Params.exhibit | jsonify }}">
     {{ range $index, $item := $photos }}
       {{ $image := .resource }}
       {{ $large := $image.Fit "1600x1600 webp q82" }}
-      {{ $wide := ge (mul $image.Width 4) (mul $image.Height 5) }}
-      {{ $sizes := cond $wide "(max-width: 600px) 70vw, (min-aspect-ratio: 8/5) 40vw, 55vw" "(max-width: 600px) 45vw, (min-aspect-ratio: 8/5) 25vw, 33vw" }}
-      {{ $loading := cond (lt $index 3) "eager" "lazy" }}
-      {{ $focus := .focus | default "" }}
+      {{ $key := strings.TrimSuffix (path.Ext $image.Name) (path.Base $image.Name) }}
+      {{ $thumbnail := $image }}
+      {{ with index $.Params.exhibit.trim_bottom $key }}
+        {{ $thumbnail = $image.Crop (printf "%dx%d Top" $image.Width (int (mul $image.Height (sub 1 .)))) }}
+      {{ end }}
+      {{ $focus := (index $.Params.exhibit.focus $key) | default .focus | default "" }}
       {{ if and $focus (not (findRE `^(100|[1-9]?[0-9])% (100|[1-9]?[0-9])%$` $focus)) }}
         {{ errorf "Photos: invalid focus %q for %s. Use two percentages such as 50%% 65%%." $focus $image.Name }}
       {{ end }}
-      <a class="photo-wall__tile{{ if $wide }} photo-wall__tile--wide{{ end }}" href="{{ $large.RelPermalink }}"{{ if $focus }} style="{{ printf "--photo-focus: %s" $focus | safeCSS }}"{{ end }}>
-        {{ partial "responsive-image.html" (dict "resource" $image "alt" .alt "widths" (slice 480 800 1200) "defaultWidth" 480 "sizes" $sizes "loading" $loading) }}
+      <a class="photo-wall__tile" data-print="{{ $key }}" href="{{ $large.RelPermalink }}"{{ if $focus }} style="{{ printf "--photo-focus: %s" $focus | safeCSS }}"{{ end }}>
+        {{ partial "responsive-image.html" (dict "resource" $thumbnail "alt" .alt "widths" (slice 480 800 1200) "defaultWidth" 480 "sizes" "(orientation: portrait) 40vw, 25vw" "loading" "eager") }}
       </a>
     {{ end }}
   </div>
   <dialog class="photo-wall__viewer" aria-label="Photo viewer">
-    <div class="photo-wall__toolbar">
-      <button type="button" class="photo-wall__control" data-close aria-label="Close photo" autofocus>×</button>
-    </div>
+    <button type="button" class="photo-wall__control" data-close aria-label="Close photo" autofocus></button>
     <div class="photo-wall__frame">
-      <button type="button" class="photo-wall__control" data-step="-1" aria-label="Previous photo">‹</button>
       <img class="photo-wall__image" alt="">
-      <button type="button" class="photo-wall__control" data-step="1" aria-label="Next photo">›</button>
+    </div>
+    <div class="photo-wall__toolbar">
+      <button type="button" class="photo-wall__control" data-step="-1" aria-label="Previous photo"></button>
+      <span class="photo-wall__position" aria-hidden="true"></span>
+      <button type="button" class="photo-wall__control" data-step="1" aria-label="Next photo"></button>
     </div>
     <span class="visually-hidden" aria-live="polite"></span>
   </dialog>
