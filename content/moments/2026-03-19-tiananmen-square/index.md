@@ -1,0 +1,23 @@
+---
+title: "A Sunny Day at Tiananmen Square"
+date: 2026-03-19
+lastmod: 2026-11-21T22:31:52+08:00
+author: Qingchen Yu
+draft: false
+toc: false
+categories:
+  - Life
+tags:
+  - Beijing
+  - Landmark
+  - City Walk
+wall_photos:
+  - src: images/tiananmen-square-sunny.jpg
+    alt: Tiananmen Gate on a clear day
+    focus: "50% 64%"
+cover: "images/tiananmen-square-sunny.jpg"
+cover_alt: "Tiananmen Gate under a clear sky"
+cover_caption: "Tiananmen Gate under a clear sky | 晴空下的天安门城楼"
+---
+
+{{< photo src="images/tiananmen-square-sunny.jpg" alt="Tiananmen Gate under a clear sky" caption="Tiananmen Gate under a clear sky | 晴空下的天安门城楼" width="80" >}}

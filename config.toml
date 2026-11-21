@@ -13,8 +13,8 @@ canonifyURLs = false
 timeout = "120s"
 
 [permalinks]
-cn = "/blogs/:filename/"
-en = "/moments/:filename/"
+blogs = "/blogs/:filename/"
+moments = "/moments/:filename/"
 posts = "/posts/:filename/"
 
 [[menu.main]]

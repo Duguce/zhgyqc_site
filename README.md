@@ -54,12 +54,16 @@ Preview includes unpublished content; use `make serve DRAFTS=false` for publishe
     <tr><td>Profile and introduction</td><td><code>content/_index.md</code></td></tr>
     <tr><td>Publications and author marks</td><td><code>data/publications.yaml</code></td></tr>
     <tr><td>Education, awards, and service</td><td><code>data/home.yaml</code></td></tr>
-    <tr><td>Chinese articles</td><td><code>content/cn/blogs/</code></td></tr>
-    <tr><td>English photo journals</td><td><code>content/en/moments/</code></td></tr>
+    <tr><td>Chinese articles</td><td><code>content/blogs/</code></td></tr>
+    <tr><td>English photo journals</td><td><code>content/moments/</code></td></tr>
     <tr><td>Design tokens and page styles</td><td><code>assets/css/</code></td></tr>
     <tr><td>Site templates and shortcodes</td><td><code>layouts/</code></td></tr>
   </tbody>
 </table>
+
+Use lowercase, date-prefixed names for new blog posts and Moments. The filename or bundle directory determines the public URL. Keep it stable after publication. A text-only blog post can be a single Markdown file. Keep article-specific media next to its article in a bundle.
+
+Feature pages live in `content/features/`, the statistics page in `content/stats.md`, and the photo wall in `content/photos/`. A Moment can contribute its own images to the photo wall.
 
 ### Theme
 
@@ -71,13 +75,12 @@ Preview includes unpublished content; use `make serve DRAFTS=false` for publishe
 <summary>New Moments &amp; media</summary>
 
 ```sh
-hugo new content --kind moments en/moments/my-note
+hugo new content --kind moments moments/2026-08-23-my-note
 ```
 
 Edit the generated `index.md`, add images to its bundle, and set:
 
 ```yaml
-url: /moments/my-note/
 cover: images/cover.jpg
 cover_alt: A description of the scene
 draft: false

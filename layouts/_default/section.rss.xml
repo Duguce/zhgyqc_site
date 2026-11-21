@@ -1,0 +1,5 @@
+{{- $feed := partial "site/rss.xml" . -}}
+{{- with .Params.legacyFeed -}}
+  {{- (resources.FromString . (string $feed)).Publish -}}
+{{- end -}}
+{{- $feed | safeHTML -}}

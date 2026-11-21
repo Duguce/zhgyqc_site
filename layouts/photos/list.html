@@ -1,5 +1,5 @@
 {{ define "main" }}
-{{ $moments := .Site.GetPage "/en/moments" }}
+{{ $moments := .Site.GetPage "/moments" }}
 {{ $entries := .RegularPages }}
 {{ with $moments }}{{ $entries = union $entries .RegularPages }}{{ end }}
 {{ $featured := slice }}
