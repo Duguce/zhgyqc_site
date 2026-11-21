@@ -12,6 +12,9 @@ canonifyURLs = false
 # Cold image processing can exceed the 30s template limit on hosting workers.
 timeout = "120s"
 
+[frontmatter]
+lastmod = ["lastmod", ":git", "date", "publishDate"]
+
 [permalinks]
 blogs = "/blogs/:filename/"
 moments = "/moments/:filename/"
