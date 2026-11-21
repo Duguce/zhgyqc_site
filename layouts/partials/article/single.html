@@ -76,7 +76,7 @@
         {{ .Content }}
         <p class="scholar-lastupdate">
           {{ $lastLabel := default (index $.Site.Params.lang.lastupdate $.Site.Params.defaultLang) (index $.Site.Params.lang.lastupdate $language.menuKey) }}
-          {{ $lastLabel }} {{ .Page.Lastmod.Format "2006-01-02" }}
+          {{ $lastLabel }} {{ (partial "article/lastmod.html" .).Format "2006-01-02" }}
         </p>
         {{ with .GetTerms "tags" }}
         <div class="scholar-tags">
@@ -186,7 +186,7 @@
     {{ .Content | partial "add-header-anchors" }}
     <p style="color:var(--site-muted);">
       {{ $lastLabel := default (index $.Site.Params.lang.lastupdate $.Site.Params.defaultLang) (index $.Site.Params.lang.lastupdate $language.menuKey) }}
-      {{ $lastLabel }} {{ .Page.Lastmod.Format "2006-01-02" }}
+      {{ $lastLabel }} {{ (partial "article/lastmod.html" .).Format "2006-01-02" }}
     </p>
     {{ with .GetTerms "tags" }}
     <div class="post-tags" style="margin-top: 0.8rem;">

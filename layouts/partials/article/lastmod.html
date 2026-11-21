@@ -1,0 +1,10 @@
+{{- $updated := .Lastmod -}}
+{{- if and .IsPage (in (slice "blogs" "moments") .Type) -}}
+  {{- with .GitInfo -}}
+    {{- /* The directory migration carried over each article's original lastmod. */ -}}
+    {{- if ne .Hash "1c5f38eb7b44986bfcb0ee99db6f25dc6623bedf" -}}
+      {{- $updated = .AuthorDate -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $updated -}}

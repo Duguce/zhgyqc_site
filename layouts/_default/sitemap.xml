@@ -4,7 +4,7 @@
   {{ if and (not .IsHome) (ne .Permalink "") }}
   <url>
     <loc>{{ .Permalink }}</loc>
-    {{ with .Lastmod }}<lastmod>{{ .Format "2006-01-02T15:04:05-07:00" }}</lastmod>{{ end }}
+    {{ with partial "article/lastmod.html" . }}<lastmod>{{ .Format "2006-01-02T15:04:05-07:00" }}</lastmod>{{ end }}
     <priority>{{ if .IsSection }}0.6{{ else if .IsPage }}0.5{{ else }}0.4{{ end }}</priority>
   </url>
   {{ end }}
