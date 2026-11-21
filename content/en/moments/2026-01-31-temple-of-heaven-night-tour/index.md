@@ -11,6 +11,11 @@ tags:
   - Beijing
   - Architecture
   - Night View
+wall_photos:
+  - src: images/temple-of-heaven-evening.jpg
+    alt: The Hall of Prayer lit against an evening sky
+    rank: 3
+    focus: "50% 67%"
 cover: "images/temple-of-heaven-evening.jpg"
 cover_alt: "The Hall of Prayer for Good Harvests"
 cover_caption: "The Hall of Prayer for Good Harvests | 夜暮中的祈年殿"

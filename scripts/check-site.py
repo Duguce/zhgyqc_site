@@ -106,6 +106,8 @@ def main():
             errors.add("Missing critical page: " + required)
         elif len(documents[required].attrs("h1")) != 1:
             errors.add("{}: expected one page heading (h1)".format(required))
+    if "photos/index.html" not in documents:
+        errors.add("Missing critical page: photos/index.html")
     stats_path = root / "stats/data.json"
     if stats_path.is_file():
         try:

@@ -11,6 +11,7 @@ tags:
   - Conference
   - Open Source
   - Beijing
+wall_photos: []
 cover: "images/cast-committee-inauguration.jpg"
 cover_alt: "The Unveiling Ceremony of the CAST Open Source Innovation Committee"
 cover_caption: "The Unveiling Ceremony of the CAST Open Source Innovation Committee"

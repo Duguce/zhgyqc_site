@@ -11,6 +11,13 @@ tags:
   - Xi'an
   - City Walk
   - Architecture
+wall_photos:
+  - src: images/big-wild-goose-pagoda.jpg
+    alt: The Giant Wild Goose Pagoda in Xi’an
+    focus: "50% 40%"
+  - src: images/xian-bell-tower-night.jpg
+    alt: The Xi’an Bell Tower lit at night
+    focus: "50% 47%"
 cover: "images/big-wild-goose-pagoda.jpg"
 cover_alt: "The Big Wild Goose Pagoda"
 cover_caption: "The Big Wild Goose Pagoda | 大雁塔"

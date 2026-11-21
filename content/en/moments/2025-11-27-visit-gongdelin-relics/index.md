@@ -11,6 +11,7 @@ tags:
   - Beijing
   - History
   - City Walk
+wall_photos: []
 cover: "images/gongdelin-plaque.jpg"
 cover_alt: "Gongdelin Relics Plaque"
 cover_caption: "Gongdelin Relics Plaque | 功德林遗存铭牌"

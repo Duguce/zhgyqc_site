@@ -94,6 +94,22 @@ draft: false
 
 </details>
 
+<details>
+<summary>Photo wall</summary>
+
+- Published Moments contribute their cover by default. Set `wall_photos` to choose the full selection from a Moment, or `wall_photos: []` to skip it.
+- For a standalone photo, run `hugo new content --kind photo photos/my-photo`, add `photo.jpg`, and fill in `date`, `image`, and `alt` in `index.md`. Set `draft: false` when ready.
+- A positive `rank` pins a photo ahead of the date order. Optional `focus` sets the crop position. The next site build updates the wall.
+
+```yaml
+wall_photos:
+  - src: images/cover.jpg
+    alt: The White Dagoba reflected in the lake
+    focus: "50% 60%"
+```
+
+</details>
+
 ## Deployment
 
 Publish from `master`, with an optional commit message:

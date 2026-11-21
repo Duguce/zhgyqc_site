@@ -11,6 +11,7 @@ tags:
   - Thinking
   - Reflection
   - 2025
+wall_photos: []
 cover: "images/at-the-crossroads.jpg"
 cover_alt: "At the Crossroads (AI-Generated Image by Google Gemini)"
 cover_caption: "At the Crossroads (AI-Generated Image by Google Gemini)"

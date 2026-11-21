@@ -5,9 +5,9 @@
   </head>
   <body{{ if .IsHome }} class="home-page"{{ end }}>
     <div class="wrapper">
-      {{ partial "site/header.html" . }}
+      {{ if ne .Type "photos" }}{{ partial "site/header.html" . }}{{ end }}
       {{ block "main" . }}{{ end }}
-      {{ partial "site/footer.html" . }}
+      {{ if ne .Type "photos" }}{{ partial "site/footer.html" . }}{{ end }}
     </div>
   </body>
 </html>

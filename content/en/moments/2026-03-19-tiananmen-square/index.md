@@ -11,6 +11,10 @@ tags:
   - Beijing
   - Landmark
   - City Walk
+wall_photos:
+  - src: images/tiananmen-square-sunny.jpg
+    alt: Tiananmen Gate on a clear day
+    focus: "50% 64%"
 cover: "images/tiananmen-square-sunny.jpg"
 cover_alt: "Tiananmen Gate under a clear sky"
 cover_caption: "Tiananmen Gate under a clear sky | 晴空下的天安门城楼"

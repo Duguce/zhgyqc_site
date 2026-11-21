@@ -1,0 +1,65 @@
+{{ define "main" }}
+{{ $moments := .Site.GetPage "/en/moments" }}
+{{ $entries := .RegularPages }}
+{{ with $moments }}{{ $entries = union $entries .RegularPages }}{{ end }}
+{{ $featured := slice }}
+{{ $recent := slice }}
+{{ range $entry := sort $entries "Date" "desc" }}
+  {{ $photos := slice }}
+  {{ if eq .Section "photos" }}
+    {{ $photos = slice (dict "src" .Params.image "alt" .Params.alt "focus" .Params.focus "rank" .Params.rank) }}
+  {{ else if isset .Params "wall_photos" }}
+    {{ $photos = .Params.wall_photos }}
+  {{ else if .Params.cover }}
+    {{ $photos = slice (dict "src" .Params.cover "alt" .Params.cover_alt) }}
+  {{ end }}
+  {{ $seen := slice }}
+  {{ range $photo := $photos }}
+    {{ if not $photo.src }}
+      {{ errorf "Photos: missing image filename in %s" $entry.File.Path }}
+    {{ else }}
+      {{ $image := partial "media/image.html" (dict "page" $entry "src" $photo.src) }}
+      {{ if not (in $seen $image.Name) }}
+        {{ $seen = $seen | append $image.Name }}
+        {{ $item := dict "resource" $image "alt" (default $entry.Title $photo.alt) "focus" $photo.focus "rank" (int ($photo.rank | default 0)) }}
+        {{ if gt $item.rank 0 }}
+          {{ $featured = $featured | append $item }}
+        {{ else }}
+          {{ $recent = $recent | append $item }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ $photos := (sort $featured "rank") | append $recent }}
+<main class="photo-wall" aria-label="{{ .Title }}">
+  <div class="photo-wall__grid" style="--photo-count: {{ math.Max (len $photos) 1 }}">
+    {{ range $index, $item := $photos }}
+      {{ $image := .resource }}
+      {{ $large := $image.Fit "1600x1600 webp q82" }}
+      {{ $wide := ge (mul $image.Width 4) (mul $image.Height 5) }}
+      {{ $sizes := cond $wide "(max-width: 600px) 70vw, (min-aspect-ratio: 8/5) 40vw, 55vw" "(max-width: 600px) 45vw, (min-aspect-ratio: 8/5) 25vw, 33vw" }}
+      {{ $loading := cond (lt $index 3) "eager" "lazy" }}
+      {{ $focus := .focus | default "" }}
+      {{ if and $focus (not (findRE `^(100|[1-9]?[0-9])% (100|[1-9]?[0-9])%$` $focus)) }}
+        {{ errorf "Photos: invalid focus %q for %s. Use two percentages such as 50%% 65%%." $focus $image.Name }}
+      {{ end }}
+      <a class="photo-wall__tile{{ if $wide }} photo-wall__tile--wide{{ end }}" href="{{ $large.RelPermalink }}"{{ if $focus }} style="{{ printf "--photo-focus: %s" $focus | safeCSS }}"{{ end }}>
+        {{ partial "responsive-image.html" (dict "resource" $image "alt" .alt "widths" (slice 480 800 1200) "defaultWidth" 480 "sizes" $sizes "loading" $loading) }}
+      </a>
+    {{ end }}
+  </div>
+  <dialog class="photo-wall__viewer" aria-label="Photo viewer">
+    <div class="photo-wall__toolbar">
+      <button type="button" class="photo-wall__control" data-close aria-label="Close photo" autofocus>×</button>
+    </div>
+    <div class="photo-wall__frame">
+      <button type="button" class="photo-wall__control" data-step="-1" aria-label="Previous photo">‹</button>
+      <img class="photo-wall__image" alt="">
+      <button type="button" class="photo-wall__control" data-step="1" aria-label="Next photo">›</button>
+    </div>
+    <span class="visually-hidden" aria-live="polite"></span>
+  </dialog>
+</main>
+{{ partial "script.html" "js/photo-wall.js" }}
+{{ end }}

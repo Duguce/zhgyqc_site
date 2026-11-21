@@ -12,6 +12,10 @@ tags:
   - City Walk
   - Architecture
   - Temple of Heaven
+wall_photos:
+  - src: images/hall-of-prayer.jpg
+    alt: The blue tiled roofs of the Hall of Prayer
+    focus: "50% 62%"
 cover: "images/hall-of-prayer.jpg"
 cover_alt: "The Hall of Prayer for Good Harvests"
 cover_caption: "The Hall of Prayer for Good Harvests | 祈年殿"

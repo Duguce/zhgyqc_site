@@ -1,6 +1,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{ if eq .Type "stats" }}{{ .Title }} · {{ end }}{{ .Site.Title }}</title>
+<title>{{ if in (slice "stats" "photos") .Type }}{{ .Title }} · {{ end }}{{ .Site.Title }}</title>
 {{ partial "site/theme-bootstrap.html" . }}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {{ partial "stylesheet.html" "css/tokens.css" }}
@@ -10,6 +10,8 @@
   {{ partial "stylesheet.html" "css/home.css" }}
 {{ else if eq .Type "stats" }}
   {{ partial "stylesheet.html" "css/stats.css" }}
+{{ else if eq .Type "photos" }}
+  {{ partial "stylesheet.html" "css/photo-wall.css" }}
 {{ else if eq .Type "features" }}
   {{ if .IsPage }}{{ partial "stylesheet.html" "css/feature.css" }}{{ else }}{{ partial "stylesheet.html" "css/features-index.css" }}{{ end }}
 {{ else if in (slice "blogs" "moments") .Type }}

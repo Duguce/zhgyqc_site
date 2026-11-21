@@ -12,6 +12,17 @@ tags:
   - Hiking
   - Autumn
   - Nature
+wall_photos:
+  - src: images/fenghuangling-autumn-leaves.jpg
+    alt: Golden autumn leaves along the Fenghuangling trail
+    rank: 2
+    focus: "50% 45%"
+  - src: images/fenghuangling-white-dog.jpg
+    alt: A white dog among trees along the Fenghuangling trail
+    focus: "48% 72%"
+  - src: images/fenghuangling-feilai-pagoda.jpg
+    alt: The Feilai Stone Pagoda standing on a large boulder at Fenghuangling
+    focus: "50% 61%"
 cover: "images/fenghuangling-white-dog.jpg"
 cover_alt: "A white dog among trees along the Fenghuangling trail"
 cover_caption: "A chance encounter on the trail | 山野里的偶遇"

@@ -12,6 +12,10 @@ tags:
   - Summer Palace
   - Nature
   - Video
+wall_photos:
+  - src: images/summer-palace-architecture.jpg
+    alt: Layered roofs and painted beams at the Summer Palace
+    focus: "55% 34%"
 cover: "images/summer-palace-architecture.jpg"
 cover_alt: "A Corner of the Summer Palace"
 cover_caption: "A Corner of the Summer Palace | 颐和园一角"

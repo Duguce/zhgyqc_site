@@ -12,6 +12,14 @@ tags:
   - Beihai Park
   - City Walk
   - Night View
+wall_photos:
+  - src: images/beihai-white-dagoba-night.jpg
+    alt: The White Dagoba reflected in Beihai Lake at dusk
+    rank: 1
+    focus: "50% 53%"
+  - src: images/beihai-white-dagoba-day.jpg
+    alt: The White Dagoba across Beihai Lake in daylight
+    focus: "48% 60%"
 cover: "images/beihai-white-dagoba-day.jpg"
 cover_alt: "The White Dagoba Across the Lake"
 cover_caption: "The White Dagoba Across the Lake | 湖对岸的北海白塔"

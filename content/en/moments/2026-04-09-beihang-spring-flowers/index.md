@@ -13,6 +13,10 @@ tags:
   - Flowers
   - Photography
   - Beijing
+wall_photos:
+  - src: images/beihang-white-flowers.jpg
+    alt: White spring blossoms on the Beihang campus
+    focus: "50% 34%"
 cover: "images/beihang-pink-flowers.jpg"
 cover_alt: "Vibrant Pink Crabapple Blossoms"
 cover_caption: "Vibrant Pink Crabapple Blossoms | 校园里盛开的粉色海棠"
