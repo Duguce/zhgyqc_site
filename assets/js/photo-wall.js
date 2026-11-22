@@ -126,9 +126,7 @@
   const frame = dialog.querySelector('.photo-wall__frame');
   const preview = frame.querySelector('[data-preview]');
   const retry = frame.querySelector('[data-retry]');
-  const shareLink = frame.querySelector('[data-share-link]');
   const close = dialog.querySelector('[data-close]');
-  const copy = dialog.querySelector('[data-copy]');
   const tilesById = new Map(tiles.map(tile => [tile.id, tile]));
   let activeLoad;
   let prefetched;
@@ -168,10 +166,8 @@
     preview.src = tile.dataset.preview || thumbnail.currentSrc || thumbnail.src;
     preview.alt = thumbnail.alt;
     preview.hidden = false;
-    if (frame.contains(document.activeElement)) close.focus({ preventScroll: true });
+    if (document.activeElement === retry) close.focus({ preventScroll: true });
     retry.hidden = true;
-    shareLink.hidden = true;
-    copy.textContent = 'Copy link';
 
     discard(activeLoad);
     if (prefetched?.tile === tile) {
@@ -290,7 +286,6 @@
   });
   dialog.addEventListener('keydown', event => {
     if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
-    if (event.target === shareLink) return;
     event.preventDefault();
     step(event.key === 'ArrowRight' ? 1 : -1);
   });
@@ -306,23 +301,6 @@
         event.clientY < bounds.top || event.clientY > bounds.bottom) closeViewer();
   });
   retry.addEventListener('click', () => show(current));
-  copy.addEventListener('click', async () => {
-    const tile = current;
-    const url = photoURL(tile).href;
-    try {
-      await navigator.clipboard.writeText(url);
-      if (tile !== current || !dialog.open) return;
-      shareLink.hidden = true;
-      copy.textContent = 'Copied';
-      status.textContent = 'Photo link copied.';
-    } catch {
-      if (tile !== current || !dialog.open) return;
-      shareLink.value = url;
-      shareLink.hidden = false;
-      shareLink.focus();
-      shareLink.select();
-    }
-  });
   window.addEventListener('popstate', syncLocation);
   window.addEventListener('hashchange', syncLocation);
   syncLocation();
