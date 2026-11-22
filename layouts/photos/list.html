@@ -26,7 +26,12 @@
       {{ $image := partial "media/image.html" (dict "page" $entry "src" $photo.src) }}
       {{ if not (in $seen $image.Name) }}
         {{ $seen = $seen | append $image.Name }}
-        {{ $item := dict "resource" $image "alt" (default $entry.Title $photo.alt) "focus" $photo.focus "rank" (int ($photo.rank | default 0)) }}
+        {{ $id := $entry.File.ContentBaseName }}
+        {{ if eq $entry.Section "moments" }}
+          {{ $photoPath := strings.TrimSuffix (path.Ext $image.Name) $image.Name }}
+          {{ $id = anchorize (printf "moment-%s-%s" $id (replace $photoPath "/" "-")) }}
+        {{ end }}
+        {{ $item := dict "id" $id "resource" $image "alt" (default $entry.Title $photo.alt) "focus" $photo.focus "rank" (int ($photo.rank | default 0)) }}
         {{ if gt $item.rank 0 }}
           {{ $featured = $featured | append $item }}
         {{ else }}
@@ -37,21 +42,28 @@
   {{ end }}
 {{ end }}
 {{ $photos := (sort $featured "rank") | append $recent }}
+{{ $ids := slice }}
 <main class="photo-wall" aria-label="{{ .Title }}">
   <div class="photo-wall__grid" data-exhibit="{{ .Params.exhibit | jsonify }}">
-    {{ range $index, $item := $photos }}
+    {{ range $photos }}
+      {{ if in $ids .id }}{{ errorf "Photos: duplicate photo link identifier %q" .id }}{{ end }}
+      {{ $ids = $ids | append .id }}
       {{ $image := .resource }}
       {{ $large := $image.Fit "1600x1600 webp q82" }}
       {{ $key := strings.TrimSuffix (path.Ext $image.Name) (path.Base $image.Name) }}
       {{ $thumbnail := $image }}
-      {{ with index $.Params.exhibit.trim_bottom $key }}
+      {{ $trim := index $.Params.exhibit.trim_bottom $key }}
+      {{ with $trim }}
         {{ $thumbnail = $image.Crop (printf "%dx%d Top" $image.Width (int (mul $image.Height (sub 1 .)))) }}
       {{ end }}
       {{ $focus := (index $.Params.exhibit.focus $key) | default .focus | default "" }}
       {{ if and $focus (not (findRE `^(100|[1-9]?[0-9])% (100|[1-9]?[0-9])%$` $focus)) }}
         {{ errorf "Photos: invalid focus %q for %s. Use two percentages such as 50%% 65%%." $focus $image.Name }}
       {{ end }}
-      <a class="photo-wall__tile" data-print="{{ $key }}" href="{{ $large.RelPermalink }}"{{ if $focus }} style="{{ printf "--photo-focus: %s" $focus | safeCSS }}"{{ end }}>
+      <a class="photo-wall__tile" id="{{ .id }}" data-print="{{ $key }}" href="{{ $large.RelPermalink }}"
+         data-width="{{ $large.Width }}" data-height="{{ $large.Height }}"
+         {{- if $trim }} data-preview="{{ ($image.Resize "480x webp q82").RelPermalink }}"{{ end }}
+         {{- if $focus }} style="{{ printf "--photo-focus: %s" $focus | safeCSS }}"{{ end }}>
         {{ partial "responsive-image.html" (dict "resource" $thumbnail "alt" .alt "widths" (slice 480 800 1200) "defaultWidth" 480 "sizes" "(orientation: portrait) 40vw, 25vw" "loading" "eager") }}
       </a>
     {{ end }}
@@ -59,12 +71,15 @@
   <dialog class="photo-wall__viewer" aria-label="Photo viewer">
     <button type="button" class="photo-wall__control" data-close aria-label="Close photo" autofocus></button>
     <div class="photo-wall__frame">
-      <img class="photo-wall__image" alt="">
+      <img class="photo-wall__image" data-preview alt="" fetchpriority="high" decoding="async" hidden>
+      <button type="button" class="photo-wall__control photo-wall__retry" data-retry hidden>Retry full-size image</button>
+      <input class="photo-wall__link" data-share-link type="text" aria-label="Photo link" readonly hidden>
     </div>
     <div class="photo-wall__toolbar">
       <button type="button" class="photo-wall__control" data-step="-1" aria-label="Previous photo"></button>
       <span class="photo-wall__position" aria-hidden="true"></span>
       <button type="button" class="photo-wall__control" data-step="1" aria-label="Next photo"></button>
+      <button type="button" class="photo-wall__control photo-wall__copy" data-copy>Copy link</button>
     </div>
     <span class="visually-hidden" aria-live="polite"></span>
   </dialog>

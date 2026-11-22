@@ -69,13 +69,15 @@
   touch-action: pan-y pinch-zoom;
 }
 .photo-wall__image {
+  grid-area: 1 / 1;
   display: block;
-  height: auto;
-  width: auto;
-  max-height: 100%;
-  max-width: 100%;
+  height: 100%;
+  width: 100%;
+  max-height: var(--photo-height, 100%);
+  max-width: var(--photo-width, 100%);
   object-fit: contain;
 }
+.photo-wall__image[hidden] { display: none; }
 .photo-wall__toolbar {
   display: flex;
   justify-self: center;
@@ -128,13 +130,36 @@
 }
 .photo-wall__control:focus-visible { outline: 2px solid var(--site-accent); }
 .photo-wall__control[hidden] { display: none; }
+.photo-wall__control.photo-wall__copy,
+.photo-wall__control.photo-wall__retry {
+  width: auto;
+  padding-inline: 12px;
+  font: 500 0.8rem/1 var(--site-font-ui);
+}
+.photo-wall__control.photo-wall__copy { min-width: 78px; }
+.photo-wall__control.photo-wall__retry,
+.photo-wall__link {
+  grid-area: 1 / 1;
+  z-index: 1;
+  background: var(--site-surface);
+  color: var(--site-ink);
+  border: 1px solid var(--site-border);
+}
+.photo-wall__control.photo-wall__retry { align-self: end; }
+.photo-wall__link {
+  align-self: start;
+  box-sizing: border-box;
+  width: min(100%, 30rem);
+  padding: 10px;
+  font: 0.875rem/1.3 var(--site-font-ui);
+}
 
 @media (max-height: 480px) and (orientation: landscape) {
   .photo-wall__viewer[open] {
-    grid-template: minmax(0, 1fr) 44px / minmax(0, 1fr) 44px;
+    grid-template: minmax(0, 1fr) 44px / minmax(0, 1fr) max-content;
     column-gap: 8px;
   }
-  .photo-wall__frame { grid-area: 1 / 1 / 3 / 2; }
-  .photo-wall__control[data-close] { grid-area: 1 / 2; align-self: start; }
+  .photo-wall__frame { grid-area: 1 / 1 / 3 / 2; min-width: 0; }
+  .photo-wall__control[data-close] { grid-area: 1 / 2; place-self: start center; }
   .photo-wall__toolbar { grid-area: 2 / 2; flex-direction: column; align-self: end; }
 }
